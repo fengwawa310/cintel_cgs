@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.utils.EtUnitIntegralMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.integral.EtUnitIntegral" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="UNIT_CODE" property="unitCode" jdbcType="VARCHAR" />
+    <result column="UNIT_NAME" property="unitName" jdbcType="VARCHAR" />
+    <result column="BASE_POINTS" property="basePoints" jdbcType="INTEGER" />
+    <result column="JUDGE_POINTS" property="judgePoints" jdbcType="INTEGER" />
+    <result column="CASE_POINTS" property="casePoints" jdbcType="INTEGER" />
+    <result column="ALARM_POINTS" property="alarmPoints" jdbcType="INTEGER" />
+    <result column="AWARDS_DEDUC_POINTS" property="awardsDeducPoints" jdbcType="INTEGER" />
+    <result column="CLUE_REPORT_POINTS" property="clueReportPoints" jdbcType="INTEGER" />
+    <result column="SUSPECT_REPORT_POINTS" property="suspectReportPoints" jdbcType="INTEGER" />
+    <result column="INFOR_REPORT_POINTS" property="inforReportPoints" jdbcType="INTEGER" />
+    <result column="TOTAL_POINTS" property="totalPoints" jdbcType="INTEGER" />
+    <result column="AWARD_COUNT" property="awardCount" jdbcType="INTEGER" />
+    <result column="HONOUR_COUNT" property="honourCount" jdbcType="INTEGER" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, UNIT_CODE, UNIT_NAME, BASE_POINTS, JUDGE_POINTS, CASE_POINTS, ALARM_POINTS, AWARDS_DEDUC_POINTS,
+    CLUE_REPORT_POINTS, SUSPECT_REPORT_POINTS, INFOR_REPORT_POINTS, TOTAL_POINTS, AWARD_COUNT,
+    HONOUR_COUNT, CREAT_TIME, MODIFY_TIME
+  </sql>
+  <insert id="mergeUnitIntegral" parameterType="com.entity.integral.EtUnitIntegral" >
+    	INSERT INTO et_unit_integrall (
+		<include refid="Base_Column_List" />
+		    )
+		VALUES
+	        	(	        	
+		        	#{id},
+		        	#{unitCode},
+		        	#{unitName},
+		        	#{basePoints},
+		        	#{judgePoints},
+		        	#{casePoints},
+		        	#{alarmPoints},
+		        	#{awardsDeducPoints},
+		        	#{clueReportPoints},
+		        	#{suspectReportPoints},
+		        	#{inforReportPoints},
+		        	#{totalPoints},
+		        	#{awardCount},
+		        	#{honourCount},
+		        	now(),
+		        	now()
+	        	)  
+	   	ON DUPLICATE KEY UPDATE
+			BASE_POINTS = BASE_POINTS + values(BASE_POINTS),
+			JUDGE_POINTS = JUDGE_POINTS + values(JUDGE_POINTS),
+			CASE_POINTS = CASE_POINTS + values(CASE_POINTS),
+			ALARM_POINTS = ALARM_POINTS + values(ALARM_POINTS),
+			AWARDS_DEDUC_POINTS = AWARDS_DEDUC_POINTS + values(AWARDS_DEDUC_POINTS),
+			CLUE_REPORT_POINTS = CLUE_REPORT_POINTS + values(CLUE_REPORT_POINTS),
+			SUSPECT_REPORT_POINTS = SUSPECT_REPORT_POINTS + values(SUSPECT_REPORT_POINTS),
+			INFOR_REPORT_POINTS = INFOR_REPORT_POINTS + values(INFOR_REPORT_POINTS),
+			TOTAL_POINTS = TOTAL_POINTS + values(TOTAL_POINTS),
+			MODIFY_TIME = values(MODIFY_TIME)
+  </insert>
+  <insert id="insert" parameterType="com.entity.integral.EtUnitIntegral" >
+    insert into et_unit_integrall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="unitCode != null" >
+        UNIT_CODE,
+      </if>
+      <if test="unitName != null" >
+        UNIT_NAME,
+      </if>
+      <if test="basePoints != null" >
+        BASE_POINTS,
+      </if>
+      <if test="judgePoints != null" >
+        JUDGE_POINTS,
+      </if>
+      <if test="casePoints != null" >
+        CASE_POINTS,
+      </if>
+      <if test="awardsDeducPoints != null" >
+        AWARDS_DEDUC_POINTS,
+      </if>
+      <if test="clueReportPoints != null" >
+        CLUE_REPORT_POINTS,
+      </if>
+      <if test="suspectReportPoints != null" >
+        SUSPECT_REPORT_POINTS,
+      </if>
+      <if test="inforReportPoints != null" >
+        INFOR_REPORT_POINTS,
+      </if>
+      <if test="totalPoints != null" >
+        TOTAL_POINTS,
+      </if>
+      <if test="awardCount != null" >
+        AWARD_COUNT,
+      </if>
+      <if test="honourCount != null" >
+        HONOUR_COUNT,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="unitCode != null" >
+        #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePoints != null" >
+        #{basePoints,jdbcType=INTEGER},
+      </if>
+      <if test="judgePoints != null" >
+        #{judgePoints,jdbcType=INTEGER},
+      </if>
+      <if test="casePoints != null" >
+        #{casePoints,jdbcType=INTEGER},
+      </if>
+      <if test="awardsDeducPoints != null" >
+        #{awardsDeducPoints,jdbcType=INTEGER},
+      </if>
+      <if test="clueReportPoints != null" >
+        #{clueReportPoints,jdbcType=INTEGER},
+      </if>
+      <if test="suspectReportPoints != null" >
+        #{suspectReportPoints,jdbcType=INTEGER},
+      </if>
+      <if test="inforReportPoints != null" >
+        #{inforReportPoints,jdbcType=INTEGER},
+      </if>
+      <if test="totalPoints != null" >
+        #{totalPoints,jdbcType=INTEGER},
+      </if>
+      <if test="awardCount != null" >
+        #{awardCount,jdbcType=INTEGER},
+      </if>
+      <if test="honourCount != null" >
+        #{honourCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_unit_integrall
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="update" parameterType="com.entity.integral.EtUnitIntegral" >
+    update et_unit_integrall
+    <set >
+      <if test="basePoints != null" >
+        BASE_POINTS = #{basePoints,jdbcType=INTEGER},
+      </if>
+      <if test="awardsDeducPoints != null" >
+        AWARDS_DEDUC_POINTS = #{awardsDeducPoints,jdbcType=INTEGER},
+      </if>
+      <if test="totalPoints != null" >
+        TOTAL_POINTS = #{totalPoints,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from et_unit_integrall
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findUnitIntegralStatistics" resultMap="BaseResultMap" parameterType="com.entity.integral.EtUnitIntegral" >
+    SELECT m.id AS UNIT_CODE,	m. NAME AS UNIT_NAME,	ifnull(n.BASE_POINTS, 0) BASE_POINTS,	IFNULL(n.JUDGE_POINTS, 0) JUDGE_POINTS,
+	IFNULL(n.CASE_POINTS, 0) CASE_POINTS,	IFNULL(n.ALARM_POINTS, 0) ALARM_POINTS,IFNULL(n.AWARDS_DEDUC_POINTS, 0) AWARDS_DEDUC_POINTS,
+	IFNULL(n.CLUE_REPORT_POINTS, 0) CLUE_REPORT_POINTS,IFNULL(n.SUSPECT_REPORT_POINTS, 0) SUSPECT_REPORT_POINTS,
+	IFNULL(n.INFOR_REPORT_POINTS, 0) INFOR_REPORT_POINTS,IFNULL(n.TOTAL_POINTS, 0) TOTAL_POINTS,IFNULL(n.AWARD_COUNT, 0) AWARD_COUNT,
+	IFNULL(n.HONOUR_COUNT, 0) HONOUR_COUNT
+	FROM(SELECT id,NAME FROM dic_unit WHERE	<!-- LENGTH(id) = 6 -->  1=1 AND parent_id > 0 ORDER BY	id) AS m
+	LEFT JOIN (
+	SELECT UNIT_CODE,UNIT_NAME,sum(BASE_POINTS) BASE_POINTS,sum(JUDGE_POINTS) JUDGE_POINTS,	sum(CASE_POINTS) CASE_POINTS,
+		sum(ALARM_POINTS) ALARM_POINTS,sum(AWARDS_DEDUC_POINTS) AWARDS_DEDUC_POINTS,sum(CLUE_REPORT_POINTS) CLUE_REPORT_POINTS,
+		sum(SUSPECT_REPORT_POINTS) SUSPECT_REPORT_POINTS,sum(INFOR_REPORT_POINTS) INFOR_REPORT_POINTS,
+		sum(TOTAL_POINTS) TOTAL_POINTS,sum(AWARD_COUNT) AWARD_COUNT,sum(HONOUR_COUNT) HONOUR_COUNT
+	FROM
+		(
+			SELECT ID,UNIT_CODE , <!-- SUBSTR(UNIT_CODE, 1, 6) UNIT_CODE, -->
+				(SELECT a. NAME	FROM dic_unit a	WHERE	id = SUBSTR(UNIT_CODE, 1, 6)) UNIT_NAME,BASE_POINTS,JUDGE_POINTS,
+				CASE_POINTS,ALARM_POINTS,	AWARDS_DEDUC_POINTS,CLUE_REPORT_POINTS,SUSPECT_REPORT_POINTS,
+				INFOR_REPORT_POINTS,TOTAL_POINTS,AWARD_COUNT,HONOUR_COUNT,CREAT_TIME,MODIFY_TIME FROM	et_unit_integrall t
+	  	) x	GROUP BY UNIT_CODE,UNIT_NAME
+	) AS n ON m.id = n.UNIT_CODE
+  </select>
+  <select id="findUnitIntegral" resultMap="BaseResultMap" parameterType="com.entity.integral.EtUnitIntegral" >
+    select
+    <include refid="Base_Column_List" />
+    from et_unit_integrall
+    where 1= 1
+    <if test="unitCode != null and unitCode !=''" >
+       and UNIT_CODE = #{unitCode,jdbcType=VARCHAR}
+    </if>
+    order by UNIT_CODE
+  </select>
+</mapper>

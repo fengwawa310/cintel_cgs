@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.alarm.EtAlarmMapper">
+	<resultMap id="BaseResultMap" type="com.entity.alarm.EtAlarm">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="ALARM_NO" jdbcType="VARCHAR" property="alarmNo" />
+		<result column="CASE_NO" jdbcType="VARCHAR" property="caseNo" />
+		<result column="OFFICER_CODE" jdbcType="VARCHAR" property="officerCode" />
+		<result column="OFFICER_NAME" jdbcType="VARCHAR" property="officerName" />
+		<result column="UNIT_CODE" jdbcType="VARCHAR" property="unitCode" />
+		<result column="UNIT_NAME" jdbcType="VARCHAR" property="unitName" />
+		<result column="ALARM_TIME" jdbcType="TIMESTAMP" property="alarmTime" />
+		<result column="ALARM_PERSON_NAME" jdbcType="VARCHAR" property="alarmPersonName" />
+		<result column="ALARM_PERSON_PHONE" jdbcType="VARCHAR"
+			property="alarmPersonPhone" />
+		<result column="LOCATION_CASE" jdbcType="VARCHAR" property="locationCase" />
+		<result column="ALARM_CLASS" jdbcType="INTEGER" property="alarmClass" />
+		<result column="ALARM_CLASS_NAME" jdbcType="VARCHAR" property="alarmClassName" />
+		<result column="SOURCE_TYPE" jdbcType="INTEGER" property="sourceType" />
+		<result column="SOURCE_TYPE_NAME" jdbcType="VARCHAR" property="sourceTypeName" />
+		<result column="IS_ARCHIVE" jdbcType="INTEGER" property="isArchive" />
+		<result column="ARCHIVE_DESC" jdbcType="VARCHAR" property="archiveDesc" />
+		<result column="IS_ABANDON" jdbcType="INTEGER" property="isAbandon" />
+		<result column="ABANDON_DESC" jdbcType="VARCHAR" property="abandonDesc" />
+		<result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+		<result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="RESERVE_A" jdbcType="VARCHAR" property="reserveA"  />
+		<result column="RESERVE_B" jdbcType="VARCHAR" property="reserveB" />
+		<result column="RESERVE_C" jdbcType="VARCHAR" property="reserveC" />
+		<result column="RESERVE_D" jdbcType="VARCHAR" property="reserveD" />
+		<result column="dece_signs" jdbcType="VARCHAR" property="deceSigns" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.entity.alarm.EtAlarm">
+		<result column="ALARM_DESC" jdbcType="LONGVARCHAR" property="alarmDesc" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultUnitSuspect"
+		type="com.entity.alarm.EtAlarm">
+		<result column="LABEL" jdbcType="INTEGER" property="lable" />
+		<result column="RELATION" jdbcType="INTEGER" property="relation" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, ALARM_NO, CASE_NO, OFFICER_CODE, OFFICER_NAME, UNIT_CODE, UNIT_NAME,
+		DATE_FORMAT(ALARM_TIME,"%Y-%m-%d %H:%i:%s")  as ALARM_TIME,
+		ALARM_PERSON_NAME, ALARM_PERSON_PHONE, LOCATION_CASE, ALARM_CLASS,
+		SOURCE_TYPE, IS_ARCHIVE,
+		ARCHIVE_DESC, IS_ABANDON, ABANDON_DESC, CREAT_TIME, MODIFY_TIME
+	</sql>
+	<sql id="Base_Column_LAST">
+		al.ID, al.ALARM_NO, al.CASE_NO, al.OFFICER_CODE, al.OFFICER_NAME, al.UNIT_CODE, al.UNIT_NAME,
+		al.ALARM_TIME,
+		al.ALARM_PERSON_NAME, al.ALARM_PERSON_PHONE, al.LOCATION_CASE, al.ALARM_CLASS,
+		al.SOURCE_TYPE, al.IS_ARCHIVE,
+		al.ARCHIVE_DESC, al.IS_ABANDON, al.ABANDON_DESC, al.CREAT_TIME, al.MODIFY_TIME
+	</sql>
+	<sql id="Blob_Column_List">
+		ALARM_DESC
+	</sql>
+	<sql id="RL_ENTRY_OPEN">
+		rlalarm.LABEL,
+		rlalarm.RELATION
+	</sql>
+	   <select id="findAlarmForSearch" parameterType="java.util.List" resultMap="BaseResultMap">
+	    select
+	    <include refid="Base_Column_LAST" />
+	    from et_alarm al
+	    WHERE  1=1
+	    AND al.ID IN
+	    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+	            #{item}  
+	    </foreach>
+	    ORDER BY al.CREAT_TIME DESC
+	  </select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,(select t.DIC_DES from dic_common t where t.DIC_CODE= ALARM_CLASS) ALARM_CLASS_NAME
+		from et_alarm
+		where ALARM_NO = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectEtAlarmList" parameterType="java.util.Map"
+		resultMap="ResultMapWithBLOBs">
+		SELECT c.*,( <!-- 增加名称的对应关系 -->
+	SELECT
+		t.DIC_DES
+	FROM
+		dic_common t
+	WHERE
+		t.DIC_CODE = ALARM_CLASS
+	) ALARM_CLASS_NAME
+ FROM (select  
+ <include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+ ec.*
+		FROM et_alarm ec LEFT JOIN sys_user su on su.id = ec.OFFICER_CODE ) c
+		where 1=1 and IS_ABANDON=0
+		<if test="alarmTimeStr != null">
+			and date_format(ALARM_TIME, '%Y-%m-%d')=str_to_date('${alarmTimeStr}',
+			'%Y-%m-%d')
+		</if>
+		<if test="unitCode != null">
+			and UNIT_CODE = '${unitCode}'
+		</if>
+		<if test="alarmPersonName != null">
+			and ALARM_PERSON_NAME like '%${alarmPersonName}%'
+		</if>
+		<!--分权分域标识 modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+		<if test="deceSigns != null and deceSigns !=''">
+			<!--modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+			<choose>
+    			<when test="deceSigns.indexOf('0,0,0,') == 0">
+					AND dece_signs LIKE '${deceSigns}%'
+    			</when>
+    			<otherwise>
+					AND (dece_signs LIKE '${deceSigns}%' or dece_signs LIKE '0,0,0,%')
+    			</otherwise>
+  			</choose>
+		</if>
+		<if test="alarmPersonPhone != null">
+			and ALARM_PERSON_PHONE like '%${alarmPersonPhone}%'
+		</if>
+		order by MODIFY_TIME desc
+		<if test="start != null and length !=null">
+			limit ${start},${length}
+		</if>
+	</select>
+
+	<select id="countEtAlarmList" parameterType="com.entity.alarm.EtAlarm"
+		resultType="java.lang.Long">
+		SELECT count(c.id) FROM (select 
+		<include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+		ec.* FROM et_alarm ec LEFT JOIN sys_user su on su.id = ec.OFFICER_CODE ) c
+		where 1=1 and IS_ABANDON=0
+		<if test="alarmTimeStr != null">
+			and date_format(ALARM_TIME, '%Y-%m-%d')=str_to_date('${alarmTimeStr}',
+			'%Y-%m-%d')
+		</if>
+		<if test="unitCode != null">
+			and UNIT_CODE = '${unitCode}'
+		</if>
+		<if test="alarmPersonName != null">
+			and ALARM_PERSON_NAME like '%${alarmPersonName}%'
+		</if>
+		<if test="alarmPersonPhone != null">
+			and ALARM_PERSON_PHONE like '%${alarmPersonPhone}%'
+		</if>
+		<!--分权分域标识 -->
+		<if test="deceSigns != null and deceSigns !=''">
+			<!--modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+			<choose>
+    			<when test="deceSigns.indexOf('0,0,0,') == 0">
+					AND dece_signs LIKE '${deceSigns}%'
+    			</when>
+    			<otherwise>
+					AND (dece_signs LIKE '${deceSigns}%' or dece_signs LIKE '0,0,0,%')
+    			</otherwise>
+  			</choose>
+		</if>
+	</select>
+
+	<select id="selectDelEtAlarmList" parameterType="com.entity.alarm.EtAlarm"
+		resultMap="ResultMapWithBLOBs">
+		SELECT c.* FROM (select 
+		<include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+		ec.*
+		FROM et_alarm ec LEFT JOIN sys_user su on su.id = ec.OFFICER_CODE ) c
+		where 1=1 and IS_ABANDON=1
+		<if test="alarmTimeStr != null">
+			and date_format(ALARM_TIME, '%Y-%m-%d')=str_to_date('${alarmTimeStr}',
+			'%Y-%m-%d')
+		</if>
+		<if test="unitCode != null">
+			and UNIT_CODE = '${unitCode}'
+		</if>
+		<if test="alarmPersonName != null">
+			and ALARM_PERSON_NAME like '%${alarmPersonName}%'
+		</if>
+		<if test="alarmPersonPhone != null">
+			and ALARM_PERSON_PHONE like '%${alarmPersonPhone}%'
+		</if>
+		<!--分权分域标识 -->
+		<if test="deceSigns != null and deceSigns !=''">
+			<!--modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+			<choose>
+    			<when test="deceSigns.indexOf('0,0,0,') == 0">
+					AND dece_signs LIKE '${deceSigns}%'
+    			</when>
+    			<otherwise>
+					AND (dece_signs LIKE '${deceSigns}%' or dece_signs LIKE '0,0,0,%')
+    			</otherwise>
+  			</choose>
+		</if>
+		order by MODIFY_TIME desc
+		<if test="start != null and length !=null">
+			limit ${start},${length}
+		</if>
+	</select>
+
+	<select id="countDelEtAlarmList" parameterType="com.entity.alarm.EtAlarm"
+		resultType="java.lang.Long">
+		SELECT count(c.id) FROM (select 
+		<include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+		ec.* FROM et_alarm ec LEFT JOIN sys_user su on su.id = ec.OFFICER_CODE ) c
+		where 1=1 and IS_ABANDON=1
+		<if test="alarmTimeStr != null">
+			and date_format(ALARM_TIME, '%Y-%m-%d')=str_to_date('${alarmTimeStr}',
+			'%Y-%m-%d')
+		</if>
+		<if test="unitCode != null">
+			and UNIT_CODE = '${unitCode}'
+		</if>
+		<if test="alarmPersonName != null">
+			and ALARM_PERSON_NAME like '%${alarmPersonName}%'
+		</if>
+		<if test="alarmPersonPhone != null">
+			and ALARM_PERSON_PHONE like '%${alarmPersonPhone}%'
+		</if>
+		<!--分权分域标识 -->
+		<if test="deceSigns != null and deceSigns !=''">
+			<!--modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+			<choose>
+    			<when test="deceSigns.indexOf('0,0,0,') == 0">
+					AND dece_signs LIKE '${deceSigns}%'
+    			</when>
+    			<otherwise>
+					AND (dece_signs LIKE '${deceSigns}%' or dece_signs LIKE '0,0,0,%')
+    			</otherwise>
+  			</choose>
+		</if>
+	</select>
+	<!-- 查询已经人工确认关系的涉警信息 -->
+	<select id="suspectAlarmOpen" parameterType="java.lang.String"
+		resultMap="ResultUnitSuspect">
+		SELECT
+		<include refid="Base_Column_LAST" />
+		,
+		<include refid="RL_ENTRY_OPEN" />
+		FROM
+		ET_ALARM al  LEFT JOIN RL_SUSPECT_ALARM rlalarm ON al.ALARM_NO=rlalarm.ALARM_ID
+		WHERE
+		al.ALARM_NO IN (SELECT ue.ALARM_ID FROM RL_SUSPECT_ALARM ue WHERE ue.SUSPECT_ID='${suspectId}' AND ue.RELATION=1)
+	</select>
+
+<!-- 根据重点人员编号查询录入该重点人员的所属单位的单位编码 -->
+	<select id="rlEntryUnit" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select if((sELECT  dic.GRADE AS grade FROM DIC_UNIT dic LEFT JOIN ET_SUSPECT suspect ON suspect.ENTRY_UNIT=dic.code
+		    WHERE
+		    dic.code=(SELECT et.ENTRY_UNIT FROM et_suspect et WHERE SUSPECT_ID='${suspectId}') LIMIT 1 )=2,
+		(SELECT SUBSTRING(ENTRY_UNIT,1,5) FROM ET_SUSPECT WHERE ET_SUSPECT.SUSPECT_ID='${suspectId}')
+		    ,
+		(SELECT SUBSTRING(ENTRY_UNIT,1,6) FROM ET_SUSPECT WHERE ET_SUSPECT.SUSPECT_ID='${suspectId}'))
+	</select>
+
+	<!-- 查询未经人工确认关系的涉警信息 -->
+	<select id="suspectAlarmClose" parameterType="java.util.Map"
+		resultMap="ResultUnitSuspect">
+		SELECT
+		<include refid="Base_Column_LAST" />
+		from
+		et_alarm al  LEFT JOIN rl_suspect_alarm rlalarm ON al.ALARM_NO=rlalarm.ALARM_ID
+		where 1=1
+
+		<if test="unitCode != null">
+			and
+			al.UNIT_CODE LIKE '${unitCode}%'
+		</if>
+		<if test="suspectId != null and suspectId!=''">
+			and
+			al.ALARM_NO NOT IN (SELECT ALARM_ID FROM rl_suspect_alarm WHERE SUSPECT_ID='${suspectId}' AND RELATION>0)
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from et_alarm
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<update id="abandonByPrimaryKey" parameterType="java.lang.String">
+		update et_alarm set IS_ABANDON=1,MODIFY_TIME=now()
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="alarmDeleteReplyById" parameterType="java.lang.String">
+		update et_alarm set IS_ABANDON=0,MODIFY_TIME=now()
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<insert id="insertSelective" parameterType="com.entity.alarm.EtAlarm">
+		insert into et_alarm
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="alarmNo != null">
+				ALARM_NO,
+			</if>
+			<if test="caseNo != null">
+				CASE_NO,
+			</if>
+			<if test="officerCode != null">
+				OFFICER_CODE,
+			</if>
+			<if test="officerName != null">
+				OFFICER_NAME,
+			</if>
+			<if test="unitCode != null">
+				UNIT_CODE,
+			</if>
+			<if test="unitName != null">
+				UNIT_NAME,
+			</if>
+			<if test="alarmTime != null">
+				ALARM_TIME,
+			</if>
+			<if test="alarmPersonName != null">
+				ALARM_PERSON_NAME,
+			</if>
+			<if test="alarmPersonPhone != null">
+				ALARM_PERSON_PHONE,
+			</if>
+			<if test="locationCase != null">
+				LOCATION_CASE,
+			</if>
+			<if test="alarmClass != null">
+				ALARM_CLASS,
+			</if>
+			<if test="sourceType != null">
+				SOURCE_TYPE,
+			</if>
+			<if test="isArchive != null">
+				IS_ARCHIVE,
+			</if>
+			<if test="archiveDesc != null">
+				ARCHIVE_DESC,
+			</if>
+			<if test="isAbandon != null">
+				IS_ABANDON,
+			</if>
+			<if test="abandonDesc != null">
+				ABANDON_DESC,
+			</if>
+			<if test="creatTime != null">
+				CREAT_TIME,
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME,
+			</if>
+			<if test="alarmDesc != null">
+				ALARM_DESC,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmNo != null">
+				#{alarmNo,jdbcType=VARCHAR},
+			</if>
+			<if test="caseNo != null">
+				#{caseNo,jdbcType=VARCHAR},
+			</if>
+			<if test="officerCode != null">
+				#{officerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="officerName != null">
+				#{officerName,jdbcType=VARCHAR},
+			</if>
+			<if test="unitCode != null">
+				#{unitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="unitName != null">
+				#{unitName,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmTime != null">
+				#{alarmTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alarmPersonName != null">
+				#{alarmPersonName,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmPersonPhone != null">
+				#{alarmPersonPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="locationCase != null">
+				#{locationCase,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmClass != null">
+				#{alarmClass,jdbcType=INTEGER},
+			</if>
+			<if test="sourceType != null">
+				#{sourceType,jdbcType=INTEGER},
+			</if>
+			<if test="isArchive != null">
+				#{isArchive,jdbcType=INTEGER},
+			</if>
+			<if test="archiveDesc != null">
+				#{archiveDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="isAbandon != null">
+				#{isAbandon,jdbcType=INTEGER},
+			</if>
+			<if test="abandonDesc != null">
+				#{abandonDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="creatTime != null">
+				now(),
+			</if>
+			<if test="modifyTime != null">
+				now(),
+			</if>
+			<if test="alarmDesc != null">
+				#{alarmDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.entity.alarm.EtAlarm">
+		update et_alarm
+		<set>
+			<if test="alarmNo != null">
+				ALARM_NO = #{alarmNo,jdbcType=VARCHAR},
+			</if>
+			<if test="caseNo != null">
+				CASE_NO = #{caseNo,jdbcType=VARCHAR},
+			</if>
+			<if test="officerCode != null">
+				OFFICER_CODE = #{officerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="officerName != null">
+				OFFICER_NAME = #{officerName,jdbcType=VARCHAR},
+			</if>
+			<if test="unitCode != null">
+				UNIT_CODE = #{unitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="unitName != null">
+				UNIT_NAME = #{unitName,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmTime != null">
+				ALARM_TIME = #{alarmTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alarmPersonName != null">
+				ALARM_PERSON_NAME = #{alarmPersonName,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmPersonPhone != null">
+				ALARM_PERSON_PHONE = #{alarmPersonPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="locationCase != null">
+				LOCATION_CASE = #{locationCase,jdbcType=VARCHAR},
+			</if>
+			<if test="alarmClass != null">
+				ALARM_CLASS = #{alarmClass,jdbcType=INTEGER},
+			</if>
+			<if test="sourceType != null">
+				SOURCE_TYPE = #{sourceType,jdbcType=INTEGER},
+			</if>
+			<if test="isArchive != null">
+				IS_ARCHIVE = #{isArchive,jdbcType=INTEGER},
+			</if>
+			<if test="archiveDesc != null">
+				ARCHIVE_DESC = #{archiveDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="isAbandon != null">
+				IS_ABANDON = #{isAbandon,jdbcType=INTEGER},
+			</if>
+			<if test="abandonDesc != null">
+				ABANDON_DESC = #{abandonDesc,jdbcType=VARCHAR},
+			</if>
+			MODIFY_TIME = now(),
+			<if test="alarmDesc != null">
+				ALARM_DESC = #{alarmDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectMaxCreateTime" resultType="java.sql.Timestamp">
+		select max(t.CREAT_TIME) from et_alarm t;
+	</select>
+	<select id="selectMaxUpdateTime" resultType="java.sql.Timestamp">
+		select max(t.MODIFY_TIME) from et_case t;
+	</select>
+
+	<select id="findById" parameterType="java.util.Map"
+			resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		from et_alarm
+		<if test="id != null and id !=''" >
+			where ID = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="alarmNo != null and alarmNo !=''" >
+			where ALARM_NO = #{alarmNo,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+</mapper>

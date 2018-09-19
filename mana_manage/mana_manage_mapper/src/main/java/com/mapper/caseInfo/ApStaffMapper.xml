@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.caseInfo.ApStaffMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.caseInfo.ApStaff" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="STAFF_ID" property="staffId" jdbcType="VARCHAR" />
+    <result column="RELATION_NO" property="relationNo" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="IDCARD_TYPE" property="idcardType" jdbcType="INTEGER" />
+    <result column="IDCARD_NUM" property="idcardNum" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="INTEGER" />
+    <result column="PHONE_NUM" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="ENTRY_UNIT" property="entryUnit" jdbcType="VARCHAR" />
+    <result column="ENTRY" property="entry" jdbcType="VARCHAR" />
+    <result column="SUSPECT_CLASS" property="suspectClass" jdbcType="INTEGER" />
+    <result column="SOURCE_TYPE" property="sourceType" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="LONGVARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, STAFF_ID, RELATION_NO, NAME, IDCARD_NUM, GENDER, PHONE_NUM, ENTRY_UNIT, ENTRY,
+    SUSPECT_CLASS, SOURCE_TYPE, REMARK,CREAT_TIME, MODIFY_TIME
+  </sql>
+
+  <!--通过案件编号查询嫌疑人和受害人-->
+  <sql id="Case_List" >
+    ID, STAFF_ID, RELATION_NO, NAME, IDCARD_NUM, GENDER, PHONE_NUM,SUSPECT_CLASS,REMARK
+  </sql>
+  <select id="selectApStaffList" resultMap="BaseResultMap"  parameterType="java.lang.String" >
+    select 
+    <include refid="Case_List" />
+    from ap_staff
+    where  STAFF_ID in (SELECT STAFF_ID from  ap_SCARELA where CASE_NO = #{caseNo,jdbcType=VARCHAR})
+  </select>
+  <!-- 综合搜索根据id集合搜索 -->
+  <select id="findApStaffForSearch" parameterType="java.util.List" resultMap="BaseResultMap">
+	    select
+	    <include refid="Base_Column_List" />
+	    from ap_staff
+	    WHERE  1=1
+	    AND ID IN
+	    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+	            #{item}  
+	    </foreach>
+	    ORDER BY CREAT_TIME DESC
+	  </select>
+  <!--删除嫌疑人和受害人-->
+  <delete id="delete" parameterType="java.lang.String"  >
+    delete from ap_staff where ID  =#{id}
+  </delete>
+
+  <!--添加嫌疑人和受害人-->
+  <insert id="insert" parameterType="com.entity.caseInfo.ApStaff" >
+    insert into ap_staff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != '' ">
+        ID,
+      </if>
+      <if test="staffId != null and staffId != '' " >
+        STAFF_ID,
+      </if>
+      <if test="relationNo != null and relationNo != ''" >
+        RELATION_NO,
+      </if>
+      <if test="name != null and name != ''" >
+        NAME,
+      </if>
+      <if test="idcardNum != null and idcardNum != ''" >
+        IDCARD_NUM,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="phoneNum != null and phoneNum != ''" >
+        PHONE_NUM,
+      </if>
+      <if test="entryUnit != null and entryUnit != ''" >
+        ENTRY_UNIT,
+      </if>
+      <if test="entry != null and entry != ''" >
+        ENTRY,
+      </if>
+      <if test="suspectClass != null" >
+        SUSPECT_CLASS,
+      </if>
+      <if test="sourceType != null" >
+        SOURCE_TYPE,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="remark != null and remark!=''" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != '' ">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null and staffId != '' " >
+        #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationNo != null and relationNo != ''" >
+        #{relationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null and name != ''" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNum != null and idcardNum != ''" >
+        #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNum != null and phoneNum != ''" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entryUnit != null and entryUnit != ''" >
+        #{entryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="entry != null and entry != ''" >
+        #{entry,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectClass != null" >
+        #{suspectClass,jdbcType=INTEGER},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark!=''" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--修改嫌疑人和受害人-->
+  <update id="update" parameterType="com.entity.caseInfo.ApStaff" >
+    update ap_staff
+    <set >
+      <if test="staffId != null" >
+        STAFF_ID = #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="relationNo != null " >
+        RELATION_NO = #{relationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null " >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNum != null " >
+        IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNum != null " >
+        PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entryUnit != null " >
+        ENTRY_UNIT = #{entryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="entry != null " >
+        ENTRY = #{entry,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectClass != null" >
+        SUSPECT_CLASS = #{suspectClass,jdbcType=INTEGER},
+      </if>
+      <if test="sourceType != null" >
+        SOURCE_TYPE = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null " >
+        REMARK = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+
+
+
+<!--修改嫌疑人和受害人 关联关系
+  <update id="update" parameterType="com.entity.caseInfo.ApStaff" >
+    update ap_staff
+ 	 set STAFF_ID = #{staffId,jdbcType=VARCHAR},
+         MODIFY_TIME = now(),
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+-->
+
+  <select id="selectMaxCreateTime" resultType="java.sql.Timestamp">
+    select max(t.CREAT_TIME) from ap_staff t;
+  </select>
+  <select id="selectMaxUpdateTime" resultType="java.sql.Timestamp">
+    select max(t.MODIFY_TIME) from ap_staff t;
+  </select>
+
+  <select id="findById" parameterType="java.util.Map"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ap_staff
+    <if test="id != null and id !=''" >
+      where ID = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="staffId != null and staffId !=''" >
+      where STAFF_ID = #{staffId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+  <select id="findInvolveByIdcard" parameterType="com.entity.caseInfo.ApStaff"
+          resultMap="BaseResultMap">
+    SELECT * FROM ap_staff WHERE STAFF_ID IN (
+      SELECT DISTINCT STAFF_ID FROM ap_scarela WHERE CASE_NO IN
+        (SELECT DISTINCT CASE_NO
+            FROM ap_scarela
+          WHERE STAFF_ID IN
+        ( SELECT STAFF_ID FROM ap_staff WHERE IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR} ))
+      );
+  </select>
+
+  <select id="findCaseNoByStaffId" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT CASE_NO FROM ap_scarela WHERE STAFF_ID = #{staffId,jdbcType=VARCHAR};
+  </select>
+
+</mapper>

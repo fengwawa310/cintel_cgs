@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的关注</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<!-- basic styles -->
+		<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+		<script src="../assets/js/jquery-2.0.3.min.js"></script>
+	    <script src="../js/jquery.dataTables.min.js"></script>
+		<script src="../assets/js/datepicker/WdatePicker.js"></script>
+		<script src="../assets/js/ace-extra.min.js"></script>
+
+
+		<script src="../js/common.js"></script>
+		<link rel="stylesheet" href="../css/commonStyle.css" />
+	</head>
+	<body id="body">
+		<!-- 右侧部分 -->
+		<div style="width: 100%;height: 100%;margin: 0 auto;background: white">
+
+			<div class="page-content">
+				<!--tab切换内容-->
+				<div id="myTabContent" class="tab-content">
+					<div class="tab-pane fade in active" id="message">
+						<div class="row-container searchAll search-condition">
+							<form action="" id="my_caseForm">
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderLnone">
+											<p>
+												案件编号:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon ">
+											<input  name="isFollow" type="hidden" value="1">
+											<input id="caseNo" name="caseNo" type="text" class="form-control" >
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle ">
+											<p>
+												案件类型:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<select id="caseClass" name="caseClass">
+												<option value ="">--请选择--</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle ">
+											<p>
+												案件状态:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon ">
+											<select id="caseState" name="caseState">
+												<option value ="">--请选择--</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderLnone">
+											<p>
+												案件名称:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<input id="caseTitle" name="caseTitle" type="text" class="form-control" >
+										</div>
+									</div>
+								</div>
+								<!--<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle">
+											<p>
+												报案时间:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<input  type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>至
+											<input type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>
+										</div>
+									</div>
+								</div>-->
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle">
+											<p>
+												区域规划:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<select  autocomplete="off" id="zoneName" name="zoneName">
+												<option value ="">--请选择--</option>
+											</select>
+											<!--<input id="zoneName" name="zoneName" type='text' class="form-control"/>-->
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle">
+											<p>
+												发案时间:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<input id="happenTimeUp" name="happenTimeUp" type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'happenTimeDown\')||\'%y-%M-%d\'}'}); " />至
+											<input id="happenTimeDown" name="happenTimeDown" type='text' class="form-control searchTime" onfocus="WdatePicker({maxDate: '%y-%M-%d',minDate:'#F{$dp.$D(\'happenTimeUp\')}',dateFmt: 'yyyy-MM-dd HH:mm:ss'}); "/>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderLnone">
+											<p>
+												登记时间:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<input id="startTime" name="startTime" type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'}); ">至
+											<input id="endTime" name="endTime" type='text' class="form-control searchTime" onfocus="WdatePicker({maxDate: '%y-%M-%d',minDate:'#F{$dp.$D(\'startTime\')}',dateFmt: 'yyyy-MM-dd HH:mm:ss'}); ">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle">
+											<p>
+												案件受理单位:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<select  autocomplete="off"  name="acceptUnitName" id="acceptUnitName">
+												<option value ="">--请选择--</option>
+											</select>
+											<!--<input id="acceptUnitName" name="acceptUnitName" type="text" class="form-control" placeholder="请输入名称">-->
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle">
+											<p>
+												案件主办单位:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon">
+											<select  autocomplete="off" id="hostUnitName" name="hostUnitName">
+												<option value ="">--请选择--</option>
+											</select>
+											<!--<input id="hostUnitName" name="hostUnitName" type="text" class="form-control" placeholder="请输入名称">-->
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderLnone borderBnone">
+											<p>
+												案件录入人:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon borderBnone">
+											<input id="inputerName" name="inputerName" type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderBnone">
+											<p>
+												案件录入单位:
+											</p>
+										</div>
+										<div class="col-md-7 searchCon borderBnone">
+											<select id="inputUnitCode" name="inputUnitCode">
+												<option value ="">--请选择--</option>
+											</select>
+											<!--<input id="inputUnitName" name="inputUnitName" type='text' class="form-control"  />-->
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<div class="col-md-5 searchTitle borderBnone borderRnone">
+										</div>
+										<div class="col-md-7 searchCon borderBnone" style="height:34px;background: #f7fbff;">
+										</div>
+									</div>
+								</div>
+							</form>
+
+							<div class="col-md-12 searchBtn" >
+								<div class="row">
+									<div class="col-md-12 ">
+										<button class="btn btn-primary" type="button" onclick="findSelect('my_caseForm')"> 查询 </button>
+										<button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--赋值js-->
+						<script>
+                            //案件状态
+                            selectDicCommon(18,"caseState");
+                            //案件类型
+                            selectDicCommon(19,"caseClass");
+                            //案件受理单位
+                            selectDicUnit("acceptUnitName");
+                            //案件主办单位
+                            selectDicUnit("hostUnitName");
+                            //案件录入单位
+                            //selectDicUnit("inputUnitName");
+                            $.ajax({
+										type : 'POST',
+										url : getRootPath_web() + "dic/findDicUnit?isInputUnit=1", //发送请求
+										cache : false,
+										async : false,
+										dataType : "json",
+										success : function(data) {
+											$("#inputUnitCode").html(data.html)
+										}
+									});
+                            //区域规划
+                            selectDicArea("zoneName");
+						</script>
+						<div class="wt100">
+							<table id="dynamic-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- basic scripts -->
+
+		<!-- <![endif]-->
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+		<!-- page specific plugin scripts -->
+
+		<script src="../assets/js/jquery.dataTables.min.js"></script>
+		<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script src="../assets/js/layer/layer.js"></script>
+
+		<!--拼音搜索输入框-->
+		<!-- select -->
+		<script type="text/javascript" src="../js/changtopy.js"></script>
+		<script type="text/javascript" src="../js/getpyszm.js"></script>
+		<script type="text/javascript" src="../js/jquery.multiseselect.js"></script>
+		<script type="text/javascript" src="../js/jquery.singleselect.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../css/selectbox.css"/>
+
+		<script>
+			/*拼音搜索输入框*/
+            $(function(){
+                $("#qtzplx").hide();
+                $("select[name='acceptUnitName']").singleSelect({width:"100%",unitCode:"acceptUnitCode",unitName:"acceptUnitName"});
+                $("select[name='hostUnitName']").singleSelect({width:"100%",unitCode:"hostUnitCode",unitName:"hostUnitName"});
+                //$("select[name='inputUnitName']").singleSelect({width:"100%",unitCode:"inputUnitCode",unitName:"inputUnitName"});
+                $("select[name='zoneName']").singleSelect({width:"100%",unitCode:"zoneCode",unitName:"zoneName"});
+                $("#yincang_code").hide();
+            })
+
+            var dynamictable;
+            $(document).ready(function() {
+                menuThing();
+                $("#dynamic-table_filter").css('display', 'block');
+                dynamictable = $("#dynamic-table").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 5,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                        /*"deferRender": true,*/
+                        "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : getRootPath_web()+"case/findCase?isFollow=1",
+                            "type" : "post"
+                        },
+						/*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>案件编号</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseNo','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>案件名称</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseTitle','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>发案时间</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'happenTimeUp','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+
+                                    return data.substring(0,data.indexOf("."));
+                                }},
+                            {"sTitle":'<font>案件来源</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseSource','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return dicCommon[22][data];
+                                }},
+                            {"sTitle":'<font>案件类别</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseClass','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return dicCommon[19][data];
+                                }},
+                            {"sTitle":'<font>案件状态</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseState','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return dicCommon[18][data];
+                                }},
+                            {"sTitle":'<font>受理单位</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'acceptUnitName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入人</font>',"sWidth":"6%","sClass":"dt-left", 'data': 'inputerName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入单位</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'inputUnitName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>区域划分</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'zoneName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入时间</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'creatTime','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }}
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"15%",
+                            "data": "id",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [12],
+                            'render': function(data, type, row, meta) {
+                                var data="'"+data+"'";
+                                return  '<a href="#" class="operation" onclick="alertDetail('+data+')">详情</a><a href="#" class="operation" onclick="setIsFollow('+data+',0)">取消关注</a>';
+                            },
+                            'bSortable': false
+                        }]
+                    });
+                $("#dynamic-table_filter").css("display", "none");
+            });
+            //详情弹框
+            function alertDetail(id) {
+                var name='案件详情';
+                var url=projectPath+'/view/case/caseDetailLayer.html?id='+id;
+                var width='90%';
+                var high='90%';
+                var callback=function (){
+                };
+                //弹框
+                window.parent.Layer.layOpen(name,url,width,high,callback);
+            }
+            //案件关注和取消关注
+            function setIsFollow(id,isFollow){
+                $.ajax({
+                    type: 'POST',
+                    url: getRootPath_web()+"case/setIsFollow?id="+id+"&isFollow="+isFollow,//发送请求
+                    dataType : "json",
+                    success: function(data) {
+                        if(data.data.flag){
+                            layer.msg(data.data.msg,{icon: 1,time:3000});
+                            findSelect('my_caseForm');
+                        }else{
+                            layer.msg(data.data.msg, {icon: 2,time:3000,anim: 6});
+                        }
+                    }
+                });
+            }
+		</script>
+	</body>
+
+</html>

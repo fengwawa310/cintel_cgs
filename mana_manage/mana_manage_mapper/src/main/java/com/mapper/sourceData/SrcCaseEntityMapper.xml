@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.sourceData.SrcCaseEntityMapper">
+    <!--查询该数据本地是否存在SQL-->
+    <select id="selectByAjbh" resultType="java.util.Map" parameterType="java.util.Map">
+        select * from ${selectSql}
+    </select>
+    <!--添加数据-->
+    <insert id="insert" parameterType="java.util.Map">
+        insert into ${insertSql}
+    </insert>
+    <!--修改数据-->
+    <update id="updateByPrimaryKey" parameterType="java.util.Map">
+        update ${updateSql}
+    </update>
+    <!--查询 创建时间 最大值-->
+    <select id="selectMaxCreateTime" resultType="java.sql.Timestamp">
+        select max(t.CREATEDTIME) from src_caseinfo t;
+    </select>
+    <!--查询 最后修改时间 最大值-->
+    <select id="selectMaxUpdateTime" resultType="java.sql.Timestamp" parameterType="java.util.Map">
+        select max(t.MODIFY_TIME) from ${mysqlTabName} t;
+    </select>
+    <!--查询本地库中 与指定ajbhs有关联的数据的 ajbh 集合-->
+    <!--<select id="selectAjbhsByAjbhs" parameterType="java.util.List" resultType="java.lang.String">
+        select AJBH from src_caseinfo
+        where AJBH IN
+        <foreach item="ajbhs" collection="list" open="(" separator="," close=")">
+            #{ajbhs}
+        </foreach>
+    </select>-->
+
+    <!--<select id="findLatestUpdateTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from src_caseinfo order by LASTUPDATETIME DESC LIMIT 1;
+    </select>
+
+    <sql id="Base_Column_List">
+        SYSTEMID, AJBH, SLJSDW, AJSTATE, ZAZT, SL_JJFS, SL_BJSLH, AJLX, AB, ZABZ, AJMC, AJWH,
+        SLJJSJ, SLFXRQ, FASJCZ, FASJZZ, FADD_QX, FADD_JD, AJSSJQ, FADD, SSSQ, FADY, SLFACS,
+        FXXS, AJWHCD, BLYY, ZYAQ, XZSJ, XZCS, XZDX, XZWP, ZAGJ, XZBW, ZARS, SDTD, SWRS, SSRS,
+        SSJZ, SAZZ, LASJ, PASJ, JA_JASJ, XA_XASJ, YSSJ, SLJJDW, SL_LRR, SL_LRSJ, SLJJRY,
+        SL_SLRXM, SL_SLSJ, SLFAQH, LADW, AJLARY, ZBDW, AJZBRY, AJXBRY, AJBARP, LA_LRR, LA_LRSJ,
+        LA_PZR, LA_PZSJ, LA_ZHXGR, LA_ZHXGSJ, LA_PSSTATE, DBXX, AJLY, BZ, DEPARTMENTCODE,
+        CREATOR, CREATEDTIME, SECURITYGRADE, RESERVATION01, RESERVATION02, RESERVATION03,
+        RESERVATION04, RESERVATION05, RESERVATION06, RESERVATION07, RESERVATION08, RESERVATION09,
+        RESERVATION10, LASTUPDATEDBY, LASTUPDATETIME, REFRESHTIME, DELETEFLAG, YSDW, YSCBR,
+        YSDWDH, RESERVATION22, AJZBRY_NAME, AJXBRY_NAME, SL_LRR_NAME, SL_SLRXM_NAME, AJLARY_NAME,
+        LA_LRR_NAME, DEPARTMENTCODE_NAME, ZBDW_NAME, LADW_NAME, SLJJDW_NAME, SLJSDW_NAME,
+        WHSSJZ, RESERVATION51, YSSJ_NEW
+    </sql>-->
+
+</mapper>

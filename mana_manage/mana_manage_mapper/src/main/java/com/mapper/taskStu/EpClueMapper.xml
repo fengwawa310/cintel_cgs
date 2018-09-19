@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.EpClueMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.xmlparse.EpClue" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="gang_id" property="gangId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="case_no" property="caseNo" jdbcType="VARCHAR" />
+    <result column="case_name" property="caseName" jdbcType="VARCHAR" />
+    <result column="suspect" property="suspect" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.xmlparse.EpClue" extends="BaseResultMap" >
+    <result column="case_detail" property="caseDetail" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, gang_id, type, case_no, case_name, suspect
+  </sql>
+  <sql id="Blob_Column_List" >
+    case_detail, remark
+  </sql>
+
+  <select id="findEpClueList" parameterType="com.entity.xmlparse.EpClue" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ep_clue
+  </select>
+
+  <insert id="insertEpClueList" parameterType="com.entity.xmlparse.EpClue" >
+    insert into ep_clue(
+    id, gang_id, type,
+    case_no, case_name, case_detail,
+    remark, suspect
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (
+      #{item.id,jdbcType=VARCHAR},
+      #{item.gangId,jdbcType=VARCHAR},
+      #{item.type,jdbcType=VARCHAR},
+      #{item.caseNo,jdbcType=VARCHAR},
+      #{item.caseName,jdbcType=VARCHAR},
+      #{item.caseDetail,jdbcType=VARCHAR},
+      #{item.remark,jdbcType=VARCHAR},
+      #{item.suspect,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ep_clue
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_clue
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.xmlparse.EpClue" >
+    insert into ep_clue (id, gang_id, type,
+    case_no, case_name, suspect,
+    case_detail, remark)
+    values (#{id,jdbcType=VARCHAR}, #{gangId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+    #{caseNo,jdbcType=VARCHAR}, #{caseName,jdbcType=VARCHAR}, #{suspect,jdbcType=VARCHAR},
+    #{caseDetail,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.xmlparse.EpClue" >
+    insert into ep_clue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gangId != null" >
+        gang_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="caseNo != null" >
+        case_no,
+      </if>
+      <if test="caseName != null" >
+        case_name,
+      </if>
+      <if test="suspect != null" >
+        suspect,
+      </if>
+      <if test="caseDetail != null" >
+        case_detail,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gangId != null" >
+        #{gangId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null" >
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caseName != null" >
+        #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="suspect != null" >
+        #{suspect,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDetail != null" >
+        #{caseDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.xmlparse.EpClue" >
+    update ep_clue
+    <set >
+      <if test="gangId != null" >
+        gang_id = #{gangId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null" >
+        case_no = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caseName != null" >
+        case_name = #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="suspect != null" >
+        suspect = #{suspect,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDetail != null" >
+        case_detail = #{caseDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.xmlparse.EpClue" >
+    update ep_clue
+    set gang_id = #{gangId,jdbcType=VARCHAR},
+    type = #{type,jdbcType=VARCHAR},
+    case_no = #{caseNo,jdbcType=VARCHAR},
+    case_name = #{caseName,jdbcType=VARCHAR},
+    suspect = #{suspect,jdbcType=VARCHAR},
+    case_detail = #{caseDetail,jdbcType=LONGVARCHAR},
+    remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.xmlparse.EpClue" >
+    update ep_clue
+    set gang_id = #{gangId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      case_no = #{caseNo,jdbcType=VARCHAR},
+      case_name = #{caseName,jdbcType=VARCHAR},
+      suspect = #{suspect,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

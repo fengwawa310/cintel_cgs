@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件录入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--案件基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">案件信息</span>
+            </div>
+        </div>
+        <form action="" id="my_caseForm">
+            <!--案件状态、案件名称-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>案件编号</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="caseNo" name="caseNo" onBlur="checkCaseNo()"/>
+                        <input id="oldCaseNo" name="oldCaseNo" type="hidden" />
+                    </div>
+                </div>
+
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件名称</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="caseID" name="id" type="hidden" />
+                        <input id="caseTitle" name="caseTitle"  type="text" style="width: 98.2%" required oninvalid="setCustomValidity('请输入案件名称！');" oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件类别</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <select id="caseClass" name="caseClass" >
+
+                        </select>
+                    </div>
+                </div>
+                <!--<div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件状态</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <select id="caseState" name="caseState">
+
+                        </select>
+                    </div>
+                </div>-->
+
+            </div>
+            <!--案件编号、案件来源、案件类别-->
+            <div class="row breadcrumbs caseContainer">
+                <!--<div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件编号</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="caseNo" name="caseNo" type="text" required oninvalid="setCustomValidity('请输入案件编号！');" oninput="setCustomValidity('');"/>
+                    </div>
+                </div>-->
+
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>警情编号</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="alarmNo" name="alarmNo"  type="text" required oninvalid="setCustomValidity('请输入警情编号！');" oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <!--             <div class="col-md-4 noPadding">
+                                <div class="col-md-4 caseTxt">
+
+                                    <span>案件来源</span>
+                                </div>
+                                <div class="col-md-8 caseInput">
+                                    <select id="caseSource" name="caseSource" >
+
+                                    </select>
+                                   // <input type="text" required oninvalid="setCustomValidity('请输入案件来源！');" oninput="setCustomValidity('');"/>
+                                </div>
+                            </div> -->
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>发案时间上限</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="happenTimeUp" name="happenTimeUp" type="text"  required oninvalid="setCustomValidity('请输入发案时间上限！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'});"oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>发案时间下限</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <input id="happenTimeDown" name="happenTimeDown"  type="text" required oninvalid="setCustomValidity('请输入发案时间下限！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'});"oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+            </div>
+            <!--备注-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-2 caseTxt" style="width: 11.11%">
+
+                    <span>备注</span>
+                </div>
+                <div class="col-md-9 caseInput lastInput" style="width: 88.88%">
+                    <input id="caseRemarks" name="caseRemarks"  type="text" style="width: 99%"  required oninvalid="setCustomValidity('请输入备注！');" oninput="setCustomValidity('');"/>
+                </div>
+            </div>
+            <!--发案时间、发案时间上限、发案时间下限-->
+            <!-- <div class="row breadcrumbs caseContainer">-->
+            <!--<div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    
+                    <span>发案时间</span>
+                </div>
+                <div class="col-md-8 caseInput">
+                    <input type="text" required oninvalid="setCustomValidity('请输入发案时间！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "oninput="setCustomValidity('');"/>
+                </div>
+            </div>-->
+
+            <!--</div>-->
+            <!--简要案情-->
+            <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+                <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+
+                    <span>简要案情</span>
+                </div>
+                <div class="col-md-10 caseInput lastInput" style="width:88.88%;min-height: 80px">
+                    <textarea id="caseDesc" name="caseDesc"  type="text" style="width: 99%;height: 95%"></textarea>
+                </div>
+            </div>
+            <!--案发详细地址-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-2 caseTxt" style="width: 11.11%">
+
+                    <span>案发详细地址</span>
+                </div>
+                <div class="col-md-10 caseInput lastInput" style="width: 88.88%">
+                    <input id="detalAddress" name="detalAddress"  type="text" style="width: 99%"  required oninvalid="setCustomValidity('请输入案发详细地址！');" oninput="setCustomValidity('');"/>
+                </div>
+            </div>
+            <!--案件主办人姓名、案件报案时间、案件受理时间-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件主办人</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input id="sponsorName" name="sponsorName"  type="text" required oninvalid="setCustomValidity('请输入案件主办人姓名！');"oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件受理单位</span>
+                    </div>
+                    <div class="col-md-8 searchConMake">
+                        <select autocomplete="off" id="acceptUnitName"  name="acceptUnitName" style="width: 98%">
+
+                        </select>
+                        <!--<input id="acceptUnitName" type="text" required oninvalid="setCustomValidity('请输入案件受理单位！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                </div>
+                <!--<div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件报案时间</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <input type="text" required oninvalid="setCustomValidity('请输入案件报案时间！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'});"oninput="setCustomValidity('');"/>
+                    </div>
+                </div>-->
+                <div class="col-md-4 noPadding" style="padding: 0px">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件受理时间</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <input id="acceptTime" name="acceptTime"  type="text" required oninvalid="setCustomValidity('请输入案件受理时间！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'});"oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+            </div>
+            <!--案件受理单位、案件主办单位、案件协办单位-->
+            <div class="row breadcrumbs caseContainer">
+
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件主办单位</span>
+                    </div>
+                    <div class="col-md-8 searchConMake">
+                        <select autocomplete="off" id="hostUnitName" name="hostUnitName" >
+
+                        </select>
+                        <!--<input id="hostUnitName" type="text" required oninvalid="setCustomValidity('请输入案件主办单位！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>案件协办单位</span>
+                    </div>
+                    <div class="col-md-8 searchConMake">
+                        <select autocomplete="off" id="assistUnitName" name="assistUnitName" >
+
+                        </select>
+                        <!--<input id="assistUnitName" type="text" required oninvalid="setCustomValidity('请输入案件协办单位！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+
+                        <span>区域划分</span>
+                    </div>
+                    <div class="col-md-8 searchConMake">
+                        <select autocomplete="off" id="zoneName" name="zoneName" >
+
+                        </select>
+                        <!--<input id="zoneName" type="text" style="width: 98.2%" required oninvalid="setCustomValidity('请输入区域划分！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <!--嫌疑人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left">
+                    <span class="multiTitle">嫌疑人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                    <span class="glyphicon-plus iconStyle"  onclick="addSuspect();"></span>
+                </div>
+            </div>
+        </div>
+        <!--嫌疑人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+
+                <span>手机号码</span>
+            </div>
+            <!-- <div class="col-md-2 caseTxt leftTxt" >
+
+                 <span>QQ</span>
+             </div>-->
+            <div class="col-md-4 caseTxt leftTxt" >
+
+                <span>备注</span>
+            </div>
+            <div class="col-md-1 caseTxt lastInput leftTxt" >
+                <span>操作</span>
+            </div>
+        </div>
+        <!--嫌疑人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="suspect">
+            <form action="" id="my_suspect1">
+                <div class="row breadcrumbs caseContainer">
+                    <div class="col-md-1 caseInput">
+                        <input id="id11" name="id" type="hidden"  />
+                        <input name="suspectClass" value="1000" type="hidden"/>
+                        <input id="name11" name="name"  type="text"  style="width: 92%" required oninvalid="setCustomValidity('请输入嫌疑人姓名！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-3 caseInput">
+                        <input id="idcardNum11" name="idcardNum"  type="text" required oninvalid="setCustomValidity('请输入嫌疑人身份证号！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-1 caseInput">
+                        <select id="gender11" name="gender" >
+                            <option value="0">请选择</option>
+                            <option value="1201">男</option>
+                            <option value="1200">女</option>
+                            <option value="1202">其他</option>
+                        </select>
+                        <!--<input id="gender11" name="gender" type="text" style="width: 92%" required oninvalid="setCustomValidity('请输入嫌疑人性别！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                    <div class="col-md-2 caseInput">
+                        <input id="phoneNum11" name="phoneNum"  type="text" required oninvalid="setCustomValidity('请输入嫌疑人手机号码！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <!-- <div class="col-md-2 caseInput">
+                         <input type="text" required oninvalid="setCustomValidity('请输入嫌疑人QQ！');" oninput="setCustomValidity('');"/>
+                     </div>-->
+                    <div class="col-md-4 caseInput">
+                        <input id="remark11" name="remark"  type="text" required oninvalid="setCustomValidity('请输入嫌疑人备注！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-1 caseInput lastInput" style="padding-left: 12px;">
+                        <span></span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!--受害人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left;">
+                    <span class="multiTitle">受害人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                    <span class="glyphicon-plus iconStyle" onclick="addVictim()"></span>
+                </div>
+            </div>
+        </div>
+        <!--受害人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+
+                <span>手机号码</span>
+            </div>
+            <!-- <div class="col-md-2 caseTxt leftTxt" >
+                 <span>QQ</span>
+             </div>-->
+            <div class="col-md-4 caseTxt leftTxt" >
+
+                <span>备注</span>
+            </div>
+            <div class="col-md-1 caseTxt lastInput leftTxt" >
+                <span>操作</span>
+            </div>
+        </div>
+        <!--受害人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="victim">
+            <form action="" id="my_victim1">
+                <div class="row breadcrumbs caseContainer ">
+                    <div class="col-md-1 caseInput">
+                        <input id="id21" name="id" type="hidden"  />
+                        <input name="suspectClass" value="1001" type="hidden"/>
+                        <input id="name21" name="name"  type="text"  style="width: 92%" required oninvalid="setCustomValidity('请输入受害人姓名！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-3 caseInput">
+                        <input id="idcardNum21" name="idcardNum"  type="text" required oninvalid="setCustomValidity('请输入受害人身份证号！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-1 caseInput">
+                        <select id="gender21" name="gender" >
+                            <option value="" >请选择</option>
+                            <option value="1201">男</option>
+                            <option value="1200">女</option>
+                            <option value="1202">其他</option>
+                        </select>
+                        <!--<input id="gender21" name="gender" type="text" style="width: 92%" required oninvalid="setCustomValidity('请输入受害人性别！');" oninput="setCustomValidity('');"/>-->
+                    </div>
+                    <div class="col-md-2 caseInput">
+                        <input id="phoneNum21" name="phoneNum"  type="text" required oninvalid="setCustomValidity('请输入受害人手机号码！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <!-- <div class="col-md-2 caseInput">
+                         <input type="text" required oninvalid="setCustomValidity('请输入受害人QQ！');" oninput="setCustomValidity('');"/>
+                     </div>-->
+                    <div class="col-md-4 caseInput">
+                        <input id="remark21" name="remark"  type="text" required oninvalid="setCustomValidity('请输入受害人备注！');" oninput="setCustomValidity('');"/>
+                    </div>
+                    <div class="col-md-1 caseInput lastInput" style="padding-left: 12px">
+                        <span></span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!--提交栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="col-md-12 searchBtn" style="border: none">
+                <button class="btn btn-primary" type="button" onclick="save()"> 提交 </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    //案件状态
+//    selectDicCommon(18,"caseState");
+    //案件类型
+    selectDicCommon(19,"caseClass");
+    //案件来源
+//    selectDicCommon(22,"caseSource");
+    //案件受理单位
+    selectDicUnit("acceptUnitName");
+    //案件主办单位
+    selectDicUnit("hostUnitName");
+    //案件协办单位
+    selectDicUnit("assistUnitName");
+    //区域规划
+    selectDicArea("zoneName");
+</script>
+<!--拼音搜索输入框-->
+<!-- select -->
+<script type="text/javascript" src="../js/changtopy.js"></script>
+<script type="text/javascript" src="../js/getpyszm.js"></script>
+<script type="text/javascript" src="../js/jquery.multiseselect.js"></script>
+<script type="text/javascript" src="../js/jquery.singleselect.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../css/selectbox.css"/>
+<script>
+    //案件id
+    var caseID;
+    var apStaffIDArr=[];
+    var victimIndex=1;
+    var suspectIndex=1;
+    $(window).ready(function () {
+        /*拼音搜索输入框*/
+        $("#qtzplx").hide();
+        //案件受理单位
+        $("select[name='acceptUnitName']").singleSelect({width:"98%",unitCode:"acceptUnitCode",unitName:"acceptUnitName"});
+        //案件主办单位
+        $("select[name='hostUnitName']").singleSelect({width:"98%",unitCode:"hostUnitCode",unitName:"hostUnitName"});
+        //案件协办单位
+        $("select[name='assistUnitName']").singleSelect({width:"98%",unitCode:"assistUnitCode",unitName:"assistUnitName"});
+        //区域规划
+        $("select[name='zoneName']").singleSelect({width:"99%",unitCode:"zoneCode",unitName:"zoneName"});
+        $("#yincang_code").hide();
+        var thisURL = document.URL;
+        console.log(thisURL);
+        var  getval =thisURL.split('?')[1];
+        if(getval!=undefined&&getval!=null&&getval!=""){
+            caseID= getval.split("=")[1];
+            $("#caseID").val(caseID);
+            findCaseById(caseID);
+        }
+    });
+
+    /**
+     * 添加嫌疑人信息
+     * @type {number}
+     */
+    function addSuspect() {
+        ++suspectIndex;
+        var suspectStr=[];
+        suspectStr.push("              <form action=\"\" id=\"my_suspect"+suspectIndex+"\">");
+        suspectStr.push("                    <div class=\"row breadcrumbs caseContainer\">\n");
+        suspectStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+        suspectStr.push("                            <input id=\"id1"+suspectIndex+"\" name=\"id\" type=\"hidden\"  />\n");
+        suspectStr.push("                            <input name=\"suspectClass\" value=\"1000\" type=\"hidden\"/>\n");
+        suspectStr.push("                            <input id=\"name1"+suspectIndex+"\" name=\"name\" class=\"verification\" type=\"text\"  style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入嫌疑人姓名！');\" oninput=\"setCustomValidity('');\"/>\n");
+        suspectStr.push("                        </div>\n");
+        suspectStr.push("                        <div class=\"col-md-3 caseInput\">\n");
+        suspectStr.push("                            <input id=\"idcardNum1"+suspectIndex+"\" name=\"idcardNum\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入嫌疑人身份证号！');\" oninput=\"setCustomValidity('');\"/>\n");
+        suspectStr.push("                        </div>\n");
+        suspectStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+        suspectStr.push("                            <select id=\"gender1"+suspectIndex+"\" name=\"gender\" class=\"verification\">\n");
+        suspectStr.push("                              <option value=\"\" >请选择</option>\n");
+        suspectStr.push("                              <option value=\"1201\">男</option>\n");
+        suspectStr.push("                              <option value=\"1200\">女</option>\n");
+        suspectStr.push("                              <option value=\"1202\">其他</option>\n");
+        suspectStr.push("                            </select>\n");
+//           suspectStr.push("                            <input id=\"gender1"+suspectIndex+"\" name=\"gender\" type=\"text\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入嫌疑人性别！');\" oninput=\"setCustomValidity('');\"/>\n");
+        suspectStr.push("                        </div>\n");
+        suspectStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+        suspectStr.push("                            <input id=\"phoneNum1"+suspectIndex+"\" name=\"phoneNum\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入嫌疑人手机号码！');\" oninput=\"setCustomValidity('');\"/>\n");
+        suspectStr.push("                        </div>\n");
+//           suspectStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+//           suspectStr.push("                            <input id=\""+suspectIndex+"\" type=\"text\" required oninvalid=\"setCustomValidity('请输入嫌疑人QQ！');\" oninput=\"setCustomValidity('');\"/>\n");
+//           suspectStr.push("                        </div>\n");
+        suspectStr.push("                        <div class=\"col-md-4 caseInput\">\n");
+        suspectStr.push("                            <input id=\"remark1"+suspectIndex+"\"  name=\"remark\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入嫌疑人备注！');\" oninput=\"setCustomValidity('');\"/>\n");
+        suspectStr.push("                        </div>\n");
+        suspectStr.push("                        <div class=\"col-md-1 caseInput lastInput\" style=\"padding-left: 12px;\">\n");
+        suspectStr.push("                            <span class=\"glyphicon-minus iconStyle\" style=\"color: black\" onclick=\"deleteSuspect(this);\"></span>\n");
+        suspectStr.push("                        </div>\n");
+        suspectStr.push("                    </div>");
+        suspectStr.push("              </form>");
+        $('#suspect').append(suspectStr.join(''));
+    }
+    /**
+     * 删除嫌疑人信息
+     * @param obj
+     */
+    function deleteSuspect(obj) {
+        var id = $(obj).parent().parent().parent().find("[name='id']").val();
+        if(id!=undefined&&id!=null&&id!=""){
+            apStaffIDArr.push(id);
+        }
+        $(obj).parent().parent().parent().remove();
+    }
+    /**
+     * 添加受害人信息
+     * @type {number}
+     */
+    function addVictim() {
+        ++victimIndex;
+        var victimStr=[];
+        victimStr.push("               <form action=\"\" id=\"my_victim"+victimIndex+"\">");
+        victimStr.push("                    <div class=\"row breadcrumbs caseContainer \">\n");
+        victimStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+        victimStr.push("                            <input id=\"id2"+victimIndex+"\" name=\"id\" type=\"hidden\"  />\n");
+        victimStr.push("                            <input name=\"suspectClass\" value=\"1001\" type=\"hidden\"/>\n");
+        victimStr.push("                            <input id=\"name2"+victimIndex+"\" name=\"name\" class=\"verification\" type=\"text\"  style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入受害人姓名！');\" oninput=\"setCustomValidity('');\"/>\n");
+        victimStr.push("                        </div>\n");
+        victimStr.push("                        <div class=\"col-md-3 caseInput\">\n");
+        victimStr.push("                            <input id=\"idcardNum2"+victimIndex+"\" name=\"idcardNum\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入受害人身份证号！');\" oninput=\"setCustomValidity('');\"/>\n");
+        victimStr.push("                        </div>\n");
+        victimStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+        victimStr.push("                            <select id=\"gender2"+victimIndex+"\" name=\"gender\" class=\"verification\">\n");
+        victimStr.push("                             <option value=\"\" >请选择</option>\n");
+        victimStr.push("                              <option value=\"1201\">男</option>\n");
+        victimStr.push("                              <option value=\"1200\">女</option>\n");
+        victimStr.push("                              <option value=\"1202\">其他</option>\n");
+        victimStr.push("                            </select>\n");
+//           victimStr.push("                            <input id=\"gender2"+victimIndex+"\" name=\"gender\" type=\"text\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入受害人性别！');\" oninput=\"setCustomValidity('');\"/>\n");
+        victimStr.push("                        </div>\n");
+        victimStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+        victimStr.push("                            <input id=\"phoneNum2"+victimIndex+"\" name=\"phoneNum\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入受害人手机号码！');\" oninput=\"setCustomValidity('');\"/>\n");
+        victimStr.push("                        </div>\n");
+//           victimStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+//           victimStr.push("                             <input type=\"text\" required oninvalid=\"setCustomValidity('请输入受害人QQ！');\" oninput=\"setCustomValidity('');\"/>\n");
+//           victimStr.push("                         </div>\n");
+        victimStr.push("                        <div class=\"col-md-4 caseInput\">\n");
+        victimStr.push("                            <input id=\"remark2"+victimIndex+"\" name=\"remark\" class=\"verification\" type=\"text\" required oninvalid=\"setCustomValidity('请输入受害人备注！');\" oninput=\"setCustomValidity('');\"/>\n");
+        victimStr.push("                        </div>\n");
+        victimStr.push("                        <div class=\"col-md-1 caseInput lastInput\" style=\"padding-left: 12px\">\n");
+        victimStr.push("                            <span class=\"glyphicon-minus iconStyle\" style=\"color: black\" onclick=\"deleteVictim(this)\"></span>\n");
+        victimStr.push("                        </div>\n");
+        victimStr.push("                    </div>");
+        victimStr.push("               </form>");
+        $('#victim').append(victimStr.join(''));
+    }
+    /**
+     * 删除受害人信息
+     * @param obj
+     */
+    function deleteVictim(obj) {
+        var id = $(obj).parent().parent().parent().find("[name='id']").val();
+        if(id!=undefined&&id!=null&&id!=""){
+            apStaffIDArr.push(id);
+        }
+        $(obj).parent().parent().parent().remove();
+    }
+
+    //案件编号查重
+    function checkCaseNo(){
+        var returnVal = false;
+        var caseNo = $.trim($("#caseNo").val());
+        if(caseNo != null && caseNo != ""){
+            $("#caseNo").val(caseNo);
+            $.ajax({
+                type: 'POST',
+                url: getRootPath_web()+"/case/findCaseById?caseNo="+caseNo,//发送请求
+                dataType : "json",
+                cache: false,
+                async: false,
+                success: function(data) {
+                    var json = $.parseJSON(data.data);
+                    //案件信息
+                    if(json.data.etCase == undefined){
+                        returnVal = true;
+                    }else{
+                        if(typeof(json.data.etCase) == "object" &&
+                            Object.prototype.toString.call(json.data.etCase).toLowerCase() == "[object object]"
+                            && !json.data.etCase.length){
+                            layer.msg("案件编号重复，请重新输入。", {icon: 2,time:3000,anim: 6});
+                            layer.alert("案件编号重复，请重新输入。",{
+                                icon: 2,
+                                skin: 'layer-ext-moon'
+                            });
+                            //$("#caseNo").focus();
+                            returnVal = false;
+                        }else{
+                            returnVal = true;
+                        }
+                    }
+                }
+            });
+        }else{
+            returnVal = true;
+        }
+        console.log( "checkCaseNo result " + returnVal)
+        return returnVal;
+    }
+
+    /*查询案件信息*/
+    function findCaseById(id){
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"/case/findCaseById?id="+id,//发送请求
+            dataType : "json",
+            success: function(data) {
+//                var json = JSON.parse(data.data);
+//                var json = eval('('+data.data+')');
+//                JSON.parse(jsonstr); //可以将json字符串转换成json对象
+//                JSON.stringify(caseObj); //可以将json对象转换成json对符串
+                var json = $.parseJSON(data.data);
+                //案件信息
+                var caseObj = json.data.etCase;
+                console.log("案件信息:");
+                console.log("caseObj['caseNo']  is "+caseObj['caseNo']);
+                for (var prop in caseObj){
+//                        $("[name='"+prop+"']").val((caseObj[prop]==null?"":caseObj[prop]));
+                    $("#my_caseForm").find("[name='"+prop+"']").val((caseObj[prop]==null?"":caseObj[prop]));
+                }
+                //原案件编号赋值
+                $("#oldCaseNo").val(caseObj['caseNo']);
+
+                //承办人姓名
+                $("#sponsorName1").val(caseObj['sponsorName']);
+                //嫌疑人和受害人
+                var apStaffArr=json.data.apStaffs;
+                console.log("嫌疑人和受害人:"+apStaffArr);
+                for (var i=0;i<apStaffArr.length;i++){
+                    if(apStaffArr[i].suspectClass=="1000"||apStaffArr[i].suspectClass==1000)
+                    {//嫌疑人
+                        if(suspectIndex==1){
+                            var obj = apStaffArr[i];
+                            for (var prop in obj){
+                                $("#"+prop+"11").val((obj[prop]==null?"":obj[prop]));
+                            }
+                            ++suspectIndex;
+                        }else{
+                            var suspectStr=[];
+                            suspectStr.push("              <form action=\"\" id=\"my_suspect"+suspectIndex+"\">");
+                            suspectStr.push("                    <div class=\"row breadcrumbs caseContainer\">\n");
+                            suspectStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+                            suspectStr.push("                            <input id=\"id1"+suspectIndex+"\" name=\"id\" type=\"hidden\" value=\""+apStaffArr[i].id+"\" />\n");
+                            suspectStr.push("                            <input name=\"suspectClass\" value=\"1000\" type=\"hidden\"  />\n");
+                            suspectStr.push("                            <input id=\"name1"+suspectIndex+"\" name=\"name\" class=\"verification\" type=\"text\"  value=\""+apStaffArr[i].name+"\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入嫌疑人姓名！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            suspectStr.push("                        </div>\n");
+                            suspectStr.push("                        <div class=\"col-md-3 caseInput\">\n");
+                            suspectStr.push("                            <input id=\"idcardNum1"+suspectIndex+"\" name=\"idcardNum\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].idcardNum+"\" required oninvalid=\"setCustomValidity('请输入嫌疑人身份证号！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            suspectStr.push("                        </div>\n");
+                            suspectStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+                            suspectStr.push("                            <select id=\"gender1"+suspectIndex+"\" name=\"gender\" class=\"verification\">\n");
+                            (apStaffArr[i].gender==1201||apStaffArr[i].gender=='1201'?suspectStr.push("                              <option value=\"1201\" selected>男</option>\n"):suspectStr.push("                              <option value=\"1201\" >男</option>\n"));
+                            (apStaffArr[i].gender==1200||apStaffArr[i].gender=='1200'?suspectStr.push("                              <option value=\"1200\" selected>女</option>\n"):suspectStr.push("                              <option value=\"1200\" >女</option>\n"));
+                            (apStaffArr[i].gender==1202||apStaffArr[i].gender=='1202'?suspectStr.push("                              <option value=\"1202\" selected>其他</option>\n"):suspectStr.push("                              <option value=\"1202\" >其他</option>\n"));
+                            suspectStr.push("                            </select>\n");
+//                              suspectStr.push("                            <input id=\"gender1"+suspectIndex+"\" name=\"gender\" type=\"text\" value=\""+apStaffArr[i].gender+"\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入嫌疑人性别！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            suspectStr.push("                        </div>\n");
+                            suspectStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+                            suspectStr.push("                            <input id=\"phoneNum1"+suspectIndex+"\" name=\"phoneNum\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].phoneNum+"\" required oninvalid=\"setCustomValidity('请输入嫌疑人手机号码！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            suspectStr.push("                        </div>\n");
+                            //          suspectStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+                            //          suspectStr.push("                            <input id=\""+suspectIndex+"\" type=\"text\" required oninvalid=\"setCustomValidity('请输入嫌疑人QQ！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            //          suspectStr.push("                        </div>\n");
+                            suspectStr.push("                        <div class=\"col-md-4 caseInput\">\n");
+                            suspectStr.push("                            <input id=\"remark1"+suspectIndex+"\" name=\"remark\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].remark+"\" required oninvalid=\"setCustomValidity('请输入嫌疑人备注！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            suspectStr.push("                        </div>\n");
+                            suspectStr.push("                        <div class=\"col-md-1 caseInput lastInput\" style=\"padding-left: 12px;\">\n");
+                            suspectStr.push("                            <span class=\"glyphicon-minus iconStyle\" style=\"color: black\" onclick=\"deleteSuspect(this);\"></span>\n");
+                            suspectStr.push("                        </div>\n");
+                            suspectStr.push("                    </div>");
+                            suspectStr.push("              </form>");
+                            $('#suspect').append(suspectStr.join(''));
+                            ++suspectIndex;
+                        }
+
+                    }else if(apStaffArr[i].suspectClass=="1001"||apStaffArr[i].suspectClass==1001)
+                    {//受害人
+                        if(victimIndex==1){
+                            var obj = apStaffArr[i];
+                            for (var prop in obj){
+                                $("#"+prop+"21").val((obj[prop]==null?"":obj[prop]));
+                            }
+                            ++victimIndex;
+                        }else{
+                            var victimStr=[];
+                            victimStr.push("               <form action=\"\" id=\"my_victim"+victimIndex+"\">");
+                            victimStr.push("                    <div class=\"row breadcrumbs caseContainer \">\n");
+                            victimStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+                            victimStr.push("                            <input id=\"id2"+victimIndex+"\" name=\"id\" type=\"hidden\" value=\""+apStaffArr[i].id+"\" />\n");
+                            victimStr.push("                            <input name=\"suspectClass\" value=\"1001\" type=\"hidden\"/>\n");
+                            victimStr.push("                            <input id=\"name2"+victimIndex+"\" name=\"name\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].name+"\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入受害人姓名！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            victimStr.push("                        </div>\n");
+                            victimStr.push("                        <div class=\"col-md-3 caseInput\">\n");
+                            victimStr.push("                            <input id=\"idcardNum2"+victimIndex+"\" name=\"idcardNum\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].idcardNum+"\" required oninvalid=\"setCustomValidity('请输入受害人身份证号！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            victimStr.push("                        </div>\n");
+                            victimStr.push("                        <div class=\"col-md-1 caseInput\">\n");
+                            victimStr.push("                            <select id=\"gender2"+victimIndex+"\" name=\"gender\" class=\"verification\">\n");
+                            (apStaffArr[i].gender==1201||apStaffArr[i].gender=='1201'?victimStr.push("                              <option value=\"1201\" selected >男</option>\n"):victimStr.push("                              <option value=\"1201\" >男</option>\n"));
+                            (apStaffArr[i].gender==1200||apStaffArr[i].gender=='1200'?victimStr.push("                              <option value=\"1200\" selected>女</option>\n"):victimStr.push("                              <option value=\"1200\" >女</option>\n"));
+                            (apStaffArr[i].gender==1202||apStaffArr[i].gender=='1202'?victimStr.push("                              <option value=\"1202\" selected>其他</option>\n"):victimStr.push("                              <option value=\"1202\" >其他</option>\n"));
+                            victimStr.push("                            </select>\n");
+//                                victimStr.push("                            <input id=\"gender2"+victimIndex+"\" name=\"gender\" type=\"text\" value=\""+apStaffArr[i].gender+"\" style=\"width: 92%\" required oninvalid=\"setCustomValidity('请输入受害人性别！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            victimStr.push("                        </div>\n");
+                            victimStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+                            victimStr.push("                            <input id=\"phoneNum2"+victimIndex+"\" name=\"phoneNum\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].phoneNum+"\" required oninvalid=\"setCustomValidity('请输入受害人手机号码！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            victimStr.push("                        </div>\n");
+                            //          victimStr.push("                        <div class=\"col-md-2 caseInput\">\n");
+                            //          victimStr.push("                             <input type=\"text\" required oninvalid=\"setCustomValidity('请输入受害人QQ！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            //          victimStr.push("                         </div>\n");
+                            victimStr.push("                        <div class=\"col-md-4 caseInput\">\n");
+                            victimStr.push("                            <input id=\"remark2"+victimIndex+"\" name=\"remark\" class=\"verification\" type=\"text\" value=\""+apStaffArr[i].remark+"\" required oninvalid=\"setCustomValidity('请输入受害人备注！');\" oninput=\"setCustomValidity('');\"/>\n");
+                            victimStr.push("                        </div>\n");
+                            victimStr.push("                        <div class=\"col-md-1 caseInput lastInput\" style=\"padding-left: 12px\">\n");
+                            victimStr.push("                            <span class=\"glyphicon-minus iconStyle\" style=\"color: black\" onclick=\"deleteVictim(this)\"></span>\n");
+                            victimStr.push("                        </div>\n");
+                            victimStr.push("                    </div>");
+                            victimStr.push("               </form>");
+                            $('#victim').append(victimStr.join(''));
+                            ++victimIndex;
+                        }
+
+                    }
+
+                }
+                if(suspectIndex>1){
+                    --suspectIndex;
+                }
+                if(victimIndex>1){
+                    --victimIndex;
+                }
+
+                //案件编号不可变更
+                if($("#caseNo").val() != ""){
+                    $("#caseNo").attr("readonly","readonly");    //添加readonly属性 & $("#ID").attr({ readonly: 'true' });
+                    //$("#id").removeAttr("readonly");    //去除readonly属性
+                    $("#caseNo").removeAttr("onblur");
+                }
+
+            }
+        });
+    }
+
+    //保存
+    function save() {
+        var my_caseForm=$("#my_caseForm");
+
+        var caseFormStr=Common.form(my_caseForm);
+//            var caseFormStr=Common.validateForm(my_caseForm);
+//            if(caseFormStr==""){
+//                return;
+//            }
+        var apStaff=[];
+        for(var i=1;i<=suspectIndex;i++){
+            var my_suspect = $("#my_suspect"+i);
+            if(my_suspect!=undefined&&my_suspect!=null&&my_suspect!=""){
+                var my_suspectStr = Common.form(my_suspect);
+//                    var my_suspectStr = Common.validateForm(my_suspect);
+//                    if(my_suspectStr==""){
+//                        return;
+//                    }
+                apStaff.push(my_suspectStr);
+            }
+        }
+        for(var i=1;i<=victimIndex;i++){
+            var my_victim = $("#my_victim"+i);
+            if(my_victim!=undefined&&my_victim!=null&&my_victim!=""){
+                var my_victimStr = Common.form(my_victim);
+//                    var my_victimStr = Common.validateForm(my_victim);
+//                    if(my_victimStr==""){
+//                        return;
+//                    }
+                apStaff.push(my_victimStr);
+            }
+        }
+        if(caseID==undefined||caseID==null||caseID=="")
+        {//案件添加
+
+            if(!checkCaseNo()) return;
+            $.ajax({
+                type: 'POST',
+                url: getRootPath_web()+"case/save",//发送请求
+                data:{"caseinfo":caseFormStr,"apStaffs":"["+apStaff.toString()+"]"},
+                dataType : "json",
+                success: function(data) {
+                    window.parent.layer.closeAll('loading');
+                    if(data.data.flag){
+                        layer.msg(data.data.msg, {icon: 1,time:3000});
+                        logEntry("2","案件信息管理 案件进行新增");
+                        setTimeout(function(){
+                            var index=parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        },1000)
+
+                    }else{
+                        layer.msg(data.data.msg, {icon: 2,time:3000,anim: 6});
+                        layer.alert(data.data.msg,{
+                            icon: 2,
+                            skin: 'layer-ext-moon'
+                        });
+                    }
+                }
+            });
+        }else{//案件修改
+            console.log("oldCaseNo is "+$("#oldCaseNo").val())
+
+            if($.trim($("#oldCaseNo").val()) == "" && $.trim($("#caseNo").val()) != "" && !checkCaseNo())
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: projectPath+"case/update",//发送请求
+                data:{"caseinfo":caseFormStr,"apStaffs":"["+apStaff.toString()+"]","apStaffIds":apStaffIDArr.toString()},
+                dataType : "json",
+                success: function(data) {
+                    window.parent.layer.closeAll('loading');
+                    if(data.data.flag){
+                        layer.msg(data.data.msg, {icon: 1,time:3000});
+                        logEntry("2","案件信息管理 案件进行编辑 ID为："+$("#id").val());
+                        setTimeout(function(){
+                            var index=parent.layer.getFrameIndex(window.name);
+                            parent.layer.closeAll();
+                        },1000)
+
+                    }else{
+                        layer.msg(data.data.msg, {icon: 2,time:3000,anim: 6});
+                        layer.alert(data.data.msg,{
+                            icon: 2,
+                            skin: 'layer-ext-moon'
+                        });
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
+

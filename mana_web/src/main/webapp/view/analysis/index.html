@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- 引入样式 -->
+  <title>深圳CID扫黑专用模块-话单分析</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="radio.css">
+  <style>
+    *{font-family:'微软雅黑'}
+    .el-dialog{margin:0 auto !important;width:100% !important;}
+    .el-form-item{display:inline-block;margin:20px 0;}
+    .filter{background:#ECF1F4;margin:-20px -20px 0;padding:0 10px;}
+    .actBar{margin-top:10px;}
+    .actBar>div{display:inline-block;}
+    .imgTool{float:right;}
+    .actBar .el-button--small, .el-button--small.is-round{padding:4px 3px;}
+    .actBar .el-button+.el-button{margin-left:0;}
+    .tipBox p{margin:0;}
+    .courseBtn{
+        width: 100%;
+        min-width:120px;
+        height: 34px;
+        color: #fff;
+        opacity:0.8;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+    .courseBtn:hover{opacity:1}
+
+    .imgBox{position:relative;}
+    .toolBar{position:absolute;top:20px;z-index:100;}
+
+    [v-cloak]{display:none}
+  </style>
+  <script src="jquery.min.js"></script>
+<script src="../js/echarts.min.js"></script>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <!--<el-button @click="visible = true">点击查看关系图</el-button>-->
+    <!-- <el-dialog :visible.sync="visible" title="话单分析" width='1200px' :show-close="false"> -->
+      <el-form ref="form" :model="form" label-width="80px" class="filter">
+        <el-form-item label="通话时间">
+          <el-date-picker
+            v-model="value7"
+            type="daterange"
+            align="left"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions2"
+            value-format="yyyy-MM-dd"
+            style="width:230px">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="呼叫类型">
+          <el-select v-model="form.region" placeholder="请选择" size='8'>
+            <el-option label="全部" value=""></el-option>
+            <el-option label="呼入" value="呼入"></el-option>
+            <el-option label="呼出" value="呼出"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="通话频次">
+          <el-select v-model="form.ci" placeholder="请选择" size='8'>
+            <el-option label="全部" value=""></el-option>
+            <el-option label="1~50次" value="1~50次"></el-option>
+            <el-option label="51~100次" value="51~100次"></el-option>
+            <el-option label=">101次" value=">101次"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="活动区域">
+          <el-cascader
+            :options="form.options"
+            size='8'
+            v-model="actCity"
+            @change="cityChange"
+          ></el-cascader>
+        </el-form-item>
+        <el-form-item label="" style="margin-left:-65px" class="phoneInput">
+          <el-input v-model="form.name" @keyup.enter.native="onSubmit" size="15" placeholder="请输入分析号码"></el-input>
+        </el-form-item>
+        <el-button type="primary" @click="onSubmit" style="margin-left:10px;background:#3DD0BE;border-color:#3DD0BE;">分析</el-button>
+      </el-form>
+      <div class="actBar">
+        <div v-show="actPhone.length>0" @click="actPhone=[]">
+          <el-button size="small">号码:<span v-for="i in actPhone">{{i}}<b v-show="actPhone.length>1">/</b></span><i class="el-icon-circle-close el-icon--right"></i></el-button>
+          <!-- <el-button size="small" type="text"><i class="el-icon-circle-plus-outline el-icon--right"></i></el-button> -->
+          <el-button type="text" icon="el-icon-arrow-right" size="small"></el-button>
+        </div>
+        <div v-show="value7" @click="value7=''">
+          <el-button size="small">通话时间:{{value7[0]}} - {{value7[1]}}<i class="el-icon-circle-close el-icon--right"></i></el-button>
+          <el-button type="text" icon="el-icon-arrow-right" size="small"></el-button>
+        </div>
+        <div v-show="form.region" @click="form.region=''">
+          <el-button size="small">呼叫类型:{{form.region}}<i class="el-icon-circle-close el-icon--right"></i></el-button>
+          <el-button type="text" icon="el-icon-arrow-right" size="small"></el-button>
+        </div>
+        <div v-show="form.ci" @click="form.ci=''">
+          <el-button size="small">通话频次:{{form.ci}}<i class="el-icon-circle-close el-icon--right"></i></el-button>
+          <el-button type="text" icon="el-icon-arrow-right" size="small"></el-button>
+        </div>
+        <div v-show="actCity[0]!=''" @click="actCity=['']">
+          <el-button size="small">活动区域:{{actCity}}<i class="el-icon-circle-close el-icon--right"></i></el-button>
+        </div>
+        <div class="imgTool">
+          <el-button size="small" type="text">表格展示<i class="el-icon-document"></i></el-button>
+          <el-button size="small" type="text">放大<i class="el-icon-zoom-in"></i></el-button>
+          <el-button size="small" type="text">缩小<i class="el-icon-zoom-out"></i></el-button>
+          <el-button size="small" type="text">打印<i class="el-icon-printer"></i></el-button>
+          <el-button size="small" type="text">分享<i class="el-icon-share"></i></el-button>
+          <el-button size="small" type="text">下载<i class="el-icon-download"></i></el-button>
+        </div>
+      </div>
+      <div class="imgBox">
+        <div class="toolBar">
+          <el-radio v-model="radio" @change="resetEcharts(1,actPhone)" label="1">一级关联</el-radio>
+          <el-radio v-model="radio" @change="resetEcharts(2,actPhone)" label="2">二级关联</el-radio>
+          <el-radio v-model="radio" @change="resetEcharts(3,actPhone)" label="3">三级关联</el-radio>
+          <el-radio v-model="radio" @change="resetEcharts(4,actPhone)" label="4">四级关联</el-radio>
+          <el-radio v-model="radio" @change="resetEcharts(5,actPhone)" label="5">五级关联</el-radio>
+          <el-radio v-model="radio" @change="resetEcharts(6,actPhone)" label="6">六级关联</el-radio>
+        </div>
+        <div id="main" style="width: 100%;height:600px;"></div>
+      </div>
+      <!--<div v-show="actPhone.length<1" style="position:absolute;padding:150px 0 0;text-align:center;width:100%;height:500px;top:140px;left:0;z-index:200;background:#fff;">-->
+        <!--<img src="zanwu.jpg" alt="">-->
+      <!--</div>-->
+    </el-dialog>
+  </div>
+</body>
+<script src="vue.js"></script>
+<script src="index.js"></script>
+<script src="city.js"></script>
+<script>
+var vm=new Vue({
+  el: '#app',
+  data: function() {
+
+    var validatePass =function (rule, value, callback){
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (this.form.checkPass !== '') {
+          this.$refs.form.validateField('checkPass');
+        }
+        callback();
+      }
+    };
+    return { 
+      visible: true,
+      actPhone:[],
+      radio:'2',
+      actCity:[''],
+      form: {
+        name: '18910678018',
+        region: '',
+        date1: '',
+        date2: '',
+        ci:'',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: '',
+        options:city
+      },
+      value7: '',
+      pickerOptions2: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      }
+    }
+  },
+  mounted(){
+    var _this=this
+    setTimeout(function(){
+      _this.resetEcharts(3,[18910678018])
+    },100)
+  },
+  methods: {
+
+    onSubmit() {
+      var _this=this;
+      var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+      if(!myreg.test(_this.form.name)) 
+      { 
+        $(".phoneInput input[type='text']").css("border","1px solid red").focus()
+        alert("查询号码不正确")
+        return false; 
+      }else{
+        if(_this.actPhone.indexOf(_this.form.name)<0){
+          if(_this.actPhone.length<2){
+            _this.actPhone.push(_this.form.name)
+            $(".phoneInput input[type='text']").css("border","1px solid #DCDFE6")
+            _this.resetEcharts(3,_this.actPhone)
+            _this.radio='2'
+          }else{
+            alert('目前最多支持两个号码查询')
+            return false
+          }
+        }else{
+          $(".phoneInput input[type='text']").css("border","1px solid red").focus()
+          alert('查询号码不能重复')
+        }
+      }
+    },
+    cityChange(o){
+      var _this=this
+      setTimeout(function(){
+        _this.actCity=$(".el-cascader__label").text()
+      },10)
+    },
+    resetEcharts(ji,num){
+      var myChart = echarts.init(document.getElementById('main'));
+      if(num.length==1){
+        if(ji==1){
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                        name:num[0],
+                        name1:num[0],
+                        t:'深圳电信',
+                        w:'高星汉',
+                        // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                        symbolSize: 80,
+                        // draggable: false,
+                        itemStyle: {
+                          normal: {
+                              color: '#3DD0BE'
+                          }
+                        }
+                    }, {
+                        name1:'15656895689',
+                        t:'江西电信',
+                        w:'潘凯定',
+                        category: 1,
+                        symbolSize: 20,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#A28EEF'
+                          }
+                        }
+                    }, {
+                        name1:'17875623546',
+                        t:'广州电信',
+                        w:'张华江',
+                        category: 1,
+                        symbolSize: 60,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#A28EEF'
+                          }
+                        }
+                    }, {
+                        name1:'13565653232',
+                        t:'北京移动',
+                        w:'郝勇男',
+                        category: 1,
+                        // draggable: true,
+                        symbolSize: 40,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#CA87A8'
+                          }
+                        }
+                    }, {
+                        name1:'13232567878',
+                        t:'陕西联通',
+                        w:'宋冰菱',
+                        category: 1,
+                        // draggable: true,
+                        symbolSize: 20,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#ABE1E3'
+                          }
+                        }
+                    }, {
+                        name1:'13345788956',
+                        t:'上海电信',
+                        w:'姜从雪',
+                        category: 1,
+                        // draggable: true,
+                    }],
+                    links: [{
+                        name:'12212',
+                        source: 0,
+                        target: 1,
+                        category: 0,
+                        value: '10'
+                    }, {
+                        source: 0,
+                        target: 2,
+                        value: '50'
+                    }, {
+                        source: 0,
+                        target: 3,
+                        value: '30'
+                    }, {
+                        source: 0,
+                        target: 4,
+                        value: '24'
+                    }, {
+                        source: 1,
+                        target: 2,
+                        value: '45'
+                    }, {
+                        source: 0,
+                        target: 5,
+                        value: '18'
+                    }, {
+                        source: 4,
+                        target: 5,
+                        value: '16'
+                    }, {
+                        source: 2,
+                        target: 8,
+                        value: '11'
+                    }, {
+                        source: 0,
+                        target: 12,
+                        value: '22'
+                    }, {
+                        source: 6,
+                        target: 11,
+                        value: '33'
+                    }, {
+                        source: 6,
+                        target: 3,
+                        value: '44'
+                    }, {
+                        source: 7,
+                        target: 5,
+                        value: '54'
+                    }, {
+                        source: 9,
+                        target: 10,
+                        value: '13'
+                    }, {
+                        source: 3,
+                        target: 10,
+                        value: '32'
+                    }, {
+                        source: 2,
+                        target: 11,
+                        value: '2'
+                    }],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }else if(ji==2){
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                          name:num[0],
+                          name1:num[0],
+                          t:'深圳电信',
+                          w:'高星汉',
+                          // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                          symbolSize: 80,
+                          // draggable: false,
+                          itemStyle: {
+                            normal: {
+                                color: '#3DD0BE'
+                            }
+                          }
+                      }, {
+                          name1:'15656895689',
+                          t:'江西电信',
+                          w:'潘凯定',
+                          category: 1,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'17875623546',
+                          t:'广州电信',
+                          w:'张华江',
+                          category: 1,
+                          symbolSize: 60,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'13565653232',
+                          t:'北京移动',
+                          w:'郝勇男',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 40,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#CA87A8'
+                            }
+                          }
+                      }, {
+                          name1:'13232567878',
+                          t:'陕西联通',
+                          w:'宋冰菱',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#ABE1E3'
+                            }
+                          }
+                      }, {
+                          name1:'13345788956',
+                          t:'上海电信',
+                          w:'姜从雪',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13154545656',
+                          t:'新疆移动',
+                          w:'覃书双',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13995959598',
+                          t:'天津电信',
+                          w:'田承载',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13635874531',
+                          t:'浙江联通',
+                          w:'徐博涛',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13254568789',
+                          t:'海南移动',
+                          w:'谢和硕',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'17759862302',
+                          t:'云南联通',
+                          w:'张朋龙',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'18996523565',
+                          t:'山东移动',
+                          w:'李军军',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'15545898523',
+                          t:'江苏联通',
+                          w:'王开富',
+                          category: 1,
+                          // draggable: true,
+                      }
+                    ],
+                    links: [{
+                          name:'12212',
+                          source: 0,
+                          target: 1,
+                          category: 0,
+                          value: '10'
+                      }, {
+                          source: 0,
+                          target: 2,
+                          value: '50'
+                      }, {
+                          source: 0,
+                          target: 3,
+                          value: '30'
+                      }, {
+                          source: 0,
+                          target: 4,
+                          value: '24'
+                      }, {
+                          source: 1,
+                          target: 2,
+                          value: '45'
+                      }, {
+                          source: 0,
+                          target: 5,
+                          value: '18'
+                      }, {
+                          source: 4,
+                          target: 5,
+                          value: '16'
+                      }, {
+                          source: 2,
+                          target: 8,
+                          value: '11'
+                      }, {
+                          source: 0,
+                          target: 12,
+                          value: '22'
+                      }, {
+                          source: 6,
+                          target: 11,
+                          value: '33'
+                      }, {
+                          source: 6,
+                          target: 3,
+                          value: '44'
+                      }, {
+                          source: 7,
+                          target: 5,
+                          value: '54'
+                      }, {
+                          source: 9,
+                          target: 10,
+                          value: '13'
+                      }, {
+                          source: 3,
+                          target: 10,
+                          value: '32'
+                      }, {
+                          source: 2,
+                          target: 11,
+                          value: '2'
+                      }
+                    ],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }else{
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                          name:num[0],
+                          name1:num[0],
+                          t:'深圳电信',
+                          w:'高星汉',
+                          // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                          symbolSize: 80,
+                          // draggable: false,
+                          itemStyle: {
+                            normal: {
+                                color: '#3DD0BE'
+                            }
+                          }
+                      }, {
+                          name1:'15656895689',
+                          t:'江西电信',
+                          w:'潘凯定',
+                          category: 1,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'17875623546',
+                          t:'广州电信',
+                          w:'张华江',
+                          category: 1,
+                          symbolSize: 60,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'13565653232',
+                          t:'北京移动',
+                          w:'郝勇男',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 40,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#CA87A8'
+                            }
+                          }
+                      }, {
+                          name1:'13232567878',
+                          t:'陕西联通',
+                          w:'宋冰菱',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#ABE1E3'
+                            }
+                          }
+                      }, {
+                          name1:'13345788956',
+                          t:'上海电信',
+                          w:'姜从雪',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13154545656',
+                          t:'新疆移动',
+                          w:'覃书双',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13995959598',
+                          t:'天津电信',
+                          w:'田承载',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13635874531',
+                          t:'浙江联通',
+                          w:'徐博涛',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13254568789',
+                          t:'海南移动',
+                          w:'谢和硕',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'17759862302',
+                          t:'云南联通',
+                          w:'张朋龙',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'18996523565',
+                          t:'山东移动',
+                          w:'李军军',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'15545898523',
+                          t:'江苏联通',
+                          w:'王开富',
+                          category: 1,
+                          // draggable: true,
+                      }
+                    ],
+                    links: [{
+                          name:'12212',
+                          source: 0,
+                          target: 1,
+                          category: 0,
+                          value: '10'
+                      }, {
+                          source: 0,
+                          target: 2,
+                          value: '50'
+                      }, {
+                          source: 0,
+                          target: 3,
+                          value: '30'
+                      }, {
+                          source: 0,
+                          target: 4,
+                          value: '24'
+                      }, {
+                          source: 1,
+                          target: 2,
+                          value: '45'
+                      }, {
+                          source: 0,
+                          target: 5,
+                          value: '18'
+                      }, {
+                          source: 4,
+                          target: 5,
+                          value: '16'
+                      }, {
+                          source: 2,
+                          target: 8,
+                          value: '11'
+                      }, {
+                          source: 0,
+                          target: 12,
+                          value: '22'
+                      }, {
+                          source: 6,
+                          target: 11,
+                          value: '33'
+                      }, {
+                          source: 6,
+                          target: 3,
+                          value: '44'
+                      }, {
+                          source: 7,
+                          target: 5,
+                          value: '54'
+                      }, {
+                          source: 9,
+                          target: 10,
+                          value: '13'
+                      }, {
+                          source: 3,
+                          target: 10,
+                          value: '32'
+                      }, {
+                          source: 2,
+                          target: 11,
+                          value: '2'
+                      }
+                    ],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }
+      }
+      if(num.length==2){
+        if(ji==1){
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                        name:num[0],
+                        name1:num[0],
+                        t:'深圳电信',
+                        w:'高星汉',
+                        // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                        symbolSize: 80,
+                        // draggable: false,
+                        itemStyle: {
+                          normal: {
+                              color: '#3DD0BE'
+                          }
+                        }
+                    }, {
+                        name1:'15656895689',
+                        t:'江西电信',
+                        w:'潘凯定',
+                        category: 1,
+                        symbolSize: 20,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#A28EEF'
+                          }
+                        }
+                    }, {
+                        name:num[1],
+                        name1:num[1],
+                        t:'广州电信',
+                        w:'张华江',
+                        category: 1,
+                        symbolSize: 60,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#A28EEF'
+                          }
+                        }
+                    }, {
+                        name1:'13565653232',
+                        t:'北京移动',
+                        w:'郝勇男',
+                        category: 1,
+                        // draggable: true,
+                        symbolSize: 40,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#CA87A8'
+                          }
+                        }
+                    }, {
+                        name1:'13232567878',
+                        t:'陕西联通',
+                        w:'宋冰菱',
+                        category: 1,
+                        // draggable: true,
+                        symbolSize: 20,
+                        // draggable: true,
+                        itemStyle: {
+                          normal: {
+                              color: '#ABE1E3'
+                          }
+                        }
+                    }, {
+                        name1:'13345788956',
+                        t:'上海电信',
+                        w:'姜从雪',
+                        category: 1,
+                        // draggable: true,
+                    }],
+                    links: [{
+                        name:'12212',
+                        source: 0,
+                        target: 1,
+                        category: 0,
+                        value: '10'
+                    }, {
+                        source: 0,
+                        target: 2,
+                        value: '50'
+                    }, {
+                        source: 0,
+                        target: 3,
+                        value: '30'
+                    }, {
+                        source: 0,
+                        target: 4,
+                        value: '24'
+                    }, {
+                        source: 1,
+                        target: 2,
+                        value: '45'
+                    }, {
+                        source: 0,
+                        target: 5,
+                        value: '18'
+                    }, {
+                        source: 4,
+                        target: 5,
+                        value: '16'
+                    }, {
+                        source: 2,
+                        target: 8,
+                        value: '11'
+                    }, {
+                        source: 0,
+                        target: 12,
+                        value: '22'
+                    }, {
+                        source: 6,
+                        target: 11,
+                        value: '33'
+                    }, {
+                        source: 6,
+                        target: 3,
+                        value: '44'
+                    }, {
+                        source: 7,
+                        target: 5,
+                        value: '54'
+                    }, {
+                        source: 9,
+                        target: 10,
+                        value: '13'
+                    }, {
+                        source: 3,
+                        target: 10,
+                        value: '32'
+                    }, {
+                        source: 2,
+                        target: 11,
+                        value: '2'
+                    }],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }else if(ji==2){
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                          name:num[0],
+                          name1:num[0],
+                          t:'深圳电信',
+                          w:'高星汉',
+                          // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                          symbolSize: 80,
+                          // draggable: false,
+                          itemStyle: {
+                            normal: {
+                                color: '#3DD0BE'
+                            }
+                          }
+                      }, {
+                          name1:'15656895689',
+                          t:'江西电信',
+                          w:'潘凯定',
+                          category: 1,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name:num[1],
+                          name1:num[0],
+                          t:'广州电信',
+                          w:'张华江',
+                          category: 1,
+                          symbolSize: 60,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'13565653232',
+                          t:'北京移动',
+                          w:'郝勇男',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 40,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#CA87A8'
+                            }
+                          }
+                      }, {
+                          name1:'13232567878',
+                          t:'陕西联通',
+                          w:'宋冰菱',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#ABE1E3'
+                            }
+                          }
+                      }, {
+                          name1:'13345788956',
+                          t:'上海电信',
+                          w:'姜从雪',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13154545656',
+                          t:'新疆移动',
+                          w:'覃书双',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13995959598',
+                          t:'天津电信',
+                          w:'田承载',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13635874531',
+                          t:'浙江联通',
+                          w:'徐博涛',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13254568789',
+                          t:'海南移动',
+                          w:'谢和硕',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'17759862302',
+                          t:'云南联通',
+                          w:'张朋龙',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'18996523565',
+                          t:'山东移动',
+                          w:'李军军',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'15545898523',
+                          t:'江苏联通',
+                          w:'王开富',
+                          category: 1,
+                          // draggable: true,
+                      }
+                    ],
+                    links: [{
+                          name:'12212',
+                          source: 0,
+                          target: 1,
+                          category: 0,
+                          value: '10'
+                      }, {
+                          source: 0,
+                          target: 2,
+                          value: '50'
+                      }, {
+                          source: 0,
+                          target: 3,
+                          value: '30'
+                      }, {
+                          source: 0,
+                          target: 4,
+                          value: '24'
+                      }, {
+                          source: 1,
+                          target: 2,
+                          value: '45'
+                      }, {
+                          source: 0,
+                          target: 5,
+                          value: '18'
+                      }, {
+                          source: 4,
+                          target: 5,
+                          value: '16'
+                      }, {
+                          source: 2,
+                          target: 8,
+                          value: '11'
+                      }, {
+                          source: 0,
+                          target: 12,
+                          value: '22'
+                      }, {
+                          source: 6,
+                          target: 11,
+                          value: '33'
+                      }, {
+                          source: 6,
+                          target: 3,
+                          value: '44'
+                      }, {
+                          source: 7,
+                          target: 5,
+                          value: '54'
+                      }, {
+                          source: 9,
+                          target: 10,
+                          value: '13'
+                      }, {
+                          source: 3,
+                          target: 10,
+                          value: '32'
+                      }, {
+                          source: 2,
+                          target: 11,
+                          value: '2'
+                      }
+                    ],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }else{
+          var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+              enterable:true,
+              //alwaysShowContent:true,
+              width:100,
+              hideDelay:1000,
+              // triggerOn:'click',
+              position:[0,0],
+              backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+              borderRadius: 5,//边框圆角
+              padding: 15,    // [5, 10, 15, 20] 内边距
+              extraCssText: 'box-shadow: 0 0 20px #ccc;',
+              textStyle:{
+                  color:'#666'
+              },
+              position: function (point, params, dom, rect, size) {
+                console.log(params)
+                if(params.dataType=='node'){
+                  $(dom).html('<div class="tipBox"><p>'+params.data.name1+'<br/>'+params.data.t+'<br/>'+params.data.w+'</p><button class="courseBtn" style="background:'+params.color+'">备注</button></tipBox>')
+                }else{
+                  $(dom).fadeOut(0)
+                }
+              }
+            },
+            // animationDurationUpdate: 1500,
+            // animationEasingUpdate: 'quinticInOut',
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            legend: {
+                x: "center",
+                show: false,
+                // data: ["朋友", "战友", '亲戚']
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'force',
+                    symbolSize: 10,
+                    itemStyle: {
+                      normal: {
+                          color: '#8BB867'
+                      }
+                    },
+                    label: {
+                        normal: {
+                            show:true,
+                            formatter:  function( data ) {
+                                return '{gray|' + data.name + ':}{green|\n' + data.name + '}';
+                            },
+                            rich: {
+                                gray: {
+                                    color: 'gray'
+                                },
+                                green: {
+                                    color: 'green'
+                                }
+                            }
+                        }
+                    },
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    categories: [{
+                        itemStyle: {
+                            normal: {
+                              color: "#393f51"
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#4592FF",
+                            }
+                        }
+                    }, {
+                        itemStyle: {
+                            normal: {
+                                color: "#3592Ff",
+                            }
+                        }
+                    }],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 12
+                            },
+                        }
+                    },
+                    force: {
+                        repulsion: 1000
+                    },
+                    edgeSymbolSize: [4, 50],
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 10
+                            },
+                            formatter: "{c}"
+                        }
+                    },
+                    data: [{
+                          name:num[0],
+                          name1:num[0],
+                          t:'深圳电信',
+                          w:'高星汉',
+                          // symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+                          symbolSize: 80,
+                          // draggable: false,
+                          itemStyle: {
+                            normal: {
+                                color: '#3DD0BE'
+                            }
+                          }
+                      }, {
+                          name1:'15656895689',
+                          t:'江西电信',
+                          w:'潘凯定',
+                          category: 1,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name:num[1],
+                          name1:num[1],
+                          t:'广州电信',
+                          w:'张华江',
+                          category: 1,
+                          symbolSize: 60,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#A28EEF'
+                            }
+                          }
+                      }, {
+                          name1:'13565653232',
+                          t:'北京移动',
+                          w:'郝勇男',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 40,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#CA87A8'
+                            }
+                          }
+                      }, {
+                          name1:'13232567878',
+                          t:'陕西联通',
+                          w:'宋冰菱',
+                          category: 1,
+                          // draggable: true,
+                          symbolSize: 20,
+                          // draggable: true,
+                          itemStyle: {
+                            normal: {
+                                color: '#ABE1E3'
+                            }
+                          }
+                      }, {
+                          name1:'13345788956',
+                          t:'上海电信',
+                          w:'姜从雪',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13154545656',
+                          t:'新疆移动',
+                          w:'覃书双',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13995959598',
+                          t:'天津电信',
+                          w:'田承载',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13635874531',
+                          t:'浙江联通',
+                          w:'徐博涛',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'13254568789',
+                          t:'海南移动',
+                          w:'谢和硕',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'17759862302',
+                          t:'云南联通',
+                          w:'张朋龙',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'18996523565',
+                          t:'山东移动',
+                          w:'李军军',
+                          category: 1,
+                          // draggable: true,
+                      }, {
+                          name1:'15545898523',
+                          t:'江苏联通',
+                          w:'王开富',
+                          category: 1,
+                          // draggable: true,
+                      }
+                    ],
+                    links: [{
+                          name:'12212',
+                          source: 0,
+                          target: 1,
+                          category: 0,
+                          value: '10'
+                      }, {
+                          source: 0,
+                          target: 2,
+                          value: '50'
+                      }, {
+                          source: 0,
+                          target: 3,
+                          value: '30'
+                      }, {
+                          source: 0,
+                          target: 4,
+                          value: '24'
+                      }, {
+                          source: 1,
+                          target: 2,
+                          value: '45'
+                      }, {
+                          source: 0,
+                          target: 5,
+                          value: '18'
+                      }, {
+                          source: 4,
+                          target: 5,
+                          value: '16'
+                      }, {
+                          source: 2,
+                          target: 8,
+                          value: '11'
+                      }, {
+                          source: 0,
+                          target: 12,
+                          value: '22'
+                      }, {
+                          source: 6,
+                          target: 11,
+                          value: '33'
+                      }, {
+                          source: 6,
+                          target: 3,
+                          value: '44'
+                      }, {
+                          source: 7,
+                          target: 5,
+                          value: '54'
+                      }, {
+                          source: 9,
+                          target: 10,
+                          value: '13'
+                      }, {
+                          source: 3,
+                          target: 10,
+                          value: '32'
+                      }, {
+                          source: 2,
+                          target: 11,
+                          value: '2'
+                      }
+                    ],
+                    lineStyle: {
+                        normal: {
+                            opacity: 0.9,
+                            width: 1,
+                            curveness: 0
+                        }
+                    }
+                }
+            ]
+          }
+        }
+      }
+      myChart.setOption(option);
+    }
+  }
+})
+
+
+
+</script>
+</html>

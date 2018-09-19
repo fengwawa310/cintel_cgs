@@ -1,0 +1,36 @@
+.main-container{
+    background: #fff;
+}
+.main-container:after{
+    display: none;
+}
+.main-content{
+    margin-left: 0;
+    background: #fff;
+}
+.breadcrumbs{
+    text-align: left;
+}
+.search-title{
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+    background: #f7fbff;
+    border-bottom: 1px solid #cedfff;
+}
+.required{
+    color: red;
+}
+.main-container{
+    text-align: center;
+    border: 1px solid #ddd;
+    -moz-box-shadow: 4px 4px 2px #eee; /* 老的 Firefox */
+    box-shadow: 4px 4px 2px #eee;
+}
+
+.row-container{
+   border-bottom: 0;
+}
+.searchCon .birthtime{
+    width: 100%;
+}

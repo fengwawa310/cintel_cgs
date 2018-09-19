@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>综合检索-首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/report.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/js/layui-v2.2.5/layui/css/layui.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+    <!-- basic scripts -->
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script src="../assets/js/layer/layer.js"></script>
+    <script src="../assets/js/layui-v2.2.5/layui/layui.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/format.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <style>
+        .clwi{
+            height: 26px;
+            margin: 0;
+            padding: 0 10px;
+            background: #cee3f7 !important;
+            color: #00559c !important;
+            border: none;
+            border-radius: 0;
+        }
+        .row_ul{
+            list-style: none;
+            margin: 0;
+            padding:0;
+            overflow: hidden;
+            border-top: 1px solid #ccc;
+        }
+        .row_ul li{
+            float: left;
+            line-height: 30px;
+        }
+        .row_ul li a{
+            color: #333;
+            cursor: pointer;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space: nowrap;
+        }
+        .row_ul_one li{
+            float: left;
+            line-height: 30px;
+        }
+        .row_ul_one{
+            background: #42a4ca59;
+            border:none;
+            overflow: hidden;
+        }
+        .row_ul li:nth-child(1){
+            width: 60px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+        .row_ul li:nth-child(2){
+            text-align: center;
+            text-indent: 20px;
+        }
+        .row_ul_one li:nth-child(1){
+            width: 60px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+        .row_ul_one li:nth-child(2){
+            text-align: center;
+            text-indent: 20px;
+        }
+        .page-content_ul{
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        .layui-laypage-default{
+            float: right;
+            margin-right: 10px;
+        }
+        .test{
+            overflow: hidden;
+        }
+        .content_h{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!--<div class="page-content">-->
+        <!--<div class="row-container searchAll search-condition">-->
+            <!--<div class="col-md-12">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-11 searchCon" style="border:none;padding-right: 0;">-->
+                        <!--<input id="suspectNo" type="text" class="form-control" placeholder="支持身份证号/电话号/姓名/绰号/关键词">-->
+                    <!--</div>-->
+                    <!--<button class="clwi" style="margin-top: 3px;width: 100px;">检 索</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="page-content">
+        <h6 class="content_h">>>>案件检索结果：</h6>
+        <table id="dynamic-table-case" class="cell-border table table-striped table-bordered table-hover dataTable"
+                                                    cellspacing="0" width="100%">
+    </table>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>警情检索结果：</h6>
+        <table id="dynamic-table-alarm" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>重点人员检索结果：</h6>
+        <table id="dynamic-table-person" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>嫌疑人检索结果：</h6>
+        <table id="dynamic-table-suspect" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>笔录检索结果：</h6>
+        <table id="dynamic-table-notes" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>住宿检索结果：</h6>
+        <table id="dynamic-table-hotel" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <script src="/static/build/layui.js"></script>
+    <script>
+
+        $(window).ready(function () {
+            var thisURL = document.URL;
+            var getval =thisURL.split('?')[1];
+            var type= decodeURI(getval.split("=")[1]);
+            console.info("获取到的数据为"+type)
+            searchCaseList(type);
+            searchAlarmList(type);
+            searchPersonList(type);
+            searchSuspectList(type);
+            searchNotesList(type);
+            searchHotelList(type);
+        });
+        //案件列表
+        var dynamictableCase;
+
+        function searchCaseList( type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictableCase = $("#dynamic-table-case").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 10,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                        /*"deferRender": true,*/
+                        "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+//                            url : getRootPath_web()+"/elastic/searchCase?param="+type,
+                            url : getRootPath_web()+"/elastic/searchCase",
+                            "data":{
+                                param:type
+                            },
+                            "type" : "post"
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>案件编号</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>案件名称</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入人</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入单位</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }}
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"10%",
+                            "data": "id",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [5],
+                            'render': function(data, type, row, meta) {
+                                var data="'"+data+"'";
+//								var caseNo="'"+row.caseNo+"'";
+                                var html='<a href="#" class="operation" onclick="getSearchPermission('+data+',\''+ 1 + '\')">查看</a>';
+                                return html;
+                            },
+                            'bSortable': false
+                        }]
+                    });
+            $("#dynamic-table_filter").css("display", "none");
+        }
+
+        function getSearchPermission(id,type){
+            $.ajax({
+                type: 'POST',
+                url: getRootPath_web()+"/elastic/searchPermission?id="+id+"&type="+type,//发送请求
+                data:{
+//                auditOpinion:auditOpinion
+                },
+                dataType : "json",
+                success : function(data){
+               console.log(data);
+                    if(data == "1"){
+                        layer.closeAll('loading');
+//                        id="160EDBF64C1F00";//案件测试
+//                        id="160D9E94FDBF07";//警情测试-用的alarmNo
+//                        id="160D4A3827BF01";//嫌疑人员测试--用的SUSPECT_ID
+                        if (type=="1"){
+                            alertCaseDetail(id);
+                        }else if(type=="2"){
+                            alertAlarmDetail(id);
+                        }else if(type=="3"){
+//                            console.info("嫌疑人员测试")
+                            alertPersonDetail(id);
+                        }else if (type=="4"){
+                            notesDetail(id)
+                        }else if (type=="5"){
+                            hotelDetail(id)
+                        }
+                    }else {
+                        parent.layer.msg("无查看详情权限！", {icon: 1,time:1000});
+                    }
+                }
+            });
+        }
+        //案件详情弹框
+        function alertCaseDetail(id) {
+            var name='案件详情';
+            var url=projectPath+'/view/case/caseDetailLayer.html?id='+id;
+            var width='90%';
+            var high='90%';
+            var callback=function (){
+
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+//            logEntry("2","案件信息管理 查看案件ID为："+id+"详情");
+        }
+        //警情列表
+        var dynamictableAlarm;
+        //警情列表部分
+        function searchAlarmList(type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictableAlarm = $("#dynamic-table-alarm").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 10,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                        /*"deferRender": true,*/
+                        "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : getRootPath_web()+"/elastic/searchAlarm",
+                            "type" : "post",
+                            "data":{
+                                param:type
+                            },
+//                            async:true
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>警情编号</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>接警单位</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>发案地点</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>报警人</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>报警人电话</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param5','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"10%",
+                            "data": "param1",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [6],
+                            'render': function(data, type, row, meta) {
+                                var data="'"+data+"'";
+                                return  '<a href="#" class="operation" onclick="getSearchPermission('+data+',\''+ 2 + '\')">查看</a>';
+                            },
+                            'bSortable': false
+                        }]
+                    });
+            //logEntry("1","警情查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+        //警情详情弹框
+        function alertAlarmDetail(alarmNo) {
+            var name='警情详情';
+            var url=projectPath+'/view/alarm/alarmDetailLayer.html?alarmNo='+alarmNo;
+            var width='90%';
+            var high='90%';
+            var callback=function (){
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+        }
+        //重点人员列表
+        var dynamictablePerson;
+        //重点人员列表部分
+        function searchPersonList(type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictablePerson = $("#dynamic-table-person").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 10,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                        /*"deferRender": true,*/
+                        "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : getRootPath_web()+"/elastic/searchPerson",
+                            "type" : "post",
+                            "data":{
+                                param:type
+                            },
+                            async:true
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>重点人员编号</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>身份证号</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入人</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入单位</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param5','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入时间</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param6','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"10%",
+                            "data": "param2",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [7],
+                            'render': function(data, type, row, meta) {
+                                var data="'"+data+"'";
+                                return  '<a href="#" class="operation" onclick="getSearchPermission('+data+',\''+ 3 + '\')">查看</a>';
+                            },
+                            'bSortable': false
+                        }]
+                    });
+            //logEntry("1","警情查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+        //重点人员详情弹框
+        //详情弹框
+        function alertPersonDetail(id) {
+            var name='重点人员';
+            var url=projectPath+'/view/person/personalFileLayer.html?id='+id;
+            var width='90%';
+            var high='90%';
+            var callback=function (){
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+        }
+        //嫌疑人列表
+        var dynamictableSuspect;
+        //列表部分
+        function searchSuspectList(type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictableSuspect = $("#dynamic-table-suspect").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 10,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                        /*"deferRender": true,*/
+                        "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : getRootPath_web()+"/elastic/searchSuspect",
+                            "type" : "post",
+                            "data":{
+                                param:type
+                            },
+                            async:true
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>证件类型</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>证件编号</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>联系电话</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>涉及人员类型</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param5','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>录入时间</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param6','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }}
+
+
+                        ]
+                    });
+            //logEntry("1","警情查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+
+        //笔录列表
+        var dynamictableNotes;
+        //笔录列表部分
+        function searchNotesList(type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictableSuspect = $("#dynamic-table-notes").DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 10,/*默认*/
+                    "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()+"/elastic/searchNotes",
+                        "type" : "post",
+                        "data":{
+                            param:type
+                        },
+                        async:true
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function(){
+                        this.api().column(0).nodes().each(function(cell, i) {
+                            cell.innerHTML =  i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件编号</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录名称</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录对象姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录对象证件号码</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录创建时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'param5','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }},
+                        {"sTitle":'<font>笔录记录地点</font>',"sWidth":"30%","sClass":"dt-left", 'data': 'param6','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }}
+                    ],
+                    "columnDefs": [{"sTitle":'<font>操作</font>',
+                        "sWidth":"8%",
+                        "data": "id",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets': [7],
+                        'render': function(data, type, row, meta) {
+//                            return  '<a href="#" class="operation" onclick="notesDetail(data)">详情</a>';
+                            var data="'"+data+"'";
+                            return  '<a href="#" class="operation" onclick="getSearchPermission('+data+',\''+ 4 + '\')">查看</a>';
+                        },
+                        'bSortable': false
+                    }]
+                });
+            //logEntry("1","警情查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+
+
+        //笔录详情弹框
+        function notesDetail(id) {
+            var name='笔录详情';
+            var url=projectPath+'/view/notes/notesDetailLayer.html?id='+id;
+            var width='90%';
+            var high='90%';
+            var callback=function (){
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+        }
+
+        //住宿列表
+        var dynamictableNotes;
+        //住宿列表部分
+        function searchHotelList(type) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictableSuspect = $("#dynamic-table-hotel").DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 10,/*默认*/
+                    "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()+"/elastic/searchHotel",
+                        "type" : "post",
+                        "data":{
+                            param:type
+                        },
+                        async:true
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function(){
+                        this.api().column(0).nodes().each(function(cell, i) {
+                            cell.innerHTML =  i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'param1','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>性别</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'param2','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>身份证号</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'param3','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>行政区划</font>',"sWidth":"21%","sClass":"dt-left", 'data': 'param4','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>入住旅馆</font>',"sWidth":"14%","sClass":"dt-left", 'data': 'param5','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>入住时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'param6','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }},
+                        {"sTitle":'<font>退房时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'param7','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }}
+                    ],
+                    "columnDefs": [{"sTitle":'<font>操作</font>',
+                        "sWidth":"6%",
+                        "data": "id",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets': [8],
+                        'render': function(data, type, row, meta) {
+//                            return  '<a href="#" class="operation" onclick="hotelDetail(data)">详情</a>';
+                            var data="'"+data+"'";
+                            return  '<a href="#" class="operation" onclick="getSearchPermission('+data+',\''+ 5+ '\')">查看</a>';
+                        },
+                        'bSortable': false
+                    }]
+                });
+            //logEntry("1","警情查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+
+
+        //住宿详情弹框
+        function hotelDetail(id) {
+            var name='住宿详情';
+            var url=projectPath+'/view/hotel/hotelDetailLayer.html?id='+id;
+            var width='90%';
+            var high='75%';
+            var callback=function (){
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+        }
+
+    </script>
+</body>
+</html>

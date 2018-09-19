@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskcnf>
+    <!-- /home/cgs_col/cgs_temp -->
+    <!-- /home/cgs_col/cgs_data -->
+    <!--
+     aj.AB in ('030807','050800','060137','060136','040109','050900','060801','060810','060147','040103','051000','060132','323202','3B0001','020511','310303','372101','372103','372099')
+     -->
+    <cnf name="AJ" enable="true" begintime="2016-01-01 00:00:00" endTime="2016-01-05 00:00:00" size="200" tofile="true"
+         dir_temp="D:\cgs_col/cgs_temp" dir_mv="D:\cgs_col/cgs_data" max_num="1000"
+         readTable="YB_ASJ_AJ" writeTable="ET_CASE"
+         readSql="
+                 SELECT *
+          FROM (SELECT A.*, ROWNUM RN
+                  FROM (select
+                       aj.AJBH caseNo,
+                       aj.SL_BJSLH alarmNo,
+                       aj.AJMC caseTitle,
+                       aj.AJSTATE caseState,
+                       aj.AB caseClass,
+                       aj.BZ caseRemarks,
+                       aj.ZYAQ caseDesc,
+                       aj.FADD detalAddress,
+                       aj.FASJCZ happenTimeUp,
+                       aj.FASJZZ happenTimeDown,
+                       aj.SLFAQH zoneCode,
+                       aj.SLJSDW acceptUnitCode,
+                       aj.SL_LRSJ acceptTime,
+                       aj.ZBDW hostUnitCode,
+                       aj.AJZBRY sponsorCode,
+                       aj.AJBARP sponsorPhone,
+                       aj.AJXBRY assistantCode,
+                       aj.LADW reserveC,
+                       aj.AJLARY reserveA,
+                       aj.CREATEDTIME creatTime,
+                       aj.LASTUPDATEDTIME modifyTime
+                          from fzppt.YB_ASJ_AJ aj
+                         where aj.AB in ('030807','050800','060137','060136','040109','050900','060801','060810','060147','040103','051000','060132','323202','3B0001','020511','310303','372101','372103','372099')
+                           AND aj.CREATEDTIME &gt;=
+                               to_date('%s', 'YYYY-MM-DD hh24:mi:ss')
+                           AND aj.CREATEDTIME &lt;=
+                               to_date('%s', 'YYYY-MM-DD hh24:mi:ss')) A
+                 WHERE ROWNUM &lt;= %d)
+         WHERE RN &gt;= %d"
+    />
+
+    <cnf name="JQ" enable="true" begintime="2016-01-01 00:00:00" endTime="2018-02-11 00:00:00" size="200" tofile="true"
+         dir_temp="D:\cgs_col/cgs_temp" dir_mv="D:\cgs_col/cgs_data" max_num="1000"
+         readTable="YB_ASJ_JQ" writeTable="ET_ALARM"
+         readSql="  SELECT *
+          FROM (SELECT A.*, ROWNUM RN
+                  FROM ( select
+                     jq.AJBH alarmNo,
+                     jq.SLJJRY reserveA,
+                     jq.SLJJRY_CN reserveB,
+                     jq.SLJJDW reserveC,
+                     jq.SLJJDW_CN reserveD,
+                     jq.SLJJSJ alarmTime,
+                     jq.RESERVATION04 alarmPersonName,
+                     jq.FADD locationCase,
+                     jq.ZYAQ alarmDesc,
+                     jq.CREATEDTIME creatTime,
+                     jq.LASTUPDATEDTIME modifyTime
+                   from fzppt.YB_ASJ_JQ jq
+                    where 1 = 1
+                           AND jq.ajbh in ( %s )
+          ) A
+                 WHERE ROWNUM &lt;= %d)
+         WHERE RN &gt;= %d"
+    />
+
+    <cnf name="RYQK" enable="true" begintime="2016-01-01 00:00:00" endTime="2016-01-05 00:00:00" size="200" tofile="true"
+         dir_temp="D:\cgs_col/cgs_temp" dir_mv="D:\cgs_col/cgs_data" max_num="1000"
+         readTable="YB_ASJ_RYSAQK" writeTable="AP_SCARELA"
+         readSql="  SELECT *
+          FROM (SELECT A.*, ROWNUM RN
+                  FROM ( select
+                     qk.SYSTEMID id,
+                     qk.AJBH caseNo,
+                     qk.RYBH staffId,
+                     qk.RYLX staffType,
+                     qk.RYSTATE staffState,
+                     qk.CREATEDTIME creatTime,
+                     qk.LASTUPDATEDTIME modifyTime
+                   from fzppt.YB_ASJ_RYSAQK qk
+                    where 1 = 1
+                           AND qk.AJBH in ( %s )
+          ) A
+                 WHERE ROWNUM &lt;= %d)
+         WHERE RN &gt;= %d"
+    />
+
+    <cnf name="XYR" enable="true" begintime="2016-01-01 00:00:00" endTime="2018-02-11 00:00:00" size="200" tofile="true"
+         dir_temp="D:\cgs_col/cgs_temp" dir_mv="D:\cgs_col/cgs_data" max_num="1000"
+         readTable="YB_ASJ_XYRDJ" writeTable="AP_STAFF"
+         readSql="  SELECT *
+          FROM (SELECT A.*, ROWNUM RN
+                  FROM ( select
+                     xyr.SYSTEMID staffId,
+                     xyr.XM name,
+                     xyr.ZJZL idcardType,
+                     xyr.ZJHM idcardNum,
+                     xyr.XB gender,
+                     xyr.LXDH phoneNum,
+                     xyr.LRDW entryUnit,
+                     xyr.LRR entry,
+                     xyr.BZ remark,
+                     xyr.CREATEDTIME creatTime,
+                     xyr.LASTUPDATEDTIME modifyTime
+                   from fzppt.YB_ASJ_XYRDJ xyr
+                    where 1 = 1
+                           AND xyr.SYSTEMID in ( %s )
+          ) A
+                 WHERE ROWNUM &lt;= %d)
+         WHERE RN &gt;= %d"
+    />
+
+</taskcnf>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布人员布控</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css"/>
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css"/>
+    <link rel="stylesheet" href="../css/case.css"/>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        //获取人员的ID
+
+        $(window).ready(function () {
+            var thisURL = document.URL;
+            //console.log(thisURL);
+            var getval = thisURL.split('?')[1];
+            var params = getval.split('&');
+            var id = params[0].split("=")[1];
+            var type = params[1].split("=")[1];
+            selectDicCommon(12, 'bCtrlGender');
+            findSuspectById(id);
+            $("#isIntl").val(type);
+        });
+
+
+        //内容填充
+        function findSuspectById(ids) {
+            $.ajax({
+                type: 'POST',
+                url: getRootPath_web() + "suspecthandler/handlerfind",//发送请求
+                data: {id: ids},
+                dataType: "json",
+                success: function (data) {
+                    //alert("11111111");
+                    //console.log(data);
+                    //var json  = eval('('+data.data+')');
+                    var context = data.data;
+                    console.log(data);
+                    //var jsonObj = json.data;
+                    $("#bCtrlPCode").val(context.suspectId);
+                    $("#bCtrlName").val(context.name);
+                    $("#bCtrlIdcardNum").val(context.idcardNum);
+                    $("#bCtrlGender").val(context.gender);
+                    $("#bCtrlPClass").val(context.suspectClass);
+                    if (context.mobilephone != null && context.mobilephone != '') {
+                        $("#bCtrlPhone").val(context.mobilephone);
+                    } else if (context.telephone != null && context.telephone != '') {
+                        $("#bCtrlPhone").val(context.telephone);
+                    }
+
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>人员关注</span>
+            </li>
+        </ul>
+    </div>
+    <!--案件基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs"
+             style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">人员信息</span>
+            </div>
+        </div>
+        <!--布控人员编号、布控人姓名、布控人身份证-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span class="required">*</span>
+                    <span>布控人员编号</span>
+                </div>
+                <div class="col-md-8 caseInput">
+                	<input type="text" id="isIntl" hidden="hidden">
+                    <input type="text" id="bCtrlPCode" required oninvalid="setCustomValidity('请输入布控人员编号！');"
+                           oninput="setCustomValidity('');" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span class="required">*</span>
+                    <span>布控人姓名</span>
+                </div>
+                <div class="col-md-8 caseInput">
+                    <input type="text" id="bCtrlName" required oninvalid="setCustomValidity('请输入布控人姓名！');"
+                           oninput="setCustomValidity('');" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span class="required">*</span>
+                    <span>布控人身份证</span>
+                </div>
+                <div class="col-md-8 caseInput lastInput">
+                    <input type="text" id="bCtrlIdcardNum" required oninvalid="setCustomValidity('请输入布控人身份证！');"
+                           oninput="setCustomValidity('');" readonly="readonly"/>
+                </div>
+            </div>
+        </div>
+        <!--布控人性别-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>布控人性别</span>
+                </div>
+                <div class="col-md-8 caseInput">
+                    <select class="main-container" id="bCtrlGender">
+                        <!-- <option value="">-&#45;&#45; 请选择 -&#45;&#45;</option>
+                         <option value="1201">男</option>
+                         <option value="1200">女</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>布控人电话</span>
+                </div>
+                <div class="col-md-8 caseInput lastInput">
+                    <input type="text" id="bCtrlPhone"  readonly="readonly"/>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>布控人车牌号</span>
+                </div>
+                <div class="col-md-8 caseInput lastInput">
+                    <input type="text" id="bCtrlPlateNum"/>
+                </div>
+            </div>
+        </div>
+        <input type="text" style="display: none" value="" id="bCtrlPClass">
+        <!--提交栏-->
+        <div class="row breadcrumbs titleBadge no-padding">
+            <div class="col-md-12 searchBtn" style="border: none">
+                <button class="btn btn-primary" type="button" id="etcontrl_submit" onclick="addCtrl()"> 提交</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    function addCtrl() {
+        var checkVoArr = new Array();
+        checkVoArr.push(new inputCheckVo("bCtrlPCode"));
+        checkVoArr.push(new inputCheckVo("bCtrlName"));
+        checkVoArr.push(new inputCheckVo("bCtrlIdcardNum"));
+        //checkVoArr.push(new inputCheckVo("bCtrlGender"));
+        //checkVoArr.push(new inputCheckVo("bCtrlPhone"));
+        //checkVoArr.push(new inputCheckVo("bCtrlPlateNum"));
+        if (!checkInputs(checkVoArr)) {
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: getRootPath_web() + "ctrlHandler/ctrsave",
+            data: {
+                bCtrlPCode: $("#bCtrlPCode").val(),
+                bCtrlName: $("#bCtrlName").val(),
+                bCtrlIdcardNum: $("#bCtrlIdcardNum").val(),
+                bCtrlGender: $("#bCtrlGender").val(),
+                bCtrlPhone: $("#bCtrlPhone").val(),
+                bCtrlPlateNum: $("#bCtrlPlateNum").val(),
+                bCtrlPClass: $("#bCtrlPClass").val(),
+                isIntl : $("#isIntl").val()
+            },
+            cache: false, 
+			async: false, 
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.data == 0) {
+                    alert("存储失败！身份证号重复");
+                }
+            }
+        });
+//        关闭弹框刷新页面
+        window.parent.location.reload();
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+
+</script>
+</body>
+</html>
+

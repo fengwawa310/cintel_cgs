@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>刑侦画布</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <link type="text/css" rel="stylesheet" href="css/awesome.css"/>
+    <link type="text/css" rel="stylesheet" href="css/zTreeStyle.css"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css" />
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/datepicker/WdatePicker.js"></script>
+    <script src="assets/js/ace-extra.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script src="assets/js/layer/layer.js"></script>
+
+
+    <script src="js/common.js"></script>
+    <link rel="stylesheet" href="css/commonStyle.css" />
+    <style>
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+            background-color: #4874C2;
+            border-color: #cedfff;
+            border-top: 1px solid #cedfff;
+            margin-top: 0px;
+            box-shadow: none;
+        }
+        .textDiv{
+            height: 100%;
+            line-height: 72px;
+            text-align: center;
+        }
+        .textSpanDiv{
+            font-weight: bold;
+            font-size: 21px;
+            color: #4175C7;
+            float: right;
+            text-shadow:2px 2px 5px grey;
+        }
+        .mainLastDiv{
+            position: absolute;
+            width: 96%;
+            bottom: 14px;
+        }
+        .mainSelect{
+            width: 90%;
+            border: 1px solid #D1E1FF;
+        }
+    </style>
+</head>
+<body id='body'>
+<div class="main-container row breadcrumbs no-padding" id="main-container">
+    <div id="right_nav" class="col-md-12 no-padding" style="height:100%;width: 100%;">
+        <iframe id="personIframe" src="graph_demo/graph_demo/caseInference.html" style="height: 100%;width: 100%"
+                scrolling="auto" frameborder="0" reload="">
+        </iframe>
+    </div>
+</div>
+<script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/jquery.ztree.core.js"></script>
+<script src="js/jquery.ztree.excheck.js"></script>
+<script src="js/jquery.ztree.exedit.js"></script>
+ <script type="text/javascript" src="plugins/webuploader/cropper/jquery.js"></script> 
+<script src="assets/js/layer/layer.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var userName = "${user.name}";
+        menuThing();
+        //图标数量更新
+        MessageTimeTask();
+        sysNoticeTask();//系统消息定时查询
+
+        $('#main-container').height($(window).height() - 112);
+        // reloadZTree();
+        // reloadZTree02();
+    });
+
+
+    //点击事件
+    $(".zhan").click(function () {
+        if( $("#left_nav").css("display") != "none" ){
+            $("#left_nav").hide();
+            $(".zhan").text(">");
+            $("#right_nav").css({
+                "width":"100%"
+            })
+            $(".zhan").css({
+                "left":"0"
+            })
+        }else{
+            $("#left_nav").show();
+            $(".zhan").text("<");
+            $("#right_nav").css({
+                "width":"80%"
+            })
+            $(".zhan").css({
+                "left":"20%"
+            })
+        }
+
+    })
+    var zTree;
+    // 节点点击事件
+    function onTreeOnClick(event, treeId, treeNode) {
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web() + "suspecthandler/suspectRole",
+            data: {"suspectId":treeNode.id},
+            dataType: "json",
+            success: function (data) {
+                //构造跳转的人员主档的url
+                var personHref = "person/personalFileLayer.html?personID=" + treeNode.id;
+                //判断是否进行跳转
+                if (treeNode.type == "1") {
+                    if(data.data.permissionCode)
+                    {
+                        //刷新人员全息档案
+                        if(!(treeNode.pId==null||treeNode.pId=="null")){
+                            $('#personIframe').attr("src", personHref);
+                        }
+                       return;
+                   }
+                   window.parent.layer.confirm('您没有查看该档案的权限', {
+                       btn: ['确定'] //按钮
+                   }, function(){
+                       window.parent.layer.closeAll();
+                   });
+               }
+           }
+       });
+    }
+    var setting = {
+        view: {
+            selectedMulti: false,
+            showLine:true,
+            addDiyDom: addDiyDom,
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            onClick: onTreeOnClick,
+        }
+    };
+
+    //文字过长时显示省略号
+    function addDiyDom(treeId, treeNode) {
+        var spaceWidth = 5;
+        var switchObj = $("#" + treeNode.tId + "_switch"),
+            icoObj = $("#" + treeNode.tId + "_ico");
+        switchObj.remove();
+        icoObj.parent().before(switchObj);
+        var spantxt = $("#" + treeNode.tId + "_span").html();
+        if (spantxt.length > 9) {
+            spantxt = spantxt.substring(0, 9) + "...";
+            $("#" + treeNode.tId + "_span").html(spantxt);
+        }
+    }
+
+    // 动态获取后台数据使用
+    function reloadZTree() {
+        var paramVo =
+            {
+                paramStr: $('#queryParam').val(),
+                treeType: $('input:radio:checked').val()
+            };
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web() + "suspecthandler/listTreeNodes",
+            data: paramVo,
+            dataType: "json",
+            success: function (data) {
+                if (data.data.level != 4) {
+                    if (data.data){
+                        $('#errTxt').hide();
+                        $('#personTree').show();
+                        zNodes = data.data.tree;
+                        for (var i = 0, len = zNodes.length; i < len; i++) {
+                            var node = zNodes[i];
+                            node.icon = getRootPath_web() + node.icon ;
+                        }
+                        $.fn.zTree.init($("#personTree"), setting, zNodes);
+                        zTree = $.fn.zTree.getZTreeObj("personTree");
+                    }else{
+                        $('#errTxt').show();
+                        $('#personTree').hide();
+                    }
+                }
+            }
+        });
+    }
+
+
+
+    //新增案警研判的tab页面
+    var zTree02;
+    // 节点点击事件
+    function onTreeOnClick02(event, treeId, treeNode) {
+        if(treeNode.pId != "0" && treeNode.pId != null){
+            //构造跳转的人员主档的url
+            var name='任务详情';
+            var url=getRootPath_web()+'/view/judge/judgeDetail.html?id='+treeNode.id+"$caseNo="+treeNode.caseNo+"$judgeType="+treeNode.judgeType+"$canJudge=1";
+            var width='90%';
+            var high='100%';
+            var callback=function (){
+//            findSelect();
+            };
+            //弹框
+            window.parent.Layer.layOpen(name,url,width,high,callback);
+        }
+        //判断是否进行跳转
+        // if (treeNode.type == "1") {
+        //     if(treeNode.permissionCode == 1)
+        //     {
+        //         //刷新人员全息档案
+        //         $('#personIframe').attr("src", personHref);
+        //         return;
+        //     }
+        //     window.parent.layer.confirm('您没有查看该档案的权限', {
+        //         btn: ['确定'] //按钮
+        //     }, function(){
+        //         window.parent.layer.closeAll();
+        //     });
+        // }
+    }
+    var setting02 = {
+        view: {
+            selectedMulti: false,
+            showLine:true,
+            addDiyDom: addDiyDom,
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            onClick: onTreeOnClick02,
+        }
+    };
+
+    // 动态获取后台数据使用
+    function reloadZTree02() {
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web() + "etJudgeflowHan/selectEJFListFastEn",
+            // data: paramVo,
+            dataType: "json",
+            success: function (data) {
+                 if (data){
+                     $('#errTxt02').hide();
+                     $('#caseTree').show();
+                     var zNodes = data;
+                     for (var i = 0, len = zNodes.length; i < len; i++) {
+                         var node = zNodes[i];
+                         node.icon = getRootPath_web() + node.icon ;
+                     }
+                     $.fn.zTree.init($("#caseTree"), setting02, zNodes);
+                     zTree02 = $.fn.zTree.getZTreeObj("caseTree");
+                 }else{
+                     $('#errTxt02').show();
+                     $('#caseTree').hide();
+                 }
+            },
+            error:function(data){
+            	console.log("~++~~"+JSON.stringify(data));
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

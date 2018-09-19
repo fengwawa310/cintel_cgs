@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>重点人员录入和编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+
+    <!--日期插件-->
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/keyPersonnelEntry.css" />
+
+    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="../assets/css/chosen.css" />
+
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="../js/ajaxfileupload.js"></script>
+    <style>
+        .lastInput{
+            border-right: none;
+        }
+        .iconStyle{
+            font-weight: bold;
+            font-size: large
+        }
+        .caseInput{
+            height: 30px;
+            border-top: none;
+            border-left:none;
+            background-color: white;
+            min-height: 30px;
+            line-height: 30px;
+            padding: 0;
+            color: #0A5CA0 !important;
+        }
+        .searchCon_2{
+            padding: 4px 4px 4px 4px;
+            border: 1px solid #cedfff;
+            /*border-right: none;*/
+            border-left: none;
+            border-top:none;
+        }
+        .searchCon_2 input, .searchCon_2 select{
+            width: 100%;
+            color: #00559c;
+            height: 25px;
+            border-radius: 0;
+            border: 1px solid #cedfff;
+            font-size: 12px;
+        }
+        .searchCon_2 .searchTime{
+            width: 45%;
+            display: inline-block;
+        }
+        .searchTitle_2 {
+            height: 34px;
+            line-height: 34px;
+            background: #f7fbff;
+            border: 1px solid #cedfff;
+            text-align: left;
+            border-left: none;
+            border-top: none;
+        }
+        .col-md-10{
+             padding-left: 0px;
+        }
+        .ace-file-multiple .file-label {
+            height: 118px;
+        }
+        .ace-file-multiple .file-label .file-name {
+            position: relative;
+            display: block;
+            padding: 0;
+            height: 153px;
+        }
+
+        #editImg{
+            width: 65%;height: 132px;padding: 1%;margin: 1% auto;
+        }
+        #editImg img{
+            width:90%;
+            height: 80%;
+        }
+        .border{
+            width:90%;
+            height: 80%;
+            border:1px solid #D1E1FF;
+        }
+    </style>
+</head>
+<body id="body">
+<div class="main-container" id="main-container">
+    <div class="main-content">
+        <div class="page-content">
+
+            <div class="row-container searchAll">
+                <div class="col-md-12 search-title">
+                    <p>
+                        基本信息
+                    </p>
+                </div>
+                <!--重点人信息-->
+                <form id="my_suspect_form">
+                    <div class="col-md-10">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone">
+                                    <input type="hidden" id="id" name="id"><!--重点人员id隐藏-->
+                                    <input type="hidden" id="suspectId" name="suspectId">
+                                    <p>
+                                        <span class="required">*</span> 姓名:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon ">
+                                    <input id="name" name="name" class="verification" type="text" class="form-control" placeholder="请输入名称"  >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         绰号:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon rightBorder">
+                                    <input id="byname" name="byname" type="text" class="form-control" placeholder="请输入绰号" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle ">
+                                    <p>
+                                        <span class="required">*</span>  身份证号:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon ">
+                                    <input id="idcardNum" name="idcardNum"  class="verification" type="text" class="form-control" placeholder="请输入身份证号"  >
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone">
+                                    <p>
+                                         出生日期:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="birthdateStr" name="birthdateStr" type="text"    placeholder="请输入出生日期" oninvalid="setCustomValidity('请输入出生日期！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'});"  oninput="setCustomValidity('');"/>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         性别:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon rightBorder">
+                                    <select id="gender" name="gender"   class="form-control" placeholder="请选择人员性别"  >
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         民族:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="nation" name="nation" type="text" class="form-control" placeholder="请输入民族" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone">
+                                    <p>
+                                         文化程度:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="educationDegree" name="educationDegree" type="text" class="form-control" placeholder="请输入文化程度" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         籍贯:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="origin" name="origin" type="text" class="form-control" placeholder="请输入籍贯" >
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         户籍地址:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="permanet" name="permanet" type="text" class="form-control" placeholder="户籍地址" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone">
+                                    <p>
+                                         现住址:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon rightBorder">
+                                    <input id="permanetNow" name="permanetNow" type="text" class="form-control" placeholder="现住址" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone borderBnone">
+                                    <p>
+                                        重点人员状态:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon borderBnone">
+                                    <select id="suspectClass" name="suspectClass"   class="form-control" placeholder="请选择重点人员状态"  >
+                                        <option value="">-请选择-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderBnone">
+                                    <p>
+                                        重点人员性质:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon borderBnone rightBorder">
+                                    <select id="suspectType" name="suspectType"   class="form-control" placeholder="请选择重点人员性质" >
+                                        <option value="">-请选择-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         工作单位:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="work" name="work" type="text" class="form-control" placeholder="工作单位" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         职业:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="occupation" name="occupation" type="text" class="form-control" placeholder="请输入职业" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle borderLnone">
+                                    <p>
+                                         身高:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="height" name="height" type="text" class="form-control" placeholder="请输入身高" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         体型:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="shape" name="shape" type="text" class="form-control" placeholder="请输体型" >
+                                </div>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         血型:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input id="bloodType" name="bloodType"  type="text" class="form-control" placeholder="请输入血型" >
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-md-2" >
+                        <div class="editImg"id="editImg">
+                            <div class="border">
+                                <img src="" alt="" id="my_img">
+                            </div>
+                            <input type="button " class="btn btn-primary search-btn" style="width:60%;margin: 3px 0;" onclick="changeImg();" value="选择图片"/>
+                            <!--<button class="btn btn-primary search-btn" onclick="changeImg();">选择图片</button>-->
+                            <input  name="upSomeFile" class="hide" type="file" id="upSomeFile" onchange="upFile(this.value)"/>
+                            <input id="url" name="headPhotoUrl" type="hidden">
+                        </div>
+                    </div>
+                    <!--<div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         手机:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input  type="text" class="form-control" placeholder="请输入手机号码" id="mobilephone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5 searchTitle">
+                                    <p>
+                                         座机:
+                                    </p>
+                                </div>
+                                <div class="col-md-7 searchCon">
+                                    <input  type="text" class="form-control" placeholder="请输入座机号码" id="telephone">
+                                </div>
+                            </div>
+                        </div>-->
+                    <div class="col-md-12" id="phone_div" style="border-top:1px solid #cedfff">
+                        <div class="row">
+                            <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">
+                                <p>
+                                     联系方式:
+                                </p>
+                            </div>
+                            <div class="col-md-9 searchCon" style="width:80%;">
+                                <input id="mobilephone1" name="mobilephone" type="text" class="form-control" placeholder="请输入联系方式" />
+                            </div>
+                            <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">
+                                <span class="glyphicon-plus iconStyle"  onclick="addPhone();"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="weixin_div">
+                        <div class="row">
+                            <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">
+                                <p>
+                                     微信号:
+                                </p>
+                            </div>
+                            <div class="col-md-9 searchCon" style="width:80%;">
+                                <input id="weixinNo1" name="weixinNo" type="text" class="form-control" placeholder="请输入微信号"/>
+                            </div>
+                            <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">
+                                <span class="glyphicon-plus iconStyle"  onclick="addWeiXin();"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="qq_div">
+                        <div class="row">
+                            <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">
+                                <p>
+                                     QQ号:
+                                </p>
+                            </div>
+                            <div class="col-md-9 searchCon" style="width:80%;">
+                                <input id="qqNo1" name="qqNo" type="text" class="form-control" placeholder="请输入QQ号" />
+                            </div>
+                            <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">
+                                <span class="glyphicon-plus iconStyle"  onclick="addQQ();"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 searchTitle borderLnone">
+                                <p>
+                                     人员类型:
+                                </p>
+                            </div>
+                            <div class="col-md-7 searchCon">
+                                &lt;!&ndash;  <input  type="select" class="form-control" placeholder="请输入名称"> &ndash;&gt;
+                                <select id="suspectClass" name="suspectClass"   class="form-control" placeholder="请选择人员类别"   >
+                                    <option value="">-请选择-</option>
+                                    <option value="1300">重点人员</option>
+                                    <option value="1302">在逃人员</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <!--<div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 searchTitle">
+                                <p>
+                                     录入人警号:
+                                </p>
+                            </div>
+                            <div class="col-md-7 searchCon">
+                                <input id="entryPoliceNo" name="entryPoliceNo"  type="text" class="form-control" placeholder="请输入录入人警号">
+                            </div>
+                        </div>
+                    </div>-->
+                    <!--<div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-5 searchTitle borderLnone">
+                                <p>
+                                     是否布控:
+                                </p>
+                            </div>
+                            <div class="col-md-7 searchCon">
+                                <select id="isIntl" name="isIntl"   class="form-control" placeholder="请选择布控"   >
+                                    <option value="">-请选择-</option>
+                                    <option value="0">是</option>
+                                    <option value="1">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-12 searchTitle" style="border-right: none;">-->
+                                <!--<p>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-12 searchTitle" style="border-right: none;">-->
+                                <!--<p>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;min-height: 80px;line-height: 80px">
+
+                                <span>备注:</span>
+                            </div>
+                            <div class="col-md-10 searchCon caseInput lastInput" style="width:86.05%;min-height: 80px">
+                                <textarea id="demo" name="demo" type="text" style="width: 98%;height: 95%">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--车辆信息-->
+                <div class="col-md-12 search-title">
+                    <div class="row">
+                        <div class="col-md-11" style="text-align: left">
+                            <span class="multiTitle">车辆信息</span>
+                        </div>
+                        <!--添加的图标-->
+                        <div class="col-md-1" style="text-align: right; width:8.05%;">
+                            <span class="glyphicon-plus iconStyle"  onclick="addVehicle();"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-1 searchTitle_2 borderLnone" >
+                            <span class="required">*</span>
+                            <span>车牌号</span>
+                        </div>
+                        <div class="col-md-3 searchTitle_2" >
+
+                            <span>驾驶证号</span>
+                        </div>
+                        <div class="col-md-1 searchTitle_2" >
+
+                            <span>车辆颜色</span>
+                        </div>
+                        <div class="col-md-2 searchTitle_2" >
+
+                            <span>车型</span>
+                        </div>
+                        <div class="col-md-4 searchTitle_2" >
+
+                            <span>备注</span>
+                        </div>
+                        <div class="col-md-1 searchTitle_2" style="border-right: none;">
+                            <span>操作</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="vehicle_div">
+                    <div class="row">
+                    <!--  默认进入页面不需要必须输入车辆信息，如需要添加车辆信息，点击+按钮添加-->
+                        <!-- <form id="my_vehicle_form1">
+                            <input id="id1" name="id"   type="hidden" class="form-control" placeholder="请输入id">
+                            <div class="col-md-1 searchCon_2 " style="border-left: none;" >
+                                <input id="plateNum1" name="plateNum" class="verification"  type="text" class="form-control" placeholder="请输入车牌号">
+                            </div>
+                            <div class="col-md-3 searchCon_2">
+                                <input id="driverLicense1" name="driverLicense"  type="text" class="form-control" placeholder="请输入驾驶证号">
+                            </div>
+                            <div class="col-md-1 searchCon_2" >
+                                <input id="carColor1" name="carColor"  type="text" class="form-control" placeholder="请输入车辆颜色">
+                            </div>
+                            <div class="col-md-2 searchCon_2" >
+                                <input id="carType1" name="carType"  type="text" class="form-control" placeholder="请输入车型">
+                            </div>
+                            <div class="col-md-4 searchCon_2" >
+                                <input id="demo1" name="demo"  type="text" class="form-control" placeholder="请输入备注">
+                            </div>
+                            <div class="col-md-1 searchTitle" style="border-left: none;border-right: none;" >
+                                <span></span>
+                            </div>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button class="btn btn-primary search-btn" type="button" id="suspect_submit"> 提交 </button>
+</div>
+
+
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../assets/js/chosen.jquery.min.js"></script>
+<script src="../assets/js/jquery.autosize.min.js"></script>
+<script src="../assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="../assets/js/jquery.maskedinput.min.js"></script>
+
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<script type="text/javascript">
+    //初始化
+   $(function(){
+
+       /*重点人员id获取---开始---*/
+       var thisURL = document.URL;
+       var getval = thisURL.split('?')[1];
+       if(getval!=undefined&&getval!=null&&getval!=""){
+           if(getval.indexOf("id")!=-1&&getval.indexOf("suspectId")!=-1){
+               var idTem = getval.split("&")[0];
+               var id = idTem.split("=")[1];
+               $("#id").val(id);
+                //       console.info("id...."+id)
+               var suspectIdTem = getval.split("&")[1];
+               var suspectId = suspectIdTem.split("=")[1];
+               $("#suspectId").val(suspectId);
+               //       console.info("suspectId...."+suspectId)
+               /*重点人员id获取---结束---*/
+               //查询重点人员信息
+                findpersonById();
+           } else{
+               menuThing();
+           }
+       }
+       //性别
+       selectDicCommon(12,"gender");
+       //重点人员状态
+       selectDicCommon(42,"suspectClass");
+       //重点人员性质
+       selectDicCommon(43,"suspectType");
+
+        $('#suspect_submit').click(function(){
+            //获取重点人员基本信息
+            var my_suspect_form=$("#my_suspect_form");
+            var suspect = Common.validateForm(my_suspect_form);
+            if(suspect==""){
+                return;
+            }
+            var parse = JSON.parse(suspect);
+            //联系方式集合
+            var phoneList = new Array();
+            $("input[name='mobilephone']").each(function() {
+                //将选中的id放进list集合里
+                phoneList.push($(this).val());
+            });
+            //联系方式集合
+            var weixinNoList = new Array();
+            $("input[name='weixinNo']").each(function() {
+                //将选中的id放进list集合里
+                weixinNoList.push($(this).val());
+            });
+            //联系方式集合
+            var qqNoList = new Array();
+            $("input[name='qqNo']").each(function() {
+                //将选中的id放进list集合里
+                qqNoList.push($(this).val());
+            });
+            parse["mobilephone"] = phoneList.join('#');
+            parse["weixinNo"] = weixinNoList.join('#');
+            parse["qqNo"] = qqNoList.join('#');
+            suspect=JSON.stringify(parse);
+//            console.log(suspect);
+            //获取重点人员车辆信息
+            var vehicleList = new Array();
+            for(var i=1;i<=vehicle;i++){
+                var my_vehicle = $("#my_vehicle_form"+i);
+                if(my_vehicle!=undefined&&my_vehicle!=null&&my_vehicle!=""){
+                    var my_vehicleStr = Common.validateForm(my_vehicle);
+                    if(my_vehicleStr==""){
+                        return;
+                    }
+                    vehicleList.push(my_vehicleStr);
+                }
+            }
+            // 添加
+             $.ajax({
+                 type: "POST",
+                 url: projectPath+"suspecthandler/handlersave",
+                 data: {"suspect":suspect,"vehicles":"["+vehicleList.toString()+"]"},
+                 dataType: "json",
+                 success: function(data){
+//                     console.log(data);
+                     if(data.data.flag){
+                         layer.msg(data.data.msg, {
+                             icon: 1,
+                             time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                         }, function(){
+                             window.parent.location.reload();
+                             var index=parent.layer.getFrameIndex(window.name);
+                             parent.layer.close(index);
+                         });
+                     }else{
+                         layer.msg(data.data.msg, {
+                             icon: 2,
+                             time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                         });
+                     }
+
+                 },
+                	 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                		 layer.msg('存储成功!', {
+                             icon: 1,
+                             time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                         }, function(){
+                        	 window.parent.location.reload();
+                             var index=parent.layer.getFrameIndex(window.name);
+                             parent.layer.close(index);
+                         });
+                 },
+             });
+        });
+    });
+    //点击回显图片触发选择文件弹框
+    function changeImg(){
+        $('#upSomeFile').click();
+    }
+   /*查询重点人员信息*/
+   function findpersonById(){
+//       window.parent.layer.load(1, {shade: [0.3, '#393D49']});
+       $("#idcardNum").attr("readonly",true)
+       var id=$("#id").val();
+       if(id!=undefined&&id!=null&&id!=""){
+//           alert(1);
+           $.ajax({
+               type: 'POST',
+               url: getRootPath_web()+"/suspecthandler/findPersonById?id="+id,//发送请求
+               dataType : "json",
+               success: function(data) {
+//                var json = JSON.parse(data.data);
+//                var json = eval('('+data.data+')');
+//                JSON.parse(jsonstr); //可以将json字符串转换成json对象
+//                JSON.stringify(caseObj); //可以将json对象转换成json对符串
+                   var json = $.parseJSON(data.data);
+                   //案件信息
+                   var caseObj = json.data.etSuspect;
+                   //回显图片地址
+                   var imgUrl=caseObj["headPhotoUrl"];
+                  	var fileName=imgUrl.split("$$")[1];
+                   //判断是否有回显图片
+                   /* var ImageName=imgUrl.split("/")[5];
+                   var ImageUrl=imgUrl.split("/")[5]; */
+                   if(imgUrl != null){
+                       $("#my_img").prop("src",projectPath+'fileCRUD/'+'downLoadFile?'+'fileName='+fileName+'&fileURL='+imgUrl);
+                   }else{
+
+                   }
+                   for (var prop in caseObj) {
+                       var value = caseObj[prop];
+//                   console.info("prop==="+prop);
+//                   console.info("value==="+value);
+//                   $('"#' + prop+'"').text((value== null ? "" : value));
+                       $("#my_suspect_form").find("[name='"+prop+"']").val((caseObj[prop]==null?"":caseObj[prop]));
+                   }
+                   /*车辆信息赋值*/
+                   var personList = json.data.etVehicles;
+//               $("#vehicle_div").html("")
+                   $.each(personList,function(i,n){
+                           addVehicle(function(x){
+                               for (var prop in n) {
+                                   var value = n[prop];
+                                   $("#my_vehicle_form"+x).find("[id='"+prop+x+"']").val((value==null?"":value));
+                               }
+                           })
+                      
+                   })
+
+                   /*电话赋值*/
+                   var mobilephone = caseObj.mobilephone.split("#");
+//               console.info("mobilephone"+mobilephone)
+                   $.each(mobilephone,function(i,n){
+//                   console.info(n)
+                       if(i==0){
+                           $("#mobilephone1").val(n);
+                       }else {
+                           editPhone(n,function(phone){
+                               $("#mobilephone"+phone).val(n);
+                           });
+                       }
+
+                   })
+                   /*微信号--*/
+                   var weixinNos = caseObj.weixinNo.split("#");
+                   $.each(weixinNos,function(i,n){
+//                   console.info(n)
+                       if(i==0){
+                           $("#weixinNo1").val(n);
+                       }else {
+                           addWeiXin(function(weixin){
+                               $("#weixinNo"+weixin).val(n);
+                           });
+                       }
+
+                   })
+
+                   /*QQ号--*/
+                   var qqNos = caseObj.qqNo.split("#");
+                   $.each(qqNos,function(i,n){
+//                   console.info(n)
+                       if(i==0){
+                           $("#qqNo1").val(n);
+                       }else {
+                           addQQ(function(qq){
+                               $("#qqNo"+qq).val(n);
+                           });
+                       }
+
+                   })
+               }
+           });
+       }
+   }
+    //添加联系方式
+    var phone=1;
+    function editPhone(n,callback){
+        ++phone;
+        var html=[];
+        html.push('<div class="row">');
+        html.push('    <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">');
+        html.push('        <p>');
+        html.push('             联系方式:');
+        html.push('        </p>');
+        html.push('    </div>');
+        html.push('    <div class="col-md-9 searchCon" style="width:80%;">');
+        html.push('        <input id="mobilephone'+phone+'" name="mobilephone" type="text" class="form-control" placeholder="请输入联系方式" />');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">');
+        html.push('        <span class="glyphicon-minus iconStyle" style="color: black" onclick="deleteHtml(this)"></span>');
+        html.push('    </div>');
+        html.push('</div>');
+        $("#phone_div").append(html.join(''));
+        return callback(phone);
+    }
+   //添加联系方式
+//    var phone=1;
+    function addPhone(){
+        ++phone;
+        var html=[];
+        html.push('<div class="row">');
+        html.push('    <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">');
+        html.push('        <p>');
+        html.push('             联系方式:');
+        html.push('        </p>');
+        html.push('    </div>');
+        html.push('    <div class="col-md-9 searchCon" style="width:80%;">');
+        html.push('        <input id="mobilephone'+phone+'" name="mobilephone" type="text" class="form-control" placeholder="请输入联系方式" />');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">');
+        html.push('        <span class="glyphicon-minus iconStyle" style="color: black" onclick="deleteHtml(this)"></span>');
+        html.push('    </div>');
+        html.push('</div>');
+        $("#phone_div").append(html.join(''));
+    }
+   //添加微信号
+    var weiXin=1;
+    function addWeiXin(callback){
+        ++weiXin;
+        var html=[];
+        html.push('<div class="row">');
+        html.push('    <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">');
+        html.push('        <p>');
+        html.push('             微信号:');
+        html.push('        </p>');
+        html.push('    </div>');
+        html.push('    <div class="col-md-9 searchCon" style="width:80%;">');
+        html.push('        <input id="weixinNo'+weiXin+'" name="weixinNo" type="text" class="form-control" placeholder="请输入微信号" />');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">');
+        html.push('        <span class="glyphicon-minus iconStyle" style="color: black" onclick="deleteHtml(this)"></span>');
+        html.push('    </div>');
+        html.push('</div>');
+        $("#weixin_div").append(html.join(''));
+        return callback(weiXin);
+    }
+   //添加QQ号
+    var qq=1;
+    function addQQ(callback){
+        ++qq;
+        var html=[];
+        html.push('<div class="row">');
+        html.push('    <div class="col-md-2 searchTitle borderLnone" style="width:13.95%;">');
+        html.push('        <p>');
+        html.push('             QQ号:');
+        html.push('        </p>');
+        html.push('    </div>');
+        html.push('    <div class="col-md-9 searchCon" style="width:80%;">');
+        html.push('        <input id="qqNo'+qq+'" name="qqNo" type="text" class="form-control" placeholder="请输入QQ号" />');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchTitle" style="width:6.05%;border-right: none;">');
+        html.push('        <span class="glyphicon-minus iconStyle" style="color: black" onclick="deleteHtml(this)"></span>');
+        html.push('    </div>');
+        html.push('</div>');
+        $("#qq_div").append(html.join(''));
+        return callback(qq);
+    }
+   //添加车辆
+    var vehicle=1;
+    function addVehicle(callback){
+        ++vehicle;
+        var html=[];
+        html.push('<div class="row">');
+        html.push('<form id="my_vehicle_form'+vehicle+'">');
+        html.push('        <input id="id'+vehicle+'" name="id"   type="hidden" class="form-control" placeholder="请输入id">');
+        html.push('    <div class="col-md-1 searchCon_2 " style="border-left: none;" >');
+        html.push('        <input id="plateNum'+vehicle+'" name="plateNum" class="verification"  type="text" class="form-control" placeholder="请输入车牌号">');
+        html.push('    </div>');
+        html.push('    <div class="col-md-3 searchCon_2">');
+        html.push('        <input id="driverLicense'+vehicle+'" name="driverLicense"  type="text" class="form-control" placeholder="请输入驾驶证号">');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchCon_2" >');
+        html.push('        <input id="carColor'+vehicle+'" name="carColor"  type="text" class="form-control" placeholder="请输入车辆颜色">');
+        html.push('    </div>');
+        html.push('    <div class="col-md-2 searchCon_2" >');
+        html.push('        <input id="carType'+vehicle+'" name="carType"  type="text" class="form-control" placeholder="请输入车型">');
+        html.push('    </div>');
+        html.push('    <div class="col-md-4 searchCon_2" >');
+        html.push('        <input id="demo'+vehicle+'" name="demo"  type="text" class="form-control" placeholder="请输入备注">');
+        html.push('    </div>');
+        html.push('    <div class="col-md-1 searchTitle" style="border-left: none;border-right: none;" >');
+        html.push('        <span class="glyphicon-minus iconStyle" style="color: black" onclick="deleteHtml(this)"></span>');
+        html.push('    </div>');
+        html.push('</form>');
+        html.push('</div>');
+        $("#vehicle_div").append(html.join(''));
+        return callback(vehicle);
+    }
+    //删除联系方式\微信号\QQ号
+    function deleteHtml(obj) {
+        $(obj).parent().parent().remove();
+    }
+
+</script>
+
+<!-- <![endif]-->
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+<!-- ace scripts -->
+
+<!--<script src="http://bootboxjs.com/bootbox.js"></script>-->
+</body>
+</html>

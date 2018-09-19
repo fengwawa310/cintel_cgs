@@ -1,0 +1,2 @@
+2017-11-29  -tom
+修改：WEB-INF/hui/js/contabs.min.js，去掉版本号后缀即去掉：?v=4.0

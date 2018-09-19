@@ -1,0 +1,2754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全息档案</title>
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<!-- basic styles -->
+	<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+	<!-- ace styles -->
+	<link rel="stylesheet" href="../assets/css/ace.min.css" />
+	<link rel="stylesheet" type="text/css"
+		  href="../css/jquery.dataTables.min.css" />
+	<script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+	<script src="../js/common.js"></script>
+	<link rel="stylesheet" href="../css/commonStyle.css" />
+	<link rel="stylesheet" href="../css/case.css" />
+	<link rel="stylesheet" href="../css/person.css" />
+	<script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+	<!-- <![endif]-->
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- ace scripts -->
+	<script src="../assets/js/ace-elements.min.js"></script>
+	<script src="../assets/js/ace.min.js"></script>
+	<!-- page specific plugin scripts -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript"></script>
+
+	<!-- layOpen -->
+	<script src="../assets/js/layer/layer.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/import.js"></script>
+
+	<!--dataTables的样式需求-->
+	<script src="../js/jquery.dataTables.min.js"></script>
+	<script src="../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+	<script src="../js/format.js"></script>
+</head>
+<body>
+<div id="personalFile" style="width: 100%;  margin: 0 auto; background: #F7FBFF">
+	<!--页面的title-->
+	<!-- <div class="personTitle">
+        <div class="col-md-12" style="text-align: center;">
+            <span class="mainTitle">扫 黑 情 报 平 台 重 点 人 员 全 息 档 案</span>
+        </div>
+    </div> -->
+	<!--人员基本信息-->
+	<div class="frame row">
+		<!--人员结构数据-->
+		<div class="col-md-10 container noPadding"
+			 style="border: 1px solid #D1E1FF">
+
+			<!--重点人员编号、姓名-->
+			<div class="row breadcrumbs noPadding rowStyle ">
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">重点人员编号</span>
+				</div>
+				<div class="col-md-4 personTxt">
+					<span id="suspectId"></span>
+				</div>
+				<div class="col-md-2 personTxt ">
+					<span class="boldFont">姓名</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="name" name="name"></span>
+				</div>
+			</div>
+			<!--别名、身份证号-->
+			<div class="row breadcrumbs noPadding rowStyle">
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">绰号</span>
+				</div>
+				<div class="col-md-4 personTxt">
+					<span id="byname" name="byname"></span>
+				</div>
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">身份证号</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="idcardNum" name="idcardNum"></span>
+				</div>
+			</div>
+			<!--性别、出生日期-->
+			<!-- <div class="row breadcrumbs noPadding rowStyle">
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">性别</span>
+                </div>
+                <div class="col-md-4 personTxt">
+                    <span id="gender"></span>
+                </div>
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">出生日期</span>
+                </div>
+                <div class="col-md-4 personTxt borderRnone">
+                    <span id="birthdate"></span>
+                </div>
+            </div> -->
+			<!--户籍地址、现住址-->
+			<div class="row breadcrumbs noPadding rowStyle">
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">籍贯</span>
+				</div>
+				<div class="col-md-4 personTxt">
+					<span id="origin" name="origin"></span>
+				</div>
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">现住址</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="permanetNow" name="permanetNow"></span>
+				</div>
+			</div>
+			<!--职业、手机号-->
+			<div class="row breadcrumbs noPadding rowStyle">
+				<!--<div class="col-md-2 personTxt">
+                    <span class="boldFont">职业</span>
+                </div>
+                <div class="col-md-4 personTxt">
+                    <span id="work"></span>
+                </div>-->
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">手机号</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="mobilephone" name="mobilephone"></span>
+				</div>
+
+			</div>
+			<!--QQ号、微信号-->
+			<!-- <div class="row breadcrumbs noPadding rowStyle">
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">QQ号</span>
+                </div>
+                <div class="col-md-4 personTxt">
+                    <span id=""></span>
+                </div>
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">微信号</span>
+                </div>
+                <div class="col-md-4 personTxt borderRnone">
+                    <img src="../assets/images/gallery/blue_star.png" width="15px"height="15px">
+                    <span id=""></span>
+                </div>
+            </div> -->
+			<!--录入人姓名、录入单位-->
+			<!-- <div class="row breadcrumbs noPadding rowStyle">
+
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">录入人姓名</span>
+                </div>
+                <div class="col-md-4 personTxt">
+                    <span id=""></span>
+                </div>
+                <div class="col-md-2 personTxt">
+                    <span class="boldFont">录入单位</span>
+                </div>
+                <div class="col-md-4 personTxt borderRnone">
+                    <span id="entryUnit" style="display: none"></span> <span
+                        id="entryUnitName"></span>
+                </div>
+            </div> -->
+			<!--录入人警号、重点人员状态-->
+			<div class="row breadcrumbs noPadding rowStyle">
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">录入人警号</span>
+				</div>
+				<div class="col-md-4 personTxt">
+					<span id="entryPoliceNo" name="entryPoliceNo"></span>
+				</div>
+
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">重点人员状态</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="suspectClass" name="suspectClass"></span>
+				</div>
+			</div>
+			<!--重点人员性质、纳入重点人员时间-->
+			<div class="row breadcrumbs noPadding rowStyle borderBnone"
+				 style="border-bottom: 1px solid #D1E1FF">
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">重点人员性质</span>
+				</div>
+				<div class="col-md-4 personTxt">
+					<span id="suspectType" name="suspectType"></span>
+				</div>
+
+				<div class="col-md-2 personTxt">
+					<span class="boldFont">纳入重点人员时间</span>
+				</div>
+				<div class="col-md-4 personTxt borderRnone">
+					<span id="creatTime" name="creatTime"></span>
+				</div>
+			</div>
+			<!--技战工具-->
+			<div class="row breadcrumbs noPadding rowStyle borderBnone" style="border-bottom: 1px solid #D1E1FF">
+				<div class="col-md-2 personTxt">
+					<span>技战工具</span>
+				</div>
+				<div class="col-md-10">
+					<a class="operation" onclick="teamMap();">团伙图谱</a>
+					<a class="operation" onclick="teamFriend()">亲友图谱</a>
+					<a class="operation"onclick="analysis();">话单分析</a>
+					<a class="operation"onclick="importGang();">团伙案件导入</a>
+					<a class="operation"onclick="importSingle();">个人个案导入</a>
+					<a class="operation"onclick="importGambling();">赌档线索导入</a>
+					<a class="operation"onclick="importClue();">线索导入</a>
+				</div>
+			</div>
+
+			<!--文件选择框-->
+			<div class="col-md-12 hide">
+				<form id='importExcel'  method='POST' enctype='multipart/form-data'>
+					<input type="file" id="excelFile" name='file' onchange="handleFile()">
+				</form>
+			</div>
+
+			<!--备注-->
+			<div class="row breadcrumbs noPadding rowStyle borderBnone">
+				<div class="col-md-2 personTxt borderRnone"  style="min-height: 30px">
+					<span>备注</span>
+				</div>
+				<div class="col-md-10  borderRnone leftBorder"  style="min-height: 30px;color: #0A5CA0 !important;">
+					<span id="remarks" name="mobilephone"></span>
+				</div>
+			</div>
+
+			<input type="text" id="suspectNo" style="display: none" value="">
+		</div>
+		<!--人员头像-->
+		<div class="col-md-2 personImgDiv">
+			<img src="" class="personImg"
+				 id="headPhotoUrl">
+		</div>
+	</div>
+
+	<div class="frame col-md-12">
+		<!--tab切换标签-->
+		<ul id="myTab" class="nav nav-tabs mytab">
+			<li class="active"><a href="#caseInvolve" data-toggle="tab">涉案信息</a></li>
+			<li><a href="#alarm" data-toggle="tab" onclick="findAlarm()">涉警信息</a></li>
+			<li><a href="#car" data-toggle="tab" ONCLICK="findCar()">车辆信息</a></li>
+			<li> <a href="#competence" data-toggle="tab">授权信息</a></li>
+			<li> <a href="#relationship" data-toggle="tab">关系人</a></li>
+			<li> <a href="#clue" data-toggle="tab">线索</a></li>
+			<li> <a href="#importCase" data-toggle="tab" onclick="findImportCase()">导入案件</a></li>
+			<li> <a href="#notes" data-toggle="tab">笔录</a></li>
+			<li> <a href="#hotel" data-toggle="tab">住宿</a></li>
+		</ul>
+		<!--tab切换内容-->
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="caseInvolve"
+				 style="min-height: 150px">
+				<div class="confirme" onclick="caseConfirmeAlert();">待确认</div>
+				<table id="caseInvolve-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<div class="tab-pane fade" id="alarm">
+				<div class="confirme" onclick="alarmConfirmeAlert();">待确认</div>
+				<table id="alarm-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<div class="tab-pane fade" id="car">
+				<table id="car-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<div class="tab-pane fade" id="competence">
+				<!--<div class="confirme" onclick="addCompetence();">权限新增</div>-->
+				<table id="competence-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<!--关系人列表 无详情-->
+			<div class="tab-pane fade" id="relationship">
+				<table id="relationship-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<!--赌档线索与线索列表 无详情-->
+			<div class="tab-pane fade" id="clue">
+				<table id="clue-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<!--导入团伙案件和个人个案列表 无详情-->
+			<div class="tab-pane fade" id="importCase">
+				<table id="importCase-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<!--笔录信息-->
+			<div class="tab-pane fade" id="notes">
+				<table id="notes-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+			<!--住宿信息-->
+			<div class="tab-pane fade" id="hotel">
+				<table id="hotel-table"
+					   class="cell-border table table-striped table-bordered table-hover dataTable"
+					   cellspacing="0" width="100%">
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!--待确认案件弹框-->
+<div id="caseConfirme" class="hide">
+	<table id="caseConfirme-table"
+		   class="cell-border table table-striped table-bordered table-hover dataTable"
+		   cellspacing="0" width="100%">
+	</table>
+	<!--<div class="btnCon">-->
+		<!--<button class="btn btn-primary search-btn" >确认</button>-->
+	<!--</div>-->
+</div>
+<!--待确认警情弹框-->
+<div id="alarmConfirme" class="hide">
+	<table id="alarmConfirme-table"
+		   class="cell-border table table-striped table-bordered table-hover dataTable"
+		   cellspacing="0" width="100%">
+	</table>
+	<!--<div class="btnCon">-->
+		<!--<button class="btn btn-primary search-btn" >确认</button>-->
+	<!--</div>-->
+</div>
+<!--选择标记的弹框-->
+<div id= "markAlert"class="hide">
+	<div class="row-container" style="margin: 10% auto;">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-md-3  searchTitle1">
+					标记选择:
+				</div>
+				<div class="col-md-9 searchCon1">
+					<select id="markSelect">
+						<option value ="">--请选择--</option>
+						<option value ="4000">前科</option>
+						<option value="4001">已处罚</option>
+						<option value="4002">未处置</option>
+					</select>
+				</div>
+			</div>
+			<div class="btnCon">
+				<button class="btn btn-primary search-btn" id="" onclick="confirmMark();"> 确认 </button>
+			</div>
+		</div>
+		<div class="col-md-2">
+
+		</div>
+	</div>
+</div>
+<!--<div id= "addCompetence" class="hide">-->
+<!--<div class="row-container" style="margin: 10% auto;">-->
+<!--<div class="col-md-2">-->
+
+<!--</div>-->
+<!--<div class="col-md-8">-->
+<!--<div class="row">-->
+<!--<div class="col-md-3  searchTitle1">-->
+<!--被授权人:-->
+<!--</div>-->
+<!--<div class="col-md-9 searchCon1">-->
+<!--<select name="" id="">-->
+<!--<option value ="">&#45;&#45;请选择&#45;&#45;</option>-->
+<!--<option value ="1400">一级重点人员</option>-->
+<!--<option value="1401">二级重点人员</option>-->
+<!--<option value="1402">三级重点人员</option>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-3  searchTitle1">-->
+<!--授予权限:-->
+<!--</div>-->
+<!--<div class="col-md-9 searchCon1">-->
+<!--<select name="" id="">-->
+<!--<option value ="">&#45;&#45;请选择&#45;&#45;</option>-->
+<!--<option value ="1400">一级重点人员</option>-->
+<!--<option value="1401">二级重点人员</option>-->
+<!--<option value="1402">三级重点人员</option>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="btnCon">-->
+<!--<button class="btn btn-primary search-btn" id=""> 确认 </button>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-2">-->
+
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<script>
+
+    //获取人员的ID
+    var mainPersonId;
+
+    //文件上传input
+    excelFile = document.getElementById("excelFile");
+
+    $(window).ready(function() {
+        var personalFileH = $(document).height();
+        $("#personalFile").height(personalFileH);
+        var thisURL = document.URL;
+        console.log(thisURL);
+        var getval = thisURL.split('?')[1];
+        var id = getval.split("=")[1];
+        $("#suspectNo").val(id);
+        console.log(id);
+        findSuspectById(id,function(context){
+			load(context);
+		});
+        //findSuspectByIdjifen(id);
+        mainPersonId=id;
+
+    });
+    function teamMap(){
+        localStorage.setItem("mainPersonId",mainPersonId);
+        jumpPage("/view/staffOrg/StaffOrgChart.html","m3","团伙图谱");
+
+    }
+    function teamFriend(){
+        localStorage.setItem("mainPersonId",mainPersonId);
+        jumpPage("/view/staffOrg/Relatives.html","m3","亲友图谱");
+
+    }
+    function analysis(){
+        if( $("#mobilephone").text() != "未录入" ){
+			var mainPersonId = $("#mobilephone").text();
+		}else{
+            var mainPersonId = "";
+		}
+        //jumpPage("/view/analysis/index.html","m16165030FA8F04","话单分析");
+        localStorage.setItem("mainPersonId",mainPersonId);
+        jumpPage("view/staffOrg/ticketAnalyze.html","m16165030FA8F04","话单分析");
+
+    }
+    //获取人员信息
+    function findSuspectById(ids,callback) {
+        $.ajax({
+            type : 'POST',
+            url : getRootPath_web() + "suspecthandler/handlerfind",//发送请求
+            data : {
+                id : ids
+            },
+            dataType : "json",
+            cache: false,
+            async: false,
+            success : function(data) {
+                console.log(data);
+                //var json  = eval('('+data.data+')');
+                var context = data.data;
+                var imgUrl=context["headPhotoUrl"];
+                var fileName=imgUrl.split("$$")[1]
+                $("#headPhotoUrl").prop("src",projectPath+'/fileCRUD/downLoadFile?'+'fileName='+fileName+'&fileURL='+imgUrl);
+                //console.log(context);
+                //var jsonObj = json.data;
+				/* 姓名 */
+                if (context.name ==null||context.name=='') {
+                    $("#name").text("未录入");
+                }else{
+                    $("#name").text(context.name);
+                }
+                if (context.byname ==null||context.byname=='') {
+                    $("#byname").text("未录入");
+                }else{
+                    $("#byname").text(context.byname);
+                }
+				/* 重点人员编号 */
+                $("#suspectId").text(context.suspectId);
+                if (context.mobilephone ==null||context.mobilephone=='') {
+                    $("#mobilephone").text("未录入");
+                }else{
+                    $("#mobilephone").text(context.mobilephone);
+                }
+				/* 身份证号 */
+                if (context.idcardNum ==null||context.idcardNum=='') {
+                    $("#idcardNum").text("未录入");
+                }else{
+                    $("#idcardNum").text(context.idcardNum);
+                }
+				/* 重点人员状态 */
+                if (context.suspectClass == '4200') {
+                    $("#suspectClass").text("在押人员");
+                } else if (context.suspectClass == '4201') {
+                    $("#suspectClass").text("在逃人员");
+                } else if (context.suspectClass == '4202') {
+                    $("#suspectClass").text("取保候审");
+                } else if (context.suspectClass == '4203') {
+                    $("#suspectClass").text("监视居住");
+                } else if (context.suspectClass == '4204') {
+                    $("#suspectClass").text("刑满释放");
+                } else if (context.suspectClass == '4205') {
+                    $("#suspectClass").text("其他");
+                } else {
+                    $("#suspectClass").text("未选择");
+                }
+				/* 重点人员性质 */
+                if (context.suspectType == '4300') {
+                    $("#suspectType").text("涉黑人员");
+                } else if (context.suspectType == '4301') {
+                    $("#suspectType").text("涉恶人员");
+                } else if (context.suspectType == '4302') {
+                    $("#suspectType").text("涉恶人员");
+                } else {
+                    $("#suspectType").text("未选择");
+                }
+				/*  户籍住址*/
+                if (context.origin ==null||context.origin=='') {
+                    $("#origin").text("未录入");
+                }else{
+                    $("#origin").text(context.origin);
+                }
+				/* 职业 */
+                if (context.work ==null||context.work=='') {
+                    $("#work").text("未录入");
+                }else{
+                    $("#work").text(context.work);
+                }
+				/* 录入人警号 */
+                if (context.entryPoliceNo ==null||context.entryPoliceNo=='') {
+                    $("#entryPoliceNo").text("未录入");
+                }else{
+                    $("#entryPoliceNo").text(context.entryPoliceNo);
+                }
+				/* 现住址 */
+                if (context.permanetNow ==null||context.permanetNow=='') {
+                    $("#permanetNow").text("未录入");
+                }else{
+                    $("#permanetNow").text(context.permanetNow);
+                }
+				/*人员等级  */
+                if (context.suspectLevel ==null||context.suspectLevel=='') {
+                    $("#suspectLevel").text("暂无等级");
+                }else{
+                    $("#suspectLevel").text(context.suspectLevel);
+                }
+				/* 录入时间 */
+                if (context.creatTime ==null||context.creatTime=='') {
+                    $("#creatTime").text("未录入");
+                }else{
+                    $("#creatTime").text(context.creatTime);
+                }
+				/* 备注 */
+                if (context.demo == null || context.demo == '')
+                {
+                    $("#remarks").text("未录入");
+                }else{
+                    $("#remarks").text(context.demo);
+                }
+
+				/* if (context.entryUnitName ==null||context.entryUnitName=='') {
+				 $("#entryUnitName").text("未录入");
+				 }else{
+				 $("#entryUnitName").text(context.entryUnitName);
+				 } */
+				/* $("#entryUnit").text(context.entryUnit); */
+				/* 	$.ajax({
+				 type : 'POST',
+				 url : getRootPath_web()
+				 + "integral/findSuspectIntegralforIdCard",//发送请求
+				 data : {
+				 idcardNum : context.idcardNum
+				 },
+				 dataType : "json",
+				 success : function(data) {
+				 if (data.data.total ==null||data.data.total=='') {
+				 $("#integral").text("未录入");
+				 }else{
+				 $("#integral").text(data.data.total);
+				 }
+				 },
+				 }); */
+                //加载table
+//                load(context);
+				return callback(context);
+            },
+        });
+
+    }
+	/* function findSuspectByIdjifen(){
+	 $.ajax({
+	 type: 'POST',
+	 url:getRootPath_web()+"integral/findSuspectIntegralforIdCard",//发送请求
+	 data:{idcardNum:$("#idcardNum").val()},
+	 dataType : "json",
+	 success: function(data) {
+	 console.log(data);
+	 },
+	 });
+	 } */
+    var dynamictable;
+    var casedynamictable;
+    function load(context){
+		/* $(document).ready(function() { */
+		/*涉案信息列表数据*/
+        $("#caseInvolve-table_filter").css('display',
+            'block');
+        casedynamictable = $("#caseInvolve-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        //	url : getRootPath_web()+"case/findCase?isArchive=0&isAbandon=0&isApproval=1",
+                        url : getRootPath_web()
+                        + "case/findCase?isArchive=0&isAbandon=0&isApproval=1",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectIDCardNo : $("#idcardNum").text(),
+                            //确认标识为有关
+                            relation:1,
+							/* manaUnitCode : $(
+							 "#entryUnit")
+							 .text(), / *///管控单位
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns" : [
+                        {
+                            "sTitle" : '<font size="2px">序号</font>',
+                            'sWidth' : '6%',
+                            "sClass" : "dt-left",
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件编号</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseNo',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件名称</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseTitle',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">发案时间</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'happenTimeUp',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data.substring(0,data.indexOf(".0"));
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件来源</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'sourceType',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[21][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件类别</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseClass',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[19][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件状态</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseState',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[18][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">受理单位</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'acceptUnitName',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">录入时间</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'creatTime',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">标记</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'lable',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                               // console.log("case  info  lable is ="+data)
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+
+                                if (data=='4000') {
+                                    return "前科";
+                                }
+                                if (data=='4001') {
+                                    return "已处罚";
+                                }
+                                if (data=='4002') {
+                                    return "未处置";
+                                }
+                            }
+                        }
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "10%",
+                        "data" : "caseNo",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 10],
+                        'render' : function(data,
+                                            type, row, meta) {
+                            var data = "'" + data
+                                + "'";
+                            var id="'"+row.id+"'"
+                            console.log(data)
+                            console.log(id)
+                            return '<a href="#" class="operation" onclick="alertDetaiCase('
+                                + data
+                                + ')">详情</a><a href="#" class="operation" onclick="mark('
+                                + id
+                                + ')">标记</a>';
+                        },
+                        'bSortable' : false
+                    } ]
+                });
+        $("#caseInvolve-table_filter").css("display",
+            "none");
+
+
+
+		/*权限列表数据*/
+        $("#competence-table_filter").css('display',
+            'block');
+        dynamictable = $("#competence-table")
+            .DataTable (
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()+"suspecthandler/findSuspectVO",
+                        data : {
+                            suspectId : $("#suspectId").text()
+                        },
+                        type : "post",
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this .api().column(0).nodes() .each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns" : [
+                        {
+                            "sTitle" : '<font>序号</font>',
+                            'sWidth' : '15%',
+                            "sClass" : "dt-left",
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>姓名</font>',
+                            "sWidth" : '25%',
+                            "sClass" : "dt-left",
+                            'data' : 'suspectNo',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>权限</font>',
+                            "sWidth" : "30%",
+                            "sClass" : "dt-left",
+                            'data' : 'permissionCode',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+								/* if (data == ""
+								 || data == null) {
+								 return "--";
+								 } */
+                                if (data==0) {
+                                    return "建档人"
+                                }
+                                if (data==1) {
+                                    return "可查阅"
+                                }
+                                if (data==2) {
+                                    return "可编辑"
+                                }
+                                var endtime=row.endTime;
+                                console.log(endtime);
+                                var starttime=row.startTime;
+                                console.log(starttime);
+                                var  cha=endtime - starttime;
+                                var fen=parseInt(cha/1000)
+                                return fen+"秒";
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>授权时间</font>',
+                            "sWidth" : "30%",
+                            "sClass" : "dt-left",
+                            'data' : 'creatTime',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        }]
+
+                });
+        $("#competence-table_filter").css("display",
+            "none");
+
+		/* }); */
+
+		/*关系人列表数据*/
+        $("#relationship-table_filter").css('display',
+            'block');
+        dynamictable = $("#relationship-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "RPDHan/selectBySuspectId",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectId : $("#suspectId").text(),
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'3%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                            {
+                                "sTitle": '<font>姓名</font>',
+                                "sWidth": "5%",
+                                "sClass": "dt-left",
+                                'data': 'fullName',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>别名</font>',
+                                "sWidth": "7%",
+                                "sClass": "dt-left",
+                                'data': 'aliasName',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>户籍地、身份证、居住地址、家庭情况</font>',
+                                "sWidth": "15%",
+                                "sClass": "dt-left",
+                                'data': 'familySituation',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>相片</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'photoUrl',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    var fileName=data.split("$$")[1];
+                                    var imgUrl=projectPath+'/fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+data;
+
+                                    return "<div style=\"width: 100%;height: 100%;text-align: center\">\n" +
+                                        "<img src='" + imgUrl + "'style=\"width: 80px;height: 100px\">\n" +
+                                        "</div>";
+                                }
+                            },
+                            {
+                                "sTitle": '<font>使用的通讯工具、车辆</font>',
+                                "sWidth": "15%",
+                                "sClass": "dt-left",
+                                'data': 'communicationTool',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>前科</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'criminalRecord',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>涉嫌的未处理犯罪事实</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'untreatedCriminalFacts',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>车辆</font>',
+                                "sWidth": "8%",
+                                "sClass": "dt-left",
+                                'data': 'vehicle',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>备注</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'remarks',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>证据情况</font>',
+                                "sWidth": "7%",
+                                "sClass": "dt-left",
+                                'data': 'evidence',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            }
+                        ]
+                    });
+        $("#relationship-table_filter").css("display",
+            "none");
+
+		/*导入线索列表数据*/
+        $("#clue-table_filter").css('display',
+            'block');
+        dynamictable = $("#clue-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "/dossierimportCase/findEpClueList",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectId : $("#suspectId").text(),
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>线索类型</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'typeEnum.name','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件编号</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'caseNo','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件名称</font>',"sWidth":"17%","sClass":"dt-left", 'data': 'caseName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>简要案情</font>',"sWidth":"28%","sClass":"dt-left", 'data': 'caseDetail','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>备注</font>',"sWidth":"20%","sClass":"dt-left", 'data': 'remark','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>嫌疑人</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'suspect','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }}
+                    ]
+                });
+        $("#clue-table_filter").css("display",
+            "none");
+
+
+        /*笔录列表数据*/
+        $("#notes-table_filter").css('display',
+            'block');
+        dynamictable = $("#notes-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "/notes/findNotesList",
+                        "type" : "post",
+                        data : {
+
+							targetXm : ($("#name").text()=="未录入"?"":$("#name").text()),//笔录对象姓名
+							targetLxdh : ($("#mobilephone").text()=="未录入"?"":$("#mobilephone").text()),//笔录对象联系电话
+							targetZjhm : ($("#idcardNum").text()=="未录入"?"":$("#idcardNum").text()),//笔录对象证件号码
+							targetCh : ($("#byname").text()=="未录入"?"":$("#byname").text())//笔录对象绰号
+                        },
+                        dataType : "json"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件编号</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'ajbh','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录名称</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'name','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录对象姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'targetXm','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录对象证件号码</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'targetZjhm','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>笔录开始时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'starttime','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }},
+                        {"sTitle":'<font>笔录记录地点</font>',"sWidth":"30%","sClass":"dt-left", 'data': 'jldd','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }}
+                    ],
+                    "columnDefs": [{"sTitle":'<font>操作</font>',
+                        "sWidth":"8%",
+                        "data": "systemid",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets': [7],
+                        'render': function(data, type, row, meta) {
+							var id="'"+row.systemid+"'"
+                            return  '<a href="#" class="operation" onclick="notesDetail('+id+')">详情</a>';
+                        },
+                        'bSortable': false
+                    }]
+                });
+        $("#notes-table_filter").css("display",
+            "none");
+
+        /*住宿列表数据*/
+        $("#hotel-table_filter").css('display',
+            'block');
+        dynamictable = $("#hotel-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "/hotelPerson/findHotelPersonList",
+                        "type" : "post",
+                        data : {
+							name : ($("#name").text()=="未录入"?"":$("#name").text()),//笔录对象姓名
+							idcode : ($("#idcardNum").text()=="未录入"?"":$("#idcardNum").text()),//笔录对象证件号码
+                        },
+                        dataType : "json"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'name','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>性别</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'sex','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>身份证号</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'idcode','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>行政区划</font>',"sWidth":"21%","sClass":"dt-left", 'data': 'xzqh','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>入住旅馆</font>',"sWidth":"14%","sClass":"dt-left", 'data': 'nohotel','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>入住时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'ltime','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+								return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }},
+                        {"sTitle":'<font>退房时间</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'etime','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+								return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }}
+                    ],
+                    "columnDefs": [{"sTitle":'<font>操作</font>',
+                        "sWidth":"6%",
+                        "data": "id",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets': [8],
+                        'render': function(data, type, row, meta) {
+							var id="'"+row.ccode+"'"
+                            return  '<a href="#" class="operation" onclick="hotelDetail('+id+')">详情</a>';
+                        },
+                        'bSortable': false
+                    }]
+                });
+        $("#hotel-table_filter").css("display",
+            "none");
+    }
+
+    //笔录详情弹框
+    function notesDetail(id) {
+        var name='笔录详情';
+        var url=projectPath+'/view/notes/notesDetailLayer.html?id='+id;
+        var width='90%';
+        var high='90%';
+        var callback=function (){
+        };
+        //弹框
+        window.parent.Layer.layOpen(name,url,width,high,callback);
+    }
+
+
+    //住宿详情弹框
+    function hotelDetail(id) {
+        var name='住宿详情';
+        var url=projectPath+'/view/hotel/hotelDetailLayer.html?id='+id;
+        var width='90%';
+        var high='75%';
+        var callback=function (){
+        };
+        //弹框
+        window.parent.Layer.layOpen(name,url,width,high,callback);
+    }
+
+
+    //选择标记弹框
+    var biaojiID;
+    function mark(id){
+        biaojiID=id;
+        $("#markAlert").attr('class','show');
+        var iiMark;
+        iiMark = layer.ready(function() {
+            iiMark = layer.open({
+                offset : 20,
+                type : 1,
+                title : '选择标记',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '300px' ],
+                content : $("#markAlert"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#markAlert").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+    //选择标记弹框点击确认
+    function confirmMark() {
+        //来自警情还是案件,来自那一条
+        //选中值的value
+        var lable= $("#markSelect option:selected").val();
+        $.ajax({
+            type: "POST",
+            url: getRootPath_web()+"suspecthandler/etSuspectCase",
+            data: {caseId:biaojiID,
+                lable:lable,
+                suspectId:$("#suspectId").text(),
+            },
+            dataType: "json",
+            success: function(data){
+                if (data.code==200) {
+                    layer.msg('操作成功！', {
+                        icon: 1,
+                        time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        //刷新页面方法
+                        var url=$("#personIframe", window.parent.document).attr("src");
+                        $("#personIframe", window.parent.document).attr("src",url);
+                        layer.closeAll();
+                    });
+                }
+            }
+        });
+        //关闭弹框
+        layer.closeAll();
+    }
+
+    //		//权限新增
+    //        function addCompetence(){
+    //            $("#addCompetence").attr('class','show');
+    //            var ii;
+    //            ii = layer.ready(function() {
+    //                ii = layer.open({
+    //                    offset : 20,
+    //                    type : 1,
+    //                    title : '权限新增',
+    //                    fix : false,
+    //                    maxmin : true,
+    //                    shadeClose : true,
+    //                    area : [ '500px', '300px' ],
+    //                    content : $("#addCompetence"),
+    //                    end : function() {
+    //                        $('#form-dialogdsss').attr("style", "display:none");
+    //                        $("#addCompetence").attr('class','hide');
+    //                    }
+    //                });
+    //            }).index;
+    //
+    //		}
+
+	/*涉警信息列表数据*/
+    var alarmdynamictable;
+    function findAlarm(){
+        $("#alarm-table_filter").css('display',
+            'block');
+        alarmdynamictable = $("#alarm-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "ETAlarmHandler/suspectAlarmOpen",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectId : $("#suspectId").text(),
+                            //确认标识为有关
+                            relation:1,
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>接警编号</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'alarmNo','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>接警单位名称</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'unitName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>警情分类</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmClass','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return dicCommon[20][data];
+                            }},
+                        {"sTitle":'<font>发案地点</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'locationCase','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return "<span style='width: 150px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>"+data+"</span>";
+                            }},
+                        {"sTitle":'<font>报警人姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmPersonName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>报警人电话</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmPersonPhone','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {"sTitle":'<font>标记</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'label','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "10%",
+                        "data" : "relationNo",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 8 ],
+                        'render' : function(data,
+                                            type, row, meta) {
+                            console.log("开始打印data");
+                            console.log(data);
+                            console.log(row.id);
+                            console.log("结束打印data");
+                            var cla = row.warningClass;
+                            var data = "'" + row.alarmNo
+                                + "'";
+                            if (data == ''
+                                || data == null) {
+                                return "--";
+                            } else {
+
+                                return '<a href="#" class="operation" onclick="alertDetaiAlarm('+data+')">详情</a>';//<a href="#" class="operation" onclick="mark('+ data+ ')">标记</a>
+                            }
+                        },
+                        'bSortable' : false
+                    } ]
+                });
+        $("#alarm-table_filter").css("display",
+            "none");
+    }
+	/*车辆信息列表数据*/
+    function findCar() {
+        $("#car-table_filter").css('display',
+            'block');
+        dynamictable = $("#car-table")
+            .DataTable (
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()+"suspecthandler/handlerfindVehicle",
+                        data : {
+                            suspectNo : $("#suspectNo").val()
+                        },
+                        type : "post",
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this .api().column(0).nodes() .each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns" : [
+                        {
+                            "sTitle" : '<font>序号</font>',
+                            'sWidth' : '10%',
+                            "sClass" : "dt-left",
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>车牌号</font>',
+                            "sWidth" : "15%",
+                            "sClass" : "dt-left",
+                            'data' : 'plateNum',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>车身颜色</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'carColor',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>车型</font>',
+                            "sWidth" : "15%",
+                            "sClass" : "dt-left",
+                            'data' : 'carType',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font>备注</font>',
+                            "sWidth" : "50%",
+                            "sClass" : "dt-left",
+                            'data' : 'demo',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "";
+                                }
+                                return data;
+                            }
+                        }]
+                });
+        $("#car-table_filter").css("display",
+            "none");
+    }
+	/*导入案件列表数据*/
+    function findImportCase(){
+        $("#importCase-table_filter").css('display',
+            'block');
+        dynamictable = $("#importCase-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "importCase/findImportCase",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            name : ($("#name").text()=="未录入"?"":$("#name").text()),
+                            byname : ($("#byname").text()=="未录入"?"":$("#byname").text()),
+                            idcardNum : ($("#idcardNum").text()=="未录入"?"":$("#idcardNum").text()),
+                            mobilephone : ($("#mobilephone").text()=="未录入"?"":$("#mobilephone").text())
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>作案人类型</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'perpetratorClass','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return dicCommon[51][data];
+                            }},
+						/*{"sTitle":'<font>作案者</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'perpetrator','bSortable': false,
+						 'render': function(data, type, row, meta) {
+						 if(data==""||data==null){
+						 return "--";
+						 }
+						 return data;
+						 }},*/
+                        {"sTitle":'<font>案件名称</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'caseTitle','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件编号</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'caseNo','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>简要案情</font>',"sWidth":"28%","sClass":"dt-left", 'data': 'caseDesc','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>涉案嫌疑人</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'caseSuspect','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>未处理人员</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'untreatedPersonnel','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>受害人及证人</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'witness','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>存在问题</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'existingProblems','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>备注</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'remark','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }}
+                    ]
+                });
+        $("#importCase-table_filter").css("display",
+            "none");
+    }
+
+    /***********************************************************待确认案件列表系列**********************************************/
+	/*案件待确认列表弹框*/
+    function caseConfirmeAlert(infor) {
+        selectCase();
+        $("#caseConfirme").attr('class','show');
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 1,
+                title : '案件待确认列表',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '1000px', '500px' ],
+                content : $("#caseConfirme"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#caseConfirme").attr('class','hide');
+                }
+            });
+        }).index;
+    }
+	/*待确认案件列表数据*/
+    function selectCase(){
+        $("#caseConfirme-table_filter").css('display',
+            'block');
+        dynamictable = $("#caseConfirme-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+//                	url : getRootPath_web()+"case/findCase?isArchive=0&isAbandon=0&isApproval=1",
+                        url : getRootPath_web()
+                        + "case/findCase?isArchive=0&isAbandon=0&isApproval=1",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectIDCardNo : $("#idcardNum").text(),
+                            //确认标识为有关
+                            relation:0,
+							/* manaUnitCode : $(
+							 "#entryUnit")
+							 .text(), / *///管控单位
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns" : [
+                        {
+                            "sTitle" : '<font size="2px">序号</font>',
+                            'sWidth' : '5%',
+                            "sClass" : "dt-left",
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件编号</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseNo',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件名称</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseTitle',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">发案时间</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'happenTimeUp',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件来源</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'sourceType',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[21][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件类别</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseClass',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[19][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">案件状态</font>',
+                            "sWidth" : "8%",
+                            "sClass" : "dt-left",
+                            'data' : 'caseState',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return dicCommon[18][data];
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">受理单位</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'acceptUnitName',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">录入时间</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'creatTime',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {
+                            "sTitle" : '<font size="2px">标记</font>',
+                            "sWidth" : "10%",
+                            "sClass" : "dt-left",
+                            'data' : 'label',
+                            'bSortable' : false,
+                            'render' : function(
+                                data, type,
+                                row, meta) {
+                                if (data == ""
+                                    || data == null) {
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "18%",
+                        "data" : "caseNo",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 10],
+                        'render' : function(data,
+                                            type, row, meta) {
+                            var data = "'" + data+"'"
+                            var id ="'"+row.id
+                                + "'";
+                            return '<a href="#" class="operation" onclick="alertDetaiCase('
+                                + data
+                                + ')">详情</a><a href="#" class="operation" onclick="etSuspectCase('
+                                + id+','+1+','+id
+                                + ')">关联</a><a href="#" class="operation" onclick="etSuspectCase('
+                                + id+','+2+','+id
+                                + ')">无关</a>';
+                        },
+                        'bSortable' : false
+                    } ]
+                })
+        $("#caseConfirme-table_filter").css("display",
+            "none");
+    }
+    //案件详情弹框
+    function alertDetaiCase(id) {
+        //console.log(id)
+        var name = '案件详情';
+        var url = projectPath + '/view/case/caseDetailLayer.html?caseNo='
+            + id;
+        var width = '1000px';
+        var high = '500px';
+        var callback = function() {
+        };
+        //弹框
+        window.parent.parent.Layer
+            .layOpen(name, url, width, high, callback);
+    }
+    //案件关联、无关方法
+    function etSuspectCase(CaseNo,relation,id){
+        console.log(CaseNo)
+        $.ajax({
+            type: "POST",
+            url: getRootPath_web()+"suspecthandler/etSuspectCase",
+            data: {caseId:id,
+                relation:relation,
+                id:id,
+                suspectId:$("#suspectId").text(),
+            },
+            dataType: "json",
+            success: function(data){
+                if (data.code==200) {
+                    layer.msg('操作成功！', {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        layer.closeAll();
+                        casedynamictable.search("").draw();
+                        //刷新页面方法
+//                         var url=$("#personIframe", window.parent.document).attr("src");
+//                         $("#personIframe", window.parent.document).attr("src",url);
+//						 layer.closeAll();
+//						 casedynamictable.search("").draw();
+                    });
+                }
+            }
+        });
+    }
+    /***********************************************待确认警情列表系列**********************************************************/
+	/*警情待确认列表弹框*/
+    function alarmConfirmeAlert(infor) {
+        selectAlarm();
+        $("#alarmConfirme").attr('class','show');
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 1,
+                title : '警情待确认列表',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '1000px', '500px' ],
+                content : $("#alarmConfirme"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#alarmConfirme").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+	/*待确认警情列表数据*/
+    function selectAlarm(){
+        $("#alarmConfirme-table_filter").css('display',
+            'block');
+        dynamictable = $("#alarmConfirme-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+					/*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+					/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+					 [0, "desc"]
+					 ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+					/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+					/*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web()
+                        + "ETAlarmHandler/suspectAlarmClose",
+                        "type" : "post",
+                        data : {
+                            // 重点人员身份证号码
+                            suspectId : $("#suspectId").text(),
+							/* manaUnitCode : $(
+							 "#entryUnit")
+							 .text(), / *///管控单位
+                        },
+                        dataType : "json"
+                    },
+					/*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'6%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>接警编号</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'alarmNo','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>接警单位名称</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'unitName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>警情分类</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmClass','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return dicCommon[20][data];
+                            }},
+                        {"sTitle":'<font>发案地点</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'locationCase','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return "<span style='width: 150px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>"+data+"</span>";
+                            }},
+                        {"sTitle":'<font>报警人姓名</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmPersonName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>报警人电话</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'alarmPersonPhone','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        },
+                        {"sTitle":'<font>标记</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'label','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "18%",
+                        "data" : "relationNo",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 8 ],
+                        'render' : function(data,
+                                            type, row, meta) {
+							/* 	console.log("开始打印data");
+							 console.log(data);
+							 console.log(row.warningClass);
+							 console.log("结束打印data"); */
+                            var cla = row.warningClass;
+                            var data = "'" + data
+                                + "'";
+                            if (data == ''
+                                || data == null) {
+                                return "--";
+                            } else {
+                                var alar="'"+row.alarmNo+"'"
+                                return '<a href="#" class="operation" onclick="alertDetaiAlarm('+alar+')">详情</a><a href="#" class="operation" onclick="etSuspectAlarm('+alar+','+1+','+1+')">关联</a><a href="#" class="operation" onclick="etSuspectAlarm('+alar+','+2+','+2+')">无关</a>';
+                            }
+                        },
+                        'bSortable' : false
+                    } ]
+                });
+        $("#alarmConfirme-table_filter").css("display",
+            "none");
+    }
+    //警情详情弹框
+    function alertDetaiAlarm(id) {
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 2,
+                title : '警情详情',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '1000px', '500px' ],
+                content : '../alarm/alarmDetailLayer.html?alarmNo=' + id,
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                }
+            });
+        }).index;
+    }
+	/* 警情关联与无关按钮方法，标记方法 */
+	/*
+	 type:1=警情确认关联
+	 type:2=警情确认无关
+	 type:3=警情确认标记
+	 */
+    function etSuspectAlarm(alarmNo,relation,type){
+        var lable=0;
+        if (type==3) {
+            lable=relation;
+        }
+        console.log(relation);
+        $.ajax({
+            type: "POST",
+            url: getRootPath_web()+"suspecthandler/etSuspectAlarm",
+            data: {alarmId:alarmNo,
+                relation:relation,
+                suspectId:$("#suspectId").text(),
+                lable:lable,
+                type:type
+            },
+            dataType: "json",
+            success: function(data){
+                if (data.code==200) {
+                    layer.msg('操作成功！', {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        //刷新页面方法
+                        layer.closeAll();
+                        alarmdynamictable.search("").draw();
+//                         var url=$("#personIframe", window.parent.document).attr("src");
+//                         $("#personIframe", window.parent.document).attr("src",url);
+//						 layer.closeAll();
+//                         alarmdynamictable.search("").draw();
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.task.jingzong.OEpHotelMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpHotel" >
+    <id column="HNOHOTEL" property="hnohotel" jdbcType="VARCHAR" />
+    <result column="HNAME" property="hname" jdbcType="VARCHAR" />
+    <result column="LEGALPERSON" property="legalperson" jdbcType="VARCHAR" />
+    <result column="PRINCIPAL" property="principal" jdbcType="VARCHAR" />
+    <result column="SOCIALDUTY" property="socialduty" jdbcType="VARCHAR" />
+    <result column="HADDRESS" property="haddress" jdbcType="VARCHAR" />
+    <result column="TELPHONE" property="telphone" jdbcType="VARCHAR" />
+    <result column="SAFETEL" property="safetel" jdbcType="VARCHAR" />
+    <result column="ROOMNUM" property="roomnum" jdbcType="INTEGER" />
+    <result column="BEDNUM" property="bednum" jdbcType="INTEGER" />
+    <result column="STARS" property="stars" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="STATEDATE" property="statedate" jdbcType="VARCHAR" />
+    <result column="STATION" property="station" jdbcType="VARCHAR" />
+    <result column="VALIDATECODE" property="validatecode" jdbcType="VARCHAR" />
+    <result column="LINKDATE" property="linkdate" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="VARCHAR" />
+    <result column="INPUTTIME" property="inputtime" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="THIRDPART" property="thirdpart" jdbcType="VARCHAR" />
+    <result column="TRANSTYPE" property="transtype" jdbcType="VARCHAR" />
+    <result column="HOTELVER" property="hotelver" jdbcType="VARCHAR" />
+    <result column="HOTELTYPE" property="hoteltype" jdbcType="VARCHAR" />
+    <result column="FWBM" property="fwbm" jdbcType="VARCHAR" />
+    <result column="PSCODE" property="pscode" jdbcType="VARCHAR" />
+    <result column="QTLX" property="qtlx" jdbcType="VARCHAR" />
+    <result column="CSFS" property="csfs" jdbcType="VARCHAR" />
+    <result column="JYXZ" property="jyxz" jdbcType="VARCHAR" />
+    <result column="SJD" property="sjd" jdbcType="VARCHAR" />
+    <result column="SWD" property="swd" jdbcType="VARCHAR" />
+    <result column="STHZH" property="sthzh" jdbcType="VARCHAR" />
+    <result column="SGSZZH" property="sgszzh" jdbcType="VARCHAR" />
+    <result column="PSORGAN" property="psorgan" jdbcType="VARCHAR" />
+    <result column="SQJWS" property="sqjws" jdbcType="VARCHAR" />
+    <result column="HOTELKIND" property="hotelkind" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="FLOORS" property="floors" jdbcType="VARCHAR" />
+    <result column="DBENCRYPT" property="dbencrypt" jdbcType="VARCHAR" />
+    <result column="ZY_RKSJ" property="zyRksj" jdbcType="VARCHAR" />
+    <result column="REDFLAG" property="redflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    HNOHOTEL, HNAME, LEGALPERSON, PRINCIPAL, SOCIALDUTY, HADDRESS, TELPHONE, SAFETEL, 
+    ROOMNUM, BEDNUM, STARS, GRADE, STATE, STATEDATE, STATION, VALIDATECODE, LINKDATE, 
+    NUM, INPUTTIME, FLAG, THIRDPART, TRANSTYPE, HOTELVER, HOTELTYPE, FWBM, PSCODE, QTLX, 
+    CSFS, JYXZ, SJD, SWD, STHZH, SGSZZH, PSORGAN, SQJWS, HOTELKIND, REMARK, FLOORS, DBENCRYPT, 
+    ZY_RKSJ, REDFLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from V_JDMC
+    where HNOHOTEL = #{hnohotel,jdbcType=VARCHAR}
+  </select>
+  <select id="findEpHotelData" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select * from (select rownum rnum,
+    <include refid="Base_Column_List" />
+    from V_JDMC where 1=1 
+    <if test="zyRksj!=null and zyRksj!='' ">
+    	and to_timestamp(substr(zy_rksj,0,14),'yyyy-mm-dd hh24:mi:ss')&gt;
+    	to_timestamp(substr(#{zyRksj},0,14),'yyyy-mm-dd hh24:mi:ss')
+    </if>
+    order by hnohotel desc) a
+    <if test="pageNum!=null and pageNum!=''">
+   		where rnum &gt; (#{pageNum} *#{eachSearch}) and rnum &lt;= ((#{pageNum}+1)*#{eachSearch})
+   	</if>
+  </select>
+  
+  <select id="findEpHotelCount" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+    count(*)
+    from V_JDMC where 1=1 
+    <if test="zyRksj!=null and zyRksj!='' ">
+    	and to_timestamp(substr(zy_rksj,0,14),'yyyy-mm-dd hh24:mi:ss')&gt;
+    	to_timestamp(substr(#{zyRksj},0,14),'yyyy-mm-dd hh24:mi:ss')
+    </if>
+  </select>
+</mapper>

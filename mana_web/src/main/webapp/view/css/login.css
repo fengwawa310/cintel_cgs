@@ -1,0 +1,107 @@
+body{
+    color:#fff;
+    font-size:14px;
+    overflow: hidden;
+    background:url(../assets/images/gallery/loginBg.jpg) no-repeat;
+}
+.wrap1{
+    height:450px;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    margin:auto;
+}/*鎶婃暣涓睆骞曠湡姝ｆ拺寮�--鑰屼笖鑳借嚜宸卞疄鐜板眳涓�*/
+.main_content{
+    background: #000;
+    opacity: 0.6;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 30px;
+    text-align:left;
+    float:none;
+    border-radius:8px;
+}
+.form-group{
+    position:relative;
+}
+.login_btn{
+    display:block;
+    background:#3872f6;
+    color:#fff;
+    font-size:15px;
+    width:100%;
+    line-height:34px;
+    border-radius:3px;
+    border:none;
+}
+.login_input{
+    color: #fff !important;
+    width:100%;
+    border:1px solid #3872f6;
+    border-radius:3px;
+    line-height:40px;
+    padding:2px 5px 2px 30px;
+    background:none;
+}
+.icon_font{
+    position:absolute;
+    display: inline-block;
+    top: 5px;
+    bottom:5px;
+    left:10px;
+    font-size:18px;
+    color:#3872f6;
+}
+.font16{
+    font-size:16px;
+    color: #dfea08;
+    font-weight:bold;
+}
+.mg-b20{
+    font-weight: bold;
+}
+.mg-t20{
+    margin-top:20px;
+}
+@media (min-width:200px){.pd-xs-20{padding:20px;}}
+@media (min-width:768px){.pd-sm-50{padding:50px;}}
+#grad {
+    background: -webkit-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#4990c1, #52a3d2, #6186a3); /* 鏍囧噯鐨勮娉� */
+}
+.copy-right{
+    position: absolute;
+    text-align: center;
+    bottom: 10px;
+    width: 100%;
+}
+.copy-right a{
+    color: #fffbff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.img-logo{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+}
+.form-control-feedback{
+    margin-top: 8px;
+    right: 10px;
+    position: absolute;
+    display: none !important;
+}
+.username-img, .password-img{
+    font-size: 16px;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.password-img{
+    font-size: 18px;
+}
+

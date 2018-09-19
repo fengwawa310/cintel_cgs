@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>警情详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/alarm.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>警情详情</span>
+            </li>
+        </ul>
+    </div>
+    <!--警情基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--警情信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">警情信息</span>
+            </div>
+        </div>
+        <!--警情编号、接警人员、接警单位-->
+        <div class="row breadcrumbs warningContainer">
+            <!--<div class="col-md-4 noPadding">-->
+                <!--<div class="col-md-4 warningTxt">-->
+                    <!--<span>接警编号</span>-->
+                <!--</div>-->
+                <!--<div class="col-md-8 warningInfo">-->
+                    <!--<span id="alarmNo"></span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>接警人员</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="officerName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>接警单位</span>
+                </div>
+                <div class="col-md-8 warningInfo ">
+                    <span id="unitName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>接警单位编码</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="unitCode"></span>
+                </div>
+            </div>
+        </div>
+        <!--接警单位编码、接警时间、报警人-->
+        <div class="row breadcrumbs warningContainer">
+
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>接警时间</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="alarmTime"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>报警人</span>
+                </div>
+                <div class="col-md-8 warningInfo ">
+                    <span id="alarmPersonName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>报警电话</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="alarmPersonPhone"></span>
+                </div>
+            </div>
+        </div>
+        <!--报警电话、发案地点-->
+        <div class="row breadcrumbs warningContainer">
+
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 warningTxt">
+                    <span>发案地点</span>
+                </div>
+                <div class="col-md-10 warningInfo ">
+                    <span id="locationCase"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span class="required">*</span>
+                    <span>警情分类</span>
+                </div>
+                <div class="col-md-8 warningInput">
+                    <span id="alarmClassName"></span>
+                </div>
+            </div>
+        </div>
+        <!--警情描述-->
+        <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 warningTxt" style="width:11.11%;">
+                <span class="detail-area-menu">警情描述</span>
+            </div>
+            <div class="col-md-10 warningInfo lastInput" style="width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="alarmDesc"></span>
+            </div>
+        </div>
+        
+        
+        <!--受理单位编码、系统创建时间、系统修改时间-->
+       <!--  <div class="row breadcrumbs warningContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>系统创建时间</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="creatTime"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>系统修改时间</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="modifyTime"></span>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<script type="text/javascript">
+$(window).ready(function () {
+    var thisURL = document.URL;
+    console.log(thisURL);
+    var  getval =thisURL.split('?')[1];
+    var alarmNo= getval.split("=")[1];
+    findCaseById(alarmNo);
+});
+/*查询案件信息*/
+function findCaseById(alarmNo){
+    $.ajax({
+        type: 'POST',
+        url: getRootPath_web()+"/ETAlarmHandler/selectByPrimaryKey?alarmNo="+alarmNo,//发送请求
+        dataType : "json",
+        success: function(data) {
+            var json = $.parseJSON(data.data);
+            console.log(json.data);
+            var jsonObj = json.data;
+            for (var prop in jsonObj){
+                $("#"+prop).text((jsonObj[prop]==null?"":jsonObj[prop]));
+            }
+            logEntry("1","警情详情查询 警情编号："+alarmNo);
+        }
+    });
+}
+</script>
+
+</body>
+</html>
+

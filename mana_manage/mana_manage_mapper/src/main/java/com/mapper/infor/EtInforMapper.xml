@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.infor.EtInforMapper">
+	<resultMap id="BaseResultMap" type="com.entity.infor.EtInfor">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="INFOR_NO" property="inforNo" jdbcType="VARCHAR" />
+		<result column="INFOR_TITLE" property="inforTitle" jdbcType="VARCHAR" />
+		<result column="INFOR_CLASS" property="inforClass" jdbcType="INTEGER" />
+		<result column="LAUNCH_UNIT_CODE" property="launchUnitCode"
+			jdbcType="VARCHAR" />
+		<result column="LAUNCH_UNIT_NAME" property="launchUnitName"
+			jdbcType="VARCHAR" />
+		<result column="LAUNCH_P_CODE" property="launchPCode" jdbcType="VARCHAR" />
+		<result column="LAUNCH_P_NAME" property="launchPName" jdbcType="VARCHAR" />
+		<result column="LAUNCH_TIME" property="launchTime" jdbcType="TIMESTAMP" />
+		<result column="HOST_UNIT_CODE" property="hostUnitCode"
+			jdbcType="VARCHAR" />
+		<result column="HOST_UNIT_NAME" property="hostUnitName"
+			jdbcType="VARCHAR" />
+		<result column="SPONSOR_CODE" property="sponsorCode" jdbcType="VARCHAR" />
+		<result column="SPONSOR_NAME" property="sponsorName" jdbcType="VARCHAR" />
+		<result column="ASSIST_UNIT_CODE" property="assistUnitCode"
+			jdbcType="VARCHAR" />
+		<result column="ASSIST_UNIT_NAME" property="assistUnitName"
+			jdbcType="VARCHAR" />
+		<result column="ASSISTANT_CODE" property="assistantCode"
+			jdbcType="VARCHAR" />
+		<result column="ASSISTANT_NAME" property="assistantName"
+			jdbcType="VARCHAR" />
+		<result column="FINISH_TIME" property="finishTime" jdbcType="TIMESTAMP" />
+		<result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+		<result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.entity.infor.EtInforWithBLOBs"
+		extends="BaseResultMap">
+		<result column="INFOR_CONTENT" property="inforContent"
+			jdbcType="LONGVARCHAR" />
+		<result column="ADVISE" property="advise" jdbcType="LONGVARCHAR" />
+		<result column="PROCESS" property="process" jdbcType="LONGVARCHAR" />
+		<result column="RESULT" property="result" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, INFOR_NO, INFOR_TITLE, INFOR_CLASS, LAUNCH_UNIT_CODE,
+		LAUNCH_UNIT_NAME, LAUNCH_P_CODE,
+		LAUNCH_P_NAME, LAUNCH_TIME,
+		HOST_UNIT_CODE, HOST_UNIT_NAME, SPONSOR_CODE,
+		SPONSOR_NAME,
+		ASSIST_UNIT_CODE, ASSIST_UNIT_NAME, ASSISTANT_CODE, ASSISTANT_NAME,
+		FINISH_TIME,
+		CREAT_TIME, MODIFY_TIME
+	</sql>
+	<sql id="Blob_Column_List">
+		INFOR_CONTENT, ADVISE, PROCESS, RESULT
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from et_infor
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		et_infor
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.entity.infor.EtInforWithBLOBs">
+		insert into et_infor (ID,
+		INFOR_NO, INFOR_TITLE,
+		INFOR_CLASS, LAUNCH_UNIT_CODE, LAUNCH_UNIT_NAME,
+		LAUNCH_P_CODE, LAUNCH_P_NAME, LAUNCH_TIME,
+		HOST_UNIT_CODE,
+		HOST_UNIT_NAME, SPONSOR_CODE,
+		SPONSOR_NAME, ASSIST_UNIT_CODE,
+		ASSIST_UNIT_NAME,
+		ASSISTANT_CODE, ASSISTANT_NAME, FINISH_TIME,
+		CREAT_TIME, MODIFY_TIME, INFOR_CONTENT,
+		ADVISE, PROCESS, RESULT
+		)
+		values
+		(#{id,jdbcType=VARCHAR}, #{inforNo,jdbcType=VARCHAR},
+		#{inforTitle,jdbcType=VARCHAR},
+		#{inforClass,jdbcType=INTEGER},
+		#{launchUnitCode,jdbcType=VARCHAR},
+		#{launchUnitName,jdbcType=VARCHAR},
+		#{launchPCode,jdbcType=VARCHAR},
+		#{launchPName,jdbcType=VARCHAR}, #{launchTime,jdbcType=TIMESTAMP},
+		#{hostUnitCode,jdbcType=VARCHAR}, #{hostUnitName,jdbcType=VARCHAR},
+		#{sponsorCode,jdbcType=VARCHAR},
+		#{sponsorName,jdbcType=VARCHAR},
+		#{assistUnitCode,jdbcType=VARCHAR},
+		#{assistUnitName,jdbcType=VARCHAR},
+		#{assistantCode,jdbcType=VARCHAR},
+		#{assistantName,jdbcType=VARCHAR}, #{finishTime,jdbcType=TIMESTAMP},
+		#{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{inforContent,jdbcType=LONGVARCHAR},
+		#{advise,jdbcType=LONGVARCHAR},
+		#{process,jdbcType=LONGVARCHAR}, #{result,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+
+
+	<insert id="insertSelective" parameterType="com.entity.infor.EtInforWithBLOBs">
+		insert into et_infor
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="inforNo != null">
+				INFOR_NO,
+			</if>
+			<if test="inforTitle != null">
+				INFOR_TITLE,
+			</if>
+			<if test="inforClass != null">
+				INFOR_CLASS,
+			</if>
+			<if test="launchUnitCode != null">
+				LAUNCH_UNIT_CODE,
+			</if>
+			<if test="launchUnitName != null">
+				LAUNCH_UNIT_NAME,
+			</if>
+			<if test="launchPCode != null">
+				LAUNCH_P_CODE,
+			</if>
+			<if test="launchPName != null">
+				LAUNCH_P_NAME,
+			</if>
+			<if test="launchTime != null">
+				LAUNCH_TIME,
+			</if>
+			<if test="hostUnitCode != null">
+				HOST_UNIT_CODE,
+			</if>
+			<if test="hostUnitName != null">
+				HOST_UNIT_NAME,
+			</if>
+			<if test="sponsorCode != null">
+				SPONSOR_CODE,
+			</if>
+			<if test="sponsorName != null">
+				SPONSOR_NAME,
+			</if>
+			<if test="assistUnitCode != null">
+				ASSIST_UNIT_CODE,
+			</if>
+			<if test="assistUnitName != null">
+				ASSIST_UNIT_NAME,
+			</if>
+			<if test="assistantCode != null">
+				ASSISTANT_CODE,
+			</if>
+			<if test="assistantName != null">
+				ASSISTANT_NAME,
+			</if>
+			<if test="finishTime != null">
+				FINISH_TIME,
+			</if>
+			<if test="creatTime != null">
+				CREAT_TIME,
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME,
+			</if>
+			<if test="inforContent != null">
+				INFOR_CONTENT,
+			</if>
+			<if test="advise != null">
+				ADVISE,
+			</if>
+			<if test="process != null">
+				PROCESS,
+			</if>
+			<if test="result != null">
+				RESULT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="inforNo != null">
+				#{inforNo,jdbcType=VARCHAR},
+			</if>
+			<if test="inforTitle != null">
+				#{inforTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="inforClass != null">
+				#{inforClass,jdbcType=INTEGER},
+			</if>
+			<if test="launchUnitCode != null">
+				#{launchUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="launchUnitName != null">
+				#{launchUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="launchPCode != null">
+				#{launchPCode,jdbcType=VARCHAR},
+			</if>
+			<if test="launchPName != null">
+				#{launchPName,jdbcType=VARCHAR},
+			</if>
+			<if test="launchTime != null">
+				#{launchTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hostUnitCode != null">
+				#{hostUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="hostUnitName != null">
+				#{hostUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="sponsorCode != null">
+				#{sponsorCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sponsorName != null">
+				#{sponsorName,jdbcType=VARCHAR},
+			</if>
+			<if test="assistUnitCode != null">
+				#{assistUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="assistUnitName != null">
+				#{assistUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="assistantCode != null">
+				#{assistantCode,jdbcType=VARCHAR},
+			</if>
+			<if test="assistantName != null">
+				#{assistantName,jdbcType=VARCHAR},
+			</if>
+			<if test="finishTime != null">
+				#{finishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creatTime != null">
+				#{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inforContent != null">
+				#{inforContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="advise != null">
+				#{advise,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="process != null">
+				#{process,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="result != null">
+				#{result,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.entity.infor.EtInforWithBLOBs">
+		update et_infor
+		<set>
+			<if test="inforNo != null">
+				INFOR_NO = #{inforNo,jdbcType=VARCHAR},
+			</if>
+			<if test="inforTitle != null">
+				INFOR_TITLE = #{inforTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="inforClass != null">
+				INFOR_CLASS = #{inforClass,jdbcType=INTEGER},
+			</if>
+			<if test="launchUnitCode != null">
+				LAUNCH_UNIT_CODE = #{launchUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="launchUnitName != null">
+				LAUNCH_UNIT_NAME = #{launchUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="launchPCode != null">
+				LAUNCH_P_CODE = #{launchPCode,jdbcType=VARCHAR},
+			</if>
+			<if test="launchPName != null">
+				LAUNCH_P_NAME = #{launchPName,jdbcType=VARCHAR},
+			</if>
+			<if test="launchTime != null">
+				LAUNCH_TIME = #{launchTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hostUnitCode != null">
+				HOST_UNIT_CODE = #{hostUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="hostUnitName != null">
+				HOST_UNIT_NAME = #{hostUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="sponsorCode != null">
+				SPONSOR_CODE = #{sponsorCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sponsorName != null">
+				SPONSOR_NAME = #{sponsorName,jdbcType=VARCHAR},
+			</if>
+			<if test="assistUnitCode != null">
+				ASSIST_UNIT_CODE = #{assistUnitCode,jdbcType=VARCHAR},
+			</if>
+			<if test="assistUnitName != null">
+				ASSIST_UNIT_NAME = #{assistUnitName,jdbcType=VARCHAR},
+			</if>
+			<if test="assistantCode != null">
+				ASSISTANT_CODE = #{assistantCode,jdbcType=VARCHAR},
+			</if>
+			<if test="assistantName != null">
+				ASSISTANT_NAME = #{assistantName,jdbcType=VARCHAR},
+			</if>
+			<if test="finishTime != null">
+				FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creatTime != null">
+				CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inforContent != null">
+				INFOR_CONTENT = #{inforContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="advise != null">
+				ADVISE = #{advise,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="process != null">
+				PROCESS = #{process,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="result != null">
+				RESULT = #{result,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.infor.EtInforWithBLOBs">
+		update
+		et_infor
+		set INFOR_NO = #{inforNo,jdbcType=VARCHAR},
+		INFOR_TITLE =
+		#{inforTitle,jdbcType=VARCHAR},
+		INFOR_CLASS =
+		#{inforClass,jdbcType=INTEGER},
+		LAUNCH_UNIT_CODE =
+		#{launchUnitCode,jdbcType=VARCHAR},
+		LAUNCH_UNIT_NAME =
+		#{launchUnitName,jdbcType=VARCHAR},
+		LAUNCH_P_CODE =
+		#{launchPCode,jdbcType=VARCHAR},
+		LAUNCH_P_NAME =
+		#{launchPName,jdbcType=VARCHAR},
+		LAUNCH_TIME =
+		#{launchTime,jdbcType=TIMESTAMP},
+		HOST_UNIT_CODE =
+		#{hostUnitCode,jdbcType=VARCHAR},
+		HOST_UNIT_NAME =
+		#{hostUnitName,jdbcType=VARCHAR},
+		SPONSOR_CODE =
+		#{sponsorCode,jdbcType=VARCHAR},
+		SPONSOR_NAME =
+		#{sponsorName,jdbcType=VARCHAR},
+		ASSIST_UNIT_CODE =
+		#{assistUnitCode,jdbcType=VARCHAR},
+		ASSIST_UNIT_NAME =
+		#{assistUnitName,jdbcType=VARCHAR},
+		ASSISTANT_CODE =
+		#{assistantCode,jdbcType=VARCHAR},
+		ASSISTANT_NAME =
+		#{assistantName,jdbcType=VARCHAR},
+		FINISH_TIME =
+		#{finishTime,jdbcType=TIMESTAMP},
+		CREAT_TIME =
+		#{creatTime,jdbcType=TIMESTAMP},
+		MODIFY_TIME =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		INFOR_CONTENT =
+		#{inforContent,jdbcType=LONGVARCHAR},
+		ADVISE =
+		#{advise,jdbcType=LONGVARCHAR},
+		PROCESS =
+		#{process,jdbcType=LONGVARCHAR},
+		RESULT =
+		#{result,jdbcType=LONGVARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.entity.infor.EtInfor">
+		update et_infor
+		set INFOR_NO = #{inforNo,jdbcType=VARCHAR},
+		INFOR_TITLE =
+		#{inforTitle,jdbcType=VARCHAR},
+		INFOR_CLASS =
+		#{inforClass,jdbcType=INTEGER},
+		LAUNCH_UNIT_CODE =
+		#{launchUnitCode,jdbcType=VARCHAR},
+		LAUNCH_UNIT_NAME =
+		#{launchUnitName,jdbcType=VARCHAR},
+		LAUNCH_P_CODE =
+		#{launchPCode,jdbcType=VARCHAR},
+		LAUNCH_P_NAME =
+		#{launchPName,jdbcType=VARCHAR},
+		LAUNCH_TIME =
+		#{launchTime,jdbcType=TIMESTAMP},
+		HOST_UNIT_CODE =
+		#{hostUnitCode,jdbcType=VARCHAR},
+		HOST_UNIT_NAME =
+		#{hostUnitName,jdbcType=VARCHAR},
+		SPONSOR_CODE =
+		#{sponsorCode,jdbcType=VARCHAR},
+		SPONSOR_NAME =
+		#{sponsorName,jdbcType=VARCHAR},
+		ASSIST_UNIT_CODE =
+		#{assistUnitCode,jdbcType=VARCHAR},
+		ASSIST_UNIT_NAME =
+		#{assistUnitName,jdbcType=VARCHAR},
+		ASSISTANT_CODE =
+		#{assistantCode,jdbcType=VARCHAR},
+		ASSISTANT_NAME =
+		#{assistantName,jdbcType=VARCHAR},
+		FINISH_TIME =
+		#{finishTime,jdbcType=TIMESTAMP},
+		CREAT_TIME =
+		#{creatTime,jdbcType=TIMESTAMP},
+		MODIFY_TIME =
+		#{modifyTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+
+	<!--查询下发结果列表 -->
+	<select id="queryByIntelligenceListRequetParam" resultType="com.vo.infor.IntelligenceListResponseVO"
+		parameterType="com.vo.infor.IntelligenceListRequetParam">
+		select
+		a.INFOR_NO as inforNo, 							 <!-- 情报编号 -->
+		a.INFOR_TITLE as inforTitle, 					 <!-- 研判标题 -->
+		date_format(a.CREAT_TIME, '%Y-%m-%d %H:%I:%S') as creatTime, 	<!-- 生成时间 -->
+		a.HOST_UNIT_CODE as hostUnitCode ,     			 <!-- 查证主办单位编号 -->
+		a.HOST_UNIT_NAME as hostUnitName ,      		 <!-- 查证主办单位名称 -->
+		a.ASSIST_UNIT_CODE as assistUnitCode,   	 	 <!-- 查证协办单位编号 -->
+		a.ASSIST_UNIT_NAME as assistUnitName,   		 <!-- 查证协办单位名称 -->
+		a.UNDERTAKE_CODE as undertakeCode,       		 <!-- 承办单位编号 -->
+		a.UNDERTAKE_NAME as undertakeName,       		 <!-- 承办单位名称 -->
+		a.UNDERTAKE_PERSION_CODE as undertakePersionCode,<!-- 承办人编号 -->
+		a.UNDERTAKE_PERSION_NAME as undertakePersionName,<!-- 承办人名称 -->
+		A.FUJIAN_URL as fujianUrl,					 <!-- 附件地址 -->
+		B.PROCESS as process,					 <!-- 查证过程 -->
+		B.RESULT as result ,					 <!-- 查证结果 -->
+		date_format(B.RECEIVE_TIME, '%Y-%m-%d %H:%I:%S') as receiveTime,  <!-- 情报接收时间 -->
+		B.RECEIVE_PERSON as receivePerson,			 <!-- 情报接收人员编码 -->
+		B.RECEIVE_PERSON_NAME as receivePersonName,	 <!-- 情报接收人员编名称 -->
+		B.RECEIVE_UNIT as receiveUnit,				 <!-- 情报接收单位编码 -->
+		B.RECEIVE_UNIT_NAME as receiveUnitName,	 <!-- 情报接收单位名称 -->
+		A.INFOR_CLASS as inforClass,					 <!-- 情报类型 -->
+		date_format(B.REPORT_TIME, '%Y-%m-%d %H:%I:%S') AS reportTime,	  <!-- 上报时间 -->
+		A.LAUNCH_UNIT_NAME as launchUnitName,
+		A.LAUNCH_P_NAME as launchPname,
+		B.IS_RECEIVE as isReceive,					 <!-- 查证单位签收状态 -->
+		B.IS_HANDOUT as isHandout,
+		B.IS_VERIFY as isVerify,
+		B.IS_REPORT as
+		isReport,
+		date_format(B.HANDOUT_TIME, '%Y-%m-%d %H:%I:%S') as
+		handoutTime, <!-- 下发单位 -->
+		B.HANDOUT_UNIT as handoutUnit,   <!-- 下发单位名称 -->
+		B.HANDOUT_UNIT_NAME as handoutUnitName,
+		B.HANDOUT_PERSON as
+		handoutPerson,  <!-- 下发人员编号 -->
+		B.HANDOUT_PERSON_NAME as handoutPersonName,<!-- 下发人名称 -->
+		B.AUTHORIZE_TIME as authorizeTime,    			 	   		<!-- 审核时间 -->
+		B.AUTHORIZE_UNIT as authorizeUnit,       		<!-- 审核单位 -->
+		B.AUTHORIZE_UNIT_NAME as authorizeUnitName,  		<!-- 审核单位 -->
+		B.AUTHORIZE_PERSON as authorizePerson,  		<!-- 审核人 -->
+		B.AUTHORIZE_PERSON_NAME as authorizePersonName,  <!-- 审核人 -->
+		B.AUTHORIZE_REMARK as authorizeRemark ,	   		<!-- 审批意见 -->
+		B.IS_AUTHORIZE as isAuthorize,
+		B.REPORT_UNIT as reportUnit,       				<!-- 上报单位编号 -->
+		B.REPORT_UNIT_NAME as reportUnitName,      		<!-- 上报单位名称 -->
+		B.REPORT_PERSON as reportPerson,     			<!-- 上报人 编号 -->
+		B.REPORT_PERSON_NAME as reportPersonName ,		<!-- 上报人名称 -->
+		B.VERIFY_UNIT_NAME as verifyUnitName,
+		B.VERIFY_PERSON_NAME as
+		verifyPersonName,
+		date_format(B.VERIFY_TIME, '%Y-%m-%d %H:%I:%S')
+		as
+		verifyTime,
+		#{level} as level
+		FROM ET_INFOR A
+		INNER JOIN B_INFOR_FLOW B
+		ON A.INFOR_NO = B.INFOR_NO
+		<if
+			test=" level =='3'.toString() or  level =='2'.toString()  or level =='1'.toString()">
+			INNER JOIN DIC_UNIT C on A.LAUNCH_UNIT_CODE = C.ID
+		</if>
+		<if test=" level =='4'.toString() ">
+			INNER JOIN DIC_UNIT C
+			ON (A.HOST_UNIT_CODE = C.ID OR
+			A.ASSIST_UNIT_CODE = C.ID)
+		</if>
+
+		<!-- 查询条件 -->
+		where true
+
+		<!-- 权限控制 -->
+		<if test=" level =='1'.toString() ">
+			AND C.ID like concat('%',left(#{area},4),'%')
+		</if>
+		<if test=" level =='2'.toString() ">
+			AND C.ID like concat('%',left(#{city},4),'%')
+		</if>
+		<if test=" level =='3'.toString() ">
+			AND C.ID like concat('%',#{area},'%')
+		</if>
+		<if test=" level =='4'.toString() ">
+			AND C.ID =#{paichusuo}
+		</if>
+
+		<!-- 情报编号 -->
+		<if test="inforNo!= null and inforNo !=''">
+			AND A.INFOR_NO =#{inforNo}
+		</if>
+		<!-- 情报标题 -->
+		<if test="inforTitle != null and inforTitle !='' ">
+			AND A.INFOR_TITLE like concat('%',#{inforTitle},'%')
+		</if>
+		<!-- 查证单位 -->
+		<if test="hostUnitCode !=null and hostUnitCode !='' ">
+			AND A.HOST_UNIT_CODE =#{hostUnitCode}
+		</if>
+		<!-- 签收审核状态 -->
+		<if test=" isAuthorize != null and   isAuthorize != '' ">
+			AND B.IS_AUTHORIZE = #{isAuthorize}
+		</if>
+
+		<!-- 签收状态 -->
+		<if test=" isReceive != null  and   isReceive != ''">
+			AND B.IS_RECEIVE = #{isReceive}
+		</if>
+
+		<!-- 上报状态 -->
+		<if test=" isReport != null   and   isReport != '' ">
+			AND B.IS_REPORT = #{isReport}
+		</if>
+		<!-- 上报审核状态 -->
+		<if test=" isVerify != null   and   isVerify != '' ">
+			AND B.IS_VERIFY = #{isVerify}
+		</if>
+		<!-- 生成时间区间 -->
+		<if test=" creatTimeStart != null and creatTimeStart != '' ">
+			AND B.HANDOUT_TIME between #{creatTimeStart} and
+			#{creatTimeEnd}
+		</if>
+
+		<!-- 签收时间区间 -->
+		<if test=" qianshouTimeStart != null and qianshouTimeStart != ''  ">
+			AND B.RECEIVE_TIME between #{qianshouTimeStart} and
+			#{qianshouTimeEnd}
+		</if>
+
+
+		<!-- 上报时间区间 -->
+		<if test=" shangbaoTimeStart != null and shangbaoTimeStart != ''  ">
+			AND B.REPORT_TIME between #{shangbaoTimeStart} and
+			#{shangbaoTimeEnd}
+		</if>
+
+		<!-- 上报审核时间区间 -->
+		<if
+			test=" shangbaoShenHeTimeStart != null and shangbaoShenHeTimeStart != ''  ">
+			AND B.VERIFY_TIME between #{shangbaoShenHeTimeStart} and
+			#{shangbaoShenHeTimeEnd}
+		</if>
+		ORDER BY a.CREAT_TIME DESC
+	</select>
+
+
+	<!-- 詳情 -->
+	<select id="findListinforNo" resultType="com.vo.infor.IntelligenceListResponseVO"
+		parameterType="java.lang.String">
+		select
+		a.INFOR_NO as inforNo, 							 <!-- 情报编号 -->
+		a.INFOR_TITLE as inforTitle, 					 <!-- 研判标题 -->
+		"" as qianFaPersion,                      		 <!-- 签发人姓名 -->
+		"" as shenHePersion,							 <!-- 审核人姓名 -->
+		"" as shenHeType,								 <!-- 审核状态 -->
+		"" as liuZhuanType,								 <!-- 流转状态 -->
+		date_format(a.CREAT_TIME, '%Y-%m-%d %H:%I:%S') as creatTime,  <!-- 生成时间 -->
+		"" as banJieType,								 <!-- 单位办结状态 -->
+		"" as banJieTime,								 <!-- 单位办结时间 -->
+		a.HOST_UNIT_CODE as hostUnitCode ,     			 <!-- 查证主办单位编号 -->
+		a.HOST_UNIT_NAME as hostUnitName ,      		 <!-- 查证主办单位名称 -->
+		a.ASSIST_UNIT_CODE as assistUnitCode,   	 	 <!-- 查证协办单位编号 -->
+		a.ASSIST_UNIT_NAME as assistUnitName,   		 <!-- 查证协办单位名称 -->
+		a.UNDERTAKE_CODE as undertakeCode,       		 <!-- 承办单位编号 -->
+		a.UNDERTAKE_NAME as undertakeName,       		 <!-- 承办单位名称 -->
+		a.UNDERTAKE_PERSION_CODE as undertakePersionCode,<!-- 承办人编号 -->
+		a.UNDERTAKE_PERSION_NAME as undertakePersionName,<!-- 承办人名称 -->
+		"" as fankuiType, 				 <!-- 反馈状态 -->
+		A.FUJIAN_URL as fujianUrl,					 <!-- 附件地址 -->
+		B.PROCESS as process,					 <!-- 查证过程 -->
+		B.RESULT as result ,					 <!-- 查证结果 -->
+		B.RECEIVE_TIME as receiveTime,				 <!-- 情报接收时间 -->
+		B.RECEIVE_PERSON as receivePerson,			 <!-- 情报接收人员编码 -->
+		B.RECEIVE_PERSON_NAME as receivePersonName,	<!-- 情报接收人员编码 -->
+		B.RECEIVE_UNIT as receiveUnit,				 <!-- 情报接收单位编码 -->
+		B.RECEIVE_UNIT_NAME as receiveUnitName,	<!-- 情报接收单位编码 -->
+		A.INFOR_CLASS as inforClass,					 <!-- 情报类型 -->
+		A.INFOR_CONTENT as inforContent,
+		A.ADVISE as advise,
+		B.IS_RECEIVE as
+		isReceive,					 <!-- 查证单位接收状态 -->
+		B.IS_HANDOUT as isHandout,
+		B.IS_VERIFY as isVerify,
+		B.IS_REPORT as
+		isReport,
+		A.LAUNCH_UNIT_NAME as launchUnitName,
+		A.LAUNCH_P_NAME as
+		launchPname,
+		B.HANDOUT_TIME as handoutTime, <!-- 下发时间 -->
+		B.HANDOUT_UNIT as handoutUnit,   <!-- 下发单位编号 -->
+		B.HANDOUT_UNIT_NAME as handoutUnitName,<!-- 下发单位名称 -->
+		B.HANDOUT_PERSON as handoutPerson,  <!-- 下发人员编号 -->
+		B.HANDOUT_PERSON_NAME as handoutPersonName,<!-- 下发人名称 -->
+		B.AUTHORIZE_TIME as authorizeTime,    			<!-- 审核时间 -->
+		B.AUTHORIZE_UNIT as authorizeUnit,       		<!-- 审核单位 -->
+		B.AUTHORIZE_UNIT_NAME as authorizeUnitName,  	<!-- 审核单位 -->
+		B.AUTHORIZE_PERSON as authorizePerson,  		<!-- 审核人 -->
+		B.AUTHORIZE_PERSON_NAME as authorizePersonName,<!-- 审核人 -->
+		B.AUTHORIZE_REMARK as authorizeRemark ,	   	<!-- 审批意见 -->
+		B.IS_AUTHORIZE as isAuthorize,
+		B.REPORT_UNIT as reportUnit,       				<!-- 上报单位编号 -->
+		B.REPORT_UNIT_NAME as reportUnitName,      		<!-- 上报单位名称 -->
+		B.REPORT_PERSON as reportPerson,     			<!-- 上报人 编号 -->
+		B.REPORT_PERSON_NAME as reportPersonName ,		<!-- 上报人名称 -->
+		B.VERIFY_UNIT_NAME as verifyUnitName,
+		B.VERIFY_PERSON_NAME as
+		verifyPersonName,
+		date_format(B.VERIFY_TIME, '%Y-%m-%d %H:%I:%S')
+		as
+		verifyTime
+
+		FROM ET_INFOR A
+		INNER JOIN B_INFOR_FLOW B
+		ON A.INFOR_NO =
+		B.INFOR_NO
+		where A.INFOR_NO = #{inforNo}
+	</select>
+
+	<!-- 嫌疑人 -->
+	<select id="findXianYiRenList" resultType="com.entity.infor.ApInforStaff"
+		parameterType="java.lang.String">
+		SELECT
+		A.NAME as name,
+		A.IDCARD_NUM as idcardNum
+		FROM
+		AP_INFOR_STAFF A
+		WHERE A.INFOR_NO = #{inforNo}
+	</select>
+	<!-- 下发 签收 审核 上报 四种操作状态 -->
+	<update id="changeXiaFaType" parameterType="java.util.Map">
+		UPDATE B_INFOR_FLOW
+		<if test="isHandout == 1 ">
+
+			SET IS_HANDOUT = #{isHandout}     	  					<!-- 下发状态 -->
+			<if test=" time != null and time != ''  ">
+				,HANDOUT_TIME = #{time}    		  					<!-- 下发时间 -->
+			</if>
+			<if test=" xiafadanweibianhao != null and xiafadanweibianhao != ''  ">
+				,HANDOUT_UNIT = #{xiafadanweibianhao}    		  		<!-- 下发单位 -->
+			</if>
+			<if test=" xiafadanweimingcheng != null and xiafadanweimingcheng != ''  ">
+				,HANDOUT_UNIT_NAME =#{xiafadanweimingcheng}    			<!-- 下发单位名称 -->
+			</if>
+			<if test=" xiafarenbianhao != null and xiafarenbianhao != ''  ">
+				,HANDOUT_PERSON = #{xiafarenbianhao}    			<!-- 下发人员编号 -->
+			</if>
+			<if test=" xiafarenmingcheng != null and xiafarenmingcheng != ''  ">
+				,HANDOUT_PERSON_NAME = #{xiafarenmingcheng}      	<!-- 下发人名称 -->
+			</if>
+
+		</if>
+		<if test="isReceive == 1 ">
+			SET IS_RECEIVE = 1  									<!-- 签收状态 -->
+			,RECEIVE_TIME = #{time}    							<!-- 签收时间 -->
+			<if test=" time != null and time != ''  ">
+			</if>
+			<if test=" receiveUnit != null and receiveUnit != ''  ">
+				,RECEIVE_UNIT = #{receiveUnit}  						<!-- 签收单位编号 -->
+			</if>
+			<if test=" receiveUnitName != null and receiveUnitName != ''  ">
+				,RECEIVE_UNIT_NAME = #{receiveUnitName}  				<!-- 签收单位名称 -->
+			</if>
+			<if test=" receivePerson != null and receivePerson != ''  ">
+				,RECEIVE_PERSON= #{receivePerson}     					<!-- 签收人编号 -->
+			</if>
+			<if test=" receivePersonName != null and receivePersonName != ''  ">
+				,RECEIVE_PERSON_NAME= #{receivePersonName}     			<!-- 签收人 -->
+			</if>
+		</if>
+		<if test="isAuthorize == 1 or isAuthorize == 2 ">
+			SET IS_AUTHORIZE = #{isAuthorize}		   				<!-- 审核状态 -->
+			,AUTHORIZE_TIME=#{time}    			 	   				<!-- 审核时间 -->
+			<if test=" authorizeUnit != null and authorizeUnit != ''  ">
+				,AUTHORIZE_UNIT=#{authorizeUnit}       					<!-- 审核单位 -->
+			</if>
+			<if test=" authorizeUnitName != null and authorizeUnitName != ''  ">
+				,AUTHORIZE_UNIT_NAME=#{authorizeUnitName}  				<!-- 审核单位 -->
+			</if>
+			<if test=" authorizePerson != null and authorizePerson != ''  ">
+				,AUTHORIZE_PERSON=#{authorizePerson}  					<!-- 审核人 -->
+			</if>
+			<if test=" authorizePersonName != null and authorizePersonName != ''  ">
+				,AUTHORIZE_PERSON_NAME=#{authorizePersonName}  			<!-- 审核人 -->
+			</if>
+			<if test=" authorizeRemark != null and authorizeRemark != ''  ">
+				,AUTHORIZE_REMARK =#{authorizeRemark} 		   			<!-- 审批意见 -->
+			</if>
+		</if>
+		<if test=" isReport == 1">
+			SET IS_REPORT = #{isReport}     						 <!-- 上报状态 -->
+			,REPORT_TIME =#{time}     								 <!-- 上报时间 -->
+			<if test=" reportUnit != null and reportUnit != ''  ">
+				,REPORT_UNIT=#{reportUnit}       						 <!-- 上报单位编号 -->
+			</if>
+			<if test=" reportUnitName != null and reportUnitName != ''  ">
+				,REPORT_UNIT_NAME=#{reportUnitName}      				 <!-- 上报单位名称 -->
+			</if>
+			<if test=" reportPerson != null and reportPerson != ''  ">
+				,REPORT_PERSON= #{reportPerson}     					 <!-- 上报人 编号 -->
+			</if>
+			<if test=" reportPersonName != null and reportPersonName != ''  ">
+				,REPORT_PERSON_NAME= #{reportPersonName} 				 <!-- 上报人名称 -->
+			</if>
+			<if test=" process != null and process != ''  ">
+				,PROCESS = #{process} 		   							 <!-- 查证过程 -->
+			</if>
+			<if test=" result != null and result != ''  ">
+				,RESULT = #{result}		   		    					 <!-- 查证结果 -->
+			</if>
+		</if>
+
+		<if test="isVerify == 1 or isVerify == 2">
+			SET IS_VERIFY = #{isVerify}		    			         <!--上报审核状态 -->
+			,VERIFY_TIME=#{time}    			 	 			     <!--上报审核时间 -->
+
+			<if test=" verifyUnit != null and verifyUnit != ''  ">
+				,VERIFY_UNIT=#{verifyUnit}                      		 <!--上报审核单位编号 -->
+			</if>
+			<if test=" verifyUnitName != null and verifyUnitName != ''  ">
+				,VERIFY_UNIT_NAME=#{verifyUnitName}                      <!--上报审核单位名称 -->
+			</if>
+			<if test=" verifyPerson != null and verifyPerson != ''  ">
+				,VERIFY_PERSON=#{verifyPerson}	 						 <!--上报审核人编号 -->
+			</if>
+			<if test=" verifyPersonName != null and verifyPersonName != ''  ">
+				,VERIFY_PERSON_NAME=#{verifyPersonName}	 				 <!--上报审核人名称 -->
+			</if>
+			<if test=" verifyRemark != null and verifyRemark != ''  ">
+				,VERIFY_REMARK=#{verifyRemark} 		         			 <!--上报审批意见 -->
+			</if>
+		</if>
+		WHERE INFOR_NO = #{inforNo}
+	</update>
+
+
+	<!--业务表 对应情报 -->
+	<insert id="addflow" parameterType="com.vo.infor.IntelligenceListRequetParam">
+		INSERT INTO b_infor_flow
+		(id,
+		INFOR_NO,
+		IS_HANDOUT,
+		IS_REPORT
+		)
+		VALUES
+		(#{id},
+		#{inforNo},
+		0,
+	    2
+		)
+	</insert>
+
+
+	<insert id="addIntelligence" parameterType="com.vo.infor.IntelligenceListRequetParam">
+		INSERT INTO et_infor
+		(id,
+		INFOR_NO,
+		INFOR_CLASS,
+		INFOR_TITLE,
+		INFOR_CONTENT,
+		HOST_UNIT_CODE,
+		HOST_UNIT_NAME,
+		ASSIST_UNIT_CODE,
+		ASSIST_UNIT_NAME,
+		LAUNCH_UNIT_CODE,
+		LAUNCH_UNIT_NAME,
+		ADVISE
+		)
+		VALUES
+		(#{id},
+		#{inforNo},
+		#{inforClass},
+		#{inforTitle},
+		#{inforContent},
+		#{hostUnitCode},
+		#{hostUnitName},
+		#{assistUnitCode},
+		#{assistUnitName},
+		#{launchUnitCode},
+		#{launchUnitName},
+		#{advise}
+		)
+	</insert>
+
+	<!-- 录入嫌疑人 -->
+	<insert id="addXianYI" parameterType="java.util.Map">
+		INSERT INTO ap_infor_staff
+		(ID,
+		INFOR_NO,
+		NAME,
+		IDCARD_NUM
+		)
+		VALUES
+		(#{id},
+		#{inforNo},
+		#{xianyirenname},
+		#{xianyirenshenfenzheng}
+		)
+	</insert>
+	
+	
+	
+	<!-- 通过单位编号获取单位 -->
+	<select id="getSysUserDicUnitName" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		SELECT
+		A.NAME as name
+		FROM
+		dic_unit A
+		WHERE A.ID = #{sysUserDicUnit}
+	</select>
+</mapper>

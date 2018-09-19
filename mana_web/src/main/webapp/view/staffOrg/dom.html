@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>话单分析</title>
+    <!--<link rel="stylesheet" href="../../static/plugins/layui-v2.2.45/layui/css/layui.css">-->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" href="../css/custom.css"/>
+    <!-- jQuery includes -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquer-1.7.1.min.js"></script>
+    <!-- 可拖拽插件 -->
+    <script  src="../js/jquery-ui.min.js"></script>
+    <!-- 组织结构图插件 -->
+    <script src="../js/jquery.jOrgChart.js"></script>
+    <!--<script src="../../static/plugins/layui-v2.2.45/layui/layui.js"></script>-->
+    <!-- 弹窗的插件 -->
+    <script src="../assets/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <!-- <![endif]-->
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- <![endif]-->
+    <style>
+        .clwi{
+            height: 25px;
+            margin: 0;
+            padding: 0 10px;
+            background: #cee3f7 !important;
+            color: #00559c !important;
+            border: none;
+            border-radius: 0;
+        }
+        .layui-form-pane .layui-form-label{
+            width: 160px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left:160px;
+        }
+        /*li{*/
+        /*border: 1px solid #dddddd;*/
+        /*padding: 5px;*/
+        /*}*/
+        .layui-colla-title {
+            line-height: 42px;
+            padding: 0 15px 0 35px;
+            background:none;
+            cursor: pointer;
+        }
+        .cusor p{
+            cursor: pointer;
+        }
+        tr{
+            cursor: pointer;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+        }
+        .jOrgChart .node {
+            border-radius: 4px;
+            cursor: pointer!important;
+            margin: 0 8px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hiw{
+            display: inline-block;
+            float: left;
+            position: relative;
+        }
+        .hiw img{
+            width: 45px;
+            height: 65px;
+        }
+        .hiw p{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .hiw p:hover{
+            color: #000;
+        }
+        .hiw p.red{
+            color: #f00;
+        }{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .je_jia{
+            position: absolute;
+            font-size: 20px;
+            color: #333;
+            right: 10px ;
+            top: -12px;
+            width: 20px;
+        }
+        .com{
+            float: left;
+        }
+        .TheEditor{
+            position: absolute;
+            right: 0;
+            top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #3652e6;
+            display: none;
+        }
+        .hiw_ul{
+            /*width: 120px;*/
+            /*padding: 0;*/
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 0px;
+            top: 18px;
+            background: #fff;
+           padding: 10px;
+            border: none;
+            border: 1px solid #333;
+            border-radius: 5px;
+            list-style: none;
+            z-index: 100;
+            display: none;
+        }
+        .hiw_ul li{
+            width: 100px;
+            line-height: 20px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #333;
+            list-style:none;
+            margin: 5px 0px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove{
+            position: absolute;
+            right: 0;
+            top: -10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .right_bxi{
+            width: 250px;
+            margin-left: 30px;
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .right_bxi > p{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 5px 0px;
+        }
+        .right_bxi > p > a{
+            color: #000;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: Webdings;
+        }
+        .right_bxi > p > input{
+            width: 105px;
+            font-size: 12px;
+        }
+        .right_bxi > p > input.jirong{
+            height: 26px;
+            text-indent: 10px;
+            background-color: #fff!important;
+        }
+        .left_nav{
+            float: left;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+        .left_nav_search{
+            overflow: hidden;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .left_nav_search > input{
+            width: 190px;
+            height: 30px;
+            border: none;
+            border: 1px solid #ccc;
+            float: left;
+            font-size: 12px;
+        }
+        .left_nav_search > button{
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            float: left;
+        }
+        .Name_head{
+            overflow: hidden;
+            padding: 0;
+            margin: 0 10px;
+            margin-top: 20px;
+
+        }
+        .crime_gang{
+            overflow: hidden;
+            overflow-y: scroll;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .Name_head > b{
+            padding: 0;
+            margin-bottom: 10px;
+            border: 0;
+            display: inline-block;
+            font-size: 14px;
+            color: #333;
+            text-indent: 20px;
+        }
+        .crime_gang li{
+            width: 215px;
+            margin: 5px 0px;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            border: 1px solid #fff;
+        }
+        .crime_gang li span{
+            float: left;
+            padding-left: 10px;
+        }
+        .crime_{
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .crime_gang li.bule{
+            color: #00b7ee;
+        }
+        .crime_gang li a{
+            color: #00b7ee;
+            font-size: 12px;
+            float: right;
+            margin-right: 10px;
+            display: none;
+        }
+        .crime_gang li span{
+            float: left;
+            margin-left: 10px;
+        }
+        .add_delete{
+            text-align: center;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        .add_delete_shuru{
+            width: 200px;
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            background: #f5f5f5;
+            z-index: 100;
+            display: none;
+        }
+        .add_delete button:nth-child(1){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            padding: 0 10px;
+        }
+        .add_delete button:nth-child(2){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #FD482C;
+            padding: 0 10px;
+        }
+        .add_delete_shuru > p{
+            margin: 10px 0px;
+        }
+        .add_delete_shuru > p > a {
+            color: #333;
+            font-size: 12px;
+        }
+        .add_delete_shuru textarea{
+            resize: none;
+            width: 115px;
+            height: 100px;
+        }
+        .add_delete_shuru > p > input{
+            height: 26px;
+            width: 115px;
+        }
+        .add_delete_shuru_bot{
+            margin-bottom: 10px;
+        }
+        .right_bxi_bianji{
+            float: right;
+            cursor: pointer;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            border: none;
+            padding: 0 10px;
+        }
+        .hiw_left{
+            /*float: left;*/
+            width: 80px;
+            height: 65px;
+            position: relative;
+        }
+        .hiw_right{
+            /*width: 190px;*/
+            /*float: left;*/
+            /*margin-left: 10px;*/
+        }
+        .bianji{
+            width: 500px;
+            height: 480px;
+            background: #fff;
+            position: fixed;
+            top:50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px rgba(0,0,0,.5);
+            display: none;
+        }
+        .com{
+            position: relative;
+        }
+        .oud{
+            float: left;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 80px;
+        }
+        .ziliao{
+            float: left;
+            margin-top: 20px;
+        }
+        .form-group{
+            overflow: hidden;
+        }
+        .form-group > input{
+            float: left;
+            text-indent: 10px;
+        }
+        .form-group > label{
+            float: left;
+        }
+        #pic {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .bot_tyep{
+            text-align: center;
+        }
+        .tainjia{
+            width: 100%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 3px rgba(0,0,0,.5);
+            display: none;
+        }
+        .ztree li span.button.switch {
+            display: none;
+        }
+        #multiTree{
+            overflow: hidden;
+        }
+        #personTree li{
+            border: 1px solid #F7FBFF;
+        }
+        .col-md-7{
+            width: 100%;
+        }
+        /*.tishiyu{*/
+        /*overflow: hidden;*/
+        /*height: 20px;*/
+        /*margin-top: 75px;*/
+        /*text-indent: 20px;*/
+        /*margin-bottom: 10px;*/
+        /*}*/
+        input{
+            text-indent: 10px;
+        }
+        .jOrgChart .node {
+            border-radius: 4px;
+            overflow: unset;
+        }
+        #Table{
+            display: none;
+        }
+        #Table tr th:nth-child(1){
+            width: 200px;
+        }
+        #Table tr th{
+            background: #42a4ca59;
+            color: #333;
+        }
+        #Table tbody tr td, #Table thead th {
+            border-color: #ddd !important;
+        }
+        #TableBor{
+            display: none;
+        }
+        #TableBor tr th:nth-child(1){
+            width: 200px;
+        }
+        #TableBor tr th{
+            /*background: #42a4ca59;*/
+            /*color: #333;*/
+        }
+        #TableBor tbody tr td, #Table thead th {
+            border-color: #ddd !important;
+        }
+        .wt100{
+            display: none;
+        }
+    </style>
+</head>
+<body id="body">
+<div class="page-content">
+    <div id="myTabContent" class="tab-content" style="border: none">
+        <div class="tab-pane fade in active" id="message">
+            <!--查询条件-->
+            <div class="row-container searchAll search-condition">
+                <!--时间-->
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4 searchTitle borderLnone">
+                            <p>
+                                时间:
+                            </p>
+                        </div>
+                        <div class="col-md-8 no-padding">
+                            <div class="col-md-3 searchCon " style="width: 45%">
+                                <input type="text" id="startTime" class="form-control"  onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'}); ">
+                            </div>
+                            <div class="col-md-2 searchCon" style="text-align: center;width: 10%">
+                                <span style="display: block;height: 25px;line-height: 25px"> 至 </span>
+                            </div>
+                            <div class="col-md-3 searchCon" style="width: 45%">
+                                <input type="text" id="finishTime" class="form-control"  onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'}); ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--手机号码-->
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4 searchTitle borderLnone">
+                            <p>
+                                手机号码:
+                            </p>
+                        </div>
+                        <div class="col-md-8 caseInput" style="border-bottom: 1px solid #cedfff;">
+                                <div class="col-md-12 searchCon" style="border:none;padding-right: 0;">
+                                    <input id="phoneNumber" type="text" class="form-control" placeholder="请输入手机号码">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--展示层级-->
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4 searchTitle">
+                            <p>
+                                展示层级:
+                            </p>
+                        </div>
+                        <div class="col-md-8 searchCon">
+                            <select class="form-control" id="xzqh" style=" width: 30%;">
+                                <option value ="" selected="selected">2</option>
+                                <option value ="">3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--通话时长或频次-->
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-2 searchTitle borderBnone borderLnone">
+                            <p>
+                                流转状态:
+                            </p>
+                        </div>
+                        <div class="col-md-8  borderBnone" style="height: 34px;line-height: 34px">
+                            <div class="col-md-4">
+                                <input type='radio'name="Box" value="1" style="cursor: pointer;" checked/>&nbsp;&nbsp;通话频次TOP10
+                            </div>
+                            <div class="col-md-4">
+                                <input type='radio' name="Box" value="2" style="cursor: pointer;"/>&nbsp;&nbsp;通话时长TOP10
+                            </div>
+                        </div>
+                        <div class="col-md-2  borderBnone" style="height: 34px;line-height: 34px">
+                        </div>
+                    </div>
+                </div>
+                <!--按钮-->
+                <div class="col-md-12 searchBtn" >
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <button class="btn btn-primary" type="button" onclick="search()"> 查询 </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='jOrgChart' style="padding-top: 20px;padding-left: 30px;"></div>
+    </div>
+</div>
+<table class="table table-bordered" id="Table">
+    <tr>
+        <th>日期</th>
+        <th>对方号码</th>
+        <th>姓名</th>
+        <th>时间类型</th>
+        <th>通话类型</th>
+        <th>对方位置</th>
+    </tr>
+</table>
+<div class="wt100">
+    <table id="dynamic-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+    </table>
+</div>
+<div class="wt200">
+    <table id="dynamic-table_one" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+    </table>
+</div>
+<script type='text/javascript'>
+    var url = getRootPath_web() + "ticket/frequencyOrCallingTimeCount";
+    function reset() {
+        $("#message input").val("");
+        $("#xzqh").find("option").attr("selected","false");
+        $("#xzqh").find("option").eq(0).attr("selected","true");
+        $("input[name=Box]").eq(0).attr("checked",true);
+    }
+    //按下Enter执行的事件
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            search()
+        }
+    };
+    function search() {
+        var startTime = $("#startTime").val();
+        var finishTime = $("#finishTime").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var ShowLevel = $("select option:checked").text();
+        var moveMessage = $("input[name=Box]:checked").val();
+        if( startTime == "" ){
+            layer.msg('请开始选择时间！',{time:600});
+            return false
+        }
+        if( finishTime == "" ){
+            layer.msg('请结束选择时间！',{time:600});
+            return false
+        }
+        if( phoneNumber == "" ){
+            layer.msg('请输入手机号码！',{time:600});
+            return false
+        }
+        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!myreg.test(phoneNumber)) {
+            layer.msg('手机号码格式不正确！',{time:600});
+            return false;
+        }
+        console.log( startTime );
+        console.log( finishTime );
+        console.log( phoneNumber );
+        console.log( ShowLevel );
+        console.log( moveMessage );
+        $.ajax({
+            url: url,
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                //将一位数组改变成树状结构图
+                function treeObj(originObj){
+                    //对象深拷贝
+                    var obj ={};
+                    for (key in originObj){
+                        var val = originObj[key];
+                        obj[key] = typeof val === 'object' ? arguments.callee(val):val;
+                    }
+                    //对象新增children键值，用于存放子树
+                    obj['children'] = [];
+                    return obj;
+                }
+                //data：带转换成树形结构的对象数组
+                //attributes：对象属性
+                function toTreeData (data, attributes) {
+                    var resData = data;
+                    var tree = [];
+                    //找寻根节点 默认返回的parentId为空后期可以更改判断
+                    for (var i = 0; i < resData.length; i++) {
+                        if ( resData[i][attributes.parentNO] === ''|| resData[i][attributes.parentNO] === null ) {
+                            tree.push( treeObj(resData[i]) );
+                            resData.splice(i, 1);
+                            i--;
+                        }
+                    }
+                    run(tree);
+                    //找寻子树
+                    function run(chiArr) {
+                        if (resData.length !== 0) {
+                            for (var i = 0; i < chiArr.length; i++) {
+                                for (var j = 0; j < resData.length; j++) {
+                                    if (chiArr[i][attributes.phoneNO] === resData[j][attributes.parentNO]){
+                                        var obj = treeObj(resData[j]);
+                                        chiArr[i].children.push(obj);
+                                        resData.splice(j, 1);
+                                        j--;
+                                    }
+                                }
+                                run(chiArr[i].children);
+                            }
+                        }
+                    }
+                    return tree;
+                }
+                var  data = data.data;
+                // 属性配置信息
+                var attributes = {
+                    phoneNO: 'phoneNO',
+                    parentNO: 'parentNO',
+                };
+                var treeData = toTreeData(data, attributes);
+
+                //点击菜单渲染树形菜单
+                var showlist = $("<ul class='org' style='display:none'></ul>");
+                showall(treeData,showlist);
+                $("#jOrgChart"). append(showlist);
+                $(".jOrgChart").remove();
+                    if($(".org").length > 1){
+                        $(".org:first").remove();
+                    }
+                $(".org").jOrgChart( {
+                    chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                    dragAndDrop : true //设置是否可拖动
+                    //chartClass [默认= 'jOrgChart']-分配给生成的标记的样式类的名称。
+                    //chartElement - 用于指定您想要附加OrgChart标记的HTML元素。[默认= '主体']
+                });
+                //循环递归显示数据数据
+                function showall(menu_list,parent) {
+                    //循环人员列表
+                    $.each(menu_list,function(index,val) {
+                        if(val.children.length > 0){
+                            var li = $("<li></li>");
+                            var li_two = $("<li></li>");
+                            li.append(
+                                "<a  class='hiw' onclick='add_click(this)'id="+val.phoneNO+">" +
+                                "<p  title="+ val.name +" >"+""+ val.name +":<span>"+ val.nickname +"</span></p>"+
+                                "<div class='hiw_left'>"+
+                                    "<img class='img_hide' onclick='img_hide(this,event)' src='img/tupu.png'>"+
+                                 "<div class='je_jia'  onclick='jiw(this,event)'>+</div>"+
+                                    "</div>"+
+                                 "<div class='hiw_right' parentId="+ val.parentNO +" id="+val.phoneNO+">"+
+                                    "<p  title="+ val.name +" >"+ "电话号码：<span onclick='Pspan(this,event)'>"+val.name +"</span></p>"+
+                                  "</div>"+
+                                "<ul class='hiw_ul'>"+
+                                    "<div class='remove' >×</div>"+
+                                    "<li  class='statistics' onclick='statistics(this,event)'>异常通话统计</li>"+
+                                    "<li  class='inquire' onclick='inquire(this,event)'>话单查询</li>"+
+                                "</ul>"+
+                                "</a>"
+                            ).append("<ul></ul>").appendTo(parent);
+                            //递归显示
+                            showall( val.children, $(li).children().eq(1) );
+                        }else{
+                            $("<li></li>").append("<a  class='hiw' onclick='add_click(this)'id="+val.phoneNO+">" +
+                                "<p  title="+ val.name +" >"+""+ val.name +":<span>"+ val.nickname +"</span></p>"+
+                                "<div class='hiw_left'>"+
+                                    "<img class='img_hide'onclick='img_hide(this,event)' src='img/tupu.png'>"+
+                                    "<div class='je_jia'  onclick='jiw(this,event)'>+</div>"+
+                                "</div>"+
+                                "<div class='hiw_right' parentId="+ val.parentNO +" id="+val.phoneNO+">"+
+                                    "<p  title="+ val.name +" >"+ "电话号码：<span onclick='Pspan(this,event)'>"+val.name +"</span></p>"+
+                                "</div>"+
+                                "<ul class='hiw_ul'>"+
+                                    "<div class='remove'>×</div>"+
+                                    "<li  class='statistics' onclick='statistics(this,event)'>异常通话统计</li>"+
+                                    "<li  class='inquire' onclick='statistics(this,event)'>话单查询</li>"+
+                                "</ul>"+
+                                "</a>").appendTo(parent);
+                        }
+                    });
+                };
+            },
+            error:function (data) {
+                alert("网络错误");
+            }
+        })
+     }
+    //判断是否伸缩
+    function  jiw(thiw,event) {
+        event.stopPropagation();
+            if( $(thiw).text() == "-" ){
+                $(thiw).text("+");
+                $(thiw).parent().parent().parent().parent().parent().parent().find("tr").hide();
+                $(thiw).parent().parent().parent().parent().parent().parent().find("tr").eq(0).show();
+            }else {
+                $(thiw).text("-");
+                $(thiw).parent().parent().parent().parent().parent().find("tr").show();
+                $(thiw).parent().parent().parent().parent().parent().find("tr").eq(0).hide();
+                $(thiw).parent().parent().parent().parent().show();
+                var perId = $(thiw).parent().next().attr("id");
+                //传参电话号
+                var ThePhoneNumber = $(thiw).parent().next().children().children("span").text();
+                $.ajax({
+                    url: "../data/seike.json",
+                    type:"POST",
+                    dataType:"json",
+                    success:function (data) {
+                        //将一位数组改变成树状结构图
+                        function treeObj(originObj){
+                            //对象深拷贝
+                            var obj ={};
+                            for (key in originObj){
+                                var val = originObj[key];
+                                obj[key] = typeof val === 'object' ? arguments.callee(val):val;
+                            }
+                            //对象新增children键值，用于存放子树
+                            obj['children'] = [];
+                            return obj;
+                        }
+                        //data：带转换成树形结构的对象数组
+                        //attributes：对象属性
+                        function toTreeData (data,attributes) {
+                            var resData = data;
+                            var tree = [];
+                            //找寻根节点 默认返回的parentId为空后期可以更改判断
+                            for (var i = 0; i < resData.length; i++) {
+                                if ( resData[i][attributes.parentNO] == perId ) {
+                                    tree.push( treeObj(resData[i]) );
+                                    resData.splice(i, 1);
+                                    i--;
+                                }
+                            }
+                            run(tree);
+                            //找寻子树
+                            function run(chiArr) {
+                                if (resData.length !== 0) {
+                                    for (var i = 0; i < chiArr.length; i++) {
+                                        for (var j = 0; j < resData.length; j++) {
+                                            if (chiArr[i][attributes.phoneNO] === resData[j][attributes.parentNO]){
+                                                var obj = treeObj(resData[j]);
+                                                chiArr[i].children.push(obj);
+                                                resData.splice(j, 1);
+                                                j--;
+                                            }
+                                        }
+                                        run(chiArr[i].children);
+                                    }
+                                }
+                            }
+                            return tree;
+                        }
+                        var  data = data.data;
+                        // 属性配置信息
+                        var attributes = {
+                            phoneNO: 'phoneNO',
+                            parentNO: 'parentNO',
+                        };
+                        var treeData = toTreeData(data, attributes);
+                        //点击菜单渲染树形菜单
+                        var showlist = $("<ul  style='display:none'></ul>");
+                        showall(treeData,showlist);
+                        $(".jOrgChart").remove();
+                        $(".org li").each(function () {
+                            var the = $(this);
+                            var plp = the.children().children(".hiw_right").attr("id");
+                            if( plp == perId){
+                                the.append(showlist);
+                                the.children().children().children("je_jia").text("-");
+                            }
+                        });
+                        $(".org").jOrgChart( {
+                            chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                            dragAndDrop : true //设置是否可拖动
+                            //chartClass [默认= 'jOrgChart']-分配给生成的标记的样式类的名称。
+                            //chartElement - 用于指定您想要附加OrgChart标记的HTML元素。[默认= '主体']
+                        });
+                        $(".hiw").each(function () {
+                            var this_w = $(this)
+                            var leng_th = $(this).parent().parent().parent().parent("tbody").children("tr").length
+                            if( leng_th > 1 ){
+                                this_w.children().children(".je_jia").text("-");
+                            };
+                        })
+                        //循环递归显示数据数据
+                        function showall(menu_list,parent) {
+                            //循环人员列表
+                            $.each(menu_list, function(index,val) {
+                                if(val.children.length > 0){
+                                    var li = $("<li></li>");
+                                    var li_two = $("<li></li>");
+                                    li.append(
+                                        "<a  class='hiw' onclick='add_click(this)'id="+val.phoneNO+">" +
+                                        "<p  title="+ val.name +" >"+""+ val.name +":<span>"+ val.nickname +"</span></p>"+
+                                        "<div class='hiw_left'>"+
+                                            "<img class='img_hide' onclick='img_hide(this,event)' src="+ val.img +" >"+
+                                            "<div class='je_jia'  onclick='jiw(this,event)'>+</div>"+
+                                        "</div>"+
+                                        "<div class='hiw_right'>"+
+                                            "<p title="+ val.name +" parentId="+ val.parentNO +" id="+val.phoneNO+">"+ "电话号码：<span onclick='Pspan(this,event)'>"+val.name +"</span></p>"+
+                                        "</div>"+
+                                        "<ul class='hiw_ul'>"+
+                                            "<div class='remove' onclick='remove_hiw_ul()'>×</div>"+
+                                            "<li  class='statistics' onclick='statistics(this,event)'>异常通话统计</li>"+
+                                            "<li  class='inquire' onclick='inquire(this,event)'>话单查询</li>"+
+                                        "</ul>"+
+                                        "</a>"
+                                    ).append("<ul></ul>").appendTo(parent);
+                                    //递归显示
+                                    showall( val.children, $(li).children().eq(1) );
+                                }else{
+                                    $("<li></li>").append("<a  class='hiw' onclick='add_click(this)'id="+val.phoneNO+">" +
+                                        "<p  title="+ val.name +" >"+""+ val.name +":<span>"+ val.nickname +"</span></p>"+
+                                        "<div class='hiw_left'>"+
+                                            "<img class='img_hide' onclick='img_hide(this,event)' src="+ val.img +" >"+
+                                            "<div class='je_jia'  onclick='jiw(this,event)'>+</div>"+
+                                        "</div>"+
+                                        "<div class='hiw_right'>"+
+                                            "<p title="+ val.name +" parentId="+ val.parentNO +" id="+val.phoneNO+">"+ "电话号码：<span onclick='Pspan(this,event)'>"+val.name +"</span></p>"+
+                                        "</div>"+
+                                        "<ul class='hiw_ul'>"+
+                                            "<div class='remove' onclick='remove_hiw_ul()'>×</div>"+
+                                            "<li  class='statistics' onclick='statistics(this,event)'>异常通话统计</li>"+
+                                            "<li  class='inquire' onclick='inquire(this,event)'>话单查询</li>"+
+                                        "</ul>"+
+                                        "</a>").appendTo(parent);
+                                }
+                            });
+                        };
+                    },
+                    error:function (data) {
+                        alert("网络错误");
+                    }
+                })
+            }
+    }
+    //给当前的元素
+    function  add_click( thiw) {
+        event.stopPropagation()
+        var thed = $(thiw);
+        var cen_a = $(thiw).children("p").text();
+        var thpid =  $(thiw).children().children("p").attr("parentId");
+        var tid =  $(thiw).attr("id");
+        //关闭侧面
+        $('.remove').unbind('click').click(function() {
+             $(this).parent().hide();
+            event.stopPropagation()
+        })
+        $(".hiw").attr("tyep","0");
+        $(thiw).attr("tyep","1");
+        $(".hiw").children().children("p").removeClass("red");//删除所有高亮的字体
+        $(thiw).children().children("p").addClass("red");//添加当前高亮的字
+        $(".hiw").children("p").removeClass("red");//删除所有高亮的字体
+        $(thiw).children("p").addClass("red");//添加当前高亮的字
+    }
+    //点击头像
+    function img_hide(thuw,event) {
+        event.stopPropagation();
+        $('.hiw_ul').hide();
+        $(thuw).parent().parent().children('.hiw_ul').show();
+        $(thuw).parent().parent().children('.hiw_ul').children("li").show();
+        $(thuw).parent().parent().children('.hiw_ul').children("li").eq(1).hide();
+    }
+    //点击电话
+    function Pspan(thw,event){
+        event.stopPropagation();
+        $('.hiw_ul').hide();
+        $(thw).parent().parent().parent().children('.hiw_ul').show();
+        $(thw).parent().parent().parent().children('.hiw_ul').children("li").show();
+        $(thw).parent().parent().parent().children('.hiw_ul').children("li").eq(0).hide();
+    }
+    //异常通话统计
+    function statistics(thw,event) {
+        var startTime = $("#startTime").val();
+        var finishTime = $("#finishTime").val();
+        var ShowLevel = $("select option:checked").text();
+        var moveMessage = $("input[name=Box]:checked").val();
+        var phoneNumber = $(thw).parent().prev().children().children("span").text();
+        console.log( phoneNumber )
+        var dynamictable;
+        $(document).ready(function() {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictable = $("#dynamic-table").DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : "../data/dataq.json",
+                        "type" : "post"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function(){
+                        this.api().column(0).nodes().each(function(cell, i) {
+                            cell.innerHTML =  i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>日期</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'NativePlace','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>对方号码</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'IDnumber','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>姓名</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'name','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data.substring(0,data.indexOf("."));
+                            }},
+                        {"sTitle":'<font>时间类型</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseClass','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return dicCommon[19][data];
+                            }},
+                        {"sTitle":'<font>通话类型</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'nickname','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                            }},
+                        {"sTitle":'<font>对方位置</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'PERMANET_NOW','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                            }},
+                    ]
+                });
+            $("#dynamic-table_filter").css("display", "none");
+        });
+        $(".wt100").show()
+        layer.open({
+            offset : 20,
+            type : 1,
+            title : '异常通话统计',
+            fix : false,
+            maxmin : true,
+            area : [ '800px', '600px' ],
+            shadeClose : true,
+            content : $(".wt100"),
+            end : function(){
+                $(".wt100").hide()
+            }
+        });
+        $(thw).parent().hide();
+        event.stopPropagation()
+    }
+    //话单查询
+    function inquire(thw,event) {
+        startTime = $("#startTime").val();
+        var finishTime = $("#finishTime").val();
+        var ShowLevel = $("select option:checked").text();
+        var moveMessage = $("input[name=Box]:checked").val();
+        var phoneNumber = $(thw).parent().prev().children().children("span").text();
+        console.log( phoneNumber )
+        var dynamictable_one;
+        $(document).ready(function() {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictable_one = $("#dynamic-table_one").DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : "../data/dataq.json",
+                        "type" : "post"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function(){
+                        this.api().column(0).nodes().each(function(cell, i) {
+                            cell.innerHTML =  i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>开始时间</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'NativePlace','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>用户号码</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'IDnumber','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>对方号码</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'IDnumber','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data.substring(0,data.indexOf("."));
+                            }},
+                        {"sTitle":'<font>对方号码归属地</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'caseClass','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return dicCommon[19][data];
+                            }},
+                        {"sTitle":'<font>通话时长</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'nickname','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                            }},
+                        {"sTitle":'<font>备注</font>',"sWidth":"7%","sClass":"dt-left", 'data': 'PERMANET_NOW','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                            }},
+                    ]
+                });
+            $("#dynamic-table_filter").css("display", "none");
+        });
+        $(".wt200").show()
+        layer.open({
+            offset : 20,
+            type : 1,
+            title : '话单查询',
+            fix : false,
+            maxmin : true,
+            area : [ '800px', '600px' ],
+            shadeClose : true,
+            content : $(".wt200"),
+            end : function(){
+                $(".wt200").hide()
+            }
+        });
+        $(thw).parent().hide();
+        event.stopPropagation()
+    }
+</script>
+</body>
+</html>

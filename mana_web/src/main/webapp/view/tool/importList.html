@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>EXCEL导入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css"/>
+    <!--<script src="assets/js/ace-extra.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css"/>
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/table.js"></script>
+
+    <script src="../assets/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css"/>
+    <link rel="stylesheet" href="../css/alarm.css" />
+
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <style>
+        .fileSpan{
+            color: black;
+            font-weight: lighter;
+            font-size: 14px
+        }
+        .selectFile{
+            margin-left: 10px;
+            color: #0A5CA0;
+            font-weight: bold;
+            font-size: 14px
+        }
+        .btn{
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body id="body">
+<div style="width: 100%;height: 100%;margin: 0 auto;background: white">
+
+    <div class="page-content">
+        <!--查询条件-->
+        <div class="row-container searchAll search-condition">
+            <div class="col-md-12 searchBtn" id="importDiv">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importPerson()">重点人员导入</button>
+                        <span type="text" class="selectFile" id="personFileName" disabled="disable" value=""></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importRelationship()">关系人导入</button>
+                        <span type="text" class="selectFile" id="relationshipFileName" disabled="disable" value=""></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importGang()">团伙案件导入</button>
+                        <span type="text" class="selectFile" id="gangFileName" disabled="disable" value=""></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importSingle()">个人个案导入</button>
+                        <span type="text" class="selectFile" id="singleFileName" disabled="disable" value=""></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importGambling()">赌档线索导入</button>
+                        <span type="text" class="selectFile" id="gamblingFileName" disabled="disable" value=""></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="button" onclick="importClue()">线索导入</button>
+                        <span type="text" class="selectFile" id="clueFileName" disabled="disable" value=""></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 hide">
+            <form id='importExcel'  method='POST' enctype='multipart/form-data'>
+                <input type="file" id="excelFile" name='file' onchange="handleFile()">
+            </form>
+        </div>
+    </div>
+
+    <!--警情基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--警情信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">导入信息</span>
+            </div>
+        </div>
+        <!--警情描述-->
+        <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 warningTxt" style="width:11.11%;text-align: center">
+                <span>导入结果描述</span>
+            </div>
+            <div class="col-md-10 warningInfo lastInput" style="width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="errorTxt" style="color: red"></span>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- basic scripts -->
+
+<script type="text/javascript">
+
+    //系统初始化
+    $(document).ready(function () {
+        menuThing();
+    });
+
+    var excelType = "";
+
+    /*重点人员EXCEL上传选择*/
+    var excelFile = document.getElementById("excelFile");
+
+    //重点人员导入点击事件
+    function importPerson(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "重点人员";
+    }
+    //关系人导入点击事件
+    function importRelationship(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "关系人";
+    }
+    //团伙案件导入点击事件
+    function importGang(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "团伙案件";
+    }
+    //个人个案导入点击事件
+    function importSingle(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "个人个案";
+    }
+    //赌档线索导入点击事件
+    function importGambling(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "赌档线索";
+    }
+    //线索导入点击事件
+    function importClue(){
+        cleanSpan();
+        $("#excelFile").click();
+        excelType = "线索";
+    }
+
+    //点击文件后处理
+    function handleFile(){
+        //获取excel名称
+        var fileName = getFileName(excelFile.value);
+
+        if("重点人员" == excelType){
+            document.getElementById("personFileName").innerText = fileName;
+        }else if("关系人" == excelType){
+            document.getElementById("relationshipFileName").innerText = fileName;
+        }else if("团伙案件" == excelType){
+            document.getElementById("gangFileName").innerText = fileName;
+        }else if("个人个案" == excelType){
+            document.getElementById("singleFileName").innerText = fileName;
+        }else if("赌档线索" == excelType){
+            document.getElementById("gamblingFileName").innerText = fileName;
+        }else{
+            document.getElementById("clueFileName").innerText = fileName;
+        }
+        layer.open({
+            title : "确认上传文件",
+            content : "<span type=\"text\" class=\"fileSpan\" id=\"excelFileName\" disabled=\"disable\" value=\"\">"+fileName+"</span>",
+            skin : 'layui-layer-lana',
+            shadeClose : 'true',
+            btn : [ '确定', '取消' ],
+            yes : function(index, layero) {
+                //根据自己需要变更
+                if("重点人员" == excelType){
+                    //重点人员excel上传处理 仅供参考
+                    toImport("importSuspectHandler/upload");
+                }else if("关系人" == excelType){
+                    //关系人excel上传处理
+                    toImport("RPDHan/upload");
+                }else if("团伙案件" == excelType){
+                    //团伙案件excel上传处理
+                    toImport("importCase/importCase?type=1");
+                }else if("个人个案" == excelType){
+                    //个人个案excel上传处理
+                    toImport("/dossierimportCase/importCase");
+                }else if("赌档线索" == excelType){
+                    //赌档线索excel上传处理
+                    toImport("/dossierimportCase/importCase");
+                }else{
+                    //线索excel上传处理
+                }
+            },
+            end:function () {
+                //可以上传相同的文件
+                $("#importExcel")[0].reset();
+            }
+        });
+    }
+
+    function toImport(url) {
+        alert(projectPath+url);
+        var data = new FormData($("#importExcel")[0]);
+        $.ajax({
+            type : "post",
+            url : projectPath+url,
+            data : data,
+            dataType : "json",
+            async : false,
+            cache : false,
+            contentType : false,
+            processData : false,
+            success : function(data) {
+                console.log(data);
+                if (data.data.flag) {
+                    layer.msg(data.data.msg, {
+                        icon : 1,
+                        time : 2000
+                    });
+                } else {
+                    layer.msg(data.data.msg, {
+                        anim:6,
+                        icon : 2,
+                        time : 2000
+                    });
+                }
+                document.getElementById("errorTxt").innerText = "导入成功";
+            },
+            error : function() {
+                document.getElementById("errorTxt").innerText = "错误信息为：。。。。。。";
+                layer.msg("上传错误信息，详见页面！", {
+                    icon : 2,
+                    time : 2000
+                });
+            }
+        });
+
+    }
+
+    
+    //清楚span内容
+    function cleanSpan() {
+        $("#importDiv span").empty();
+    }
+
+
+    //根据路径获取文件名称
+    function getFileName(filePath) {
+        return filePath.substring(filePath.lastIndexOf("\\")+1,filePath.length);
+    }
+
+</script>
+
+</body>
+</html>

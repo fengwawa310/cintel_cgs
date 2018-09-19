@@ -1,0 +1,62 @@
+
+.header table tr td{
+	width:14%;
+
+}
+
+.content section table td{
+	width:14%;
+}
+.content #accept{
+}
+.table>tbody>tr>td{
+	text-align:center;
+}
+
+.aa{
+padding: 3px 8px;
+    margin: 2px 4px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #0d409d;
+    background: #e1edf9;
+    width: 42px;
+    font-weight: bolder;
+    border-color: #0d409d;
+}
+a:visited {
+    color: #0d409d;
+    text-decoration: none;
+}
+a:link {
+    color: #0d409d;
+    text-decoration: none;
+}
+table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
+	border-top: 1px solid #dddddd;
+}
+
+table.dataTable.no-footer {
+	border-bottom: 1px solid #E8E8E8;
+}
+
+.main_bottom table tr:first-child {
+	background: #c6c6c6 none repeat scroll 0 0;
+	color: #000;
+}
+table.dataTable {
+	background: #c6c6c6 none repeat scroll 0 0;
+}

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.infor.EtTipoffMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.infor.EtTipoff" >
+    <id column="TIPOFF_ID" property="tipoffId" jdbcType="VARCHAR" />
+    <result column="TIPOFF_REPORTER" property="tipoffReporter" jdbcType="VARCHAR" />
+    <result column="REPORTER_PHONE" property="reporterPhone" jdbcType="VARCHAR" />
+    <result column="REPORTER_IDCARD" property="reporterIdcard" jdbcType="VARCHAR" />
+    <result column="CASE_CLASS" property="caseClass" jdbcType="INTEGER" />
+    <result column="CASE_CLASS_NAME" property="caseClassName" jdbcType="VARCHAR" />
+    <result column="CASE_CLASS_MEMO" property="caseClassMemo" jdbcType="VARCHAR" />
+    <result column="CASE_UNIT" property="caseUnit" jdbcType="VARCHAR" />
+    <result column="CASE_UNIT_NAME" property="caseUnitName" jdbcType="VARCHAR" />
+    <result column="BEING_REPORTED" property="beingReported" jdbcType="VARCHAR" />
+    <result column="BEING_REPORTED_PHONE" property="beingReportedPhone" jdbcType="VARCHAR" />
+    <result column="BEING_REPORTED_IDCARD" property="beingReportedIdcard" jdbcType="VARCHAR" />
+    <result column="CLUE_TITLE" property="clueTitle" jdbcType="VARCHAR" />
+    <result column="CLUE_CONTENT" property="clueContent" jdbcType="LONGVARCHAR" />
+    <result column="JUDGE_CONTENT" property="judgeContent" jdbcType="LONGVARCHAR" />
+    <result column="OPERATE_TYPE" property="operateType" jdbcType="INTEGER" />
+    <result column="JUDGES" property="judges" jdbcType="VARCHAR" />
+    <result column="JUDGE_TIME" property="judgeTime" jdbcType="TIMESTAMP" />
+    <result column="INPUTER_ID" property="inputerId" jdbcType="VARCHAR" />
+    <result column="TIPOFF_TIME" property="tipoffTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!--举报添加-->
+  <insert id="insert" parameterType="com.entity.infor.EtTipoff" >
+    insert into et_tipoff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tipoffId != null and tipoffId!=''" >
+        TIPOFF_ID,
+      </if>
+      <if test="tipoffReporter != null and tipoffReporter!=''" >
+        TIPOFF_REPORTER,
+      </if>
+      <if test="reporterPhone != null and reporterPhone!=''" >
+        REPORTER_PHONE,
+      </if>
+      <if test="reporterIdcard != null and reporterIdcard!=''" >
+        REPORTER_IDCARD,
+      </if>
+      <if test="caseClass != null" >
+        CASE_CLASS,
+      </if>
+      <if test="caseClassMemo != null and caseClassMemo!=''" >
+          CASE_CLASS_MEMO,
+      </if>
+      <if test="caseUnit != null and caseUnit!=''" >
+        CASE_UNIT,
+      </if>
+      <if test="beingReported != null and beingReported!=''" >
+        BEING_REPORTED,
+      </if>
+      <if test="beingReportedPhone != null and beingReportedPhone!=''" >
+        BEING_REPORTED_PHONE,
+      </if>
+      <if test="beingReportedIdcard != null and beingReportedIdcard!=''" >
+        BEING_REPORTED_IDCARD,
+      </if>
+      <if test="clueTitle != null and clueTitle!=''" >
+        CLUE_TITLE,
+      </if>
+      <if test="judges != null and judges!=''" >
+        JUDGES,
+      </if>
+      <if test="judgeTime != null" >
+        JUDGE_TIME,
+      </if>
+      <if test="inputerId != null and inputerId!=''" >
+        INPUTER_ID,
+      </if>
+        TIPOFF_TIME,
+        CREATE_TIME,
+        MODIFY_TIME,
+      <if test="clueContent != null and clueContent!=''" >
+        CLUE_CONTENT,
+      </if>
+      <if test="judgeContent != null and judgeContent!=''" >
+        JUDGE_CONTENT,
+      </if>
+      <if test="operateType != null and operateType!=''" >
+        OPERATE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tipoffId != null and tipoffId!=''" >
+        #{tipoffId,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoffReporter != null and tipoffReporter!=''" >
+        #{tipoffReporter,jdbcType=VARCHAR},
+      </if>
+      <if test="reporterPhone != null and reporterPhone!=''" >
+        #{reporterPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="reporterIdcard != null and reporterIdcard!=''" >
+        #{reporterIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="caseClass != null" >
+        #{caseClass,jdbcType=INTEGER},
+      </if>
+      <if test="caseClassMemo != null and caseClassMemo!=''" >
+        #{caseClassMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="caseUnit != null and caseUnit!=''" >
+        #{caseUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReported != null and beingReported!=''" >
+        #{beingReported,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReportedPhone != null and beingReportedPhone!=''" >
+        #{beingReportedPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReportedIdcard != null and beingReportedIdcard!=''" >
+        #{beingReportedIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="clueTitle != null and clueTitle!=''" >
+        #{clueTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="judges != null and judges!=''" >
+        #{judges,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeTime != null" >
+        #{judgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputerId != null and inputerId!=''" >
+        #{inputerId,jdbcType=VARCHAR},
+      </if>
+        now(),
+        now(),
+        now(),
+      <if test="clueContent != null and clueContent!=''" >
+        #{clueContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="judgeContent != null and judgeContent!=''" >
+        #{judgeContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operateType != null and operateType!=''" >
+        #{operateType},
+      </if>
+    </trim>
+  </insert>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from et_tipoff
+    where TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR}
+  </delete>
+  <!--举报编辑-->
+  <update id="update" parameterType="com.entity.infor.EtTipoff" >
+    update et_tipoff
+    <set >
+      <if test="tipoffReporter != null and tipoffReporter!=''" >
+        TIPOFF_REPORTER = #{tipoffReporter,jdbcType=VARCHAR},
+      </if>
+      <if test="reporterPhone != null and reporterPhone!=''" >
+        REPORTER_PHONE = #{reporterPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="reporterIdcard != null and reporterIdcard!=''" >
+        REPORTER_IDCARD = #{reporterIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="caseClass != null" >
+        CASE_CLASS = #{caseClass,jdbcType=INTEGER},
+      </if>
+      <!--涉案类别为其它时-->
+      <if test="caseClass == 1916 and caseClassMemo != null and caseClassMemo!=''" >
+        CASE_CLASS_MEMO = #{caseClassMemo,jdbcType=VARCHAR},
+      </if>
+      <!--涉案类别不为其它时-->
+      <if test="caseClass != 1916 " >
+        CASE_CLASS_MEMO = '',
+      </if>
+      <if test="caseUnit != null and caseUnit!=''" >
+        CASE_UNIT = #{caseUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReported != null and beingReported!=''" >
+        BEING_REPORTED = #{beingReported,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReportedPhone != null and beingReportedPhone!=''" >
+        BEING_REPORTED_PHONE = #{beingReportedPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="beingReportedIdcard != null and beingReportedIdcard!=''" >
+        BEING_REPORTED_IDCARD = #{beingReportedIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="clueTitle != null and clueTitle!=''" >
+        CLUE_TITLE = #{clueTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="judges != null and judges!=''" >
+        JUDGES = #{judges,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeTime != null" >
+        JUDGE_TIME = #{judgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputerId != null and inputerId!=''" >
+        INPUTER_ID = #{inputerId,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoffTime != null" >
+        TIPOFF_TIME = #{tipoffTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        MODIFY_TIME = now(),
+      <if test="clueContent != null and clueContent!=''" >
+        CLUE_CONTENT = #{clueContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="judgeContent != null and judgeContent!=''" >
+        JUDGE_CONTENT = #{judgeContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operateType != null and operateType!=''" >
+        OPERATE_TYPE = #{operateType},
+      </if>
+    </set>
+    where TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR}
+  </update>
+
+  <sql id="Base_Column_List" >
+    TIPOFF_ID, TIPOFF_REPORTER, REPORTER_PHONE, REPORTER_IDCARD, CASE_CLASS,CASE_CLASS_MEMO, CASE_UNIT,
+    BEING_REPORTED, BEING_REPORTED_PHONE, BEING_REPORTED_IDCARD, CLUE_TITLE,CLUE_CONTENT, JUDGE_CONTENT,OPERATE_TYPE,JUDGES,
+    JUDGE_TIME, INPUTER_ID, TIPOFF_TIME, CREATE_TIME, MODIFY_TIME
+  </sql>
+
+  <!--查询单个举报信息-->
+  <select id="findReportById" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+      ,(select DIC_DES from dic_common c where c.DIC_CODE=t.CASE_CLASS ) CASE_CLASS_NAME
+	    ,(select NAME from dic_unit u where u.id=t.CASE_UNIT ) CASE_UNIT_NAME
+    from et_tipoff t
+    where TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <!--详情页面查询流转信息-->
+  <select id="findetTipoffMemoById" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+     ID as id,
+     TIPOFF_ID as tipoffId,
+     MEMO_CONTENT as memoContent,
+     OPERATE_TYPE as operateType,
+     OPERATOR as operator,
+     CREATE_TIME as createTime,
+     MODIFY_TIME as modifyTime
+    from et_topoff_memo
+    where TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from et_tipoff
+    where TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="etTipoffList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  	  select 
+	    <include refid="Base_Column_List" />
+	    ,(select DIC_DES from dic_common c where c.DIC_CODE=t.CASE_CLASS ) CASE_CLASS_NAME
+	    ,(select NAME from dic_unit u where u.id=t.CASE_UNIT ) CASE_UNIT_NAME
+	    from et_tipoff t
+	    where 1=1
+  	<!-- 以下为查询条件 --> 
+  	<if test="code!=null and code!='' ">
+  		and t.CASE_UNIT = #{code}
+  	</if>
+  	<if test="inputerId!=null and inputerId!='' ">
+  		and t.INPUTER_ID = #{inputerId}
+  	</if>
+  	<if test="startTime!=null and startTime!=''">
+  		and t.TIPOFF_TIME &gt; DATE_FORMAT(#{startTime},"%Y-%m-%d %T")
+  	</if>
+  	<if test="endTime!=null and endTime!=''">
+	  	and t.TIPOFF_TIME &lt; DATE_FORMAT(#{endTime},"%Y-%m-%d 23:59:59") 
+  	</if>
+  	<if test="caseClass !=null and caseClass !=''">
+  		and t.CASE_CLASS =#{caseClass}
+  	</if>
+    <if test="operateType !=null and operateType !=''">
+      and t.OPERATE_TYPE =#{operateType}
+    </if>
+  	<if test="tipoffReporter !=null and tipoffReporter !=''">
+        AND t.TIPOFF_REPORTER like concat('%',#{tipoffReporter},'%')
+  	</if>
+  	<if test="beingReported !=null and beingReported !=''">
+        AND t.BEING_REPORTED like concat('%',#{beingReported},'%')
+  	</if>
+    <if test="clueTitle != null and clueTitle !=''">
+    	and t.CLUE_TITLE like concat('%',#{clueTitle},'%')
+    </if>
+    <if test="start != null and length !=null">
+		limit ${start},${length}
+	</if>
+  </select>
+  
+  <select id="etTipoffListCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+  	  select 
+	    count(*)
+	    from et_tipoff t
+	    where 1=1
+  	<!-- 以下为查询条件 --> 
+  	<if test="code!=null and code!='' ">
+  		and t.CASE_UNIT = #{code}
+  	</if>
+  	<if test="inputerId!=null and inputerId!='' ">
+  		and t.INPUTER_ID = #{inputerId}
+  	</if>
+    <if test="operateType !=null and operateType !=''">
+      and t.OPERATE_TYPE =#{operateType}
+    </if>
+      <if test="startTime!=null and startTime!=''">
+          and t.TIPOFF_TIME &gt; DATE_FORMAT(#{startTime},"%Y-%m-%d %T")
+      </if>
+      <if test="endTime!=null and endTime!=''">
+          and t.TIPOFF_TIME &lt; DATE_FORMAT(#{endTime},"%Y-%m-%d 23:59:59")
+      </if>
+      <if test="caseClass !=null and caseClass !=''">
+          and t.CASE_CLASS =#{caseClass}
+      </if>
+      <if test="tipoffReporter !=null and tipoffReporter !=''">
+          AND t.TIPOFF_REPORTER like concat('%',#{tipoffReporter},'%')
+      </if>
+      <if test="beingReported !=null and beingReported !=''">
+          AND t.BEING_REPORTED like concat('%',#{beingReported},'%')
+      </if>
+      <if test="clueTitle != null and clueTitle !=''">
+          AND t.CLUE_TITLE like concat('%',#{clueTitle},'%')
+      </if>
+
+  </select>
+  
+  <update id="etTipoffUpdate"  parameterType="java.util.Map">
+  	update et_tipoff set
+	  	TIPOFF_ID=#{tipoffId}
+	  		,OPERATE_TYPE=#{operationSign}
+	  	<if test="operationSign==5">
+	  		,JUDGE_TIME=now()
+	  		<if test="remark!=null ">,JUDGE_CONTENT=#{remark}</if>
+	  		<if test="userId!=null ">,JUDGES=#{userId}</if>
+	  	</if>
+	  	<if test="operationSign==3 and caseUnit!=null">
+	  		,CASE_UNIT=#{caseUnit}
+	  	</if>
+	  	where TIPOFF_ID=#{tipoffId}
+  </update>
+  <!--根据被举报人信息查询-->
+  <select id="findBeingReport" resultType="java.lang.Integer"  parameterType="java.util.Map" >
+    select 
+   	count(*)
+    from et_tipoff
+    where 1=1
+    <!-- 被举报人身份证号不为空 用身份证号查  -->
+      <if test="reporterIdcard != null and reporterIdcard !='' " >
+         AND BEING_REPORTED_IDCARD = #{reporterIdcard,jdbcType=VARCHAR}
+      </if>
+      
+       <!-- 被举报人身份证号为空   -->
+ 		 <if test="reporterIdcard == null and reporterIdcard =='' " >
+ 		 <!-- 电话不为空  用电话查 -->
+              <if test="reporterPhone != null and reporterPhone !='' " >
+             	AND BEING_REPORTED_PHONE = #{reporterPhone,jdbcType=VARCHAR}
+              </if>
+               <!-- 电话为空  用姓名模糊查询 -->
+              <if test="reporterPhone == null and reporterPhone =='' " >
+             	 AND BEING_REPORTED  LIKE CONCAT('%',#{tipoffReporter,jdbcType=VARCHAR},'%')
+              </if>
+     	</if>
+  </select>
+</mapper>

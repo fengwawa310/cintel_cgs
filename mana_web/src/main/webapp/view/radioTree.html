@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单选/复选树</title>
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />-->
+    <link rel="stylesheet" href="css/tree/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/awesome.css" />
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="js/jquery.ztree.core.js"></script>
+    <script src="js/jquery.ztree.excheck.js"></script>
+    <script src="js/jquery.ztree.exedit.js"></script>
+    <style>
+        .ztree li span.button.switch {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="radioTree">
+        <ul id="personTree" class="ztree"></ul>
+    </div>
+
+    <button onclick="getNodes();">获取选中值</button>
+
+<script>
+    var setting= {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: true,
+            chkStyle: 'radio',
+            radioType: "all"
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var zNodes =[
+        { id:'1', pId:"", name:"pNode 1", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+        { id:'2', pId:"", name:"pNode 2", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+        { id:'3', pId:"", name:"pNode 3", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+        { id:'4', pId:"", name:"pNode 4", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+        { id:'5', pId:"", name:"pNode 5", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+        { id:'6', pId:"", name:"pNode 6", icon:"http://localhost:8080/mana_web/view/assets/images/gallery/person_open.png"},
+    ];
+
+    var zTree;
+    $(document).ready(function(){
+        // 动态获取后台数据使用
+        // $(document).ready(function(){
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "http://localhost:8080/sky/tree/getNodes",
+        //         dataType : "json",
+        //         success: function(data) {
+        //             console.log(data);
+        //             zNodes = data;
+        //             $.fn.zTree.init($("#personTree"), setting, zNodes);
+        //             zTree = $.fn.zTree.getZTreeObj("personTree");
+        //         }
+        //     });
+        // });
+        $.fn.zTree.init($("#personTree"), setting, zNodes);
+        zTree = $.fn.zTree.getZTreeObj("personTree");
+    });
+
+
+    //获取选中node的方法
+    function getNodes() {
+        var nodes = zTree.getCheckedNodes();
+        for(var i=0;i<nodes.length;i++){
+            console.log(nodes[i]);
+        }
+    }
+</script>
+</body>
+</html>

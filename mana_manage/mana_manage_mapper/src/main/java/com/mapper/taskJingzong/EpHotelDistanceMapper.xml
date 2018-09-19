@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskJingzong.EpHotelDistanceMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpHotelDistance" >
+    <result column="hotel_id" property="hotelId" jdbcType="VARCHAR" />
+    <result column="nearly_hotel_id" property="nearlyHotelId" jdbcType="VARCHAR" />
+    <result column="distance" property="distance" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.entity.task.EpHotelDistance" >
+    insert into ep_hotel_distance (hotel_id, nearly_hotel_id, distance
+      )
+    values (#{hotelId,jdbcType=VARCHAR}, #{nearlyHotelId,jdbcType=VARCHAR}, #{distance,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.task.EpHotelDistance" >
+    insert into ep_hotel_distance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="nearlyHotelId != null" >
+        nearly_hotel_id,
+      </if>
+      <if test="distance != null" >
+        distance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=VARCHAR},
+      </if>
+      <if test="nearlyHotelId != null" >
+        #{nearlyHotelId,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+<!--  SELECT
+    *
+    FROM ep_hotel_distance
+    WHERE
+    hotel_id = #{hotelId,jdbcType=VARCHAR}
+    AND
+    distance &lt;= 5000-->
+  <select id="selectByHotelId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      SELECT hotel_id, nearly_hotel_id, distance FROM (
+        SELECT T.HNOHOTEL hotel_id, H.HNOHOTEL nearly_hotel_id,
+                ROUND (
+                    6378.138 * 2 * ASIN (
+                        SQRT (
+                          pow (
+                            SIN (
+                              (
+                                  T .SJD * pi () / 180 - H .SJD * pi () / 180
+                              ) / 2
+                            ),
+                            2
+                          ) + COS (T .SJD * pi() / 180) * COS (H .SJD * pi() / 180) * pow (
+                            SIN (
+                              (
+                                  T .SWD * pi () / 180 - H .SWD * pi () / 180
+                              ) / 2
+                            ),
+                            2
+                          )
+                        )
+                    ) * 1000
+                ) distance
+      FROM ep_hotel T JOIN ep_hotel H WHERE 1 = 1
+      AND T.HNOHOTEL &lt;&gt; H.HNOHOTEL
+      AND T.HNOHOTEL=#{hotelId,jdbcType=VARCHAR}
+      ORDER BY
+      T .HNOHOTEL DESC,
+      H .HNOHOTEL DESC
+      ) A
+      WHERE
+      1 = 1
+      AND distance &lt;= 5000
+  </select>
+
+</mapper>

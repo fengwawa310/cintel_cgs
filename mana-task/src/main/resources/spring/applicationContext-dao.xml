@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 数据库连接池 -->
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:resource/db.properties" />
+	<!--==============mysql数据库访问【开始】==========-->
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="5" />
+	</bean>
+	<!-- 配置SqlsessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
+		<!-- 配置数据源 -->
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 配置包扫描器，扫描mapper接口生成代理对象放到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 指定要扫描的包 -->
+		<property name="basePackage" value="com.mapper.taskJingzong,com.mapper.sourceData,com.mapper.caseInfo,com.mapper.alarm,com.mapper.task.log,com.mapper.communal"/>
+	</bean>
+
+
+	<!--==============mysql数据库访问【结束】==========-->
+
+	<!--=============oracle数据库访问【【开始】】====================-->
+	<bean id="dataSource-oracle" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${oracle.jdbc.driverClassName}" />
+		<property name="url" value="${oracle.jdbc.url}" />
+		<property name="username" value="${oracle.jdbc.username}" />
+		<property name="password" value="${oracle.jdbc.password}" />
+		<property name="initialSize" value="10"/>
+		<property name="maxActive" value="50"/>
+		<property name="maxIdle" value="20"/>
+		<property name="minIdle" value="5"/>
+		<property name="maxWait" value="600000"/>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"/>
+		<property name="minEvictableIdleTimeMillis" value="300000"/>
+		<property name="validationQuery" value="select count(*) from dual"/>
+	</bean>
+
+	<!-- 配置SqlsessionFactory -->
+	<bean id="sqlSessionFactory-oracle" class="org.mybatis.spring.SqlSessionFactoryBean"
+		  p:dataSource-ref="dataSource-oracle"
+	/>
+	<!-- 配置包扫描器，扫描mapper接口生成代理对象放到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		  p:sqlSessionFactoryBeanName="sqlSessionFactory-oracle"
+		  p:basePackage="com.mapper.task.*"
+	/>
+	<!--=============oracle数据库访问【【结束】】====================-->
+	<!--=============住宿信息oracle数据库访问【【开始】】====================-->
+	<bean id="dataSource-oracle-gnlk" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${oracle.gnlk.jdbc.driverClassName}" />
+		<property name="url" value="${oracle.gnlk.jdbc.url}" />
+		<property name="username" value="${oracle.gnlk.jdbc.username}" />
+		<property name="password" value="${oracle.gnlk.jdbc.password}" />
+		<property name="initialSize" value="10"/>
+		<property name="maxActive" value="50"/>
+		<property name="maxIdle" value="20"/>
+		<property name="minIdle" value="5"/>
+		<property name="maxWait" value="1200000"/>
+		<property name="timeBetweenEvictionRunsMillis" value="1200000"/>
+		<property name="minEvictableIdleTimeMillis" value="800000"/>
+		<property name="validationQuery" value="select count(*) from dual"/>
+	</bean>
+
+	<!-- 配置SqlsessionFactory -->
+	<bean id="sqlSessionFactory-oracle-gnlk" class="org.mybatis.spring.SqlSessionFactoryBean"
+		  p:dataSource-ref="dataSource-oracle-gnlk"
+	/>
+	<!-- 配置包扫描器，扫描mapper接口生成代理对象放到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		  p:sqlSessionFactoryBeanName="sqlSessionFactory-oracle-gnlk"
+		  p:basePackage="com.mapper.taskgnlk"
+	/>
+	<!--=============住宿信息oracle数据库访问【【结束】】====================-->
+</beans>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>签收研判</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+
+    <script src="../js/common.js"></script>
+    <script src="../js/format.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+</head>
+<body id="body">
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+        <!-- 右侧部分 -->
+        <div style="width: 100%;height: 100%;margin: 0 auto;background: white">
+            <div class="page-content">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="message">
+                        <!--查询条件-->
+                        <div class="row-container searchAll search-condition">
+                            <!--案警发生时间-->
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4 searchTitle borderLnone">
+                                        <p>
+                                            案警发生时间:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8 no-padding">
+                                        <div class="col-md-3 searchCon " style="width: 45%">
+                                            <input type="text" id="bjsjStart" class="form-control"  onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'}); ">
+                                        </div>
+                                        <div class="col-md-2 searchCon" style="text-align: center;width: 10%">
+                                            <span style="display: block;height: 25px;line-height: 25px"> 至 </span>
+                                        </div>
+                                        <div class="col-md-3 searchCon" style="width: 45%">
+                                            <input type="text" id="bjsjEnd" class="form-control"  onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'}); ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--行政区划-->
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4 searchTitle">
+                                        <p>
+                                             案发地点:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8 searchCon">
+                                       <input class="form-control" type="text" id="afdd">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--流转状态-->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2 searchTitle borderBnone borderLnone">
+                                        <p>
+                                            流转状态:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8  borderBnone" style="height: 34px;line-height: 34px">
+                                        <div class="col-md-2">
+                                            <input type='checkbox' id="fsYXF" name="" value="5003"/>&nbsp;&nbsp;待签收
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type='checkbox' id="fsYQS" name="" value="5004"/>&nbsp;&nbsp;已签收
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type='checkbox' id="fsYYP" name="" value="5006"/>&nbsp;&nbsp;已研判
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-2  borderBnone" style="height: 34px;line-height: 34px">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--按钮-->
+                            <div class="col-md-12 searchBtn" >
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <button class="btn btn-primary" type="button" onclick="search()"> 查询 </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wt100">
+                            <table id="dynamic-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--签收弹框-->
+    <div class="row hide" id="pass">
+        <input id="judgeId" type="hidden"><!--案警任务id-->
+        <div>
+            <!--备注-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>签收意见</span>
+                </div>
+                <div>
+                    <textarea id="auditOpinion" class="remarkFrame"></textarea>
+                </div>
+            </div>
+            <!--审核按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" onclick="auditPass('确定',1);">
+                        签收
+                    </button>
+                    <!--<button class="btn btn-primary" onclick="noAuditPass('审核不通过',2);">拒绝签收</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--拒接弹框-->
+    <div class="row hide" id="noPass">
+        <input id="noJudgeId" type="hidden"><!--案警任务id-->
+        <div>
+            <!--备注-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>签收意见</span>
+                </div>
+                <div>
+                    <textarea id="noAuditOpinion" class="remarkFrame"></textarea>
+                </div>
+            </div>
+            <!--审核按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <!--<button class="btn btn-primary" style="margin-right: 30px" onclick="auditPass('确定',1);">-->
+                        <!--签收-->
+                    <!--</button>-->
+                    <button class="btn btn-primary" onclick="noAuditPass('审核不通过',2);">拒绝签收</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--研判弹框-->
+    <div class="row hide" id="passYP">
+        <input id="judgeIdYP" type="hidden"><!--案警任务id-->
+        <div>
+            <!--备注-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>研判意见</span>
+                </div>
+                <div>
+                    <textarea id="auditOpinionYP" class="remarkFrame"></textarea>
+                </div>
+            </div>
+            <!--审核按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" style="margin-right: 30px" onclick="auditPassYP('确定',1);">
+                        确定
+                    </button>
+                    <!--<button class="btn btn-primary" onclick="noAuditPass('审核不通过',2);">拒绝签收</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="caseSeries" class="hide">
+    <table id="caseSeriesConfirme-table"
+           class="cell-border table table-striped table-bordered table-hover dataTable"
+           cellspacing="0" width="100%">
+    </table>
+</div>
+<div id="caseSeriesEvent" class="hide">
+    <table id="caseSeriesEventConfirme-table"
+           class="cell-border table table-striped table-bordered table-hover dataTable"
+           cellspacing="0" width="100%">
+    </table>
+</div>
+<!-- basic scripts -->
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- page specific plugin scripts -->
+
+<script src="../assets/js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+<!-- inline scripts related to this page -->
+<script src="../assets/js/layer/layer.js"></script>
+
+<script>
+    var dynamictable;
+    $(document).ready(function() {
+        menuThing();
+        reset();
+        dynamictableSearch();
+    });
+
+    //列表部分
+    function dynamictableSearch() {
+    	var flowStateStr=findFlowStateChecked();
+        $("#dynamic-table_filter").css('display', 'block');
+        dynamictable = $("#dynamic-table").DataTable(
+            {
+                "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                "pageLength" : 10,/*默认*/
+                "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                    [ 5, 10, 20, "全部" ] ],
+                /*"deferRender": true,*/
+                "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                 [0, "desc"]
+                 ], */
+                //因为需要多次初始化，所以需要设置允许销毁实例
+                "destroy" : true,
+                "bFilter" : false,
+                "orderMulti" : false, //启用多列排序
+                "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                /*   "table-layout":fix, */
+                "row-border" : true,
+                "oLanguage" : {
+                    "sEmptyTable" : "没有记录",
+                    "sProcessing" : "处理中，请稍候...",
+                    "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                    "sZeroRecords" : "没有记录",
+                    "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                    "sInfoPostFix" : "",
+                    "sLoadingRecords" : "正在加载中,请稍候...",
+                    "sSearch" : "搜索",
+                    "sUrl" : "",
+                    "oPaginate" : {
+                        "sFirst" : "首页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "末页"
+                    }
+                },
+                ajax : {
+                    url : getRootPath_web() + "etJudgeflowHan/selectEJFList",
+                    "type" : "post",
+                    "data":{
+                    	afdd : $("#afdd").val(),
+                    	bjsjStart : $("#bjsjStart").val(),
+                    	bjsjEnd : $("#bjsjEnd").val(),
+                    	flowState : flowStateStr,
+                    	pageCon:"signList"
+                    },
+                    async:true
+                },
+                /*序号自增长*/
+                "fnDrawCallback" : function(){
+                    this.api().column(0).nodes().each(function(cell, i) {
+                        cell.innerHTML =  i + 1;
+                    });
+                },
+                "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                "columns": [
+                    {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>任务标题</font>',"sWidth":"20%","sClass":"dt-left", 'data': 'title','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>案发地点</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'afdd','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>案警发生时间</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'afsj','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                        }},
+                    {"sTitle":'<font>主办单位</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'issuedUnit','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return "<span style='width: 150px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>"+data+"</span>";
+                        }},
+                    {"sTitle":'<font>下发时间</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'issuedTime','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                        }},
+                    {"sTitle":'<font>流转状态</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'flowStateName','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                ],
+                "columnDefs": [{"sTitle":'<font>操作</font>',
+                    "sWidth":"15%",
+                    "data": "id",
+                    "sClass" : "dt-left",//字体居中dt-center
+                    'targets': [7],
+                    'render': function(data, type, row, meta) {
+                        var id=row.id;
+                        var caseNo = row.caseNo;
+                        var judgeType = row.judgeType;
+                        var flowState = row.flowState;
+                        var strs = '';
+                        if(flowState=="5003"){
+                        strs += '<a href="#" class="operation" onclick="alertAudit(\''+ id + '\');">签收</a>';
+                        strs += '<a href="#" class="operation" onclick="alertNoAudit(\''+ id + '\');">拒接</a>';
+                        }    
+                        if(flowState=="5004"){
+                            strs += '<a href="#" class="operation" onclick="alertAuditYP(\''+ id + '\');">研判</a>';
+                        }    
+                        strs += '<a href="#" class="operation" onclick="judgeDetailClick(\''+ id + '\',\''+ caseNo + '\',\''+ judgeType + '\');">详情</a>';
+                        if(flowState==5004||flowState==5006){
+                            strs += '<br><a href="#" class="operation" onclick="alertSeriesOne(\''+ caseNo + '\');">相似度串并</a>';
+                            strs += '<br><a href="#" class="operation" onclick="alertHistorySeries(\''+ caseNo + '\');">历史串并结果</a>';
+                        }
+                        return  strs;
+                    },
+                    'bSortable': false
+                }]
+            });
+        //logEntry("1","举报查询");
+        $("#dynamic-table_filter").css("display", "none");
+    }
+    
+    
+    function findFlowStateChecked(){
+    	var fsStr="";
+    	if($("#fsYXF").is(':checked')){
+    		fsStr=fsStr+","+$("#fsYXF").val();
+    	}
+    	if($("#fsYQS").is(':checked')){
+    		fsStr=fsStr+","+$("#fsYQS").val();
+    	}
+    	if($("#fsYYP").is(':checked')){
+    		fsStr=fsStr+","+$("#fsYYP").val();
+    	}
+    	return fsStr;
+    }
+    
+    function search(){
+    	dynamictableSearch();
+    }
+    
+    function reset(){
+    	$("#afdd").val("");
+    	$("#bjsjStart").val("");
+    	$("#bjsjEnd").val("");
+    	$("#fsYXF").removeAttr("checked");
+    	$("#fsYQS").removeAttr("checked");
+    	$("#fsYYP").removeAttr("checked");
+    }
+
+
+
+    function alertAudit(id){
+        $("#pass").attr('class','show');
+        $("#judgeId").val(id);//隐藏域赋值
+        iiMark = layer.ready(function() {
+            iiMark = layer.open({
+                offset : 20,
+                type : 1,
+                title : '签收弹窗',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#pass"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#pass").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+
+
+    //点击拒接按钮
+    function alertNoAudit(id){
+        $("#noPass").attr('class','show');
+        $("#noJudgeId").val(id);//隐藏域赋值
+        iiMark = layer.ready(function() {
+            iiMark = layer.open({
+                offset : 20,
+                type : 1,
+                title : '拒接框',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#noPass"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#noPass").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+
+    /*研判弹框*/
+    function alertAuditYP(id){
+        $("#passYP").attr('class','show');
+        $("#judgeIdYP").val(id);//隐藏域赋值
+        iiMark = layer.ready(function() {
+            iiMark = layer.open({
+                offset : 20,
+                type : 1,
+                title : '研判弹窗',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#passYP"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#passYP").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+
+    //   /*签收函数*/
+    function auditPass(obj,index) {
+        var id=$("#judgeId").val();//隐藏域赋值
+        var auditOpinion=$("#auditOpinion").val()
+        var operType="5004";//审核通过
+        parent.layer.msg(obj, {icon: 1,time:1000});
+        setTimeout(function () {
+            layer.close(index);
+        },1000);
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"etJudgeflowHan/updateJudgeOperType?id="+id+"&operType="+operType,//发送请求
+            data:{
+                auditOpinion:auditOpinion
+            },
+            dataType : "json",
+            success : function(data){
+//                console.log(data.data);
+                location.reload();
+            }
+        });
+
+    }
+
+    /*研判函数*/
+    function auditPassYP(obj,index) {
+        var id=$("#judgeIdYP").val();//隐藏域赋值
+        var auditOpinion=$("#auditOpinionYP").val()
+        var operType="5006";//审核通过
+        parent.layer.msg(obj, {icon: 1,time:1000});
+        setTimeout(function () {
+            layer.close(index);
+        },1000);
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"etJudgeflowHan/updateJudgeOperType?id="+id+"&operType="+operType,//发送请求
+            data:{
+                auditOpinion:auditOpinion
+            },
+            dataType : "json",
+            success : function(data){
+//                console.log(data.data);
+                location.reload();
+            }
+        });
+
+    }
+    //点击不通过 /*拒绝签收*/
+    function noAuditPass(obj,index) {
+        var id=$("#noJudgeId").val();//隐藏域赋值
+        var auditOpinion=$("#noAuditOpinion").val()
+        var operType="5005";//审核不通过
+        parent.layer.msg(obj, {icon: 1,time:1000});
+        setTimeout(function () {
+            layer.close(index);
+        },1000);
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"etJudgeflowHan/updateJudgeOperType?id="+id+"&operType="+operType,//发送请求
+            data:{
+                auditOpinion:auditOpinion
+            },
+            dataType : "json",
+            success : function(data){
+//                console.log(data.data);
+                layer.close(index);
+                location.reload();
+            }
+        });
+
+    }
+
+    function judgeDetailClick(id,caseNo,judgeType){
+        var name='任务详情';
+        var url=getRootPath_web()+'/view/judge/judgeDetail.html?id='+id+"$caseNo="+caseNo+"$judgeType="+judgeType;
+        var width='90%';
+        var high='100%';
+        var callback=function (){
+//            findSelect();
+        };
+        //弹框
+        window.parent.Layer.layOpen(name,url,width,high,callback);
+    }
+
+
+    /*相似度串并*/
+    function alertSeriesOne(caseNo){
+        layer.prompt({title: '相似度阈值（取值范围为0-100）!', formType: 0}, function(text, index){
+            var reg = /^\d{0,3}$/;
+            if (text != null && text != "" ) {
+                if (!reg.test(text)) {
+                    layer.msg("相似度阈值不合法，请重新输入",{icon: 7,time:2000});
+                    return false;
+                }
+                var flag=text*1 <=100;
+                if(!flag){
+                    layer.msg("相似度阈值不合法，请重新输入",{icon: 7,time:2000});
+                    return false;
+                }
+            }else {
+                layer.msg("相似度阈值不能为空",{icon: 7,time:2000});
+                return false;
+            }
+            layer.close(index);
+            window.parent.layer.load(1, {shade: [0.3, '#393D49']});
+            $.ajax({
+                type: 'POST',
+                url: projectPath+"etJudgeflowHan/series",//发送请求
+                data:{"ajbh":caseNo,"similar":text},
+                dataType : "json",
+                success: function(data) {
+                    window.parent.layer.closeAll('loading');
+                    console.log(data);
+                    if(data.data.flag){
+                        alertSeries(data.data.data,caseNo);
+                    }else{
+                        layer.msg("相似度串并失败！", {icon: 2,time:3000,anim: 6});
+                        console.log(data.data.RET_CODE);
+                        console.log(data.data.ERR_TEXT);
+                    }
+                }
+            });
+        });
+    };
+    /*相似度串并弹框*/
+    function alertSeries(eventId,caseNo){
+        alertSeriesTwo(eventId);
+        $("#caseSeries").attr('class','show');
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 1,
+                title : '案件编号 '+caseNo+' 的串并结果如下:',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '1000px', '500px' ],
+                content : $("#caseSeries"),
+                btn: ['确定', '取消'],
+                yes: function(index, layero){
+                    layer.close(index)
+                }
+                ,btn2: function(index, layero){
+                    //按钮【取消】的回调
+                    layer.close(index)
+                },
+                end : function() {
+                    $("#caseSeries").attr('class','hide');
+                }
+            });
+        }).index;
+    }
+    /*相似度串并结果列表数据*/
+    var dynamictable;
+    function alertSeriesTwo(eventId){
+        $("#caseSeriesConfirme-table_filter").css('display',
+            'block');
+        dynamictable = $("#caseSeriesConfirme-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : projectPath+ "etJudgeflowHan/selectSeriesResult",
+                        "type" : "post",
+                        data : {
+                            eventId : eventId,
+                        },
+                        dataType : "json"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>案件编号</font>',"sWidth":"35%","sClass":"dt-left", 'data': 'ajbh','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>相似度</font>',"sWidth":"35%","sClass":"dt-left", 'data': 'similar','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                        }}
+
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "20%",
+                        "data" : "caseEventId",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 3 ],
+                        'render' : function(data,type, row, meta) {
+                            return '<a href="#" class="operation" onclick="">思维导图</a>';
+                        },
+                        'bSortable' : false
+                    } ]
+                });
+        $("#caseSeriesConfirme-table_filter").css("display",
+            "none");
+    }
+    /*历史串并结果*/
+    function alertHistorySeries(caseNo){
+        alertHistorySeriesTwo(caseNo);
+        $("#caseSeriesEvent").attr('class','show');
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 1,
+                title : '案件编号 '+caseNo+' 的串并结果如下:',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '1000px', '500px' ],
+                content : $("#caseSeriesEvent"),
+                btn: ['确定', '取消'],
+                yes: function(index, layero){
+                    layer.close(index)
+                }
+                ,btn2: function(index, layero){
+                    //按钮【取消】的回调
+                    layer.close(index)
+                },
+                end : function() {
+                    $("#caseSeriesEvent").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+
+    function alertHistorySeriesTwo(caseNo){
+        $("#caseSeriesEventConfirme-table_filter").css('display',
+            'block');
+        dynamictable = $("#caseSeriesEventConfirme-table")
+            .DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 5,/*默认*/
+                    "lengthMenu" : [
+                        [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : false,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : projectPath+ "etJudgeflowHan/selectSeriesEvent",
+                        "type" : "post",
+                        data : {
+                            caseNo : caseNo,
+                        },
+                        dataType : "json"
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function() {
+                        this.api().column(0).nodes().each(function(cell,i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>操作人</font>',"sWidth":"25%","sClass":"dt-left", 'data': 'operatorName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>相似度阈值</font>',"sWidth":"20%","sClass":"dt-left", 'data': 'similar','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>操作时间</font>',"sWidth":"25%","sClass":"dt-left", 'data': 'creatTime','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }}
+
+                    ],
+                    "columnDefs" : [ {
+                        "sTitle" : '<font size="2px">操作</font>',
+                        "sWidth" : "20%",
+                        "data" : "id",
+                        "sClass" : "dt-left",//字体居中dt-center
+                        'targets' : [ 4 ],
+                        'render' : function(data,type, row, meta) {
+                            return '<a href="#" class="operation" onclick="alertSeries(\''+ data + '\',\''+ caseNo + '\')">详情</a>';
+                        },
+                        'bSortable' : false
+                    } ]
+                });
+        $("#caseSeriesEventConfirme-table_filter").css("display",
+            "none");
+    }
+
+</script>
+</body>
+</html>

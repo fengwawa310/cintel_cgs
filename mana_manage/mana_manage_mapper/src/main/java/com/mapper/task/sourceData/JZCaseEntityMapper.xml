@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.task.sourceData.JZCaseEntityMapper">
+    <!--<resultMap id="BaseResultMap" type="com.entity.task.sourceData.JZCaseEntity">
+        <id column="SYSTEMID" property="systemid" jdbcType="VARCHAR"/>
+        <result column="AJBH" property="ajbh" jdbcType="VARCHAR"/>
+        <result column="SLJSDW" property="sljsdw" jdbcType="VARCHAR"/>
+        <result column="AJSTATE" property="ajstate" jdbcType="VARCHAR"/>
+        <result column="ZAZT" property="zazt" jdbcType="VARCHAR"/>
+        <result column="SL_BJSLH" property="slBjslh" jdbcType="VARCHAR"/>
+        <result column="SL_JJFS" property="slJjfs" jdbcType="VARCHAR"/>
+        <result column="AJLX" property="ajlx" jdbcType="VARCHAR"/>
+        <result column="AB" property="ab" jdbcType="VARCHAR"/>
+        <result column="ZABZ" property="zabz" jdbcType="VARCHAR"/>
+        <result column="AJMC" property="ajmc" jdbcType="VARCHAR"/>
+        <result column="AJWH" property="ajwh" jdbcType="VARCHAR"/>
+        <result column="SLJJSJ" property="sljjsj" jdbcType="TIMESTAMP"/>
+        <result column="SLFXRQ" property="slfxrq" jdbcType="TIMESTAMP"/>
+        <result column="FASJCZ" property="fasjcz" jdbcType="TIMESTAMP"/>
+        <result column="FASJZZ" property="fasjzz" jdbcType="TIMESTAMP"/>
+        <result column="FADD_QX" property="faddQx" jdbcType="VARCHAR"/>
+        <result column="FADD_JD" property="faddJd" jdbcType="VARCHAR"/>
+        <result column="AJSSJQ" property="ajssjq" jdbcType="VARCHAR"/>
+        <result column="FADD" property="fadd" jdbcType="VARCHAR"/>
+        <result column="SSSQ" property="sssq" jdbcType="VARCHAR"/>
+        <result column="FADY" property="fady" jdbcType="VARCHAR"/>
+        <result column="SLFACS" property="slfacs" jdbcType="VARCHAR"/>
+        <result column="FXXS" property="fxxs" jdbcType="VARCHAR"/>
+        <result column="AJWHCD" property="ajwhcd" jdbcType="VARCHAR"/>
+        <result column="BLYY" property="blyy" jdbcType="VARCHAR"/>
+        <result column="ZYAQ" property="zyaq" jdbcType="VARCHAR"/>
+        <result column="XZSJ" property="xzsj" jdbcType="VARCHAR"/>
+        <result column="XZCS" property="xzcs" jdbcType="VARCHAR"/>
+        <result column="XZDX" property="xzdx" jdbcType="VARCHAR"/>
+        <result column="XZWP" property="xzwp" jdbcType="VARCHAR"/>
+        <result column="ZAGJ" property="zagj" jdbcType="VARCHAR"/>
+        <result column="XZBW" property="xzbw" jdbcType="VARCHAR"/>
+        <result column="ZARS" property="zars" jdbcType="VARCHAR"/>
+        <result column="SDTD" property="sdtd" jdbcType="VARCHAR"/>
+        <result column="SWRS" property="swrs" jdbcType="VARCHAR"/>
+        <result column="SSRS" property="ssrs" jdbcType="VARCHAR"/>
+        <result column="SSJZ" property="ssjz" jdbcType="DECIMAL"/>
+        <result column="SAZZ" property="sazz" jdbcType="DECIMAL"/>
+        <result column="LASJ" property="lasj" jdbcType="TIMESTAMP"/>
+        <result column="PASJ" property="pasj" jdbcType="TIMESTAMP"/>
+        <result column="JA_JASJ" property="jaJasj" jdbcType="TIMESTAMP"/>
+        <result column="XA_XASJ" property="xaXasj" jdbcType="TIMESTAMP"/>
+        <result column="YSSJ" property="yssj" jdbcType="TIMESTAMP"/>
+        <result column="SLJJDW" property="sljjdw" jdbcType="VARCHAR"/>
+        <result column="SL_LRR" property="slLrr" jdbcType="VARCHAR"/>
+        <result column="SL_LRSJ" property="slLrsj" jdbcType="TIMESTAMP"/>
+        <result column="SLJJRY" property="sljjry" jdbcType="VARCHAR"/>
+        <result column="SL_SLRXM" property="slSlrxm" jdbcType="VARCHAR"/>
+        <result column="SL_SLSJ" property="slSlsj" jdbcType="TIMESTAMP"/>
+        <result column="SLFAQH" property="slfaqh" jdbcType="VARCHAR"/>
+        <result column="LADW" property="ladw" jdbcType="VARCHAR"/>
+        <result column="AJLARY" property="ajlary" jdbcType="VARCHAR"/>
+        <result column="ZBDW" property="zbdw" jdbcType="VARCHAR"/>
+        <result column="AJZBRY" property="ajzbry" jdbcType="VARCHAR"/>
+        <result column="AJXBRY" property="ajxbry" jdbcType="VARCHAR"/>
+        <result column="AJBARP" property="ajbarp" jdbcType="VARCHAR"/>
+        <result column="LA_LRR" property="laLrr" jdbcType="VARCHAR"/>
+        <result column="LA_LRSJ" property="laLrsj" jdbcType="TIMESTAMP"/>
+        <result column="LA_PZR" property="laPzr" jdbcType="VARCHAR"/>
+        <result column="LA_PZSJ" property="laPzsj" jdbcType="TIMESTAMP"/>
+        <result column="LA_ZHXGR" property="laZhxgr" jdbcType="VARCHAR"/>
+        <result column="LA_ZHXGSJ" property="laZhxgsj" jdbcType="TIMESTAMP"/>
+        <result column="LA_PSSTATE" property="laPsstate" jdbcType="VARCHAR"/>
+        <result column="DBXX" property="dbxx" jdbcType="VARCHAR"/>
+        <result column="AJLY" property="ajly" jdbcType="VARCHAR"/>
+        <result column="BZ" property="bz" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENTCODE" property="departmentcode" jdbcType="VARCHAR"/>
+        <result column="CREATOR" property="creator" jdbcType="VARCHAR"/>
+        <result column="CREATEDTIME" property="createdtime" jdbcType="TIMESTAMP"/>
+        <result column="SECURITYGRADE" property="securitygrade" jdbcType="VARCHAR"/>
+        <result column="RESERVATION01" property="reservation01" jdbcType="VARCHAR"/>
+        <result column="RESERVATION02" property="reservation02" jdbcType="VARCHAR"/>
+        <result column="RESERVATION03" property="reservation03" jdbcType="VARCHAR"/>
+        <result column="RESERVATION04" property="reservation04" jdbcType="VARCHAR"/>
+        <result column="RESERVATION05" property="reservation05" jdbcType="VARCHAR"/>
+        <result column="RESERVATION06" property="reservation06" jdbcType="VARCHAR"/>
+        <result column="RESERVATION07" property="reservation07" jdbcType="VARCHAR"/>
+        <result column="RESERVATION08" property="reservation08" jdbcType="VARCHAR"/>
+        <result column="RESERVATION09" property="reservation09" jdbcType="VARCHAR"/>
+        <result column="RESERVATION10" property="reservation10" jdbcType="VARCHAR"/>
+        <result column="LASTUPDATEDBY" property="lastupdatedby" jdbcType="VARCHAR"/>
+        <result column="LASTUPDATEDTIME" property="lastupdatedtime" jdbcType="TIMESTAMP"/>
+        <result column="REFRESHTIME" property="refreshtime" jdbcType="TIMESTAMP"/>
+        <result column="DELETEFLAG" property="deleteflag" jdbcType="VARCHAR"/>
+        <result column="YSDW" property="ysdw" jdbcType="VARCHAR"/>
+        <result column="YSCBR" property="yscbr" jdbcType="VARCHAR"/>
+        <result column="YSDWDH" property="ysdwdh" jdbcType="VARCHAR"/>
+        <result column="RESERVATION22" property="reservation22" jdbcType="TIMESTAMP"/>
+        <result column="AJZBRY_NAME" property="ajzbryName" jdbcType="VARCHAR"/>
+        <result column="AJXBRY_NAME" property="ajxbryName" jdbcType="VARCHAR"/>
+        <result column="SL_LRR_NAME" property="slLrrName" jdbcType="VARCHAR"/>
+        <result column="SL_SLRXM_NAME" property="slSlrxmName" jdbcType="VARCHAR"/>
+        <result column="AJLARY_NAME" property="ajlaryName" jdbcType="VARCHAR"/>
+        <result column="LA_LRR_NAME" property="laLrrName" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENTCODE_NAME" property="departmentcodeName" jdbcType="VARCHAR"/>
+        <result column="ZBDW_NAME" property="zbdwName" jdbcType="VARCHAR"/>
+        <result column="LADW_NAME" property="ladwName" jdbcType="VARCHAR"/>
+        <result column="SLJJDW_NAME" property="sljjdwName" jdbcType="VARCHAR"/>
+        <result column="SLJSDW_NAME" property="sljsdwName" jdbcType="VARCHAR"/>
+        <result column="WHSSJZ" property="whssjz" jdbcType="DECIMAL"/>
+        <result column="RESERVATION51" property="reservation51" jdbcType="TIMESTAMP"/>
+        <result column="YSSJ_NEW" property="yssjNew" jdbcType="TIMESTAMP"/>
+    </resultMap>-->
+
+    <select id="findPageAJData" parameterType="java.util.Map" resultType="com.entity.caseInfo.EtCase">
+         ${sql}
+    </select>
+
+    <select id="findPageJQData" parameterType="java.util.Map" resultType="com.entity.alarm.EtAlarm">
+        ${sql}
+    </select>
+
+    <select id="findPageRYQKData" parameterType="java.util.Map" resultType="com.entity.caseInfo.ApScarela">
+        ${sql}
+    </select>
+
+    <select id="findPageXYRData" parameterType="java.util.Map" resultType="com.entity.caseInfo.ApStaff">
+        ${sql}
+    </select>
+
+
+    <!--<sql id="Base_Column_List">
+    SYSTEMID, AJBH, SLJSDW, AJSTATE, ZAZT, SL_BJSLH, SL_JJFS, AJLX, AB, ZABZ, AJMC, AJWH, 
+    SLJJSJ, SLFXRQ, FASJCZ, FASJZZ, FADD_QX, FADD_JD, AJSSJQ, FADD, SSSQ, FADY, SLFACS, 
+    FXXS, AJWHCD, BLYY, ZYAQ, XZSJ, XZCS, XZDX, XZWP, ZAGJ, XZBW, ZARS, SDTD, SWRS, SSRS, 
+    SSJZ, SAZZ, LASJ, PASJ, JA_JASJ, XA_XASJ, YSSJ, SLJJDW, SL_LRR, SL_LRSJ, SLJJRY, 
+    SL_SLRXM, SL_SLSJ, SLFAQH, LADW, AJLARY, ZBDW, AJZBRY, AJXBRY, AJBARP, LA_LRR, LA_LRSJ, 
+    LA_PZR, LA_PZSJ, LA_ZHXGR, LA_ZHXGSJ, LA_PSSTATE, DBXX, AJLY, BZ, DEPARTMENTCODE, 
+    CREATOR, CREATEDTIME, SECURITYGRADE, RESERVATION01, RESERVATION02, RESERVATION03, 
+    RESERVATION04, RESERVATION05, RESERVATION06, RESERVATION07, RESERVATION08, RESERVATION09, 
+    RESERVATION10, LASTUPDATEDBY, LASTUPDATEDTIME, REFRESHTIME, DELETEFLAG, YSDW, YSCBR, 
+    YSDWDH, RESERVATION22, AJZBRY_NAME, AJXBRY_NAME, SL_LRR_NAME, SL_SLRXM_NAME, AJLARY_NAME, 
+    LA_LRR_NAME, DEPARTMENTCODE_NAME, ZBDW_NAME, LADW_NAME, SLJJDW_NAME, SLJSDW_NAME, 
+    WHSSJZ, RESERVATION51, YSSJ_NEW
+  </sql>
+    <select id="findPageDataInPeriodOfTime" parameterType="com.entity.task.CTPageQueryBean" resultMap="BaseResultMap">
+        SELECT * FROM (
+          SELECT A.*, ROWNUM RN
+          FROM (select *
+                from YB_ASJ_AJ t
+                where 1=1
+                <if test=" appointBeginTimeStr!=null and appointBeginTimeStr!='' ">
+                    AND t.lastupdatedtime &gt; to_date('${appointBeginTimeStr}', 'YYYY-MM-DD hh24:mi:ss')
+                </if>
+                <if test=" appointEndTimeStr!=null and appointEndTimeStr!='' ">
+                    AND t.lastupdatedtime &lt; to_date('${appointEndTimeStr}', 'YYYY-MM-DD hh24:mi:ss')
+                </if>
+              ) A
+          WHERE ROWNUM &lt;= ${endIndex})
+        WHERE RN &gt;= ${beginIndex}
+    </select>
+
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from YB_ASJ_AJ
+        where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from YB_ASJ_AJ
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.entity.task.sourceData.JZCaseEntity">
+    insert into YB_ASJ_AJ (SYSTEMID, AJBH, SLJSDW,
+      AJSTATE, ZAZT, SL_BJSLH, 
+      SL_JJFS, AJLX, AB, ZABZ, 
+      AJMC, AJWH, SLJJSJ, 
+      SLFXRQ, FASJCZ, FASJZZ, 
+      FADD_QX, FADD_JD, AJSSJQ, 
+      FADD, SSSQ, FADY, SLFACS, 
+      FXXS, AJWHCD, BLYY, 
+      ZYAQ, XZSJ, XZCS, XZDX, 
+      XZWP, ZAGJ, XZBW, ZARS, 
+      SDTD, SWRS, SSRS, SSJZ, 
+      SAZZ, LASJ, PASJ, 
+      JA_JASJ, XA_XASJ, YSSJ, 
+      SLJJDW, SL_LRR, SL_LRSJ, 
+      SLJJRY, SL_SLRXM, SL_SLSJ, 
+      SLFAQH, LADW, AJLARY, 
+      ZBDW, AJZBRY, AJXBRY, 
+      AJBARP, LA_LRR, LA_LRSJ, 
+      LA_PZR, LA_PZSJ, LA_ZHXGR, 
+      LA_ZHXGSJ, LA_PSSTATE, DBXX, 
+      AJLY, BZ, DEPARTMENTCODE, 
+      CREATOR, CREATEDTIME, SECURITYGRADE, 
+      RESERVATION01, RESERVATION02, RESERVATION03, 
+      RESERVATION04, RESERVATION05, RESERVATION06, 
+      RESERVATION07, RESERVATION08, RESERVATION09, 
+      RESERVATION10, LASTUPDATEDBY, LASTUPDATEDTIME, 
+      REFRESHTIME, DELETEFLAG, YSDW, 
+      YSCBR, YSDWDH, RESERVATION22, 
+      AJZBRY_NAME, AJXBRY_NAME, SL_LRR_NAME, 
+      SL_SLRXM_NAME, AJLARY_NAME, LA_LRR_NAME, 
+      DEPARTMENTCODE_NAME, ZBDW_NAME, LADW_NAME, 
+      SLJJDW_NAME, SLJSDW_NAME, WHSSJZ, 
+      RESERVATION51, YSSJ_NEW)
+    values (#{systemid,jdbcType=VARCHAR}, #{ajbh,jdbcType=VARCHAR}, #{sljsdw,jdbcType=VARCHAR}, 
+      #{ajstate,jdbcType=VARCHAR}, #{zazt,jdbcType=VARCHAR}, #{slBjslh,jdbcType=VARCHAR}, 
+      #{slJjfs,jdbcType=VARCHAR}, #{ajlx,jdbcType=VARCHAR}, #{ab,jdbcType=VARCHAR}, #{zabz,jdbcType=VARCHAR}, 
+      #{ajmc,jdbcType=VARCHAR}, #{ajwh,jdbcType=VARCHAR}, #{sljjsj,jdbcType=TIMESTAMP}, 
+      #{slfxrq,jdbcType=TIMESTAMP}, #{fasjcz,jdbcType=TIMESTAMP}, #{fasjzz,jdbcType=TIMESTAMP}, 
+      #{faddQx,jdbcType=VARCHAR}, #{faddJd,jdbcType=VARCHAR}, #{ajssjq,jdbcType=VARCHAR}, 
+      #{fadd,jdbcType=VARCHAR}, #{sssq,jdbcType=VARCHAR}, #{fady,jdbcType=VARCHAR}, #{slfacs,jdbcType=VARCHAR}, 
+      #{fxxs,jdbcType=VARCHAR}, #{ajwhcd,jdbcType=VARCHAR}, #{blyy,jdbcType=VARCHAR}, 
+      #{zyaq,jdbcType=VARCHAR}, #{xzsj,jdbcType=VARCHAR}, #{xzcs,jdbcType=VARCHAR}, #{xzdx,jdbcType=VARCHAR}, 
+      #{xzwp,jdbcType=VARCHAR}, #{zagj,jdbcType=VARCHAR}, #{xzbw,jdbcType=VARCHAR}, #{zars,jdbcType=VARCHAR}, 
+      #{sdtd,jdbcType=VARCHAR}, #{swrs,jdbcType=VARCHAR}, #{ssrs,jdbcType=VARCHAR}, #{ssjz,jdbcType=DECIMAL}, 
+      #{sazz,jdbcType=DECIMAL}, #{lasj,jdbcType=TIMESTAMP}, #{pasj,jdbcType=TIMESTAMP}, 
+      #{jaJasj,jdbcType=TIMESTAMP}, #{xaXasj,jdbcType=TIMESTAMP}, #{yssj,jdbcType=TIMESTAMP}, 
+      #{sljjdw,jdbcType=VARCHAR}, #{slLrr,jdbcType=VARCHAR}, #{slLrsj,jdbcType=TIMESTAMP}, 
+      #{sljjry,jdbcType=VARCHAR}, #{slSlrxm,jdbcType=VARCHAR}, #{slSlsj,jdbcType=TIMESTAMP}, 
+      #{slfaqh,jdbcType=VARCHAR}, #{ladw,jdbcType=VARCHAR}, #{ajlary,jdbcType=VARCHAR}, 
+      #{zbdw,jdbcType=VARCHAR}, #{ajzbry,jdbcType=VARCHAR}, #{ajxbry,jdbcType=VARCHAR}, 
+      #{ajbarp,jdbcType=VARCHAR}, #{laLrr,jdbcType=VARCHAR}, #{laLrsj,jdbcType=TIMESTAMP}, 
+      #{laPzr,jdbcType=VARCHAR}, #{laPzsj,jdbcType=TIMESTAMP}, #{laZhxgr,jdbcType=VARCHAR}, 
+      #{laZhxgsj,jdbcType=TIMESTAMP}, #{laPsstate,jdbcType=VARCHAR}, #{dbxx,jdbcType=VARCHAR}, 
+      #{ajly,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{departmentcode,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, #{securitygrade,jdbcType=VARCHAR}, 
+      #{reservation01,jdbcType=VARCHAR}, #{reservation02,jdbcType=VARCHAR}, #{reservation03,jdbcType=VARCHAR}, 
+      #{reservation04,jdbcType=VARCHAR}, #{reservation05,jdbcType=VARCHAR}, #{reservation06,jdbcType=VARCHAR}, 
+      #{reservation07,jdbcType=VARCHAR}, #{reservation08,jdbcType=VARCHAR}, #{reservation09,jdbcType=VARCHAR}, 
+      #{reservation10,jdbcType=VARCHAR}, #{lastupdatedby,jdbcType=VARCHAR}, #{lastupdatedtime,jdbcType=TIMESTAMP}, 
+      #{refreshtime,jdbcType=TIMESTAMP}, #{deleteflag,jdbcType=VARCHAR}, #{ysdw,jdbcType=VARCHAR}, 
+      #{yscbr,jdbcType=VARCHAR}, #{ysdwdh,jdbcType=VARCHAR}, #{reservation22,jdbcType=TIMESTAMP}, 
+      #{ajzbryName,jdbcType=VARCHAR}, #{ajxbryName,jdbcType=VARCHAR}, #{slLrrName,jdbcType=VARCHAR}, 
+      #{slSlrxmName,jdbcType=VARCHAR}, #{ajlaryName,jdbcType=VARCHAR}, #{laLrrName,jdbcType=VARCHAR}, 
+      #{departmentcodeName,jdbcType=VARCHAR}, #{zbdwName,jdbcType=VARCHAR}, #{ladwName,jdbcType=VARCHAR}, 
+      #{sljjdwName,jdbcType=VARCHAR}, #{sljsdwName,jdbcType=VARCHAR}, #{whssjz,jdbcType=DECIMAL}, 
+      #{reservation51,jdbcType=TIMESTAMP}, #{yssjNew,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.entity.task.sourceData.JZCaseEntity">
+        insert into YB_ASJ_AJ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemid != null">
+                SYSTEMID,
+            </if>
+            <if test="ajbh != null">
+                AJBH,
+            </if>
+            <if test="sljsdw != null">
+                SLJSDW,
+            </if>
+            <if test="ajstate != null">
+                AJSTATE,
+            </if>
+            <if test="zazt != null">
+                ZAZT,
+            </if>
+            <if test="slBjslh != null">
+                SL_BJSLH,
+            </if>
+            <if test="slJjfs != null">
+                SL_JJFS,
+            </if>
+            <if test="ajlx != null">
+                AJLX,
+            </if>
+            <if test="ab != null">
+                AB,
+            </if>
+            <if test="zabz != null">
+                ZABZ,
+            </if>
+            <if test="ajmc != null">
+                AJMC,
+            </if>
+            <if test="ajwh != null">
+                AJWH,
+            </if>
+            <if test="sljjsj != null">
+                SLJJSJ,
+            </if>
+            <if test="slfxrq != null">
+                SLFXRQ,
+            </if>
+            <if test="fasjcz != null">
+                FASJCZ,
+            </if>
+            <if test="fasjzz != null">
+                FASJZZ,
+            </if>
+            <if test="faddQx != null">
+                FADD_QX,
+            </if>
+            <if test="faddJd != null">
+                FADD_JD,
+            </if>
+            <if test="ajssjq != null">
+                AJSSJQ,
+            </if>
+            <if test="fadd != null">
+                FADD,
+            </if>
+            <if test="sssq != null">
+                SSSQ,
+            </if>
+            <if test="fady != null">
+                FADY,
+            </if>
+            <if test="slfacs != null">
+                SLFACS,
+            </if>
+            <if test="fxxs != null">
+                FXXS,
+            </if>
+            <if test="ajwhcd != null">
+                AJWHCD,
+            </if>
+            <if test="blyy != null">
+                BLYY,
+            </if>
+            <if test="zyaq != null">
+                ZYAQ,
+            </if>
+            <if test="xzsj != null">
+                XZSJ,
+            </if>
+            <if test="xzcs != null">
+                XZCS,
+            </if>
+            <if test="xzdx != null">
+                XZDX,
+            </if>
+            <if test="xzwp != null">
+                XZWP,
+            </if>
+            <if test="zagj != null">
+                ZAGJ,
+            </if>
+            <if test="xzbw != null">
+                XZBW,
+            </if>
+            <if test="zars != null">
+                ZARS,
+            </if>
+            <if test="sdtd != null">
+                SDTD,
+            </if>
+            <if test="swrs != null">
+                SWRS,
+            </if>
+            <if test="ssrs != null">
+                SSRS,
+            </if>
+            <if test="ssjz != null">
+                SSJZ,
+            </if>
+            <if test="sazz != null">
+                SAZZ,
+            </if>
+            <if test="lasj != null">
+                LASJ,
+            </if>
+            <if test="pasj != null">
+                PASJ,
+            </if>
+            <if test="jaJasj != null">
+                JA_JASJ,
+            </if>
+            <if test="xaXasj != null">
+                XA_XASJ,
+            </if>
+            <if test="yssj != null">
+                YSSJ,
+            </if>
+            <if test="sljjdw != null">
+                SLJJDW,
+            </if>
+            <if test="slLrr != null">
+                SL_LRR,
+            </if>
+            <if test="slLrsj != null">
+                SL_LRSJ,
+            </if>
+            <if test="sljjry != null">
+                SLJJRY,
+            </if>
+            <if test="slSlrxm != null">
+                SL_SLRXM,
+            </if>
+            <if test="slSlsj != null">
+                SL_SLSJ,
+            </if>
+            <if test="slfaqh != null">
+                SLFAQH,
+            </if>
+            <if test="ladw != null">
+                LADW,
+            </if>
+            <if test="ajlary != null">
+                AJLARY,
+            </if>
+            <if test="zbdw != null">
+                ZBDW,
+            </if>
+            <if test="ajzbry != null">
+                AJZBRY,
+            </if>
+            <if test="ajxbry != null">
+                AJXBRY,
+            </if>
+            <if test="ajbarp != null">
+                AJBARP,
+            </if>
+            <if test="laLrr != null">
+                LA_LRR,
+            </if>
+            <if test="laLrsj != null">
+                LA_LRSJ,
+            </if>
+            <if test="laPzr != null">
+                LA_PZR,
+            </if>
+            <if test="laPzsj != null">
+                LA_PZSJ,
+            </if>
+            <if test="laZhxgr != null">
+                LA_ZHXGR,
+            </if>
+            <if test="laZhxgsj != null">
+                LA_ZHXGSJ,
+            </if>
+            <if test="laPsstate != null">
+                LA_PSSTATE,
+            </if>
+            <if test="dbxx != null">
+                DBXX,
+            </if>
+            <if test="ajly != null">
+                AJLY,
+            </if>
+            <if test="bz != null">
+                BZ,
+            </if>
+            <if test="departmentcode != null">
+                DEPARTMENTCODE,
+            </if>
+            <if test="creator != null">
+                CREATOR,
+            </if>
+            <if test="createdtime != null">
+                CREATEDTIME,
+            </if>
+            <if test="securitygrade != null">
+                SECURITYGRADE,
+            </if>
+            <if test="reservation01 != null">
+                RESERVATION01,
+            </if>
+            <if test="reservation02 != null">
+                RESERVATION02,
+            </if>
+            <if test="reservation03 != null">
+                RESERVATION03,
+            </if>
+            <if test="reservation04 != null">
+                RESERVATION04,
+            </if>
+            <if test="reservation05 != null">
+                RESERVATION05,
+            </if>
+            <if test="reservation06 != null">
+                RESERVATION06,
+            </if>
+            <if test="reservation07 != null">
+                RESERVATION07,
+            </if>
+            <if test="reservation08 != null">
+                RESERVATION08,
+            </if>
+            <if test="reservation09 != null">
+                RESERVATION09,
+            </if>
+            <if test="reservation10 != null">
+                RESERVATION10,
+            </if>
+            <if test="lastupdatedby != null">
+                LASTUPDATEDBY,
+            </if>
+            <if test="lastupdatedtime != null">
+                LASTUPDATEDTIME,
+            </if>
+            <if test="refreshtime != null">
+                REFRESHTIME,
+            </if>
+            <if test="deleteflag != null">
+                DELETEFLAG,
+            </if>
+            <if test="ysdw != null">
+                YSDW,
+            </if>
+            <if test="yscbr != null">
+                YSCBR,
+            </if>
+            <if test="ysdwdh != null">
+                YSDWDH,
+            </if>
+            <if test="reservation22 != null">
+                RESERVATION22,
+            </if>
+            <if test="ajzbryName != null">
+                AJZBRY_NAME,
+            </if>
+            <if test="ajxbryName != null">
+                AJXBRY_NAME,
+            </if>
+            <if test="slLrrName != null">
+                SL_LRR_NAME,
+            </if>
+            <if test="slSlrxmName != null">
+                SL_SLRXM_NAME,
+            </if>
+            <if test="ajlaryName != null">
+                AJLARY_NAME,
+            </if>
+            <if test="laLrrName != null">
+                LA_LRR_NAME,
+            </if>
+            <if test="departmentcodeName != null">
+                DEPARTMENTCODE_NAME,
+            </if>
+            <if test="zbdwName != null">
+                ZBDW_NAME,
+            </if>
+            <if test="ladwName != null">
+                LADW_NAME,
+            </if>
+            <if test="sljjdwName != null">
+                SLJJDW_NAME,
+            </if>
+            <if test="sljsdwName != null">
+                SLJSDW_NAME,
+            </if>
+            <if test="whssjz != null">
+                WHSSJZ,
+            </if>
+            <if test="reservation51 != null">
+                RESERVATION51,
+            </if>
+            <if test="yssjNew != null">
+                YSSJ_NEW,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemid != null">
+                #{systemid,jdbcType=VARCHAR},
+            </if>
+            <if test="ajbh != null">
+                #{ajbh,jdbcType=VARCHAR},
+            </if>
+            <if test="sljsdw != null">
+                #{sljsdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajstate != null">
+                #{ajstate,jdbcType=VARCHAR},
+            </if>
+            <if test="zazt != null">
+                #{zazt,jdbcType=VARCHAR},
+            </if>
+            <if test="slBjslh != null">
+                #{slBjslh,jdbcType=VARCHAR},
+            </if>
+            <if test="slJjfs != null">
+                #{slJjfs,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlx != null">
+                #{ajlx,jdbcType=VARCHAR},
+            </if>
+            <if test="ab != null">
+                #{ab,jdbcType=VARCHAR},
+            </if>
+            <if test="zabz != null">
+                #{zabz,jdbcType=VARCHAR},
+            </if>
+            <if test="ajmc != null">
+                #{ajmc,jdbcType=VARCHAR},
+            </if>
+            <if test="ajwh != null">
+                #{ajwh,jdbcType=VARCHAR},
+            </if>
+            <if test="sljjsj != null">
+                #{sljjsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="slfxrq != null">
+                #{slfxrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fasjcz != null">
+                #{fasjcz,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fasjzz != null">
+                #{fasjzz,jdbcType=TIMESTAMP},
+            </if>
+            <if test="faddQx != null">
+                #{faddQx,jdbcType=VARCHAR},
+            </if>
+            <if test="faddJd != null">
+                #{faddJd,jdbcType=VARCHAR},
+            </if>
+            <if test="ajssjq != null">
+                #{ajssjq,jdbcType=VARCHAR},
+            </if>
+            <if test="fadd != null">
+                #{fadd,jdbcType=VARCHAR},
+            </if>
+            <if test="sssq != null">
+                #{sssq,jdbcType=VARCHAR},
+            </if>
+            <if test="fady != null">
+                #{fady,jdbcType=VARCHAR},
+            </if>
+            <if test="slfacs != null">
+                #{slfacs,jdbcType=VARCHAR},
+            </if>
+            <if test="fxxs != null">
+                #{fxxs,jdbcType=VARCHAR},
+            </if>
+            <if test="ajwhcd != null">
+                #{ajwhcd,jdbcType=VARCHAR},
+            </if>
+            <if test="blyy != null">
+                #{blyy,jdbcType=VARCHAR},
+            </if>
+            <if test="zyaq != null">
+                #{zyaq,jdbcType=VARCHAR},
+            </if>
+            <if test="xzsj != null">
+                #{xzsj,jdbcType=VARCHAR},
+            </if>
+            <if test="xzcs != null">
+                #{xzcs,jdbcType=VARCHAR},
+            </if>
+            <if test="xzdx != null">
+                #{xzdx,jdbcType=VARCHAR},
+            </if>
+            <if test="xzwp != null">
+                #{xzwp,jdbcType=VARCHAR},
+            </if>
+            <if test="zagj != null">
+                #{zagj,jdbcType=VARCHAR},
+            </if>
+            <if test="xzbw != null">
+                #{xzbw,jdbcType=VARCHAR},
+            </if>
+            <if test="zars != null">
+                #{zars,jdbcType=VARCHAR},
+            </if>
+            <if test="sdtd != null">
+                #{sdtd,jdbcType=VARCHAR},
+            </if>
+            <if test="swrs != null">
+                #{swrs,jdbcType=VARCHAR},
+            </if>
+            <if test="ssrs != null">
+                #{ssrs,jdbcType=VARCHAR},
+            </if>
+            <if test="ssjz != null">
+                #{ssjz,jdbcType=DECIMAL},
+            </if>
+            <if test="sazz != null">
+                #{sazz,jdbcType=DECIMAL},
+            </if>
+            <if test="lasj != null">
+                #{lasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pasj != null">
+                #{pasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jaJasj != null">
+                #{jaJasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="xaXasj != null">
+                #{xaXasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yssj != null">
+                #{yssj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sljjdw != null">
+                #{sljjdw,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrr != null">
+                #{slLrr,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrsj != null">
+                #{slLrsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sljjry != null">
+                #{sljjry,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlrxm != null">
+                #{slSlrxm,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlsj != null">
+                #{slSlsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="slfaqh != null">
+                #{slfaqh,jdbcType=VARCHAR},
+            </if>
+            <if test="ladw != null">
+                #{ladw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlary != null">
+                #{ajlary,jdbcType=VARCHAR},
+            </if>
+            <if test="zbdw != null">
+                #{zbdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajzbry != null">
+                #{ajzbry,jdbcType=VARCHAR},
+            </if>
+            <if test="ajxbry != null">
+                #{ajxbry,jdbcType=VARCHAR},
+            </if>
+            <if test="ajbarp != null">
+                #{ajbarp,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrr != null">
+                #{laLrr,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrsj != null">
+                #{laLrsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laPzr != null">
+                #{laPzr,jdbcType=VARCHAR},
+            </if>
+            <if test="laPzsj != null">
+                #{laPzsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laZhxgr != null">
+                #{laZhxgr,jdbcType=VARCHAR},
+            </if>
+            <if test="laZhxgsj != null">
+                #{laZhxgsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laPsstate != null">
+                #{laPsstate,jdbcType=VARCHAR},
+            </if>
+            <if test="dbxx != null">
+                #{dbxx,jdbcType=VARCHAR},
+            </if>
+            <if test="ajly != null">
+                #{ajly,jdbcType=VARCHAR},
+            </if>
+            <if test="bz != null">
+                #{bz,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentcode != null">
+                #{departmentcode,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createdtime != null">
+                #{createdtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="securitygrade != null">
+                #{securitygrade,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation01 != null">
+                #{reservation01,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation02 != null">
+                #{reservation02,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation03 != null">
+                #{reservation03,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation04 != null">
+                #{reservation04,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation05 != null">
+                #{reservation05,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation06 != null">
+                #{reservation06,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation07 != null">
+                #{reservation07,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation08 != null">
+                #{reservation08,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation09 != null">
+                #{reservation09,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation10 != null">
+                #{reservation10,jdbcType=VARCHAR},
+            </if>
+            <if test="lastupdatedby != null">
+                #{lastupdatedby,jdbcType=VARCHAR},
+            </if>
+            <if test="lastupdatedtime != null">
+                #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refreshtime != null">
+                #{refreshtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteflag != null">
+                #{deleteflag,jdbcType=VARCHAR},
+            </if>
+            <if test="ysdw != null">
+                #{ysdw,jdbcType=VARCHAR},
+            </if>
+            <if test="yscbr != null">
+                #{yscbr,jdbcType=VARCHAR},
+            </if>
+            <if test="ysdwdh != null">
+                #{ysdwdh,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation22 != null">
+                #{reservation22,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ajzbryName != null">
+                #{ajzbryName,jdbcType=VARCHAR},
+            </if>
+            <if test="ajxbryName != null">
+                #{ajxbryName,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrrName != null">
+                #{slLrrName,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlrxmName != null">
+                #{slSlrxmName,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlaryName != null">
+                #{ajlaryName,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrrName != null">
+                #{laLrrName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentcodeName != null">
+                #{departmentcodeName,jdbcType=VARCHAR},
+            </if>
+            <if test="zbdwName != null">
+                #{zbdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="ladwName != null">
+                #{ladwName,jdbcType=VARCHAR},
+            </if>
+            <if test="sljjdwName != null">
+                #{sljjdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="sljsdwName != null">
+                #{sljsdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="whssjz != null">
+                #{whssjz,jdbcType=DECIMAL},
+            </if>
+            <if test="reservation51 != null">
+                #{reservation51,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yssjNew != null">
+                #{yssjNew,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.task.sourceData.JZCaseEntity">
+        update YB_ASJ_AJ
+        <set>
+            <if test="ajbh != null">
+                AJBH = #{ajbh,jdbcType=VARCHAR},
+            </if>
+            <if test="sljsdw != null">
+                SLJSDW = #{sljsdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajstate != null">
+                AJSTATE = #{ajstate,jdbcType=VARCHAR},
+            </if>
+            <if test="zazt != null">
+                ZAZT = #{zazt,jdbcType=VARCHAR},
+            </if>
+            <if test="slBjslh != null">
+                SL_BJSLH = #{slBjslh,jdbcType=VARCHAR},
+            </if>
+            <if test="slJjfs != null">
+                SL_JJFS = #{slJjfs,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlx != null">
+                AJLX = #{ajlx,jdbcType=VARCHAR},
+            </if>
+            <if test="ab != null">
+                AB = #{ab,jdbcType=VARCHAR},
+            </if>
+            <if test="zabz != null">
+                ZABZ = #{zabz,jdbcType=VARCHAR},
+            </if>
+            <if test="ajmc != null">
+                AJMC = #{ajmc,jdbcType=VARCHAR},
+            </if>
+            <if test="ajwh != null">
+                AJWH = #{ajwh,jdbcType=VARCHAR},
+            </if>
+            <if test="sljjsj != null">
+                SLJJSJ = #{sljjsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="slfxrq != null">
+                SLFXRQ = #{slfxrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fasjcz != null">
+                FASJCZ = #{fasjcz,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fasjzz != null">
+                FASJZZ = #{fasjzz,jdbcType=TIMESTAMP},
+            </if>
+            <if test="faddQx != null">
+                FADD_QX = #{faddQx,jdbcType=VARCHAR},
+            </if>
+            <if test="faddJd != null">
+                FADD_JD = #{faddJd,jdbcType=VARCHAR},
+            </if>
+            <if test="ajssjq != null">
+                AJSSJQ = #{ajssjq,jdbcType=VARCHAR},
+            </if>
+            <if test="fadd != null">
+                FADD = #{fadd,jdbcType=VARCHAR},
+            </if>
+            <if test="sssq != null">
+                SSSQ = #{sssq,jdbcType=VARCHAR},
+            </if>
+            <if test="fady != null">
+                FADY = #{fady,jdbcType=VARCHAR},
+            </if>
+            <if test="slfacs != null">
+                SLFACS = #{slfacs,jdbcType=VARCHAR},
+            </if>
+            <if test="fxxs != null">
+                FXXS = #{fxxs,jdbcType=VARCHAR},
+            </if>
+            <if test="ajwhcd != null">
+                AJWHCD = #{ajwhcd,jdbcType=VARCHAR},
+            </if>
+            <if test="blyy != null">
+                BLYY = #{blyy,jdbcType=VARCHAR},
+            </if>
+            <if test="zyaq != null">
+                ZYAQ = #{zyaq,jdbcType=VARCHAR},
+            </if>
+            <if test="xzsj != null">
+                XZSJ = #{xzsj,jdbcType=VARCHAR},
+            </if>
+            <if test="xzcs != null">
+                XZCS = #{xzcs,jdbcType=VARCHAR},
+            </if>
+            <if test="xzdx != null">
+                XZDX = #{xzdx,jdbcType=VARCHAR},
+            </if>
+            <if test="xzwp != null">
+                XZWP = #{xzwp,jdbcType=VARCHAR},
+            </if>
+            <if test="zagj != null">
+                ZAGJ = #{zagj,jdbcType=VARCHAR},
+            </if>
+            <if test="xzbw != null">
+                XZBW = #{xzbw,jdbcType=VARCHAR},
+            </if>
+            <if test="zars != null">
+                ZARS = #{zars,jdbcType=VARCHAR},
+            </if>
+            <if test="sdtd != null">
+                SDTD = #{sdtd,jdbcType=VARCHAR},
+            </if>
+            <if test="swrs != null">
+                SWRS = #{swrs,jdbcType=VARCHAR},
+            </if>
+            <if test="ssrs != null">
+                SSRS = #{ssrs,jdbcType=VARCHAR},
+            </if>
+            <if test="ssjz != null">
+                SSJZ = #{ssjz,jdbcType=DECIMAL},
+            </if>
+            <if test="sazz != null">
+                SAZZ = #{sazz,jdbcType=DECIMAL},
+            </if>
+            <if test="lasj != null">
+                LASJ = #{lasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pasj != null">
+                PASJ = #{pasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jaJasj != null">
+                JA_JASJ = #{jaJasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="xaXasj != null">
+                XA_XASJ = #{xaXasj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yssj != null">
+                YSSJ = #{yssj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sljjdw != null">
+                SLJJDW = #{sljjdw,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrr != null">
+                SL_LRR = #{slLrr,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrsj != null">
+                SL_LRSJ = #{slLrsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sljjry != null">
+                SLJJRY = #{sljjry,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlrxm != null">
+                SL_SLRXM = #{slSlrxm,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlsj != null">
+                SL_SLSJ = #{slSlsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="slfaqh != null">
+                SLFAQH = #{slfaqh,jdbcType=VARCHAR},
+            </if>
+            <if test="ladw != null">
+                LADW = #{ladw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlary != null">
+                AJLARY = #{ajlary,jdbcType=VARCHAR},
+            </if>
+            <if test="zbdw != null">
+                ZBDW = #{zbdw,jdbcType=VARCHAR},
+            </if>
+            <if test="ajzbry != null">
+                AJZBRY = #{ajzbry,jdbcType=VARCHAR},
+            </if>
+            <if test="ajxbry != null">
+                AJXBRY = #{ajxbry,jdbcType=VARCHAR},
+            </if>
+            <if test="ajbarp != null">
+                AJBARP = #{ajbarp,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrr != null">
+                LA_LRR = #{laLrr,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrsj != null">
+                LA_LRSJ = #{laLrsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laPzr != null">
+                LA_PZR = #{laPzr,jdbcType=VARCHAR},
+            </if>
+            <if test="laPzsj != null">
+                LA_PZSJ = #{laPzsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laZhxgr != null">
+                LA_ZHXGR = #{laZhxgr,jdbcType=VARCHAR},
+            </if>
+            <if test="laZhxgsj != null">
+                LA_ZHXGSJ = #{laZhxgsj,jdbcType=TIMESTAMP},
+            </if>
+            <if test="laPsstate != null">
+                LA_PSSTATE = #{laPsstate,jdbcType=VARCHAR},
+            </if>
+            <if test="dbxx != null">
+                DBXX = #{dbxx,jdbcType=VARCHAR},
+            </if>
+            <if test="ajly != null">
+                AJLY = #{ajly,jdbcType=VARCHAR},
+            </if>
+            <if test="bz != null">
+                BZ = #{bz,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentcode != null">
+                DEPARTMENTCODE = #{departmentcode,jdbcType=VARCHAR},
+            </if>
+            <if test="creator != null">
+                CREATOR = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="createdtime != null">
+                CREATEDTIME = #{createdtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="securitygrade != null">
+                SECURITYGRADE = #{securitygrade,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation01 != null">
+                RESERVATION01 = #{reservation01,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation02 != null">
+                RESERVATION02 = #{reservation02,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation03 != null">
+                RESERVATION03 = #{reservation03,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation04 != null">
+                RESERVATION04 = #{reservation04,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation05 != null">
+                RESERVATION05 = #{reservation05,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation06 != null">
+                RESERVATION06 = #{reservation06,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation07 != null">
+                RESERVATION07 = #{reservation07,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation08 != null">
+                RESERVATION08 = #{reservation08,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation09 != null">
+                RESERVATION09 = #{reservation09,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation10 != null">
+                RESERVATION10 = #{reservation10,jdbcType=VARCHAR},
+            </if>
+            <if test="lastupdatedby != null">
+                LASTUPDATEDBY = #{lastupdatedby,jdbcType=VARCHAR},
+            </if>
+            <if test="lastupdatedtime != null">
+                LASTUPDATEDTIME = #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refreshtime != null">
+                REFRESHTIME = #{refreshtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteflag != null">
+                DELETEFLAG = #{deleteflag,jdbcType=VARCHAR},
+            </if>
+            <if test="ysdw != null">
+                YSDW = #{ysdw,jdbcType=VARCHAR},
+            </if>
+            <if test="yscbr != null">
+                YSCBR = #{yscbr,jdbcType=VARCHAR},
+            </if>
+            <if test="ysdwdh != null">
+                YSDWDH = #{ysdwdh,jdbcType=VARCHAR},
+            </if>
+            <if test="reservation22 != null">
+                RESERVATION22 = #{reservation22,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ajzbryName != null">
+                AJZBRY_NAME = #{ajzbryName,jdbcType=VARCHAR},
+            </if>
+            <if test="ajxbryName != null">
+                AJXBRY_NAME = #{ajxbryName,jdbcType=VARCHAR},
+            </if>
+            <if test="slLrrName != null">
+                SL_LRR_NAME = #{slLrrName,jdbcType=VARCHAR},
+            </if>
+            <if test="slSlrxmName != null">
+                SL_SLRXM_NAME = #{slSlrxmName,jdbcType=VARCHAR},
+            </if>
+            <if test="ajlaryName != null">
+                AJLARY_NAME = #{ajlaryName,jdbcType=VARCHAR},
+            </if>
+            <if test="laLrrName != null">
+                LA_LRR_NAME = #{laLrrName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentcodeName != null">
+                DEPARTMENTCODE_NAME = #{departmentcodeName,jdbcType=VARCHAR},
+            </if>
+            <if test="zbdwName != null">
+                ZBDW_NAME = #{zbdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="ladwName != null">
+                LADW_NAME = #{ladwName,jdbcType=VARCHAR},
+            </if>
+            <if test="sljjdwName != null">
+                SLJJDW_NAME = #{sljjdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="sljsdwName != null">
+                SLJSDW_NAME = #{sljsdwName,jdbcType=VARCHAR},
+            </if>
+            <if test="whssjz != null">
+                WHSSJZ = #{whssjz,jdbcType=DECIMAL},
+            </if>
+            <if test="reservation51 != null">
+                RESERVATION51 = #{reservation51,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yssjNew != null">
+                YSSJ_NEW = #{yssjNew,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.task.sourceData.JZCaseEntity">
+    update YB_ASJ_AJ
+    set AJBH = #{ajbh,jdbcType=VARCHAR},
+      SLJSDW = #{sljsdw,jdbcType=VARCHAR},
+      AJSTATE = #{ajstate,jdbcType=VARCHAR},
+      ZAZT = #{zazt,jdbcType=VARCHAR},
+      SL_BJSLH = #{slBjslh,jdbcType=VARCHAR},
+      SL_JJFS = #{slJjfs,jdbcType=VARCHAR},
+      AJLX = #{ajlx,jdbcType=VARCHAR},
+      AB = #{ab,jdbcType=VARCHAR},
+      ZABZ = #{zabz,jdbcType=VARCHAR},
+      AJMC = #{ajmc,jdbcType=VARCHAR},
+      AJWH = #{ajwh,jdbcType=VARCHAR},
+      SLJJSJ = #{sljjsj,jdbcType=TIMESTAMP},
+      SLFXRQ = #{slfxrq,jdbcType=TIMESTAMP},
+      FASJCZ = #{fasjcz,jdbcType=TIMESTAMP},
+      FASJZZ = #{fasjzz,jdbcType=TIMESTAMP},
+      FADD_QX = #{faddQx,jdbcType=VARCHAR},
+      FADD_JD = #{faddJd,jdbcType=VARCHAR},
+      AJSSJQ = #{ajssjq,jdbcType=VARCHAR},
+      FADD = #{fadd,jdbcType=VARCHAR},
+      SSSQ = #{sssq,jdbcType=VARCHAR},
+      FADY = #{fady,jdbcType=VARCHAR},
+      SLFACS = #{slfacs,jdbcType=VARCHAR},
+      FXXS = #{fxxs,jdbcType=VARCHAR},
+      AJWHCD = #{ajwhcd,jdbcType=VARCHAR},
+      BLYY = #{blyy,jdbcType=VARCHAR},
+      ZYAQ = #{zyaq,jdbcType=VARCHAR},
+      XZSJ = #{xzsj,jdbcType=VARCHAR},
+      XZCS = #{xzcs,jdbcType=VARCHAR},
+      XZDX = #{xzdx,jdbcType=VARCHAR},
+      XZWP = #{xzwp,jdbcType=VARCHAR},
+      ZAGJ = #{zagj,jdbcType=VARCHAR},
+      XZBW = #{xzbw,jdbcType=VARCHAR},
+      ZARS = #{zars,jdbcType=VARCHAR},
+      SDTD = #{sdtd,jdbcType=VARCHAR},
+      SWRS = #{swrs,jdbcType=VARCHAR},
+      SSRS = #{ssrs,jdbcType=VARCHAR},
+      SSJZ = #{ssjz,jdbcType=DECIMAL},
+      SAZZ = #{sazz,jdbcType=DECIMAL},
+      LASJ = #{lasj,jdbcType=TIMESTAMP},
+      PASJ = #{pasj,jdbcType=TIMESTAMP},
+      JA_JASJ = #{jaJasj,jdbcType=TIMESTAMP},
+      XA_XASJ = #{xaXasj,jdbcType=TIMESTAMP},
+      YSSJ = #{yssj,jdbcType=TIMESTAMP},
+      SLJJDW = #{sljjdw,jdbcType=VARCHAR},
+      SL_LRR = #{slLrr,jdbcType=VARCHAR},
+      SL_LRSJ = #{slLrsj,jdbcType=TIMESTAMP},
+      SLJJRY = #{sljjry,jdbcType=VARCHAR},
+      SL_SLRXM = #{slSlrxm,jdbcType=VARCHAR},
+      SL_SLSJ = #{slSlsj,jdbcType=TIMESTAMP},
+      SLFAQH = #{slfaqh,jdbcType=VARCHAR},
+      LADW = #{ladw,jdbcType=VARCHAR},
+      AJLARY = #{ajlary,jdbcType=VARCHAR},
+      ZBDW = #{zbdw,jdbcType=VARCHAR},
+      AJZBRY = #{ajzbry,jdbcType=VARCHAR},
+      AJXBRY = #{ajxbry,jdbcType=VARCHAR},
+      AJBARP = #{ajbarp,jdbcType=VARCHAR},
+      LA_LRR = #{laLrr,jdbcType=VARCHAR},
+      LA_LRSJ = #{laLrsj,jdbcType=TIMESTAMP},
+      LA_PZR = #{laPzr,jdbcType=VARCHAR},
+      LA_PZSJ = #{laPzsj,jdbcType=TIMESTAMP},
+      LA_ZHXGR = #{laZhxgr,jdbcType=VARCHAR},
+      LA_ZHXGSJ = #{laZhxgsj,jdbcType=TIMESTAMP},
+      LA_PSSTATE = #{laPsstate,jdbcType=VARCHAR},
+      DBXX = #{dbxx,jdbcType=VARCHAR},
+      AJLY = #{ajly,jdbcType=VARCHAR},
+      BZ = #{bz,jdbcType=VARCHAR},
+      DEPARTMENTCODE = #{departmentcode,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATEDTIME = #{createdtime,jdbcType=TIMESTAMP},
+      SECURITYGRADE = #{securitygrade,jdbcType=VARCHAR},
+      RESERVATION01 = #{reservation01,jdbcType=VARCHAR},
+      RESERVATION02 = #{reservation02,jdbcType=VARCHAR},
+      RESERVATION03 = #{reservation03,jdbcType=VARCHAR},
+      RESERVATION04 = #{reservation04,jdbcType=VARCHAR},
+      RESERVATION05 = #{reservation05,jdbcType=VARCHAR},
+      RESERVATION06 = #{reservation06,jdbcType=VARCHAR},
+      RESERVATION07 = #{reservation07,jdbcType=VARCHAR},
+      RESERVATION08 = #{reservation08,jdbcType=VARCHAR},
+      RESERVATION09 = #{reservation09,jdbcType=VARCHAR},
+      RESERVATION10 = #{reservation10,jdbcType=VARCHAR},
+      LASTUPDATEDBY = #{lastupdatedby,jdbcType=VARCHAR},
+      LASTUPDATEDTIME = #{lastupdatedtime,jdbcType=TIMESTAMP},
+      REFRESHTIME = #{refreshtime,jdbcType=TIMESTAMP},
+      DELETEFLAG = #{deleteflag,jdbcType=VARCHAR},
+      YSDW = #{ysdw,jdbcType=VARCHAR},
+      YSCBR = #{yscbr,jdbcType=VARCHAR},
+      YSDWDH = #{ysdwdh,jdbcType=VARCHAR},
+      RESERVATION22 = #{reservation22,jdbcType=TIMESTAMP},
+      AJZBRY_NAME = #{ajzbryName,jdbcType=VARCHAR},
+      AJXBRY_NAME = #{ajxbryName,jdbcType=VARCHAR},
+      SL_LRR_NAME = #{slLrrName,jdbcType=VARCHAR},
+      SL_SLRXM_NAME = #{slSlrxmName,jdbcType=VARCHAR},
+      AJLARY_NAME = #{ajlaryName,jdbcType=VARCHAR},
+      LA_LRR_NAME = #{laLrrName,jdbcType=VARCHAR},
+      DEPARTMENTCODE_NAME = #{departmentcodeName,jdbcType=VARCHAR},
+      ZBDW_NAME = #{zbdwName,jdbcType=VARCHAR},
+      LADW_NAME = #{ladwName,jdbcType=VARCHAR},
+      SLJJDW_NAME = #{sljjdwName,jdbcType=VARCHAR},
+      SLJSDW_NAME = #{sljsdwName,jdbcType=VARCHAR},
+      WHSSJZ = #{whssjz,jdbcType=DECIMAL},
+      RESERVATION51 = #{reservation51,jdbcType=TIMESTAMP},
+      YSSJ_NEW = #{yssjNew,jdbcType=TIMESTAMP}
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </update>-->
+</mapper>

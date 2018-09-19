@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+<title>扫黑专用模块</title>
+<base href="http://localhost:8680/mana_web/" />
+<script src="../view/js/common.js"></script>
+<script type="text/javascript">
+var jypath = getRootPath();
+
+//获取主机地址
+function getRootPath() {
+    //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+    var curWwwPath = window.document.location.href;
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+    var pathName = window.document.location.pathname;
+    var pos = curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8083
+    var localhostPaht = curWwwPath.substring(0, pos);
+    //获取带"/"的项目名，如：/uimcardprj
+    var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+    return (localhostPaht+projectName);
+}
+
+</script>
+
+<script src="static/js/jquery/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="static/js/jquery/jquery.tips.js"></script>
+<script src="static/js/jquery/jquery.cookie.js"></script>
+<script src="static/js/ace/ace-extra.min.js"></script>
+<script src="static/js/bootstrap/bootstrap.min.js"></script>
+<script src="static/js/ace/typeahead-bs2.min.js"></script>
+<script src="static/js/ace/ace-elements.min.js"></script>
+<script src="static/js/ace/ace.min.js"></script>
+<script src="static/js/jquery/jquery-ui.min.js"></script>
+<script src="static/js/jquery/jquery.md5.js"></script>
+<script src="static/plugins/tabs/js/tab-control.min.js"></script>
+<script src="static/js/system/jy/jy.main.js"></script>
+<script src="static/js/system/index/index_.js"></script>
+
+<link rel="stylesheet" href="static/css/system/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="static/css/system/ace/font-awesome.min.css" />
+<link rel="stylesheet" href="static/css/system/jquery/jquery-ui.min.css" type="text/css" />
+<!--[if IE 7]>
+	<link rel="stylesheet" href="static/css/system/ace/font-awesome-ie7.min.css" />
+<![endif]-->
+<link rel="stylesheet" href="static/css/system/bootstrap/bootstrap-responsive.min.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="static/css/system/ace/ace.min.css" />
+<!--[if lte IE 8]>
+	<link rel="stylesheet" href="static/css/system/ace/ace-ie.min.css" />
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="static/css/system/ace/ace-rtl.min.css" />
+<link type="text/css" rel="stylesheet" href="static/css/system/ace/ace-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="static/css/system/ace/ace-skins.min.css" />
+
+<link type="text/css" rel="stylesheet" href="static/plugins/tabs/css/tab-control.min.css" />
+<link type="text/css" rel="stylesheet" href="static/css/system/system/index.css" />
+
+<link rel="stylesheet" href="view/css/commonStyle.css" />
+
+</head>
+
+<body id='indexBody'>
+	<div class="navbar-container navbar navbar-default" id="navbar">
+		<div class="navbar-header pull-left">
+			<a href="#" class="navbar-brand">
+				<small>
+					<img style="width:9%;height:9%;margin-left: 10px" src="view/assets/images/gallery/logo.png">
+					<label style="font-size:24px;">深圳CID扫黑专用模块</label>
+				</small>
+
+			</a>
+		</div>
+		<!-- 上方的用户部分-->
+		<div class="navbar-header pull-right" role="navigation" style="padding-right: 20px">
+			<ul class="nav ace-nav">
+				<li>
+					<span class="time"></span>
+				</li>
+				<li>
+					<span>系统管理综合研判组</span>
+				</li>
+				<li>
+					<span>系统管理用户</span>
+				</li>
+				<li>
+					<span>欢迎你！！</span>
+				</li>
+				<li class="">
+					<a  class="dropdown-toggle" href="#">
+						<i class="icon-bell-alt"></i>
+						<span class="badge badge-important">8</span>
+					</a>
+				</li>
+				<li class="">
+					<a  class="dropdown-toggle" href="#">
+						<i class="icon-bullhorn"></i>
+						<span class="badge badge-important">8</span>
+					</a>
+
+				</li>
+				<li class="">
+					<a  class="dropdown-toggle" href="#">
+						<i class="icon-envelope-alt"></i>
+						<span class="badge badge-important">8</span>
+					</a>
+				</li>
+				<li>
+					<a  onclick="" style="cursor: pointer">>>> 进入系统</a>
+				</li>
+				<li>
+					<a  onclick="logout();" style="cursor: pointer">退出</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main-container" id="main-container">
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#">
+				<span class="menu-text"></span>
+			</a>
+		<div class="sidebar" id="sidebar">
+			<!--左边 导航 菜单 -->
+			<ul class="nav nav-list" id="menu_li_id" ></ul><!-- /.nav-list -->
+			<!--左边 导航 菜单  end-->
+			<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+			</div>					
+		</div>
+		<!-- 主要界面 右边 -->
+		<div class="main-content" id="maincontent" >
+			<div class="page-content ">	
+				<div class="tab-control">
+				    <!--当前位置信息-->
+    				<div class="breadcrumbs" id="breadcrumbs">
+        				<ul class="breadcrumb">
+            				<li>
+                				<span class="title">当前位置：</span>
+                				<span id="yemianweizhi">首页</span>
+            				</li>
+        				</ul>
+    				</div>	
+					<div  class="tab simple hidden ">
+						<form>
+							<input class="prev" type="button" /> 
+							<input class="next" type="button" /> 
+							<input class="find" type="button" />
+						</form>
+						<ul class="tabul"></ul>
+					</div>
+					<!-- 标签查找 -->
+					<div class="tab-find hidden ">
+						<form><input class="text" type="text" /></form>
+						<ul></ul>
+					</div>
+					<!-- 主体 -->
+					<div class="main">
+					<iframe id="if_main" src="hui/index.html" scrolling="auto" frameborder="0" reload=""></iframe>
+					</div>			
+				</div>	
+			</div>
+			<!-- /.main-content -->
+			<!-- #dialog-confirm -->
+<div id="jyConfirm" class="hide">
+	<div class="center">
+		<h4><i class="icon-hand-right blue bigger-120"></i> <span id="jyConfirmStr"></span></h4>
+	</div>
+</div>
+<div id="jyInfo" class="hide">
+	<div class="center">
+		<h4><i class="icon-info-sign blue bigger-120"></i> <span id="jyInfoStr"></span></h4>
+	</div>
+</div>
+<div id="jyError" class="hide">
+	<div class="center">
+		<h4><i class="icon-warning-sign red bigger-120"></i> <span id="jyErrorStr"></span></h4>
+	</div>
+</div>
+<div id="jyLoading" class="hide">
+	<div class="center">
+		<h4><img alt="loading" src="static/images/system/loading.gif"><span id="jyLoadingStr"></span></h4>
+	</div>
+</div>
+
+		</div><!-- /.main-container-inner -->
+			<!-- 重回最上按钮 -->
+	</div><!-- /.main-container -->
+</div>
+</body>
+</html>

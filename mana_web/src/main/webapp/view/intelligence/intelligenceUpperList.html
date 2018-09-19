@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>情报上级列表</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<!-- basic styles -->
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="../css/jquery.dataTables.min.css" />
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+<script src="../js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/datepicker/WdatePicker.js"></script>
+<script src="../assets/js/ace-extra.min.js"></script>
+
+<script src="../js/common.js"></script>
+<link rel="stylesheet" href="../css/commonStyle.css" />
+<link rel="stylesheet" href="../css/intelligence.css" />
+</head>
+<body id="body">
+	<!-- 上方导航栏 -->
+	<!-- <iframe src="../index.html" style="width:100%;height:60px;"></iframe> -->
+	<!-- 右侧部分 -->
+	<div style="width: 100%; height: 100%; margin: 0 auto; background: white">
+		<!-- 	<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+						<ul class="breadcrumb">
+							<li>
+								<span class="title">当前位置：</span>
+								<span>情报下发列表</span>
+							</li>
+						</ul>
+					</div> -->
+		<div class="page-content">
+			<!--隐藏域 只为传值使用  -->
+			、 <input type="hidden" id="tittle">
+			<!--<ul id="myTab" class="nav nav-tabs mytab">-->
+			<!--<li class="active">-->
+			<!--<a href="#home" data-toggle="tab">手动录入</a>-->
+			<!--</li>-->
+			<!--<li>-->
+			<!--<a href="#ios" data-toggle="tab">平台导入</a>-->
+			<!--</li>-->
+			<!--</ul>-->
+			<!--tab切换内容-->
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="message">
+					<div class="row-container searchAll search-condition">
+						<!--情报编号-->
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-5 searchTitle borderLnone">
+									<p>情报编号</p>
+								</div>
+								<div class="col-md-7 searchCon rightBorder">
+									<input type="text" id="inforNo" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<!--查证单位-->
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-5 searchTitle borderLnone">
+									<p>查证单位</p>
+								</div>
+								<div class="col-md-7 searchCon">
+									<select autocomplete="off" id="hostUnitName" name="hostUnitName">
+										<option value ="">--请选择--</option>
+									</select>
+									<!-- <input type="text" id="verifyUnit" class="form-control"> -->
+								</div>
+							</div>
+						</div>
+						<!--审核状态-->
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-5 searchTitle">
+									<p>审核状态</p>
+								</div>
+								<div class="col-md-7 searchCon">
+									<select id="isVerify">
+										<option value=''>---请选择 ---</option>
+										<option value=0>未审核</option>
+										<option value=1>审核通过</option>
+										<option value=2>审核失败</option>
+									</select>
+
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="row">
+								<!--下发生成时间-->
+								<div class="col-md-5 searchTitle borderBnone borderLnone">
+									<p>下发生成时间</p>
+								</div>
+								<div class="col-md-7 searchCon borderBnone rightBorder">
+									<input type='text' id="creatTimeStart"
+										class="form-control searchTime"
+										onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); " />&nbsp;至
+									<input type='text' id="creatTimeEnd"
+										class="form-control searchTime"
+										onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); " />
+								</div>
+							</div>
+						</div>
+
+						<div class="no-border col-md-8 defaultBackColor"
+							style="height: 34px; background: #f7fbff;"></div>
+						<!--查询、保存按钮-->
+						<div class="col-md-12 searchBtn">
+							<div class="row">
+								<div class="col-md-12 ">
+									<button class="btn btn-primary" type="button" id="query">
+										查询</button>
+									<button class="btn btn-primary" type="button"
+										 onclick="getDispatchLayer();">
+										录入</button>
+									<button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wt100">
+						<table id="dynamic-table"
+							class="cell-border table table-striped table-bordered table-hover dataTable"
+							cellspacing="0" width="100%">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--start modal1 审核模态框-->
+		<div id="auditLayer" class="modal fade" role="dialog"
+			aria-label="myModalLabel">
+			<div class="modal-dialog" style="width: 420px;">
+				<div class="modal-content" id="modalContent"
+					style="border-radius: 4px">
+					<!--模态框标题-->
+					<div
+						class="modal-header container bottomBorder no-padding modalTitle">
+						<div class="col-md-11">
+							<span class="modalTitleTxt" id="modalTitle"></span>
+						</div>
+						<div class="col-md-1 boldFont">
+							<a data-dismiss="modal" style="font-size: 15px">×</a>
+						</div>
+					</div>
+					<!--模态框内容-->
+					<div class="modal-body breadcrumbs bottomBorder modalBodyContainer">
+						<div>
+							<span>备注</span>
+						</div>
+						<div>
+							<textarea class="remarkFrame"></textarea>
+						</div>
+					</div>
+					<!--模态框按钮-->
+					<div class="modal-footer topBorder no-padding">
+						<div class="searchBtn" style="border: none; padding: 6px 0 6px 0"
+							id="auditDiv">
+							<button class="btn btn-primary" data-dismiss="modal"
+								style="margin-right: 30px" onclick="auditPass(this);">
+								审核通过</button>
+							<button class="btn btn-primary" data-dismiss="modal">
+								审核不通过</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end modal1-->
+	</div>
+	</div>
+	<!-- basic scripts -->
+
+	<!-- <![endif]-->
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- ace scripts -->
+	<script src="../assets/js/ace-elements.min.js"></script>
+	<script src="../assets/js/ace.min.js"></script>
+	<!-- page specific plugin scripts -->
+
+	<script src="../assets/js/jquery.dataTables.min.js"></script>
+	<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript"></script>
+
+	<!-- inline scripts related to this page 弹框插件-->
+	<script src="../assets/js/layer/layer.js"></script>
+
+		<script src="../js/meaasgeList.js"></script>
+	<!--列表加载数据-->
+	<script>
+            var dynamictable;
+           var infoNo;
+            $(document).ready(function() {
+                menuThing();
+                $("#dynamic-table_filter").css('display', 'block');
+                dynamictable = $("#dynamic-table").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 5,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+                            /*"deferRender": true,*/
+                        "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                            /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                             [0, "desc"]
+                             ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                            /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                            /*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : getRootPath_web() + "IntelligenceHandler/list.action",
+							"type" : "post"
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'4%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>情报研判编号</font>',"sWidth":"9%","sClass":"dt-left", 'data': 'inforNo','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>研判标题</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'inforTitle','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                                {"sTitle":'<font>下发状态</font>',"sWidth":"6%","sClass":"dt-left", 'data': 'isHandout','bSortable': false,
+                                    'render': function(data, type, row, meta) {
+                                        if(data==""||data==null|| data==0){
+                                            return "未下发";
+                                        }
+                                        if(data == 1){
+                                        	return "已下发";
+                                        }
+                                        return data;
+                                    }},
+                                    {"sTitle":'<font>下发生成时间</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'handoutTime','bSortable': false,
+                                        'render': function(data, type, row, meta) {
+                                            if(data==""||data==null){
+                                                return "--";
+                                            }
+                                            return data;
+                                        }},
+                                        {"sTitle":'<font>下发单位</font>',"sWidth":"9%","sClass":"dt-left", 'data': 'handoutUnitName','bSortable': false,
+                                            'render': function(data, type, row, meta) {
+                                            	  if(data==""||data==null){
+                                                      return "--";
+                                                  }
+                                                return data;
+                                            }},
+                                    {"sTitle":'<font>下发人</font>',"sWidth":"9%","sClass":"dt-left", 'data': 'handoutPersonName','bSortable': false,
+                                                'render': function(data, type, row, meta) {
+                                                	  if(data==""||data==null){
+                                                          return "--";
+                                                      }
+                                                    return data;
+                                                }},
+                           
+                            {"sTitle":'<font>主办查证单位</font>',"sWidth":"9%","sClass":"dt-left", 'data': 'hostUnitName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }} ,
+                                {"sTitle":'<font>协办查证单位</font>',"sWidth":"9%","sClass":"dt-left", 'data': 'assistUnitName','bSortable': false,
+                                    'render': function(data, type, row, meta) {
+                                        if(data==""||data==null){
+                                            return "--";
+                                        }
+                                        return data;
+                                    }} ,
+                                    {"sTitle":'<font>审核状态</font>',"sWidth":"6%","sClass":"dt-left", 'data': 'isVerify','bSortable': false,
+                                        'render': function(data, type, row, meta) {
+                                            if(data==""||data==null){
+                                                return "未审核";
+                                            }
+                                            if(data == 1){
+                                            	return "审核通过";
+                                            }
+                                            if(data == 2){
+                                            	return "审核不通过";
+                                            }
+                                            return data;
+                                        }},
+                                
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"40%",
+                            "data": "level",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [10],
+                            'render': function(data, type, row, meta) {
+                            	var html = '<a href="#" class="operation" onclick="getInfoDetailLayer(\''+row.inforNo+'\')">详情</a>';
+    						 		if( data <=3 && row.isHandout == 0){
+    						 			html='<a href="#" class="operation" onclick="getInfoDetailLayer(\''+row.inforNo+'\')">详情</a><a  onclick="xiafa(\''+row.inforNo+'\',\''+row.inforTitle+'\')">下发</a>';
+    								}  
+                                    return  html ;
+                            },
+                            'bSortable': false
+                        }]
+                    });
+                $("#dynamic-table_filter").css("display", "none");
+                
+                $(document).on("click", "#query",
+                		//查询条件
+    					function() {
+    						 var str = '{';
+    				            str += '"inforNo": "'+$("#inforNo").val()+'",';
+    				            str += '"hostUnitCode": "'+$("#hostUnitName").val()+'",';
+    				            str += '"isVerify": "'+$("#isVerify").val()+'",';
+    				            str += '"creatTimeStart": "'+$("#creatTimeStart").val()+'", ';
+    				            str += '"creatTimeEnd": "'+$("#creatTimeEnd").val()+'" ';
+    				            str += '}'; 
+    						dynamictable.search(JSON.stringify(str)).draw();
+    					});
+            });
+        
+
+			var title = "";
+			/*弹出情报录入界面*/
+            function getDispatchLayer() {
+                var ii;
+                ii = layer.ready(function () {
+                    ii = layer.open({
+                        offset: 20,
+                        type: 2,
+                        title: '情报录入',
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['1000px', '500px'],
+                        content: 'dispatchInstruction.html',
+                        end: function () {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                        }
+                    });
+                }).index;
+            }
+
+			/*弹出情报详情界面*/
+            function getInfoDetailLayer(infor) {
+                var ii;
+                ii = layer.ready(function () {
+                    ii = layer.open({
+                        offset: 20,
+                        type: 2,
+                        title: '情报详情',
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['1000px', '500px'],
+                        content: 'intelligenceDetails.html?infor='+ infor,
+                        end: function () {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                        }
+                    });
+                }).index;
+            }
+
+            /*动态设置modal中的title*/
+            $("#auditLayer").on("show.bs.modal", function(e) {
+                // 这里的trigger就是触发元素，即你点击的a标签
+                var trigger = $(e.relatedTarget);
+                var modalTitle = trigger.data("id").split("?")[0];
+                var infoNO = trigger.data("id").split("?")[1];
+
+                var idNo = infoNO;
+				document.getElementById("modalTitle").innerText = modalTitle;
+				var btnAudit =  $("#auditDiv").find("button:first-child") ;
+                btnAudit.attr("value",idNo);
+            })
+		
+		       function xiafa(inforNo,inforTitle) {
+		    	//定义路径
+		    	var liuchengType = "1";
+		        var url = getRootPath_web() + "IntelligenceHandler/xiafa.action";
+		    	// 封装调往后台的参数
+		     	 var str = '{';
+		            str += '"inforNo": "'+inforNo+'",';
+		            str += '"inforTitle": "'+inforTitle+'",';
+		            str += '"liuchengType": "'+liuchengType+'"';
+		            str += '}'; 
+		            layer.confirm('是否确认进行操作', {
+	            		btn: ['确认','取消'] //按钮
+	            	}, function(){ 
+	            		
+	            		$.ajax({
+				 	      type : "post",
+				 	      url : url,
+				 	      dataType : "json",
+				 	      contentType : "application/json;charset=utf-8",
+				 	      data:JSON.stringify(str),
+				 	      success : function(data) {
+				 	    	  if(data){
+				 	    		//alert("下发成功");
+				 	    		layer.msg("下发成功", {icon: 1,time:3000});
+				 	    		 //刷新
+				 	    		var str = '{';
+					            str += '"inforNo": "'+$("#inforNo").val()+'"'; 
+					            str += '}'; 
+								dynamictable.search(JSON.stringify(str)).draw();
+				 	    	  }else{
+				 	    		 //alert("下发失败");
+				 	    		layer.msg("下发失败失败", {icon: 2,time:3000,anim: 6});
+				 	    	  }
+				 	      },
+				 	      error : function(data) {
+				 	    	 //alert("下发失败");
+				 	    	 layer.msg("下发失败失败", {icon: 2,time:3000,anim: 6});
+				 	      }
+				 	   });
+	            		
+	            		});
+		    }
+            
+            
+            //查询查证单位
+            selectDicUnit("hostUnitName");
+		</script>
+
+</body>
+
+</html>

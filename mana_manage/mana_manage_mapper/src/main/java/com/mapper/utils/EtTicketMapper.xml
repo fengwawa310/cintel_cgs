@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.utils.EtTicketMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ticket.EtTicket" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="EVENT_TYPE" property="eventType" jdbcType="INTEGER" />
+    <result column="CALLING_NUMBER" property="callingNumber" jdbcType="VARCHAR" />
+    <result column="END_NUMBER" property="endNumber" jdbcType="VARCHAR" />
+    <result column="CALLING_NUB_IMSI" property="callingNubImsi" jdbcType="VARCHAR" />
+    <result column="END_NUB_IMSI" property="endNubImsi" jdbcType="VARCHAR" />
+    <result column="CALLING_NUB_IMEI" property="callingNubImei" jdbcType="VARCHAR" />
+    <result column="END_NUB_IMEI" property="endNubImei" jdbcType="VARCHAR" />
+    <result column="CALLING_HOME" property="callingHome" jdbcType="VARCHAR" />
+    <result column="END_HOME" property="endHome" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--批量添加话单信息-->
+  <insert id="insert" parameterType="com.entity.ticket.EtTicket" >
+    insert into et_ticket
+    (
+    ID, START_TIME, END_TIME,
+    EVENT_TYPE, CALLING_NUMBER, END_NUMBER,
+    CALLING_HOME, END_HOME,CREATE_TIME, MODIFY_TIME
+    )
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (
+      #{item.id},
+      <if test="item.startTimeStr != null and item.startTimeStr !='' " >
+        #{item.startTimeStr},
+      </if>
+      <if test="item.startTimeStr == null or item.startTimeStr =='' " >
+        '0000-00-00 00:00:00',
+      </if>
+      <if test="item.endTimeStr != null and item.endTimeStr !='' " >
+        #{item.endTimeStr},
+      </if>
+      <if test="item.endTimeStr == null or item.endTimeStr =='' " >
+        '0000-00-00 00:00:00',
+      </if>
+      #{item.eventType}, #{item.callingNumber}, #{item.endNumber},
+      #{item.callingHome}, #{item.endHome}, now(), now()
+      )
+    </foreach>
+  </insert>
+
+  <sql id="Base_Column_List" >
+    ID, START_TIME, END_TIME, EVENT_TYPE, CALLING_NUMBER, END_NUMBER, CALLING_NUB_IMSI, 
+    END_NUB_IMSI, CALLING_NUB_IMEI, END_NUB_IMEI, CALLING_HOME, END_HOME, CREATE_TIME, 
+    MODIFY_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_ticket
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectByCallingNumber" resultMap="BaseResultMap" parameterType="com.entity.ticket.EtTicket" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_ticket
+    where 1=1 and
+	  <if test="callingNumber != null" >
+     	     CALLING_NUMBER =  #{callingNumber,jdbcType=VARCHAR}
+     	OR   END_NUMBER =  #{callingNumber,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_ticket
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.entity.ticket.EtTicket" >
+    insert into et_ticket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE,
+      </if>
+      <if test="callingNumber != null" >
+        CALLING_NUMBER,
+      </if>
+      <if test="endNumber != null" >
+        END_NUMBER,
+      </if>
+      <if test="callingNubImsi != null" >
+        CALLING_NUB_IMSI,
+      </if>
+      <if test="endNubImsi != null" >
+        END_NUB_IMSI,
+      </if>
+      <if test="callingNubImei != null" >
+        CALLING_NUB_IMEI,
+      </if>
+      <if test="endNubImei != null" >
+        END_NUB_IMEI,
+      </if>
+      <if test="callingHome != null" >
+        CALLING_HOME,
+      </if>
+      <if test="endHome != null" >
+        END_HOME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="callingNumber != null" >
+        #{callingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="endNumber != null" >
+        #{endNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="callingNubImsi != null" >
+        #{callingNubImsi,jdbcType=VARCHAR},
+      </if>
+      <if test="endNubImsi != null" >
+        #{endNubImsi,jdbcType=VARCHAR},
+      </if>
+      <if test="callingNubImei != null" >
+        #{callingNubImei,jdbcType=VARCHAR},
+      </if>
+      <if test="endNubImei != null" >
+        #{endNubImei,jdbcType=VARCHAR},
+      </if>
+      <if test="callingHome != null" >
+        #{callingHome,jdbcType=VARCHAR},
+      </if>
+      <if test="endHome != null" >
+        #{endHome,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ticket.EtTicket" >
+    update et_ticket
+    <set >
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="callingNumber != null" >
+        CALLING_NUMBER = #{callingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="endNumber != null" >
+        END_NUMBER = #{endNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="callingNubImsi != null" >
+        CALLING_NUB_IMSI = #{callingNubImsi,jdbcType=VARCHAR},
+      </if>
+      <if test="endNubImsi != null" >
+        END_NUB_IMSI = #{endNubImsi,jdbcType=VARCHAR},
+      </if>
+      <if test="callingNubImei != null" >
+        CALLING_NUB_IMEI = #{callingNubImei,jdbcType=VARCHAR},
+      </if>
+      <if test="endNubImei != null" >
+        END_NUB_IMEI = #{endNubImei,jdbcType=VARCHAR},
+      </if>
+      <if test="callingHome != null" >
+        CALLING_HOME = #{callingHome,jdbcType=VARCHAR},
+      </if>
+      <if test="endHome != null" >
+        END_HOME = #{endHome,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ticket.EtTicket" >
+    update et_ticket
+    set START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      EVENT_TYPE = #{eventType,jdbcType=INTEGER},
+      CALLING_NUMBER = #{callingNumber,jdbcType=VARCHAR},
+      END_NUMBER = #{endNumber,jdbcType=VARCHAR},
+      CALLING_NUB_IMSI = #{callingNubImsi,jdbcType=VARCHAR},
+      END_NUB_IMSI = #{endNubImsi,jdbcType=VARCHAR},
+      CALLING_NUB_IMEI = #{callingNubImei,jdbcType=VARCHAR},
+      END_NUB_IMEI = #{endNubImei,jdbcType=VARCHAR},
+      CALLING_HOME = #{callingHome,jdbcType=VARCHAR},
+      END_HOME = #{endHome,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

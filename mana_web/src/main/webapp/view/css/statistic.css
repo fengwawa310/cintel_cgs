@@ -1,0 +1,37 @@
+.btnDiv{
+    text-align: left;
+    padding-left: 50px;
+    background-color: #F7FBFF
+}
+.ul-wrapper {
+    list-style: none;
+    background-color: transparent;
+    display: inline-block;
+    line-height: 24px;
+    margin: 0 22px 0 12px;
+    padding: 0;
+    font-size: 13px;
+    color: #4c8fbd;
+    border-radius: 0;
+    margin-left: 36px;
+}
+
+/*ul里span文件颜色*/
+.ul-wrapper>li>span {
+    color: #333;
+}
+
+.ul-li-redNum{
+    color: red;
+}
+
+.ul-li-blueText{
+    color: deepskyblue;
+}
+.dateInput{
+    border: 1px solid #D1E1FF;
+    margin: 3px
+}
+.withBack{
+    border:none;
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>警情录入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/alarm.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>警情录入</span>
+            </li>
+        </ul>
+    </div>
+    <!--警情基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--警情信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">警情信息</span>
+            </div>
+        </div>
+        <form action="" id="alarmForm">
+            <!--接警人员、接警单位-->
+            <div class="row breadcrumbs warningContainer">
+                <!--<div class="col-md-4 noPadding">-->
+                <!--<div class="col-md-4 warningTxt">-->
+                <!--<span>警情编号</span>-->
+                <!--</div>-->
+                <!--<div class="col-md-8 warningInput">-->
+                <!--<input type="text" id="alarmNo" name="alarmNo"/>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>接警人员</span>
+                    </div>
+                    <div class="col-md-8 warningInput">
+                        <input type="text" id="officerName" maxLength="64" placeholder="输入最大长度为64" name="officerName"/>
+                    </div>
+                </div>
+                <!-- <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>接警单位</span>
+                    </div>
+                    <div class="col-md-8 warningInput">
+                        <select id="unitName" name="unitName" >
+                        </select>
+                        <input type="text" id="unitName"/>
+                    </div>
+                </div> -->
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>报警电话</span>
+                    </div>
+                    <div class="col-md-8 warningInput lastInput">
+                        <input type="text" maxLength="24"  placeholder="输入最大长度为24" id="alarmPersonPhone" name="alarmPersonPhone"/>
+                    </div>
+                </div>
+            </div>
+            <!--接警时间、报警人、报警电话-->
+            <div class="row breadcrumbs warningContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>接警时间</span>
+                    </div>
+                    <div class="col-md-8 warningInput">
+                        <input type="text" id="alarmTime" name="alarmTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>警情分类</span>
+                    </div>
+                    <div class="col-md-8 warningInput">
+                        <select id="alarmClass" name="alarmClass" >
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 warningTxt">
+                        <span class="required">*</span>
+                        <span>报警人</span>
+                    </div>
+                    <div class="col-md-8 warningInput ">
+                        <input type="text" maxLength="64"  placeholder="输入最大长度为64" id="alarmPersonName" name="alarmPersonName"/>
+                    </div>
+                </div>
+
+            </div>
+            <!--发案地点-->
+            <div class="row breadcrumbs warningContainer">
+                <div class="col-md-8 noPadding">
+                    <div class="col-md-2 warningTxt">
+                        <span class="required">*</span>
+                        <span>发案地点</span>
+                    </div>
+                    <div class="col-md-10 warningInput ">
+                        <input type="text" maxLength="128"  placeholder="输入最大长度为128" id="locationCase" name="locationCase" style="width: 98.5%"/>
+                    </div>
+                </div>
+            </div>
+            <!--警情描述-->
+            <div class="row breadcrumbs warningContainer" style="min-height: 200px">
+                <div class="col-md-2 warningTxt" style="width:11.11%;min-height: 200px;line-height: 200px">
+                    <span class="required">*</span>
+                    <span>警情描述</span>
+                </div>
+                <div class="col-md-10 warningInput lastInput" style="width:88.88%;min-height: 200px">
+                    <textarea type="text" id="alarmDesc" name="alarmDesc" style="width: 99%;min-height: 200px"></textarea>
+                </div>
+            </div>
+        </form>
+
+        <!--提交栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="col-md-12 searchBtn" style="border: none">
+                <button class="btn btn-primary" onclick="insertCase()" type="button"> 提交 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+   /*  selectDicUnit("unitName"); */
+    selectDicCommon(20,"alarmClass");
+});
+
+/*新案件插入*/
+function insertCase(){
+    var my_alarmForm=$("#alarmForm");
+    var alarmFormStr=Common.validateForm(my_alarmForm);
+    
+    var alarmTime = $("#alarmTime").val();
+    if(alarmTime == "" || alarmTime == null){
+    	 alert("时间不可为空");
+    	 return;
+    }
+    
+    if(alarmFormStr==""){
+        return;
+    } else{
+	    $.ajax({
+	        type: 'POST',
+	        url: getRootPath_web()+"/ETAlarmHandler/insertETAlaemData",//发送请求
+	        dataType : "json",
+	        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+	        data:{
+	        	officerName:$("#officerName").val(),
+	        	//unitName:$("#unitName").find("option:selected").text(),
+	        	//unitCode:$("#unitName").val(),
+	        	alarmClass:$("#alarmClass").val(),
+	        	alarmTime:$("#alarmTime").val(),
+	        	alarmPersonName:$("#alarmPersonName").val(),
+	        	alarmPersonPhone:$("#alarmPersonPhone").val(),
+	        	locationCase:$("#locationCase").val(),
+	        	alarmDesc:$("#alarmDesc").val()
+	        },
+	        success: function(json) {
+	        	 console.log(json);
+	        	if(json.data==1){
+	        		layer.msg("数据录入成功！", {
+	  			      icon: 6,
+	  			      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+	  			    }, function(){
+			            var index=parent.layer.getFrameIndex(window.name);
+				        parent.layer.close(index);
+	                  });
+	        	logEntry("1","插入新警情");
+	        	}
+	        }
+	    });
+	}
+}
+
+</script>
+</body>
+</html>
+

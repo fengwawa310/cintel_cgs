@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告录入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/notice.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>公告录入</span>
+            </li>
+        </ul>
+    </div>
+    <!--公告基本信息录入-->
+    <div class="container breadcrumbs" style="max-width: 100%;height: auto;padding: 0px">
+        <form name="noticeEditForm" id="noticeEditForm">
+            <!--公告信息录入-->
+            <div class="row breadcrumbs" style="text-align: left;margin: 0px;border-left: none;border-top: none;border-right: none">
+                <div class="col-md-12">
+                    <span class="title">公告信息录入</span>
+                </div>
+            </div>
+            <!--单位-->
+            <div class="row breadcrumbs noticeContainer">
+                <div class="col-md-2 noticeTxt" style="width: 11.11%">
+                    <span>单位</span>
+                </div>
+                <div class="col-md-10 noticeInput lastInput" style="width: 88.88%">
+                    <!--<input type="text" style="width: 25%"  required oninvalid="setCustomValidity('请输入查证主办单位！');" oninput="setCustomValidity('');"/>-->
+                    <select style="width: 25%" id="receiveUnitCode" name="receiveUnitCode">
+                        <option>--- 请选择 ---</option>
+                    </select>
+                </div>
+            </div>
+            <!--公告-->
+            <div class="row breadcrumbs noticeContainer" style="min-height: 200px">
+                <div class="col-md-2 noticeTxt" style="width:11.11%;min-height: 200px;line-height: 200px">
+                    <span>公告</span>
+                </div>
+                <div class="col-md-10 noticeInput lastInput" style="width:88.88%;min-height: 200px">
+                    <textarea type="text"  name="msgText" style="max-width: 99%;max-height: 95%"></textarea>
+                </div>
+            </div>
+            <!--提交栏-->
+            <div class="row breadcrumbs titleBadge">
+                <div class="col-md-12 searchBtn" style="border: none">
+                    <button class="btn btn-primary" type="button" onclick="save();"> 提交 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    var  curSysUserUnitCode;
+    var title = $("");
+    /*layer弹框点击消失*/
+    function save() {
+        var url=getRootPath_web()+"/notice/addSysNoticeSysUnit";
+        var data=$("#noticeEditForm").serialize();
+        console.info(data)
+        var dataP={}
+        $.post(url, data, function (res) {
+            var codes=res.data
+            console.info(res)
+            if(res.code==1){
+                parent.layer.msg("上报成功", {icon: 1,time:1000});
+                var index=parent.layer.getFrameIndex(window.name);
+                setTimeout(function () {
+                    parent.layer.close(index);
+                },1000);
+            }
+        }, "json");
+
+    }
+
+    $(window).ready(function () {
+        findCurSysUserUnitCode(function(){
+//            findSysUnit(curSysUserUnitCode);
+        })
+    })
+    /*查找当前系统用户的区域编码*/
+    function findCurSysUserUnitCode(callback){
+        var  url=getRootPath_web()+"/dic/findCurUserSysUnit";
+        var dataP={}
+        $.post(url, dataP, function (res) {
+            var codes=res.data
+//            console.info(codes)
+            var caseSubtypePage = $("[name='receiveUnitCode']")//警情分类
+            $.each(codes,function(i,n){
+                var str = '<option value="' + n.id + '">' + n.name + '</option>'
+                $(str).appendTo($(caseSubtypePage))
+            })
+            return callback();
+        }, "json");
+    }
+
+</script>
+
+</body>
+</html>
+

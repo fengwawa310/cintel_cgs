@@ -1,0 +1,46 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "caseId":"BK1090",
+      "caseName":"打架斗殴案",
+      "caseTime":"2017-12-03",
+      "caseSource":"110报警",
+      "caseClasses":"斗殴案",
+      "caseState":"破案",
+      "caseUnit":"XX单位",
+      "editPeple":"AAA",
+      "editUnit":"V单位",
+      "area":"C单位",
+      "editTime":"2017-12-03"
+    },
+	{
+        "caseId":"BK1090",
+          "caseName":"打架斗殴案",
+          "caseTime":"2017-12-03",
+          "caseSource":"110报警",
+          "caseClasses":"斗殴案",
+          "caseState":"破案",
+          "caseUnit":"XX单位",
+          "editPeple":"AAA",
+          "editUnit":"V单位",
+          "area":"C单位",
+          "editTime":"2017-12-03"
+    },
+	{
+      "caseId":"BK1090",
+        "caseName":"打架斗殴案",
+        "caseTime":"2017-12-03",
+        "caseSource":"110报警",
+        "caseClasses":"斗殴案",
+        "caseState":"破案",
+        "caseUnit":"XX单位",
+        "editPeple":"AAA",
+        "editUnit":"V单位",
+        "area":"C单位",
+        "editTime":"2017-12-03"
+    }
+	]
+}

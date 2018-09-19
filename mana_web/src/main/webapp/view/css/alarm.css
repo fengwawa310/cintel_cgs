@@ -1,0 +1,159 @@
+.breadcrumbs .title{
+    color: #0A5CA0 !important;
+}
+.warningContainer{
+    text-align: center;
+    margin: 0px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    padding: 0px;
+}
+.warningTxt{
+    height: 30px;
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: #F7FBFF;
+    min-height: 30px;
+    line-height: 30px;
+    text-align: right;
+    color: #0A5CA0 !important;
+    padding: 0px 12px 0 0;
+}
+.warningInfo{
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: #fff;
+    min-height: 30px;
+    line-height: 30px;
+    text-align: left;
+    color: #0A5CA0 !important;
+    padding: 0px 0 0 12px;
+}
+.warningInput{
+    height: 30px;
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: white;
+    min-height: 30px;
+    line-height: 30px;
+    padding: 0;
+    text-align: left;
+    color: #0A5CA0 !important;
+}
+.warningInput input , .warningInput select{
+    width: 96%;
+    height: 88%;
+    margin-top: 2px;
+    margin-left: 4px;
+    border: 1px solid #D1E1FF
+}
+.warningInput textarea{
+    height: 94%;
+    margin-top: 2px;
+    margin-left: 4px;
+    border: 1px solid #D1E1FF;
+    width: 99%;
+}
+.warningInput button{
+    height: 26px !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    background: #cee3f7 !important;
+    color: #00559c !important;
+    border: none !important;
+    border-radius: 0 !important;
+
+}
+.lastInput{
+    border-right: none;
+}
+.noPadding{
+    padding: 0px
+}
+.multiTitle{
+    font-weight: bold;
+    color: #902B34
+}
+.leftTxt{
+    text-align: left;
+    padding-left: 12px;
+}
+.titleBadge{
+    margin: 0px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    border-top: 1px solid #D1E1FF
+}
+.iconStyle{
+    font-weight: bold;
+    font-size: large
+}
+.required{
+    color: red;
+}
+
+
+.projectfile{
+    width: 25% !important;
+    display:inline-block !important;
+}
+.warningInfo span{
+    background: #fff;
+}
+.textarea-input{
+    position:relative;          /* 父元素设置为 position:relative;让子元素继承父元素高度 */
+}
+.textarea-input .warningTxt{
+    position: absolute;       /*让div高度为父元素的100%，并且左浮动 */
+    float: left;
+    height: 100%;
+    display: flex;            /*让text垂直居中于div */
+    justify-content: center;  /*让text垂直居中于div */
+    align-items: center;      /*让text垂直居中于div */
+}
+.textarea-input .warningInfo{
+    float:right;              /*让div高度为父元素的100%，并且右浮动 */
+}
+.warningTxt  .detail-area-menu{
+    position:absolute;        /*让text向右对齐于div */
+    right:10px;               /*让text向右对齐于div */
+}
+#file-cancel-btn{
+    margin-top:-10px !important;
+}
+.remarkFrame{
+    height: 100%;
+    width: 100%;
+    border: 1px solid #D1E1FF;
+    background-color: white;
+    min-height: 50px;
+    line-height: 50px;
+    padding: 0;
+    text-align: left;
+    color: #0A5CA0 !important;
+}
+.modal-dialog {
+    margin: 100px auto;
+}
+.modalTitle{
+    height: 40px;
+    line-height: 40px
+}
+.modalTitleTxt{
+    font-weight: bold;
+    font-size: 13px
+}
+.modalBodyContainer{
+    padding: 10px;
+    padding-top: 5px
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>重点人员回收站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css"/>
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css"/>
+</head>
+<body id="body">
+<!-- 上方头部 -->
+<!--<iframe src="../index.html" style="width:100%;height:60px;"></iframe>-->
+<div class="main-container" id="main-container">
+    <div class="main-container-inner">
+        <!-- 右侧部分 -->
+        <div style="width: 100%;height: 100%;margin: 0 auto;background: white">
+            <div class="page-content">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="message">
+                        <!--查询条件-->
+                        <div class="row-container searchAll search-condition">
+                            <!--人员姓名-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle borderLnone">
+                                        <p>
+                                            人员姓名:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon ">
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--身份证号-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle ">
+                                        <p>
+                                            身份证号:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon">
+                                        <input type="text" class="form-control" id="idcardNum">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--人员级别-->
+                            <!-- <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle ">
+                                        <p>
+                                            人员级别:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon ">
+                                        <select>
+                                            <option value="volvo">--请选择--</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="opel">Opel</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--人员编号-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle borderLnone">
+                                        <p>
+                                            人员编号:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon">
+                                        <input type="text" class="form-control" id="suspectId">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--审批状态-->
+                            <!-- <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle">
+                                        <p>
+                                            审批状态:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon">
+                                        <select>
+                                            <option value="volvo">--请选择--</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="opel">Opel</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--建档日期-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle">
+                                        <p>
+                                            建档日期:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon">
+                                        <input type='text' class="form-control searchTime" id="startTime"
+                                               onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>至
+                                        <input type='text' class="form-control searchTime" id="endTime"
+                                               onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--人员年龄段-->
+                            <!-- <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle borderLnone">
+                                        <p>
+                                            人员年龄段:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--人员类别-->
+                            <!-- <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle" style="display:none">
+                                        <p>
+                                            人员类别:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon" style="display:none">
+                                        <select id="suspectClass">
+                                            <option value="">--请选择--</option>
+                                            <option value="1300">重点人员</option>
+                                            <option value="1301">管控人员</option>
+                                            <option value="1302">在逃人员</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--录入单位-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle" style="display:none">
+                                        <p>
+                                            录入单位:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon" style="display:none">
+                                       <select id="entryUnit">
+											<option value ="">--请选择--</option>
+										</select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--录入人-->
+                            <!-- <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5 searchTitle borderLnone borderBnone">
+                                        <p>
+                                            录入人:
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7 searchCon borderBnone">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--查询按钮-->
+                            <div class="col-md-12 searchBtn">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <button class="btn btn-primary" type="button" onclick="searchAlarm()"> 查询</button>
+                                        <button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wt100">
+                            <table id="dynamic-table"
+                                   class="cell-border table table-striped table-bordered table-hover dataTable"
+                                   cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- basic scripts -->
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- page specific plugin scripts -->
+
+<script src="../assets/js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+<!-- inline scripts related to this page -->
+<script src="../assets/js/layer/layer.js"></script>
+
+<script>
+    var dynamictable;
+    //列表部分
+    	$(document).ready(function()  {
+    	    menuThing();
+        		alertFindAll("","","","","","","","","",0,1);
+        	})
+            //列表部分 ...
+            function alertFindAll(names,idcardNums,suspectLevels,suspectClasss,suspectIds,startTimes,endTimes,ages,entryUnits,isArchive,isAbandon) {
+        $("#dynamic-table_filter").css('display', 'block');
+        dynamictable = $("#dynamic-table").DataTable(
+            {
+                "bLengthChange": false, /* 去掉每页显示多少条数据方法 */
+                "processing": true, /*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                "pageLength": 5, /*默认*/
+                "lengthMenu": [[5, 10, 20, -1],
+                    [5, 10, 20, "全部"]],
+                /*"deferRender": true,*/
+                "searching": true, /*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                "serverSide": true, /* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                "autoWidth": false, /*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                 [0, "desc"]
+                 ], */
+                //因为需要多次初始化，所以需要设置允许销毁实例
+                "destroy": true,
+                "bFilter": false,
+                "orderMulti": false, //启用多列排序
+                "order": [], //取消默认排序查询,否则复选框一列会出现小箭头
+                /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                /*   "table-layout":fix, */
+                "row-border": true,
+                "oLanguage": {
+                    "sEmptyTable": "没有记录",
+                    "sProcessing": "处理中，请稍候...",
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "没有记录",
+                    "sInfo": " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                    "sInfoEmpty": "记录数为0",
+                    "sInfoFiltered": "(从全部记录数 _MAX_ 条中过滤)",
+                    "sInfoPostFix": "",
+                    "sLoadingRecords": "正在加载中,请稍候...",
+                    "sSearch": "搜索",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上一页",
+                        "sNext": "下一页",
+                        "sLast": "末页"
+                    }
+                },
+                ajax : {
+                    url : getRootPath_web()+"suspecthandler/handlerfindlist",
+					"type" : "post",
+					 "data":{
+						name:names,
+						idcardNum:idcardNums,
+						suspectLevel:suspectLevels,
+						suspectClass:suspectClasss,
+						suspectId:suspectIds,
+						startTime:startTimes,
+						endTime:endTimes,
+						age:ages,
+						entryUnit:entryUnits,
+						isArchive:isArchive,
+						isAbandon:isAbandon
+					},
+					async:true 
+                },
+                /*序号自增长*/
+                "fnDrawCallback": function () {
+                    this.api().column(0).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                },
+                "bDeferRender": true, /*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                "columns": [
+                    {
+                        "sTitle": '<font>序号</font>', 'sWidth': '6%', "sClass": "dt-left", 'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": '<font>姓名</font>',
+                        "sWidth": "8%",
+                        "sClass": "dt-left",
+                        'data': 'name',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": '<font>身份证号</font>',
+                        "sWidth": "13%",
+                        "sClass": "dt-left",
+                        'data': 'idcardNum',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                   /*  {
+                        "sTitle": '<font>删除理由</font>',
+                        "sWidth": "15%",
+                        "sClass": "dt-left",
+                        'data': 'caseName',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    }, */
+                    {
+                        "sTitle": '<font>操作人姓名</font>',
+                        "sWidth": "8%",
+                        "sClass": "dt-left",
+                        'data': 'optPName',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": '<font>操作人单位代码</font>',
+                        "sWidth": "10%",
+                        "sClass": "dt-left",
+                        'data': 'optUnitCode',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": '<font>操作人单位名称</font>',
+                        "sWidth": "12%",
+                        "sClass": "dt-left",
+                        'data': 'optUnitName',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": '<font>操作时间</font>',
+                        "sWidth": "15%",
+                        "sClass": "dt-left",
+                        'data': 'optTime',
+                        'bSortable': false,
+                        'render': function (data, type, row, meta) {
+                            if (data == "" || data == null) {
+                                return "--";
+                            }
+                            return data;
+                        }
+                    }
+                ],
+                "columnDefs": [{
+                    "sTitle": '<font>操作</font>',
+                    "sWidth": "13%",
+                    "data": "describe",
+                    "sClass": "dt-left",//字体居中dt-center
+                    'targets': [7],
+                    'render': function (data, type, row, meta) {
+                    		var ids="'"+row.suspectId+"'";
+                    		var idss="'"+row.id+"'";
+                        return '<a href="#" class="operation" onclick="alertDetail('+ids+')">详情</a>'
+                        +'<a href="#" class="operation" onclick="alertDetailRecover('+idss+')">恢复</a>'
+                        +'<a href="#" class="operation" onclick="alertDetailDelete('+idss+')">彻底删除</a>';
+                    },
+                    'bSortable': false
+                }]
+            });
+        $("#dynamic-table_filter").css("display", "none");
+        selectDicUnit("entryUnit");
+    };
+    //详情弹框
+     function alertDetail(ids) {
+                var ii;
+                ii = layer.ready(function () {
+                    ii = layer.open({
+                        offset: 20,
+                        type: 2,
+                        title: '重点人员详情',
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['1000px', '600px'],
+                        content: 'personalFileLayer.html?id='+ids,
+                        end: function () {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                        }
+                    });
+                }).index;
+            }
+    
+    
+     function alertDetailRecover(id){
+     	var cr=confirm("请问您确定将该条数据恢复么？");
+     	if(cr==true){
+         	$.ajax({
+         		url:getRootPath_web() + "suspecthandler/deleteReply",
+         		type:"post",
+         		dataType:"json",
+         		data:{
+         			id:id
+         		},
+         		success:function(json){
+         			var str=JSON.stringify(json)
+         			if(json.data==1){
+         				layer.msg("数据恢复成功！", {
+	            			      icon: 6,
+	            			      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+	            			    }, function(){
+			            			location.reload();
+	                            });
+         			}
+         		}
+         	})
+     	}
+     }
+     
+     function alertDetailDelete(id){
+     	var cr=confirm("请问您确定将该条数据彻底删除么？");
+     	if(cr==true){
+         	$.ajax({
+         		url:getRootPath_web() + "suspecthandler/handlerdelete",
+         		type:"post",
+         		dataType:"json",
+         		data:{
+         			id:id
+         		},
+         		success:function(json){
+         			var str=JSON.stringify(json)
+         			console.log(str);
+         			console.log(json.data);
+         			if(json.data==1){
+         				layer.msg("数据删除成功！", {
+	            			      icon: 6,
+	            			      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+	            			    }, function(){
+			            			location.reload();
+	                            });
+         			}
+         		}
+         	})
+     	}
+     	
+     }
+    
+    
+    
+    
+    function searchAlarm(){
+     	var name=$("#name").val();
+     	var idcardNum=$("#idcardNum").val();
+     	var suspectLevel=$("#suspectLevel").val();
+     	var suspectClass=$("#suspectClass").val();
+     	var suspectId=$("#suspectId").val();
+     	var startTime=$("#startTime").val();
+     	var endTime=$("#endTime").val();
+     	var age=$("#age").val();
+     	var entryUnit=$("#entryUnit").val();
+     	var isArchive=0;
+     	var isAbandon=1;
+     	console.log(startTime);
+     	console.log(endTime);
+     	alertFindAll(name,idcardNum,suspectLevel,suspectClass,suspectId,startTime,endTime,age,entryUnit,isArchive,isAbandon);
+     }
+</script>
+</body>
+</html>

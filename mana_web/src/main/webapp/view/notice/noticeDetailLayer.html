@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/notice.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+
+    <!-- inline scripts related to this page 弹框插件-->
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>公告详情</span>
+            </li>
+        </ul>
+    </div>
+    <!--公告基本信息录入-->
+    <div class="container breadcrumbs" style="max-width: 100%;height: auto;padding: 0px">
+        <!--公告信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">公告信息</span>
+            </div>
+        </div>
+        <!--发起单位-->
+        <div class="row breadcrumbs noticeContainer">
+            <div class="col-md-2 noticeTxt" style="width: 11.11%">
+                <span>发起单位</span>
+            </div>
+            <div class="col-md-9 noticeInfo lastInput" style="width: 88.88%">
+                <span id="sendUnit"></span>
+            </div>
+        </div>
+        <!--接收单位-->
+        <div class="row breadcrumbs noticeContainer">
+            <div class="col-md-2 noticeTxt" style="width: 11.11%">
+                <span>接收单位</span>
+            </div>
+            <div class="col-md-9 noticeInfo lastInput" style="width: 88.88%">
+                <span id="receiveUnit"></span>
+            </div>
+        </div>
+        <!--公告-->
+        <div class="row breadcrumbs noticeContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 noticeTxt" style="width:11.11%;">
+                <span class="detail-area-menu">公告</span>
+            </div>
+            <div class="col-md-10 noticeInfo lastInput" style="width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="contentText"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+    $(window).ready(function () {
+        var thisURL = document.URL;
+        var urlContent =thisURL.split('?')[1];
+        var idData =urlContent.split('=')[1];
+        var id = idData.split("#")[0];
+        var userNoticId = idData.split("#")[1];
+        findNoticeById(id,userNoticId);
+    });
+
+    function findNoticeById(id,userNoticId){
+        console.log(id);
+        console.log(userNoticId);
+        window.parent.layer.load(1, {shade: [0.3, '#393D49']});
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"notice/findNoticeById?id="+id+"&userNoticId="+userNoticId,//发送请求
+            dataType : "json",
+            success : function(data){
+                console.log(data.data);
+                var sysNotice = data.data;
+                //发送单位
+                $('#sendUnit').text(sysNotice.sendUnitName);
+                //接收单位
+                $('#receiveUnit').text(sysNotice.receiveUnitName);
+                //公告内容
+                $('#contentText').text(sysNotice.msgText);
+                window.parent.layer.closeAll('loading');
+            }
+        });
+    }
+    
+</script>
+</body>
+</html>
+

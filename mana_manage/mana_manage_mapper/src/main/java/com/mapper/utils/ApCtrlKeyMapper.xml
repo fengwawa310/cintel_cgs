@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.utils.ApCtrlKeyMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.suspect.ApCtrlKey" >
+    <id column="CTRL_ID" property="ctrlId" jdbcType="VARCHAR" />
+    <result column="IDCARD_NUM" property="idcardNum" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CTRL_ID, IDCARD_NUM, CREAT_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ap_ctrl_key
+    where CTRL_ID = #{ctrlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ap_ctrl_key
+    where CTRL_ID = #{ctrlId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByIDCardNum" parameterType="java.lang.String" >
+    delete from ap_ctrl_key
+    where IDCARD_NUM = #{idCardNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.suspect.ApCtrlKey" >
+    insert into ap_ctrl_key (CTRL_ID, IDCARD_NUM, CREAT_TIME
+      )
+    values (#{ctrlId,jdbcType=VARCHAR}, #{idcardNum,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.suspect.ApCtrlKey" >
+    insert into ap_ctrl_key
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctrlId != null" >
+        CTRL_ID,
+      </if>
+      <if test="idcardNum != null" >
+        IDCARD_NUM,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctrlId != null" >
+        #{ctrlId,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNum != null" >
+        #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.ApCtrlKey" >
+    update ap_ctrl_key
+    <set >
+      <if test="idcardNum != null" >
+        IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CTRL_ID = #{ctrlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.suspect.ApCtrlKey" >
+    update ap_ctrl_key
+    set IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP}
+    where CTRL_ID = #{ctrlId,jdbcType=VARCHAR}
+  </update>
+</mapper>

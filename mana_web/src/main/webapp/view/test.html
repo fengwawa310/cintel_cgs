@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>上传和下载测试</title>
+    <script type="text/javascript" charset="utf-8" src="./js/include.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./js/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./js/ajaxfileupload.js"></script>
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<!--下载-->
+<button class="publicBtnC" onclick="downLoadFile('QQ图片20171117091650.jpg','/group1/M00/00/59/wKgC9lpoRe-AQCp6AAAIsJPMMgs732.jpg$$QQ图片20171117091650.jpg')">下载</button>
+<!--上传-->
+<button class="publicBtnC" onclick="addacc()">上传</button>
+<button class="publicBtnC" onclick="addacc()">上传</button>
+<!--导入-->
+<button class="publicBtnC" onclick="toImportCommunication()">导入通讯录</button>
+<button class="publicBtnC" onclick="toImportTicket()">导入话单</button>
+<button onclick="saveAnalyse();">保存分析数据</button>
+<button onclick="updateAnalyse();">更新分析数据</button>
+<button onclick="deleteAnalyse();">删除数据保存</button>
+<button onclick="analyseList();">获取数据列表</button>
+<button onclick="findAnalyseById();">获取单挑数据</button>
+<div style="display: none;" id="my_file">
+    <input  name="upSomeFile" type="file"  id="upSomeFile"  onchange="upFile(this.value)" />
+    <input id="url" name="url" type="hidden">
+</div>
+</body>
+<script>
+
+    var areacode;
+    $(window).ready(function () {
+        areacode = getAreacodeByGlobal();
+        // alert(areacode);
+    });
+
+    /*上传选择*/
+    function addacc(){
+        var file = document.getElementById('upSomeFile');
+        if (file.value == "") {
+            $("#upSomeFile").click();
+        }else{
+            layer.alert("您已上传文件不能重复上传！");
+        }
+    }
+
+    //测试分析数据保存
+    function saveAnalyse() {
+        $.ajax({
+                type: 'POST',
+                url: projectPath+"/elastic/saveAnalyse",//发送请求
+                dataType : "json",
+                data:{
+                    id:"",
+                    userId:"",
+                    createUser:"",
+                    analyseType:"2",
+                    title:"测试标题",
+                    term:"测试条件",
+                    content:"结果数据",
+                }
+        });
+    } //测试分析数据更新
+    function updateAnalyse() {
+        $.ajax({
+                type: 'POST',
+                url: projectPath+"/elastic/saveAnalyse",//发送请求
+                dataType : "json",
+                data:{
+                    id:"162F1BDD8C0F02",
+                    userId:"1",
+                    createUser:"1",
+                    analyseType:"2",
+                    title:"测试标题",
+                    term:"测试条件",
+                    content:"结果数据",
+                }
+        });
+    } //测试分析数据删除
+    function deleteAnalyse() {
+        $.ajax({
+                type: 'POST',
+                url: projectPath+"/elastic/deleteAnalyse",//发送请求
+                dataType : "json",
+                data:{
+                    id:"162F1BDD8C0F02",
+                }
+        });
+    } //测试分析数据列表
+    function analyseList() {
+        $.ajax({
+                type: 'POST',
+                url: projectPath+"/elastic/analyseList",//发送请求
+                dataType : "json",
+                data:{
+                    analyseType:"2",
+                }
+        });
+    } //测试分析数据保存
+    function findAnalyseById() {
+        $.ajax({
+                type: 'POST',
+                url: projectPath+"/elastic/findAnalyseById",//发送请求
+                dataType : "json",
+                data:{
+                    id:"162F1BDD8C0F02",
+                }
+        });
+    }
+
+
+    function toImportCommunication() {
+        layer.open({
+                title : "导入",
+                content : "<form id='importCommunication'  method='POST' enctype='multipart/form-data' ><input id='file' type='file' name='file'/></form>",
+                skin : 'layui-layer-lana',
+                shadeClose : 'true',
+                btn : [ '确定', '取消' ],
+                yes : function(index, layero) {
+                    var data = new FormData($("#importCommunication")[0]);
+                    $.ajax({
+                            type : "post",
+                            url : projectPath+"/ticket/importCommunication",
+                            data : data,
+                            dataType : "json",
+                            async : false,
+                            cache : false,
+                            contentType : false,
+                            processData : false,
+                            success : function(data) {
+                                console.log(data);
+                                if (data.data.flag) {
+                                    layer.msg(data.data.msg, {
+                                        icon : 1,
+                                        time : 2000
+                                    });
+                                } else {
+                                    layer.msg(data.data.msg, {
+                                        anim:6,
+                                        icon : 2,
+                                        time : 2000
+                                    });
+                                }
+                            },
+                            error : function() {
+                                layer.msg("系统错误，请联系管理员！", {
+                                    icon : 2,
+                                    time : 2000
+                                });
+                            }
+                        });
+                }
+            });
+    }
+    function toImportTicket() {
+        layer.open({
+                title : "导入",
+                content : "<form id='importTicket'  method='POST' enctype='multipart/form-data' ><input id='file' type='file' name='file'/></form>",
+                skin : 'layui-layer-lana',
+                shadeClose : 'true',
+                btn : [ '确定', '取消' ],
+                yes : function(index, layero) {
+                    var data = new FormData($("#importTicket")[0]);
+                    $.ajax({
+                            type : "post",
+                            url : projectPath+"/ticket/importTicket",
+                            data : data,
+                            dataType : "json",
+                            async : false,
+                            cache : false,
+                            contentType : false,
+                            processData : false,
+                            success : function(data) {
+                                console.log(data);
+                                if (data.data.flag) {
+                                    layer.msg(data.data.msg, {
+                                        icon : 1,
+                                        time : 2000
+                                    });
+                                } else {
+                                    layer.msg(data.data.msg, {
+                                        anim:6,
+                                        icon : 2,
+                                        time : 2000
+                                    });
+                                }
+                            },
+                            error : function() {
+                                layer.msg("系统错误，请联系管理员！", {
+                                    icon : 2,
+                                    time : 2000
+                                });
+                            }
+                        });
+                }
+            });
+    }
+</script>
+</html>

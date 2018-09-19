@@ -1,0 +1,16 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "describe":"您有一条新的案件，请查收！"
+    },
+	{
+      "describe":"您有一条新的案件，请查收！"
+    },
+	{
+      "describe":"您有一条新的案件，请查收！"
+    }
+	]
+}

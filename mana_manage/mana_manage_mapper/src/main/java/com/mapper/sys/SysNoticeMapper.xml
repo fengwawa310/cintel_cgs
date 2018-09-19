@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.sys.SysNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.sys.SysNotice" >
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="SEND_UNIT_CODE" jdbcType="VARCHAR" property="sendUnitCode" />
+    <result column="SEND_UNIT_NAME" jdbcType="VARCHAR" property="sendUnitName" />
+    <result column="SENDER_NO" jdbcType="VARCHAR" property="senderNo" />
+    <result column="SENDER_NAME" jdbcType="VARCHAR" property="senderName" />
+    <result column="RECEIVE_UNIT_CODE" jdbcType="VARCHAR" property="receiveUnitCode" />
+    <result column="RECEIVE_UNIT_NAME" jdbcType="VARCHAR" property="receiveUnitName" />
+    <result column="RECEIVER_CODE" jdbcType="VARCHAR" property="receiverCode" />
+    <result column="RECEIVER_NAME" jdbcType="VARCHAR" property="receiverName" />
+    <result column="MSG_CLASS" jdbcType="INTEGER" property="msgClass" />
+    <result column="IS_SEND" jdbcType="INTEGER" property="isSend" />
+    <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="SENDING_TIME" jdbcType="TIMESTAMP" property="sendingTime" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.sys.SysNotice" extends="BaseResultMap" >
+    <result column="MSG_TEXT" property="msgText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TITLE, SEND_UNIT_CODE, SEND_UNIT_NAME, SENDER_NO, SENDER_NAME, RECEIVE_UNIT_CODE,
+    RECEIVE_UNIT_NAME, RECEIVER_CODE, RECEIVER_NAME, MSG_CLASS, IS_SEND, CREAT_TIME,
+    SENDING_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    MSG_TEXT
+  </sql>
+
+  <select id="countSysUserNoticeNoRead" resultType="java.lang.Integer"><!--当前用户未读消息-->
+    SELECT COUNT(*)  FROM sys_user_notice
+    WHERE user_id=#{userId} AND is_read=0
+  </select>
+
+  <select id="getNoticeList" resultType="java.lang.String">
+    SELECT
+	CONCAT( a.CREAT_TIME, "    ", a.TITLE )
+FROM
+	sys_message a
+ORDER BY
+	a.CREAT_TIME DESC
+	LIMIT 0,20;
+  </select>
+
+  <select id="selectNoticListForProposal" resultType="com.entity.sys.SysNotice"
+          parameterType="com.entity.sys.SysNotice">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_notice n
+    where MSG_CLASS='3301'
+    <if test="sendUnitCode != null">
+      and (SEND_UNIT_CODE='${sendUnitCode}'
+      or RECEIVE_UNIT_CODE='${sendUnitCode}')
+    </if>
+    order by CREAT_TIME desc
+    <if test="start != null and length !=null">
+      limit ${start},${length}
+    </if>
+  </select>
+
+  <select id="countFindProposalList"  resultType="java.lang.Long"
+          parameterType="com.entity.sys.SysNotice">
+    select
+    count(*)
+    from sys_notice n
+    where MSG_CLASS='3301'
+    <if test="sendUnitCode != null">
+      and (SEND_UNIT_CODE='${sendUnitCode}'
+      or RECEIVE_UNIT_CODE='${sendUnitCode}')
+    </if>
+  </select>
+  <select id="findNoticeList" resultType="com.vo.sys.SysNoticeVO">
+    select
+    n.ID,
+    n.TITLE,
+    n.SEND_UNIT_CODE,
+    n.SEND_UNIT_NAME,
+    n.SENDER_NO,
+    n.SENDER_NAME,
+    n.MSG_CLASS,
+    n.IS_SEND,
+    n.CREAT_TIME,
+    n.SENDING_TIME,
+    n.MSG_TEXT,
+    s.is_read,
+    s.id as userNoticId
+    from   sys_user_notice s,
+           sys_notice n
+    WHERE s.`notice_id` = n.`ID`
+    <!--审批标识-->
+    <if test="sysUser !=null and sysUser.id != '' ">
+      AND s.user_id = #{sysUser.id}
+    </if>
+    ORDER BY CREAT_TIME DESC
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_notice
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findNoticeById" parameterType="java.lang.String" resultType="com.entity.sys.SysNotice">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_notice
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_notice
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.sys.SysNotice" >
+    insert into sys_notice (ID, TITLE, SEND_UNIT_CODE,
+    SEND_UNIT_NAME, SENDER_NO, SENDER_NAME,
+    RECEIVE_UNIT_CODE, RECEIVE_UNIT_NAME, RECEIVER_CODE,
+    RECEIVER_NAME, MSG_CLASS, IS_SEND,
+    CREAT_TIME, SENDING_TIME, MSG_TEXT
+    )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{sendUnitCode,jdbcType=VARCHAR},
+    #{sendUnitName,jdbcType=VARCHAR}, #{senderNo,jdbcType=VARCHAR}, #{senderName,jdbcType=VARCHAR},
+    #{receiveUnitCode,jdbcType=VARCHAR}, #{receiveUnitName,jdbcType=VARCHAR}, #{receiverCode,jdbcType=VARCHAR},
+    #{receiverName,jdbcType=VARCHAR}, #{msgClass,jdbcType=INTEGER}, #{isSend,jdbcType=INTEGER},
+    #{creatTime,jdbcType=TIMESTAMP}, #{sendingTime,jdbcType=TIMESTAMP}, #{msgText,jdbcType=LONGVARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.sys.SysNotice" >
+    insert into sys_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="sendUnitCode != null" >
+        SEND_UNIT_CODE,
+      </if>
+      <if test="sendUnitName != null" >
+        SEND_UNIT_NAME,
+      </if>
+      <if test="senderNo != null" >
+        SENDER_NO,
+      </if>
+      <if test="senderName != null" >
+        SENDER_NAME,
+      </if>
+      <if test="receiveUnitCode != null" >
+        RECEIVE_UNIT_CODE,
+      </if>
+      <if test="receiveUnitName != null" >
+        RECEIVE_UNIT_NAME,
+      </if>
+      <if test="receiverCode != null" >
+        RECEIVER_CODE,
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME,
+      </if>
+      <if test="msgClass != null" >
+        MSG_CLASS,
+      </if>
+      <if test="isSend != null" >
+        IS_SEND,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="sendingTime != null" >
+        SENDING_TIME,
+      </if>
+      <if test="msgText != null" >
+        MSG_TEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUnitCode != null" >
+        #{sendUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUnitName != null" >
+        #{sendUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderNo != null" >
+        #{senderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="senderName != null" >
+        #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnitCode != null" >
+        #{receiveUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnitName != null" >
+        #{receiveUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverCode != null" >
+        #{receiverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="msgClass != null" >
+        #{msgClass,jdbcType=INTEGER},
+      </if>
+      <if test="isSend != null" >
+        #{isSend,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendingTime != null" >
+        #{sendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgText != null" >
+        #{msgText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.sys.SysNotice" >
+    update sys_notice
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUnitCode != null" >
+        SEND_UNIT_CODE = #{sendUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUnitName != null" >
+        SEND_UNIT_NAME = #{sendUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderNo != null" >
+        SENDER_NO = #{senderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="senderName != null" >
+        SENDER_NAME = #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnitCode != null" >
+        RECEIVE_UNIT_CODE = #{receiveUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUnitName != null" >
+        RECEIVE_UNIT_NAME = #{receiveUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverCode != null" >
+        RECEIVER_CODE = #{receiverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="msgClass != null" >
+        MSG_CLASS = #{msgClass,jdbcType=INTEGER},
+      </if>
+      <if test="isSend != null" >
+        IS_SEND = #{isSend,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendingTime != null" >
+        SENDING_TIME = #{sendingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgText != null" >
+        MSG_TEXT = #{msgText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.sys.SysNotice" >
+    update sys_notice
+    set TITLE = #{title,jdbcType=VARCHAR},
+    SEND_UNIT_CODE = #{sendUnitCode,jdbcType=VARCHAR},
+    SEND_UNIT_NAME = #{sendUnitName,jdbcType=VARCHAR},
+    SENDER_NO = #{senderNo,jdbcType=VARCHAR},
+    SENDER_NAME = #{senderName,jdbcType=VARCHAR},
+    RECEIVE_UNIT_CODE = #{receiveUnitCode,jdbcType=VARCHAR},
+    RECEIVE_UNIT_NAME = #{receiveUnitName,jdbcType=VARCHAR},
+    RECEIVER_CODE = #{receiverCode,jdbcType=VARCHAR},
+    RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+    MSG_CLASS = #{msgClass,jdbcType=INTEGER},
+    IS_SEND = #{isSend,jdbcType=INTEGER},
+    CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+    SENDING_TIME = #{sendingTime,jdbcType=TIMESTAMP},
+    MSG_TEXT = #{msgText,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.sys.SysNotice" >
+    update sys_notice
+    set TITLE = #{title,jdbcType=VARCHAR},
+    SEND_UNIT_CODE = #{sendUnitCode,jdbcType=VARCHAR},
+    SEND_UNIT_NAME = #{sendUnitName,jdbcType=VARCHAR},
+    SENDER_NO = #{senderNo,jdbcType=VARCHAR},
+    SENDER_NAME = #{senderName,jdbcType=VARCHAR},
+    RECEIVE_UNIT_CODE = #{receiveUnitCode,jdbcType=VARCHAR},
+    RECEIVE_UNIT_NAME = #{receiveUnitName,jdbcType=VARCHAR},
+    RECEIVER_CODE = #{receiverCode,jdbcType=VARCHAR},
+    RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+    MSG_CLASS = #{msgClass,jdbcType=INTEGER},
+    IS_SEND = #{isSend,jdbcType=INTEGER},
+    CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+    SENDING_TIME = #{sendingTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

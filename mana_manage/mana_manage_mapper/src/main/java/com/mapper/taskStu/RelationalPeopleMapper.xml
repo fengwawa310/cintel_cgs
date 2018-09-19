@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.RelationalPeopleMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.taskStu.RelationalPeople" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="GANG_ID" property="gangId" jdbcType="VARCHAR" />
+    <result column="FULL_NAME" property="fullName" jdbcType="VARCHAR" />
+    <result column="ALIAS_NAME" property="aliasName" jdbcType="VARCHAR" />
+    <result column="FAMILY_SITUATION" property="familySituation" jdbcType="VARCHAR" />
+    <result column="PHOTO_URL" property="photoUrl" jdbcType="VARCHAR" />
+    <result column="COMMUNICATION_TOOL" property="communicationTool" jdbcType="VARCHAR" />
+    <result column="VEHICLE" property="vehicle" jdbcType="VARCHAR" />
+    <result column="CRIMINAL_RECORD" property="criminalRecord" jdbcType="VARCHAR" />
+    <result column="UNTREATED_CRIMINAL_FACTS" property="untreatedCriminalFacts" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="EVIDENCE" property="evidence" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, GANG_ID, FULL_NAME, ALIAS_NAME, FAMILY_SITUATION, PHOTO_URL, COMMUNICATION_TOOL, 
+    VEHICLE, CRIMINAL_RECORD, UNTREATED_CRIMINAL_FACTS, REMARKS, EVIDENCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ep_relational_people
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByGangId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from ep_relational_people
+	    where GANG_ID = #{gangId,jdbcType=VARCHAR}
+	    order by ID desc
+		    LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  <select id="countSelectByGangId" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+    count(*)
+    from ep_relational_people
+    where GANG_ID = #{gangId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectBySuspectId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from ep_relational_people
+	    where  GANG_ID IN (
+					SELECT
+						GANG_ID
+					FROM
+						rl_suspect_gang g
+					WHERE
+						g.SUSPECT_ID = #{suspectId,jdbcType=VARCHAR}
+				)
+	    order by ID desc
+		    LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  <select id="countSelectBySuspectId" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+    count(*)
+    from ep_relational_people
+    where GANG_ID IN (
+					SELECT
+						GANG_ID
+					FROM
+						rl_suspect_gang g
+					WHERE
+						g.SUSPECT_ID = #{suspectId,jdbcType=VARCHAR}
+				)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_relational_people
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.taskStu.RelationalPeople" >
+    insert into ep_relational_people (ID, GANG_ID, FULL_NAME, 
+      ALIAS_NAME, FAMILY_SITUATION, PHOTO_URL, 
+      COMMUNICATION_TOOL, VEHICLE, CRIMINAL_RECORD, 
+      UNTREATED_CRIMINAL_FACTS, REMARKS, EVIDENCE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{gangId,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
+      #{aliasName,jdbcType=VARCHAR}, #{familySituation,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
+      #{communicationTool,jdbcType=VARCHAR}, #{vehicle,jdbcType=VARCHAR}, #{criminalRecord,jdbcType=VARCHAR}, 
+      #{untreatedCriminalFacts,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{evidence,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertExcelRPData" parameterType="java.util.List" >
+    insert into ep_relational_people (ID, GANG_ID, FULL_NAME, 
+      ALIAS_NAME, FAMILY_SITUATION, PHOTO_URL, 
+      COMMUNICATION_TOOL, VEHICLE, CRIMINAL_RECORD, 
+      UNTREATED_CRIMINAL_FACTS, REMARKS, EVIDENCE
+      )
+    values 
+    <foreach collection="listmap" item="lmp" separator=",">  
+        (#{lmp.id},#{lmp.gangId}, #{lmp.fullName},#{lmp.aliasName}, #{lmp.familySituation}, #{lmp.photoUrl}, 
+      #{lmp.communicationTool}, #{lmp.vehicle}, #{lmp.criminalRecord}, 
+      #{lmp.untreatedCriminalFacts}, #{lmp.remarks}, #{lmp.evidence}
+      )
+    </foreach>  
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.taskStu.RelationalPeople" >
+    insert into ep_relational_people
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="gangId != null" >
+        GANG_ID,
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME,
+      </if>
+      <if test="aliasName != null" >
+        ALIAS_NAME,
+      </if>
+      <if test="familySituation != null" >
+        FAMILY_SITUATION,
+      </if>
+      <if test="photoUrl != null" >
+        PHOTO_URL,
+      </if>
+      <if test="communicationTool != null" >
+        COMMUNICATION_TOOL,
+      </if>
+      <if test="vehicle != null" >
+        VEHICLE,
+      </if>
+      <if test="criminalRecord != null" >
+        CRIMINAL_RECORD,
+      </if>
+      <if test="untreatedCriminalFacts != null" >
+        UNTREATED_CRIMINAL_FACTS,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="evidence != null" >
+        EVIDENCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gangId != null" >
+        #{gangId,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="familySituation != null" >
+        #{familySituation,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl != null" >
+        #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationTool != null" >
+        #{communicationTool,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicle != null" >
+        #{vehicle,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalRecord != null" >
+        #{criminalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="untreatedCriminalFacts != null" >
+        #{untreatedCriminalFacts,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="evidence != null" >
+        #{evidence,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.taskStu.RelationalPeople" >
+    update ep_relational_people
+    <set >
+      <if test="gangId != null" >
+        GANG_ID = #{gangId,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        ALIAS_NAME = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="familySituation != null" >
+        FAMILY_SITUATION = #{familySituation,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl != null" >
+        PHOTO_URL = #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="communicationTool != null" >
+        COMMUNICATION_TOOL = #{communicationTool,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicle != null" >
+        VEHICLE = #{vehicle,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalRecord != null" >
+        CRIMINAL_RECORD = #{criminalRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="untreatedCriminalFacts != null" >
+        UNTREATED_CRIMINAL_FACTS = #{untreatedCriminalFacts,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="evidence != null" >
+        EVIDENCE = #{evidence,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.taskStu.RelationalPeople" >
+    update ep_relational_people
+    set GANG_ID = #{gangId,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      ALIAS_NAME = #{aliasName,jdbcType=VARCHAR},
+      FAMILY_SITUATION = #{familySituation,jdbcType=VARCHAR},
+      PHOTO_URL = #{photoUrl,jdbcType=VARCHAR},
+      COMMUNICATION_TOOL = #{communicationTool,jdbcType=VARCHAR},
+      VEHICLE = #{vehicle,jdbcType=VARCHAR},
+      CRIMINAL_RECORD = #{criminalRecord,jdbcType=VARCHAR},
+      UNTREATED_CRIMINAL_FACTS = #{untreatedCriminalFacts,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      EVIDENCE = #{evidence,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

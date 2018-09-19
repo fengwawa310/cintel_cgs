@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.communal.DicCommonMapper">
+    <resultMap id="BaseResultMap" type="com.entity.DicCommon">
+        <id column="DIC_CODE" jdbcType="VARCHAR" property="dicCode"/>
+        <id column="DIC_VALUE" jdbcType="VARCHAR" property="dicValue"/>
+        <result column="DIC_DES" jdbcType="VARCHAR" property="dicDes"/>
+        <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode"/>
+        <result column="PARENT_DES" jdbcType="VARCHAR" property="parentDes"/>
+        <result column="IS_ABANDON" jdbcType="INTEGER" property="isAbandon"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    DIC_CODE,DIC_VALUE, DIC_DES, PARENT_CODE, PARENT_DES, IS_ABANDON
+  </sql>
+
+    <!--通过字典编码获取字典-->
+    <select id="selectByDicCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dic_common
+        where DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据父级字典编码查询出以下的字典-->
+    <select id="selectDicCommon" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dic_common
+        where PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+    </select>
+    <!--查询字典中所有信息-->
+    <select id="selectDicCommons" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dic_common
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dic_common
+    where DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.entity.DicCommon">
+        insert into dic_common
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dicCode != null">
+                DIC_CODE,
+            </if>
+            <if test="dicDes != null">
+                DIC_DES,
+            </if>
+            <if test="parentCode != null">
+                PARENT_CODE,
+            </if>
+            <if test="parentDes != null">
+                PARENT_DES,
+            </if>
+            <if test="isAbandon != null">
+                IS_ABANDON,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dicCode != null">
+                #{dicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dicDes != null">
+                #{dicDes,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null">
+                #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentDes != null">
+                #{parentDes,jdbcType=VARCHAR},
+            </if>
+            <if test="isAbandon != null">
+                #{isAbandon,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.DicCommon">
+        update dic_common
+        <set>
+            <if test="dicDes != null">
+                DIC_DES = #{dicDes,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCode != null">
+                PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentDes != null">
+                PARENT_DES = #{parentDes,jdbcType=VARCHAR},
+            </if>
+            <if test="isAbandon != null">
+                IS_ABANDON = #{isAbandon,jdbcType=INTEGER},
+            </if>
+        </set>
+        where DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+    </update>
+</mapper>

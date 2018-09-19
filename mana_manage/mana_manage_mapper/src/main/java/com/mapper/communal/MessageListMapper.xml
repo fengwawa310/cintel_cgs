@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.communal.MessageListMapper" >
+    <resultMap id="BaseResultMap" type="com.entity.message.MessageList" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="RECEIVE_UNIT_CODE" property="receiveUnitCode" jdbcType="VARCHAR" />
+    <result column="RECEIVE_UNIT_NAME" property="receiveUnitName" jdbcType="VARCHAR" />
+    <result column="RECEIVER_CODE" property="receiverCode" jdbcType="VARCHAR" />
+    <result column="RECEIVER_NAME" property="receiverName" jdbcType="VARCHAR" />
+    <result column="RELATION_NO" property="relationNo" jdbcType="VARCHAR" />
+    <result column="RELATION_CLASS" property="relationClass" jdbcType="VARCHAR" />
+    <result column="IS_SEND" property="isSend" jdbcType="INTEGER" />
+    <result column="IS_READ" property="isRead" jdbcType="INTEGER" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="SENDING_TIME" property="sendingTime" jdbcType="VARCHAR" />
+   </resultMap>
+    <sql id="Base_Column_List" >
+     ID,
+     TITLE,
+     RECEIVE_UNIT_CODE,
+     RECEIVE_UNIT_NAME,
+     RECEIVER_CODE,
+     RECEIVER_NAME,
+     RELATION_NO,
+     RELATION_CLASS,
+     IS_SEND,
+     IS_READ,
+     CREAT_TIME,
+     SENDING_TIME
+  </sql>
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select c.* from (SELECT 
+     <include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+     	ec.ID,TITLE,RECEIVE_UNIT_CODE,RECEIVE_UNIT_NAME,RECEIVER_CODE,RECEIVER_NAME,RELATION_NO,RELATION_CLASS,IS_SEND,IS_READ,CREAT_TIME,SENDING_TIME
+    FROM SYS_MESSAGE ec LEFT JOIN sys_user su on su.id = ec.RECEIVER_CODE) c
+    WHERE 1=1
+      <!--分权分域标识-->
+    <if test="deceSigns != null and deceSigns !=''" >
+      	AND c.dece_signs = '${deceSigns}'
+    </if>
+    ORDER BY c.CREAT_TIME DESC
+   
+  </select>
+ 
+ 
+  <insert id="add" parameterType="com.vo.infor.IntelligenceListRequetParam" >
+	INSERT INTO SYS_MESSAGE 
+	(ID,
+     TITLE,
+     RECEIVE_UNIT_CODE,
+     RECEIVE_UNIT_NAME,
+     RECEIVER_CODE,
+     RECEIVER_NAME,
+     RELATION_NO,
+     RELATION_CLASS,
+     IS_SEND,
+     IS_READ,
+     CREAT_TIME 
+	 )
+	VALUES
+	( #{id},
+	 #{title},
+	 #{receiveUnitCode},
+	 #{receiveUnitName},
+	 #{receiverCode},
+	 #{receiverName},
+	 #{relationNo},
+	 #{relationClass},
+	 #{isSend},
+	 #{isRead},
+	 now()
+	 )
+  </insert>
+  
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map" >
+   SELECT COUNT(1)
+    FROM (SELECT 
+    <include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+    c.* FROM SYS_MESSAGE c LEFT JOIN sys_user su on su.id = c.RECEIVER_CODE) a
+    WHERE IS_READ = 0
+    <!--分权分域标识-->
+    <if test="deceSigns != null and deceSigns !=''" >
+      	AND dece_signs = '${deceSigns}'
+    </if>
+  </select>
+  
+    <delete id="deletebyId" parameterType="java.lang.String" >
+    DELETE FROM SYS_MESSAGE
+    WHERE  RELATION_NO = #{relationNo}
+  </delete>
+  
+  
+  
+</mapper>

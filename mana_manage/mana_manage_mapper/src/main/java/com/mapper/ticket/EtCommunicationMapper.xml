@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ticket.EtCommunicationMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ticket.EtCommunication" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOCAL_NUMBER" property="localNumber" jdbcType="VARCHAR" />
+    <result column="CONTACT_NAME" property="contactName" jdbcType="VARCHAR" />
+    <result column="CONTACT_NUMBER" property="contactNumber" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--批量添加通讯录信息-->
+  <insert id="insert" parameterType="com.entity.ticket.EtCommunication" >
+    insert into et_communication (ID, LOCAL_NUMBER, CONTACT_NAME,
+    CONTACT_NUMBER)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},
+      #{item.localNumber},
+      #{item.contactName},
+      #{item.contactNumber}
+      )
+    </foreach>
+  </insert>
+
+  <sql id="Base_Column_List" >
+    ID, LOCAL_NUMBER, CONTACT_NAME, CONTACT_NUMBER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_communication
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_communication
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.entity.ticket.EtCommunication" >
+    insert into et_communication
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="localNumber != null" >
+        LOCAL_NUMBER,
+      </if>
+      <if test="contactName != null" >
+        CONTACT_NAME,
+      </if>
+      <if test="contactNumber != null" >
+        CONTACT_NUMBER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="localNumber != null" >
+        #{localNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        #{contactNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ticket.EtCommunication" >
+    update et_communication
+    <set >
+      <if test="localNumber != null" >
+        LOCAL_NUMBER = #{localNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        CONTACT_NUMBER = #{contactNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ticket.EtCommunication" >
+    update et_communication
+    set LOCAL_NUMBER = #{localNumber,jdbcType=VARCHAR},
+      CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      CONTACT_NUMBER = #{contactNumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

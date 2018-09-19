@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pdf文件保存</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/person.css" />
+    <link rel="stylesheet" href="../assets/js/layui-v2.2.5/layui/css/layui.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript" src="../assets/js/D3.js"></script>
+
+    <!-- layOpen -->
+    <script src="../assets/js/layer/layer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/import.js"></script>
+
+    <!--dataTables的样式需求-->
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <!--<script src="../assets/js/bootstrap.min.js"></script>-->
+    <script src="../js/format.js"></script>
+    <!-- 打印功能 -->
+    <script src="../js/jquery.PrintArea.js"></script>
+    <link rel="stylesheet" href="../css/print.css" />
+    <script src="build/pdf.js"></script>
+    <!-- pdf保存 -->
+    <script type="text/javascript" src="../js/canvg2.js"></script>
+    <script type="text/javascript" src="../js/html2canvas-0.4.1.js"></script>
+    <script type="text/javascript" src="../js/jspdf.min.js"></script>
+    <script type="text/javascript" src="../js/saveSvgAsPng.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../assets/js/layui-v2.2.5/layui/layui.all.js"></script>
+</head>
+<body>
+    <h3 id="hade"style="margin: 10px 0; text-align: center"> 共同联系人</h3>
+    <div id="fen">
+        <div id="fen1" class="row-container searchAll search-condition hidden-print" style="margin-bottom: 10px;border: none;">
+            <div class="col-md-3" style="width: 25%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderLnone borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            开始日期:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input type="text" id="startTime" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="width: 25%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            手机号:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input id="phoneNumber" name="" type="text" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="width: 25%">
+                <div class="row">
+                    <div class="col-md-4 searchTitle borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            通联时段:
+                        </p>
+                    </div>
+                    <div class="col-md-8 searchCon borderBnone ">
+                        <input id="TonlyTime" name="" type="text" value="" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="width: 25%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderBnone borderLnone" style="border: none;background: #fff;">
+                        <p>
+                            TOP数量:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone " >
+                        <input id="TopNumber" name="" type="text" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="fen2" class="row-container searchAll search-condition hidden-print" style="margin-bottom: 10px;border: none;">
+            <div class="col-md-3" style="width: 50%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderLnone borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            开始日期:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input type="text" id="relationshipTime" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="width: 50%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            手机号:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input id="MultiplePhone" name="" type="text" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="fen3"class="row-container searchAll search-condition hidden-print" style="margin-bottom: 10px;border: none;">
+            <div class="col-md-3" style="width: 50%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderLnone borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            入住日期:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input type="text" id="liveTime" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="width: 50%">
+                <div class="row">
+                    <div class="col-md-5 searchTitle borderBnone" style="border: none;background: #fff;">
+                        <p>
+                            身份证号:
+                        </p>
+                    </div>
+                    <div class="col-md-7 searchCon borderBnone">
+                        <input id="idNumHotel" name="" type="text" class="form-control" readonly="readonly" style=" background: #fff!important;border: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="class_show">
+        <table class="table table-bordered" style="display: none;" id="table1" >
+            <thead>
+            <tr>
+                <th>手机号</th>
+                <th>归属地</th>
+                <th>归属运营商</th>
+                <th>频次</th>
+                <th>频次排名</th>
+                <th>时长（秒）</th>
+                <th>时长排名</th>
+            </tr>
+            </thead>
+        </table>
+        <table class="table table-bordered" style="display: none;" id="table2">
+        <thead>
+        <tr>
+            <th>输入手机号</th>
+            <th>对方号码</th>
+            <th>归属地</th>
+            <th>运营商</th>
+            <th>频次-主叫</th>
+            <th>频次-被叫</th>
+            <th>频次-全部</th>
+        </tr>
+        </thead>
+    </table>
+        <table class="table table-bordered" style="display: none;"id="table3">
+           <thead>
+               <tr>
+                   <th>入住时间</th>
+                   <th>离开时间</th>
+                   <th>同住人姓名</th>
+                   <th>标签</th>
+                   <th>同住人身份证号</th>
+                   <th>同住人户籍</th>
+                   <th>入住酒店名称</th>
+                   <th>入住人房间号</th>
+                   <th>入住酒店星级</th>
+                   <th>酒店详细地址</th>
+               </tr>
+           </thead>
+   </table>
+    </div>
+    <h3 style="margin: 10px 0;text-align: center">页脚</h3>
+    <script type="text/javascript">
+        $("#class_show > table").hide();
+        $("#fen > div").hide();
+        $("#hade").text("打印pdf");
+        var tyep = $(window.parent.document).find("#type").val();
+        var startTime = sessionStorage.getItem("startTime");
+        var phoneNumber = sessionStorage.getItem("phoneNumber");
+        var TonlyTime = sessionStorage.getItem("TonlyTime");
+        var TopNumber = sessionStorage.getItem("TopNumber");
+
+        var phoneNumbers = sessionStorage.getItem("phoneNumbers");
+        var start_time = sessionStorage.getItem("start_time");
+
+        var liveTime = sessionStorage.getItem("liveTime");
+        var idNumHotel = sessionStorage.getItem("idNumHotel");
+        if( tyep == 1){
+            $("#table1").show();
+            $("#hade").text("通联人分析");
+            $("#fen1").show();
+            $("#startTime").val(startTime);
+            $("#phoneNumber").val(phoneNumber);
+            ("#TonlyTime").val(TonlyTime);
+            $("#TopNumber").val(TopNumber);
+        }else if( tyep == 2){
+            $("#table2").show();
+            $("#hade").text("共同关系人分析");
+            $("#fen2").show();
+            $("#phoneNumbers").val(phoneNumbers);
+            $("#start_time").val(start_time);
+        }else if( tyep == 3){
+            $("#table3").show();
+            $("#hade").text("同住人分析");
+            $("#fen3").show();
+            $("#liveTime").val(liveTime);
+            $("#idNumHotel").val(idNumHotel);
+        }
+        var add = sessionStorage.getItem("add");
+        if(add == 1){
+            cated();
+        }else if( add == 2){
+            People();
+        }else if( add == 3){
+            LiveTable();
+        }
+        //初始化通联人
+        function cated() {
+            var DedicatedPeople2  = sessionStorage.getItem("DedicatedPeople2")
+            var data = $.parseJSON(DedicatedPeople2)
+            $.each( data,function (i,time) {
+                var str = ''
+                str += '<tbody>'+
+                        '<tr>'+
+                            '<td>'+time.phone+'</td>'+
+                            '<td>'+time.city+'</td>'+
+                            '<td>'+time.operate+'</td>'+
+                            '<td>'+time.all+'</td>'+
+                            '<td>'+time.allSort+'</td>'+
+                            '<td>'+time.duration+'</td>'+
+                            '<td>'+time.durationSort+'</td>'+
+                        '</tr>'+
+                    '</tbody>'
+                $("#table1").append(str);
+            })
+        };
+        //初始化共同关系人分析
+        //var People = window.parent.commonPeople2;
+        function People(){
+            var commonPeople2  = sessionStorage.getItem("commonPeople2")
+            var data = $.parseJSON(commonPeople2);
+            $.each( data,function (i,time) {
+                var str = ''
+                str +=     '<tbody>'+
+                    '<tr>'+
+                        '<td>'+time.inputNumber+'</td>'+
+                        '<td>'+time.opositeNumber+'</td>'+
+                        '<td>'+time.location+'</td>'+
+                        '<td>'+time.domain+'</td>'+
+                        '<td>'+time.callingFrequency+'</td>'+
+                        '<td>'+time.calledFrequency+'</td>'+
+                        '<td>'+time.allFrequency+'</td>'+
+                    '</tr>'+
+                    '</tbody>'
+                $("#table2").append(str);
+            })
+        };
+        //初始化同住人
+        function LiveTable() {
+            var initLiveTable1  = sessionStorage.getItem("initLiveTable2")
+            var data = $.parseJSON(initLiveTable1)
+            $.each( data,function (i,time) {
+                var str = ''
+                str +=     '<tbody>'+
+                            '<tr>'+
+                                '<td>'+time.ltime+'</td>'+
+                                '<td>'+time.etime+'</td>'+
+                                '<td>'+time.personinfo.name+'</td>'+
+                                '<td>'+time.tag+'</td>'+
+                                '<td>'+time.personinfo.idcode+'</td>'+
+                                '<td>'+time.personinfo.address+'</td>'+
+                                '<td>'+time.hotelinfo.hname+'</td>'+
+                                '<td>'+time.noroom+'</td>'+
+                                '<td>'+time.hotelinfo.stars+'</td>'+
+                                '<td>'+time.hotelinfo.haddress+'</td>'+
+                            '</tr>'+
+                        '</tbody>'
+                $("#table3").append(str);
+            })
+        };
+    </script>
+</body>
+</html>

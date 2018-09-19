@@ -1,0 +1,26 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "unitName":"分局",
+      "caseID":12,
+      "caseOrigin":"110中心",
+      "caseType":"治安案件"
+    },
+    {
+          "unitName":"北京市海淀区上地派出所",
+          "caseID":12331,
+          "caseOrigin":"联防中心",
+          "caseType":"刑事案件"
+    },
+    {
+              "unitName":"一级省会二级地市三级县市五个名字的派出所",
+              "caseID":12315,
+              "caseOrigin":"合作单位",
+              "caseType":"诈骗案件"
+    }
+
+  ]
+}

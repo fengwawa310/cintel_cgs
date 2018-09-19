@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下发指令</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/intelligence.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--情报基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--情报信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">情报信息</span>
+            </div>
+        </div>
+        <form action="" id="infoBase">
+            <!--情报标题、情报类型-->
+            <div class="row breadcrumbs intelligenceContainer">
+                <div class="col-md-8 noPadding">
+                    <div class="col-md-2 intelligenceTxt">
+                        <span class="required">*</span>
+                        <span>情报研判标题</span>
+                    </div>
+                    <div class="col-md-10 intelligenceInput">
+                        <input type="text" id="inforTitle" name="inforTitle" style="width: 98.2%" required oninvalid="setCustomValidity('请输入情报研判标题！');" oninput="setCustomValidity('');"/>
+                    </div>
+                </div>
+                <!--  <div class="col-md-4 noPadding">
+                     <div class="col-md-4 intelligenceTxt">
+                         <span class="required">*</span>
+                         <span>情报类型</span>
+                     </div>
+                     <div class="col-md-8 intelligenceInput lastInput">
+                      <input type="text" id="inforClass" style="width: 98.2%" required oninvalid="setCustomValidity('请输入情报研类型！');" oninput="setCustomValidity('');"/>
+                     </div>
+                 </div> -->
+            </div>
+            <!--查证内容-->
+            <div class="row breadcrumbs intelligenceContainer" style="min-height: 200px">
+                <div class="col-md-2 intelligenceTxt" style="width:11.11%;min-height: 200px;line-height: 200px">
+                    <span class="required">*</span>
+                    <span>查证内容</span>
+                </div>
+                <div class="col-md-10 intelligenceInput lastInput" style="width:88.88%;min-height: 200px">
+                    <textarea type="text" id="inforContent" name="inforContent" style="width: 99%;height: 95%" oninvalid="setCustomValidity('请输入查证内容！');" oninput="setCustomValidity('');"></textarea>
+                </div>
+            </div>
+            <!--附件-->
+            <!--   <div class="row breadcrumbs intelligenceContainer">
+             <div class="col-md-2 intelligenceTxt" style="width: 11.11%">
+                 <span>附件</span>
+             </div>
+             <div class="col-md-10 intelligenceInput lastInput" style="width: 88.88%">
+                 <input type="file" class="projectfile" oninvalid="setCustomValidity('请选择附件！');" oninput="setCustomValidity('');"/>
+                 <button class="btn btn-primary" id="file-cancel-btn" type="button"> 取消 </button>
+             </div>
+         </div> -->
+            <!--查证主办单位-->
+            <div class="row breadcrumbs intelligenceContainer">
+                <div class="col-md-2 intelligenceTxt" style="width: 11.11%">
+                    <span class="required">*</span>
+                    <span>查证主办单位</span>
+                </div>
+                <div class="col-md-10 intelligenceInput lastInput" style="width: 88.88%">
+                    <select autocomplete="off" id="hostUnitName" name="hostUnitName" >
+                    </select>
+                </div>
+            </div>
+            <!--查证协办单位-->
+            <div class="row breadcrumbs intelligenceContainer">
+                <div class="col-md-2 intelligenceTxt" style="width: 11.11%">
+                    <span class="required">*</span>
+                    <span>查证协办单位</span>
+                </div>
+                <div class="col-md-10 intelligenceInput lastInput" style="width: 88.88%">
+                    <select autocomplete="off" id="assistUnitName" name="assistUnitName" >
+                    </select>
+                </div>
+            </div>
+        </form>
+        <!--嫌疑人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left">
+                    <span class="multiTitle">嫌疑人员信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                    <span class="glyphicon-plus iconStyle"  onclick="addSuspect();"></span>
+                </div>
+            </div>
+        </div>
+        <!--嫌疑人员标题栏-->
+        <div class="row breadcrumbs intelligenceContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-4 intelligenceTxt leftTxt">
+                <span>姓名</span>
+            </div>
+            <div class="col-md-6 intelligenceTxt leftTxt">
+                <span>身份证</span>
+            </div>
+            <div class="col-md-2 intelligenceTxt lastInput leftTxt" >
+                <span>操作</span>
+            </div>
+        </div>
+        <!--嫌疑人员编辑栏-->
+        <div class="row breadcrumbs intelligenceContainer" style="border-bottom: none" id="suspect">
+            <div class="row breadcrumbs intelligenceContainer editSus">
+                <div class="col-md-4 intelligenceInput">
+                    <input type="text"  id="xianyiName" name="suspectName" style="width: 92%" oninvalid="setCustomValidity('请输入嫌疑人姓名！');" oninput="setCustomValidity('');"/>
+                </div>
+                <div class="col-md-6 intelligenceInput">
+                    <input type="text" id="xianyiIdcard" name="suspectIdCard" onblur = "check(this)" oninvalid="setCustomValidity('请输入嫌疑人身份证号！');" oninput="setCustomValidity('');"/>
+                </div>
+                <div class="col-md-2 intelligenceInput lastInput" style="padding-left: 12px;">
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+        <!--工作建议-->
+        <div class="row breadcrumbs intelligenceContainer" style="min-height: 160px">
+            <div class="col-md-2 intelligenceTxt" style="width:11.11%;min-height: 160px;line-height: 160px">
+                <span class="required">*</span>
+                <span>工作建议</span>
+            </div>
+            <div class="col-md-10 intelligenceInput lastInput" style="width:88.88%;min-height: 160px">
+                <textarea type="text" id= "advise" name="advise" style="width: 99%;height: 95%"  oninvalid="setCustomValidity('请输入查证内容！');" oninput="setCustomValidity('');"></textarea>
+            </div>
+        </div>
+
+        <!--提交栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="col-md-12 searchBtn" style="border: none">
+                <button class="btn btn-primary" type="button" style="margin-right: 30px"> 取消 </button>
+                <button class="btn btn-primary" type="button" onclick="baocun()"> 保存 </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var suspectStr = "<div class=\"row breadcrumbs intelligenceContainer editSus\">\n" +
+            "                        <div class=\"col-md-4 intelligenceInput\">\n" +
+            "                            <input type=\"text\" name='suspectName' style=\"width: 92%\" oninvalid=\"setCustomValidity('请输入嫌疑人姓名！');\" oninput=\"setCustomValidity('');\"/>\n" +
+            "                        </div>\n" +
+            "                        <div class=\"col-md-6 intelligenceInput\">\n" +
+            "                            <input type=\"text\" name='suspectIdCard' onblur = \"check(this)\" oninvalid=\"setCustomValidity('请输入嫌疑人身份证号！');\" oninput=\"setCustomValidity('');\"/>\n" +
+            "                        </div>\n" +
+            "                         <div class=\"col-md-2 intelligenceInput lastInput\" style=\"padding-left: 12px;\">\n" +
+            "                            <span class=\"glyphicon-minus iconStyle\" style=\"color: black\" onclick=\"deleteSuspect(this);\"></span>\n" +
+            "                        </div>\n" +
+            "                    </div>";
+
+    function addSuspect() {
+        $('#suspect').append(suspectStr );
+    }
+
+    function deleteSuspect(obj) {
+        console.log(obj);
+        $(obj).parent().parent().remove();
+    }
+    function baocun() {
+        var my_infoForm=$("#infoBase");
+        var infoFormStr=Common.validateForm(my_infoForm);
+        var advise = $('#advise');
+        if(infoFormStr==""){
+            return;
+        }else if (advise.val()==null||advise.val()==""||advise.val()==undefined){
+            var id= advise.attr("id");
+            $("#"+id).focus();
+            layer.tips('请填写内容！', "#"+id);
+            return;
+        }else{
+            //创建数组和对象
+            var susArr = [];
+            function susPect(name,idCard){
+                this.name = name;
+                this.idCard = idCard;
+            }
+            //将嫌疑人信息以对象形式存到数组里并转化为json格式
+            $('#suspect .editSus').each(function(i){
+                var name = $(this).find($("input[name ='suspectName']")).val();
+                var idCard = $(this).find($("input[name ='suspectIdCard']")).val();
+                susArr.push(new susPect(name,idCard));
+            });
+            var susArrStr = JSON.stringify(susArr);
+            //定义路径
+            var url = getRootPath_web() + "IntelligenceHandler/add.action";
+            // 封装调往后台的参数
+            var hostUnitCode =$("#hostUnitName").val();
+            var assistUnitCode =$("#assistUnitName").val();
+            var str = '{';
+            str += '"inforTitle": "'+$("#inforTitle").val()+'",';
+            str += '"inforContent": "'+$("#inforContent").val()+'",';
+            str += '"advise": "'+$("#advise").val()+'",';
+            str += '"assistUnitCode": "'+assistUnitCode+'",';
+            str += '"assistUnitName": "'+$("#assistUnitName").find("option:selected").text()+'",';
+            str += '"hostUnitCode": "'+hostUnitCode+'",';
+            str += '"hostUnitName": "'+$("#hostUnitName").find("option:selected").text()+'",';
+            str += '"suspect": '+susArrStr;/*添加嫌疑人信息数组转换的json*/
+            str += '}';
+            console.log(str);
+            $.ajax({
+                type : "post",
+                url : url,
+                dataType : "json",
+                contentType : "application/json;charset=utf-8",
+                data:JSON.stringify(str),
+                success : function(data) {
+                    if(data){
+                        layer.msg("保存成功", {icon: 1,time:3000});//成功
+                        var index=parent.layer.getFrameIndex(window.name);
+                        window.parent.location.reload();
+                        parent.layer.close(index);
+                    }else{
+                        layer.msg("保存失败", {icon: 2,time:3000,anim: 6});//失败
+                    }
+                },
+                error : function(data) {
+                    layer.msg("保存失败", {icon: 2,time:3000,anim: 6});
+                }
+            });
+        }
+    }
+    
+    
+    //查询主板查证单位
+    selectDicUnit("hostUnitName");
+    //协办
+    selectDicUnit("assistUnitName");
+    function check(obj) {
+        var value = obj.value;
+    	console.log("value ==" + value)
+    	   var idCardLength  = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    	   if(!idCardLength.test(value)){
+               $(obj).focus();
+               //var id = $(obj).attr("id");
+               layer.tips('请填写正确的身份证号码！', $(obj));
+    	   }
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>笔录详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/format.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 0px;background: white">
+    <!--案件基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px;padding-bottom: 8px">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">笔录信息</span>
+            </div>
+        </div>
+        <!--案件编号、笔录序号、笔录名称-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件编号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="ajbh"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录序号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="serNo"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录名称</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="name"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录开始时间、笔录结束时间、对象人员编号-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>对象人员编号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="target"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录开始时间</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="starttime"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录结束时间</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="endtime"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录详细内容-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>笔录详细内容</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="body"></span>
+            </div>
+        </div>
+        <!--笔录记录地点-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>笔录记录地点</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="jldd"></span>
+            </div>
+        </div>
+        <!--笔录创建人姓名、笔录创建人工作单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录创建人姓名</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="creatorName"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>笔录创建人工作单位</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="createDept"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--记录笔录人姓名、记录笔录人工作单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>记录笔录人姓名</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="recorder"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>记录笔录人工作单位</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="recorderDept"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--笔录对象姓名、笔录对象曾用名、笔录对象性别-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象姓名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetXm"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象曾用名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetCym"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+            </div>
+            <div class="col-md-4 noPadding" style="padding: 0px">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象性别</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="targetXb"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录对象生日、笔录对象文化程度、笔录对象民族-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象生日</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetCsrq"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象文化程度</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetWhcd"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象民族</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="targetMz"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录对象户籍所在地-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>笔录对象户籍所在地</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="targetHjszd"></span>
+            </div>
+        </div>
+        <!--笔录对象现住址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>笔录对象现住址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="targetXzz"></span>
+            </div>
+        </div>
+        <!--笔录对象证件种类、笔录对象证件号码-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象证件种类</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="targetZjzl"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>笔录对象证件号码</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="targetZjhm"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--笔录对象联系电话、笔录对象工作单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象联系电话</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="targetLxdh"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>笔录对象工作单位</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="targetGzdw"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--笔录对象别名、笔录对象到达时间、笔录对象离开时间-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象别名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetBm"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象到达时间</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetArrivaltime"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象离开时间</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="targetLefttime"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录对象英文名、笔录对象国籍、笔录对象绰号-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象英文名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetYwm"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象国籍</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetGj"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象绰号</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="targetCh"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录对象籍贯、笔录对象政治面貌、笔录对象职业-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象籍贯</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetJg"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象政治面貌</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetZzmm"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>笔录对象职业</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="reservation01"></span>
+                </div>
+            </div>
+        </div>
+        <!--笔录对象家庭情况-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>笔录对象家庭情况</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="targetJtqk"></span>
+            </div>
+        </div>
+        <!--笔录对象社会经历-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>笔录对象社会经历</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="targetShjl"></span>
+            </div>
+        </div>
+        <!--是否受过刑事行政处罚、是否聋哑人士、是否配备翻译人员-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>是否受过刑事行政处罚</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetSfsgcf"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>是否聋哑人士</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="targetSflyrs"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>是否配备翻译人员</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="targetSfpbfyry"></span>
+                </div>
+            </div>
+        </div>
+        <!--翻译人员姓名、翻译人员职业、翻译人员工作单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>翻译人员姓名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="transXm"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>翻译人员职业</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="transZy"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>翻译人员工作单位</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="transGzdw"></span>
+                </div>
+            </div>
+        </div>
+        <!--翻译人员现住址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>翻译人员现住址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="transXzz"></span>
+            </div>
+        </div>
+        <!--勘验地点/检查对象-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>勘验地点/检查对象</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="kcdd"></span>
+            </div>
+        </div>
+        <!--检查证/工作证件号-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>检查证/工作证件号</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="jcz"></span>
+            </div>
+        </div>
+        <!--勘验/检察人员信息-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>勘验/检察人员信息</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="kcryms"></span>
+            </div>
+        </div>
+        <!--创建人部门编号-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>创建人部门编号</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="departmentcode"></span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(window).ready(function () {
+        var thisURL = document.URL;
+        var  getval =thisURL.split('?')[1];
+        console.log(getval);
+        var id= getval.split("=")[1];//此条数据id
+//        id="1";//因为es没有数据暂时用固定为1
+        console.info("笔录id为"+id)
+        findNotesDetail(id);
+    });
+    /*查询酒店基本信息*/
+    function findNotesDetail(id){
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"/notes/selectById?id="+id,//发送请求
+            dataType : "json",
+            success: function(data) {
+//                    var json = $.parseJSON(data.data);
+                console.log(data);
+                var jsonObj = data.data;
+                console.log(jsonObj);
+                for (var prop in jsonObj){
+                    if (prop.indexOf("Time") > 0||prop.indexOf("time") > 0||prop.indexOf("targetCsrq")>0){
+                        $("#"+prop).text((jsonObj[prop]==null?"":Common.dateFormat2(jsonObj[prop],"yyyy-MM-dd hh:mm:ss")));
+                    }else {
+                        $("#"+prop).text((jsonObj[prop]==null?"":jsonObj[prop]));
+                    }
+
+                }
+//                if(jsonObj["flowState"]!=5004){
+//                    $("#yanpanButton").attr("style","display:none;");//隐藏div
+//                }
+                /*审批、研判状态赋值*/
+//                $("#shenHeStateName").text((jsonObj["shenHeState"]==null?"":jsonObj["shenHeState"].name))
+//                $("#qianshouStateName").text((jsonObj["qianshouState"]==null?"":jsonObj["qianshouState"].name))
+//                $("#yanpanStateName").text((jsonObj["yanpanState"]==null?"":jsonObj["yanpanState"].name))
+
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

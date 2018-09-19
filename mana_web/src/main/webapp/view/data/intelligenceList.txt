@@ -1,0 +1,46 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "infoNo":"BQ0003",
+      "infoTitle":"XXX情报",
+      "auditStatus":"未审核",
+      "closedStatus":"未办结",
+      "doStatus":"已下发",
+      "generateTime":"2017-12-03 10:00:02",
+      "closedTime":"2017-12-03 10:00:02",
+      "verifyUnit":"XX单位",
+      "undertakeUnit":"XX单位",
+      "undertakePerson":"AAA",
+      "status":"1"
+    },
+    {
+      "infoNo":"BQ0003",
+      "infoTitle":"XXX情报",
+      "auditStatus":"未审核",
+      "closedStatus":"未办结",
+      "doStatus":"已下发",
+      "generateTime":"2017-12-03 10:00:02",
+      "closedTime":"2017-12-03 10:00:02",
+      "verifyUnit":"XX单位",
+      "undertakeUnit":"XX单位",
+      "undertakePerson":"AAA",
+      "status":"1"
+    },
+    {
+      "infoNo":"BQ0003",
+      "infoTitle":"XXX情报",
+      "auditStatus":"未审核",
+      "closedStatus":"未办结",
+      "doStatus":"已下发",
+      "generateTime":"2017-12-03 10:00:02",
+      "closedTime":"2017-12-03 10:00:02",
+      "verifyUnit":"XX单位",
+      "undertakeUnit":"XX单位",
+      "undertakePerson":"AAA",
+      "status":"2"
+    }
+	]
+}

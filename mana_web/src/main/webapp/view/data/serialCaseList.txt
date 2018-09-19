@@ -1,0 +1,28 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "serialWay":"BK1090",
+      "serialPrice":"打架斗殴案",
+      "serialQuantity":"14",
+      "startTime":"2017-12-03 12:30:00",
+      "endTime":"2017-12-03 12:30:00"
+    },
+	{
+          "serialWay":"BK1090",
+          "serialPrice":"打架斗殴案",
+          "serialQuantity":"14",
+          "startTime":"2017-12-03 12:30:00",
+          "endTime":"2017-12-03 12:30:00"
+        },
+	{
+          "serialWay":"BK1090",
+          "serialPrice":"打架斗殴案",
+          "serialQuantity":"14",
+          "startTime":"2017-12-03 12:30:00",
+          "endTime":"2017-12-03 12:30:00"
+        }
+	]
+}

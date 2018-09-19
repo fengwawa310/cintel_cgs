@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.sys.DicGenericMapper">
+  <resultMap id="BaseResultMap" type="com.entity.DicGeneric">
+    <id column="TYPE_CODE" jdbcType="VARCHAR" property="typeCode" />
+    <result column="TYPE_DES" jdbcType="VARCHAR" property="typeDes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TYPE_CODE, TYPE_DES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dic_generic
+    where TYPE_CODE = #{typeCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dic_generic
+    where TYPE_CODE = #{typeCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.DicGeneric">
+    insert into dic_generic (TYPE_CODE, TYPE_DES)
+    values (#{typeCode,jdbcType=VARCHAR}, #{typeDes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.DicGeneric">
+    insert into dic_generic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeCode != null">
+        TYPE_CODE,
+      </if>
+      <if test="typeDes != null">
+        TYPE_DES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeCode != null">
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeDes != null">
+        #{typeDes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.DicGeneric">
+    update dic_generic
+    <set>
+      <if test="typeDes != null">
+        TYPE_DES = #{typeDes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYPE_CODE = #{typeCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.DicGeneric">
+    update dic_generic
+    set TYPE_DES = #{typeDes,jdbcType=VARCHAR}
+    where TYPE_CODE = #{typeCode,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

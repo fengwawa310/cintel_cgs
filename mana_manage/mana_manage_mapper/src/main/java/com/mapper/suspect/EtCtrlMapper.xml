@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.EtCtrlMapper">
+    <resultMap id="BaseResultMap" type="com.entity.suspect.EtCtrl">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="CTRL_ID" property="ctrlId" jdbcType="VARCHAR"/>
+        <result column="APPLY_UNIT_CODE" property="applyUnitCode" jdbcType="VARCHAR"/>
+        <result column="APPLY_UNIT_NAME" property="applyUnitName" jdbcType="VARCHAR"/>
+        <result column="APPLICANT_CODE" property="applicantCode" jdbcType="VARCHAR"/>
+        <result column="APPLICANT_NAME" property="applicantName" jdbcType="VARCHAR"/>
+        <result column="APPLY_TIME" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="CTRL_TASK_LEVEL" property="ctrlTaskLevel" jdbcType="INTEGER"/>
+        <result column="CTRL_TASK_STATE" property="ctrlTaskState" jdbcType="INTEGER"/>
+        <result column="CTRL_TASK_CLASS" property="ctrlTaskClass" jdbcType="INTEGER"/>
+        <result column="B_CTRL_P_CODE" property="bCtrlPCode" jdbcType="VARCHAR"/>
+        <result column="B_CTRL_NAME" property="bCtrlName" jdbcType="VARCHAR"/>
+        <result column="B_CTRL_IDCARD_NUM" property="bCtrlIdcardNum" jdbcType="VARCHAR"/>
+        <result column="B_CTRL_GENDER" property="bCtrlGender" jdbcType="INTEGER"/>
+        <result column="B_CTRL_PHONE" property="bCtrlPhone" jdbcType="VARCHAR"/>
+        <result column="B_CTRL_PLATE_NUM" property="bCtrlPlateNum" jdbcType="VARCHAR"/>
+        <result column="B_CTRL_P_CLASS" property="bCtrlPClass" jdbcType="INTEGER"/>
+        <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, CTRL_ID, APPLY_UNIT_CODE, APPLY_UNIT_NAME, APPLICANT_CODE, APPLICANT_NAME, APPLY_TIME, 
+    CTRL_TASK_LEVEL, CTRL_TASK_STATE, CTRL_TASK_CLASS, B_CTRL_P_CODE, B_CTRL_NAME, B_CTRL_IDCARD_NUM, 
+    B_CTRL_GENDER, B_CTRL_PHONE, B_CTRL_PLATE_NUM, B_CTRL_P_CLASS, CREAT_TIME, MODIFY_TIME
+  </sql>
+
+    <select id="countTotal" parameterType="com.vo.ctrl.PageVoCtrl" resultType="java.lang.Long">
+        select count(*) from et_ctrl t
+        where 1=1
+        <if test=" applicantCode != null and applicantCode != '' ">
+            AND t.APPLICANT_CODE = #{applicantCode,jdbcType=VARCHAR}
+        </if>
+        <if test=" regionCodeStr != null and regionCodeStr != '' ">
+            AND t.APPLY_UNIT_CODE like CONCAT( #{regionCodeStr,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" suspectNo != null and suspectNo != '' ">
+            AND t.B_CTRL_P_CODE like CONCAT('%', #{suspectNo,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" suspectIDCardNo != null and suspectIDCardNo != '' ">
+            AND t.B_CTRL_IDCARD_NUM like CONCAT('%', #{suspectIDCardNo,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" suspectName != null and suspectName != '' ">
+            AND t.B_CTRL_NAME like CONCAT('%', #{suspectName,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" manaUnitCode != null and manaUnitCode != '' ">
+            AND t.APPLY_UNIT_CODE like CONCAT('%', #{manaUnitCode,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test="ctrlCreateUpperLimitTime != null">
+            AND t.CREAT_TIME &gt;= #{ctrlCreateUpperLimitTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ctrlCreateLowerLimiteTime != null">
+            AND t.CREAT_TIME &lt;= #{ctrlCreateLowerLimiteTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <select id="selectByPage" parameterType="com.vo.ctrl.PageVoCtrl"
+            resultMap="BaseResultMap">
+        select * from et_ctrl t
+        where 1=1
+        <if test=" regionCodeStr != null and regionCodeStr != '' ">
+            AND t.APPLY_UNIT_CODE like CONCAT( #{regionCodeStr,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" applicantCode != null and applicantCode != '' ">
+            AND t.APPLICANT_CODE = #{applicantCode,jdbcType=VARCHAR}
+        </if>
+        <if test=" suspectNo != null and suspectNo != '' ">
+            AND t.B_CTRL_P_CODE like CONCAT('%', #{suspectNo,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" suspectIDCardNo != null and suspectIDCardNo != '' ">
+            AND t.B_CTRL_IDCARD_NUM like CONCAT('%', #{suspectIDCardNo,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" suspectName != null and suspectName != '' ">
+            AND t.B_CTRL_NAME like CONCAT('%', #{suspectName,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test=" manaUnitCode != null and manaUnitCode != '' ">
+            AND t.APPLY_UNIT_CODE like CONCAT('%', #{manaUnitCode,jdbcType=VARCHAR},'%' )
+        </if>
+        <if test="ctrlCreateUpperLimitTime != null">
+            AND t.CREAT_TIME &gt;= #{ctrlCreateUpperLimitTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ctrlCreateLowerLimiteTime != null">
+            AND t.CREAT_TIME &lt;= #{ctrlCreateLowerLimiteTime,jdbcType=TIMESTAMP}
+        </if>
+        LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from et_ctrl
+        where CTRL_ID = #{No,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from et_ctrl
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByNo" parameterType="java.lang.String">
+        delete from et_ctrl
+    where CTRL_ID = #{No,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    	delete from et_ctrl
+    	where ID = #{id,jdbcType=VARCHAR}
+  	</delete>
+    <delete id="deleteByIDCardNum" parameterType="java.lang.String">
+    	delete from et_ctrl
+    	where B_CTRL_IDCARD_NUM = #{idCardNum,jdbcType=VARCHAR}
+  	</delete>
+    <insert id="insert" parameterType="com.entity.suspect.EtCtrl">
+    insert into et_ctrl (ID, CTRL_ID, APPLY_UNIT_CODE, 
+      APPLY_UNIT_NAME, APPLICANT_CODE, APPLICANT_NAME, 
+      APPLY_TIME, CTRL_TASK_LEVEL, CTRL_TASK_STATE, 
+      CTRL_TASK_CLASS, B_CTRL_P_CODE, B_CTRL_NAME, 
+      B_CTRL_IDCARD_NUM, B_CTRL_GENDER, B_CTRL_PHONE, 
+      B_CTRL_PLATE_NUM, B_CTRL_P_CLASS, CREAT_TIME, 
+      MODIFY_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{ctrlId,jdbcType=VARCHAR}, #{applyUnitCode,jdbcType=VARCHAR}, 
+      #{applyUnitName,jdbcType=VARCHAR}, #{applicantCode,jdbcType=VARCHAR}, #{applicantName,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{ctrlTaskLevel,jdbcType=INTEGER}, #{ctrlTaskState,jdbcType=INTEGER}, 
+      #{ctrlTaskClass,jdbcType=INTEGER}, #{bCtrlPCode,jdbcType=VARCHAR}, #{bCtrlName,jdbcType=VARCHAR}, 
+      #{bCtrlIdcardNum,jdbcType=VARCHAR}, #{bCtrlGender,jdbcType=INTEGER}, #{bCtrlPhone,jdbcType=VARCHAR}, 
+      #{bCtrlPlateNum,jdbcType=VARCHAR}, #{bCtrlPClass,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.entity.suspect.EtCtrl">
+        insert into et_ctrl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="ctrlId != null">
+                CTRL_ID,
+            </if>
+            <if test="applyUnitCode != null">
+                APPLY_UNIT_CODE,
+            </if>
+            <if test="applyUnitName != null">
+                APPLY_UNIT_NAME,
+            </if>
+            <if test="applicantCode != null">
+                APPLICANT_CODE,
+            </if>
+            <if test="applicantName != null">
+                APPLICANT_NAME,
+            </if>
+            <if test="applyTime != null">
+                APPLY_TIME,
+            </if>
+            <if test="ctrlTaskLevel != null">
+                CTRL_TASK_LEVEL,
+            </if>
+            <if test="ctrlTaskState != null">
+                CTRL_TASK_STATE,
+            </if>
+            <if test="ctrlTaskClass != null">
+                CTRL_TASK_CLASS,
+            </if>
+            <if test="bCtrlPCode != null">
+                B_CTRL_P_CODE,
+            </if>
+            <if test="bCtrlName != null">
+                B_CTRL_NAME,
+            </if>
+            <if test="bCtrlIdcardNum != null">
+                B_CTRL_IDCARD_NUM,
+            </if>
+            <if test="bCtrlGender != null">
+                B_CTRL_GENDER,
+            </if>
+            <if test="bCtrlPhone != null">
+                B_CTRL_PHONE,
+            </if>
+            <if test="bCtrlPlateNum != null">
+                B_CTRL_PLATE_NUM,
+            </if>
+            <if test="bCtrlPClass != null">
+                B_CTRL_P_CLASS,
+            </if>
+            <if test="creatTime != null">
+                CREAT_TIME,
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="ctrlId != null">
+                #{ctrlId,jdbcType=VARCHAR},
+            </if>
+            <if test="applyUnitCode != null">
+                #{applyUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyUnitName != null">
+                #{applyUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantCode != null">
+                #{applicantCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantName != null">
+                #{applicantName,jdbcType=VARCHAR},
+            </if>
+            <if test="applyTime != null">
+                #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ctrlTaskLevel != null">
+                #{ctrlTaskLevel,jdbcType=INTEGER},
+            </if>
+            <if test="ctrlTaskState != null">
+                #{ctrlTaskState,jdbcType=INTEGER},
+            </if>
+            <if test="ctrlTaskClass != null">
+                #{ctrlTaskClass,jdbcType=INTEGER},
+            </if>
+            <if test="bCtrlPCode != null">
+                #{bCtrlPCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlName != null">
+                #{bCtrlName,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlIdcardNum != null">
+                #{bCtrlIdcardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlGender != null">
+                #{bCtrlGender,jdbcType=INTEGER},
+            </if>
+            <if test="bCtrlPhone != null">
+                #{bCtrlPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlPlateNum != null">
+                #{bCtrlPlateNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlPClass != null">
+                #{bCtrlPClass,jdbcType=INTEGER},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.EtCtrl">
+        update et_ctrl
+        <set>
+            <if test="ctrlId != null">
+                CTRL_ID = #{ctrlId,jdbcType=VARCHAR},
+            </if>
+            <if test="applyUnitCode != null">
+                APPLY_UNIT_CODE = #{applyUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyUnitName != null">
+                APPLY_UNIT_NAME = #{applyUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantCode != null">
+                APPLICANT_CODE = #{applicantCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applicantName != null">
+                APPLICANT_NAME = #{applicantName,jdbcType=VARCHAR},
+            </if>
+            <if test="applyTime != null">
+                APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ctrlTaskLevel != null">
+                CTRL_TASK_LEVEL = #{ctrlTaskLevel,jdbcType=INTEGER},
+            </if>
+            <if test="ctrlTaskState != null">
+                CTRL_TASK_STATE = #{ctrlTaskState,jdbcType=INTEGER},
+            </if>
+            <if test="ctrlTaskClass != null">
+                CTRL_TASK_CLASS = #{ctrlTaskClass,jdbcType=INTEGER},
+            </if>
+            <if test="bCtrlPCode != null">
+                B_CTRL_P_CODE = #{bCtrlPCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlName != null">
+                B_CTRL_NAME = #{bCtrlName,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlIdcardNum != null">
+                B_CTRL_IDCARD_NUM = #{bCtrlIdcardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlGender != null">
+                B_CTRL_GENDER = #{bCtrlGender,jdbcType=INTEGER},
+            </if>
+            <if test="bCtrlPhone != null">
+                B_CTRL_PHONE = #{bCtrlPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlPlateNum != null">
+                B_CTRL_PLATE_NUM = #{bCtrlPlateNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bCtrlPClass != null">
+                B_CTRL_P_CLASS = #{bCtrlPClass,jdbcType=INTEGER},
+            </if>
+            <if test="creatTime != null">
+                CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.suspect.EtCtrl">
+    update et_ctrl
+    set CTRL_ID = #{ctrlId,jdbcType=VARCHAR},
+      APPLY_UNIT_CODE = #{applyUnitCode,jdbcType=VARCHAR},
+      APPLY_UNIT_NAME = #{applyUnitName,jdbcType=VARCHAR},
+      APPLICANT_CODE = #{applicantCode,jdbcType=VARCHAR},
+      APPLICANT_NAME = #{applicantName,jdbcType=VARCHAR},
+      APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},
+      CTRL_TASK_LEVEL = #{ctrlTaskLevel,jdbcType=INTEGER},
+      CTRL_TASK_STATE = #{ctrlTaskState,jdbcType=INTEGER},
+      CTRL_TASK_CLASS = #{ctrlTaskClass,jdbcType=INTEGER},
+      B_CTRL_P_CODE = #{bCtrlPCode,jdbcType=VARCHAR},
+      B_CTRL_NAME = #{bCtrlName,jdbcType=VARCHAR},
+      B_CTRL_IDCARD_NUM = #{bCtrlIdcardNum,jdbcType=VARCHAR},
+      B_CTRL_GENDER = #{bCtrlGender,jdbcType=INTEGER},
+      B_CTRL_PHONE = #{bCtrlPhone,jdbcType=VARCHAR},
+      B_CTRL_PLATE_NUM = #{bCtrlPlateNum,jdbcType=VARCHAR},
+      B_CTRL_P_CLASS = #{bCtrlPClass,jdbcType=INTEGER},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCtrlIdByICN" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	SELECT
+		ec.id,
+		ec.CTRL_ID,
+		ec.APPLICANT_CODE,
+		ec.APPLICANT_NAME,
+		ec.APPLY_UNIT_CODE,
+		ec.APPLY_UNIT_NAME,
+		ec.B_CTRL_P_CODE,
+		ec.B_CTRL_NAME,
+		EC.B_CTRL_IDCARD_NUM
+	FROM
+		et_ctrl ec
+	LEFT JOIN ap_ctrl_key ack ON ec.CTRL_ID = ack.CTRL_ID
+	WHERE
+		IDCARD_NUM IS NOT NULL
+	AND IDCARD_NUM ='${bCtrlIdcardNum}'
+  </select>
+
+    <!--通过布控任务ID查询-->
+    <select id="findCtrlById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from et_ctrl
+        where CTRL_ID = #{ctrlId,jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskgnlk.OEpHotelPersonMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpHotelPerson" >
+    <id column="CCODE" property="ccode" jdbcType="VARCHAR" />
+    <result column="GCODE" property="gcode" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NAMEPY" property="namepy" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="NATION" property="nation" jdbcType="VARCHAR" />
+    <result column="BDATE" property="bdate" jdbcType="VARCHAR" />
+    <result column="IDTYPE" property="idtype" jdbcType="VARCHAR" />
+    <result column="IDCODE" property="idcode" jdbcType="VARCHAR" />
+    <result column="XZQH" property="xzqh" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="NOHOTEL" property="nohotel" jdbcType="VARCHAR" />
+    <result column="NOROOM" property="noroom" jdbcType="VARCHAR" />
+    <result column="LTIME" property="ltime" jdbcType="TIMESTAMP" />
+    <result column="LWAITER" property="lwaiter" jdbcType="VARCHAR" />
+    <result column="ETIME" property="etime" jdbcType="VARCHAR" />
+    <result column="EWAITER" property="ewaiter" jdbcType="VARCHAR" />
+    <result column="CARDTYPE" property="cardtype" jdbcType="VARCHAR" />
+    <result column="CARDNO" property="cardno" jdbcType="VARCHAR" />
+    <result column="STIME" property="stime" jdbcType="VARCHAR" />
+    <result column="RTIME" property="rtime" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="VARCHAR" />
+    <result column="INPUTTIME" property="inputtime" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="RKSJ" property="rksj" jdbcType="TIMESTAMP" />
+    <result column="SSPCS" property="sspcs" jdbcType="VARCHAR" />
+    <result column="REVSTATUS" property="revstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CCODE, GCODE, NAME, NAMEPY, SEX, NATION, BDATE, IDTYPE, IDCODE, XZQH, ADDRESS, NOHOTEL, 
+    NOROOM, LTIME, LWAITER, ETIME, EWAITER, CARDTYPE, CARDNO, STIME, RTIME, CREATETIME, 
+    NUM, INPUTTIME, FLAG, RKSJ, SSPCS, REVSTATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from V_GNLK
+    where CCODE = #{ccode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findEpHotelPersonData" resultType="com.entity.task.EpHotelPerson" parameterType="java.util.Map" >
+     select * from (
+                    SELECT ROWNUM rnum,A.* FROM(
+                        SELECT
+                        <include refid="Base_Column_List" />
+                        from V_GNLK where 1=1
+                        <if test="rksj!=null and rksj!='' ">
+                            and RKSJ &gt;to_date(substr(#{rksj},1,19),'YYYY-MM-DD HH24:MI:SS')
+                        </if>
+                    order by ccode desc
+                    ) A
+                  WHERE ROWNUM &lt;= ((#{pageNum}+1)*#{eachSearch})
+      ) A1
+    WHERE
+    A1.rnum  &gt;(#{pageNum} *#{eachSearch})
+
+  </select>
+  <!--<if test="pageNum!=null and pageNum!=''">
+     where rnum &gt;(#{pageNum} *#{eachSearch}) and rnum &lt;= ((#{pageNum}+1)*#{eachSearch})
+ </if>-->
+
+  <select id="findEpHotelPersonCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+    select 
+    	count(*)
+    from V_GNLK where 1=1
+    <if test="rksj!=null and rksj!='' ">
+    	and RKSJ &gt;to_date(substr(#{rksj},1,19),'YYYY-MM-DD HH24:MI:SS')
+    </if>
+  </select>
+</mapper>

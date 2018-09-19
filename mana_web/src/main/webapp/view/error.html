@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>错误</title>
+    <script type="text/javascript" charset="utf-8" src="./js/include.js"></script>
+</head>
+<body>
+</body>
+<script>
+    //用户登录提醒
+    $(function(){
+        layer.alert("您的账号已登录！",{
+            icon: 2,
+            skin: 'layer-ext-moon',
+            end: function () {
+                top.window.location.href=projectPath+'login/page.do';
+            }
+        });
+    })
+
+</script>
+</html>

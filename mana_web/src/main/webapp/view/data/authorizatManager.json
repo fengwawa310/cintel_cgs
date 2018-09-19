@@ -1,0 +1,37 @@
+﻿{
+    "type": "authorizatManager",
+    "recordsTotal": 3,
+    "recordsFiltered": 3,
+    "draw": null,
+    "data": [
+        {
+            "bianhao": "386aeaf8-9363-4911-ba19-76b6eb37df3d",
+            "xingming": "嫌疑人1",
+            "shenfenhao": "110105200012201475",
+            "shijian": "2018-02-03"
+        },{
+            "bianhao": "d19d34d7-eaf8-4502-be7b-91a7d1ba96d5",
+            "xingming": "嫌疑人2",
+            "shenfenhao": "110105200012201475",
+            "shijian": "2018-02-03"
+        },
+        {
+            "bianhao": "c0b3f0da-b56f-4967-804c-5afd9d22b112",
+            "xingming": "嫌疑人3",
+            "shenfenhao": "386aeaf8-9363-4911",
+            "shijian": "2018-02-03"
+        },
+        {
+            "bianhao": "4cab1b97-d02e-4e71-aa7c-b7d640cf2714",
+            "xingming": "嫌疑人4",
+            "shenfenhao": "c0b3f0da-b56f-4967",
+            "shijian": "2018-02-03"
+        },
+        {
+            "bianhao": "dccb9a70-b80e-4401-9fff-67502be6d292",
+            "xingming": "嫌疑人5",
+            "shenfenhao": "4cab1b97-d02e-4e71",
+            "shijian": "2018-02-03"
+        }
+    ]
+}

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.task.jingzong.OEpAsjBlMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpAsjBl" >
+    <id column="SYSTEMID" property="systemid" jdbcType="VARCHAR" />
+    <result column="AJBH" property="ajbh" jdbcType="VARCHAR" />
+    <result column="SER_NO" property="serNo" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="SCEN_SYSTEMID" property="scenSystemid" jdbcType="VARCHAR" />
+    <result column="TARGET" property="target" jdbcType="VARCHAR" />
+    <result column="FJ" property="fj" jdbcType="VARCHAR" />
+    <result column="STARTTIME" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="ENDTIME" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="JLDD" property="jldd" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="CREATOR_DEPT" property="createDept" jdbcType="VARCHAR" />
+    <result column="RECORDER" property="recorder" jdbcType="VARCHAR" />
+    <result column="RECORDER_DEPT" property="recorderDept" jdbcType="VARCHAR" />
+    <result column="TARGET_XM" property="targetXm" jdbcType="VARCHAR" />
+    <result column="TARGET_CYM" property="targetCym" jdbcType="VARCHAR" />
+    <result column="TARGET_XB" property="targetXb" jdbcType="VARCHAR" />
+    <result column="TARGET_CSRQ" property="targetCsrq" jdbcType="TIMESTAMP" />
+    <result column="TARGET_WHCD" property="targetWhcd" jdbcType="VARCHAR" />
+    <result column="TARGET_MZ" property="targetMz" jdbcType="VARCHAR" />
+    <result column="TARGET_HJSZD" property="targetHjszd" jdbcType="VARCHAR" />
+    <result column="TARGET_XZZ" property="targetXzz" jdbcType="VARCHAR" />
+    <result column="TARGET_ZJZL" property="targetZjzl" jdbcType="VARCHAR" />
+    <result column="TARGET_ZJHM" property="targetZjhm" jdbcType="VARCHAR" />
+    <result column="TARGET_GZDW" property="targetGzdw" jdbcType="VARCHAR" />
+    <result column="TARGET_LXDH" property="targetLxdh" jdbcType="VARCHAR" />
+    <result column="TARGET_ARRIVALTIME" property="targetArrivaltime" jdbcType="TIMESTAMP" />
+    <result column="TARGET_LEFTTIME" property="targetLefttime" jdbcType="TIMESTAMP" />
+    <result column="TARGET_BM" property="targetBm" jdbcType="VARCHAR" />
+    <result column="TARGET_YWM" property="targetYwm" jdbcType="VARCHAR" />
+    <result column="TARGET_GJ" property="targetGj" jdbcType="VARCHAR" />
+    <result column="TARGET_CH" property="targetCh" jdbcType="VARCHAR" />
+    <result column="TARGET_JG" property="targetJg" jdbcType="VARCHAR" />
+    <result column="TARGET_ZZMM" property="targetZzmm" jdbcType="VARCHAR" />
+    <result column="TARGET_JTQK" property="targetJtqk" jdbcType="VARCHAR" />
+    <result column="TARGET_SHJL" property="targetShjl" jdbcType="VARCHAR" />
+    <result column="TARGET_SFSGCF" property="targetSfsgcf" jdbcType="VARCHAR" />
+    <result column="TARGET_SFLYRS" property="targetSflyrs" jdbcType="VARCHAR" />
+    <result column="TARGET_SFPBFYRY" property="targetSfpbfyry" jdbcType="VARCHAR" />
+    <result column="TRANS_XM" property="transXm" jdbcType="VARCHAR" />
+    <result column="TRANS_ZY" property="transZy" jdbcType="VARCHAR" />
+    <result column="TRANS_GZDW" property="transGzdw" jdbcType="VARCHAR" />
+    <result column="TRANS_XZZ" property="transXzz" jdbcType="VARCHAR" />
+    <result column="KCDD" property="kcdd" jdbcType="VARCHAR" />
+    <result column="JCZ" property="jcz" jdbcType="VARCHAR" />
+    <result column="KCRYMS" property="kcryms" jdbcType="VARCHAR" />
+    <result column="RESERVATION01" property="reservation01" jdbcType="VARCHAR" />
+    <result column="RESERVATION02" property="reservation02" jdbcType="VARCHAR" />
+    <result column="RESERVATION03" property="reservation03" jdbcType="VARCHAR" />
+    <result column="RESERVATION04" property="reservation04" jdbcType="VARCHAR" />
+    <result column="RESERVATION05" property="reservation05" jdbcType="VARCHAR" />
+    <result column="RESERVATION06" property="reservation06" jdbcType="VARCHAR" />
+    <result column="RESERVATION07" property="reservation07" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION08" property="reservation08" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION09" property="reservation09" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION10" property="reservation10" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION11" property="reservation11" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION12" property="reservation12" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION13" property="reservation13" jdbcType="VARCHAR" />
+    <result column="RESERVATION14" property="reservation14" jdbcType="VARCHAR" />
+    <result column="RESERVATION15" property="reservation15" jdbcType="VARCHAR" />
+    <result column="RESERVATION16" property="reservation16" jdbcType="VARCHAR" />
+    <result column="RESERVATION17" property="reservation17" jdbcType="VARCHAR" />
+    <result column="RESERVATION18" property="reservation18" jdbcType="VARCHAR" />
+    <result column="RESERVATION19" property="reservation19" jdbcType="VARCHAR" />
+    <result column="RESERVATION20" property="reservation20" jdbcType="VARCHAR" />
+    <result column="RESERVATION21" property="reservation21" jdbcType="VARCHAR" />
+    <result column="RESERVATION22" property="reservation22" jdbcType="VARCHAR" />
+    <result column="RESERVATION23" property="reservation23" jdbcType="VARCHAR" />
+    <result column="RESERVATION24" property="reservation24" jdbcType="VARCHAR" />
+    <result column="RESERVATION25" property="reservation25" jdbcType="VARCHAR" />
+    <result column="RESERVATION26" property="reservation26" jdbcType="VARCHAR" />
+    <result column="RESERVATION27" property="reservation27" jdbcType="VARCHAR" />
+    <result column="RESERVATION28" property="reservation28" jdbcType="VARCHAR" />
+    <result column="RESERVATION29" property="reservation29" jdbcType="VARCHAR" />
+    <result column="RESERVATION30" property="reservation30" jdbcType="VARCHAR" />
+    <result column="RESERVATION31" property="reservation31" jdbcType="VARCHAR" />
+    <result column="RESERVATION32" property="reservation32" jdbcType="VARCHAR" />
+    <result column="RESERVATION33" property="reservation33" jdbcType="VARCHAR" />
+    <result column="RESERVATION34" property="reservation34" jdbcType="VARCHAR" />
+    <result column="RESERVATION35" property="reservation35" jdbcType="VARCHAR" />
+    <result column="RESERVATION36" property="reservation36" jdbcType="VARCHAR" />
+    <result column="RESERVATION37" property="reservation37" jdbcType="VARCHAR" />
+    <result column="RESERVATION38" property="reservation38" jdbcType="VARCHAR" />
+    <result column="RESERVATION39" property="reservation39" jdbcType="VARCHAR" />
+    <result column="RESERVATION40" property="reservation40" jdbcType="VARCHAR" />
+    <result column="DEPARTMENTCODE" property="departmentcode" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATEDTIME" property="createdtime" jdbcType="TIMESTAMP" />
+    <result column="LASTUPDATEDBY" property="lastupdatedby" jdbcType="VARCHAR" />
+    <result column="LASTUPDATEDTIME" property="lastupdatedtime" jdbcType="TIMESTAMP" />
+    <result column="UPLOADFLAG" property="uploadflag" jdbcType="VARCHAR" />
+    <result column="DOWNLOADFLAG" property="downloadflag" jdbcType="VARCHAR" />
+    <result column="DELETEFLAG" property="deleteflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.task.EpAsjBl" extends="BaseResultMap" >
+    <result column="BODY" property="body" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SYSTEMID, AJBH, SER_NO, NAME, TYPE, SCEN_SYSTEMID, TARGET, FJ, STARTTIME, ENDTIME, 
+    JLDD, CREATOR_NAME, CREATOR_DEPT, RECORDER, RECORDER_DEPT, TARGET_XM, TARGET_CYM, 
+    TARGET_XB, TARGET_CSRQ, TARGET_WHCD, TARGET_MZ, TARGET_HJSZD, TARGET_XZZ, TARGET_ZJZL, 
+    TARGET_ZJHM, TARGET_GZDW, TARGET_LXDH, TARGET_ARRIVALTIME, TARGET_LEFTTIME, TARGET_BM, 
+    TARGET_YWM, TARGET_GJ, TARGET_CH, TARGET_JG, TARGET_ZZMM, TARGET_JTQK, TARGET_SHJL, 
+    TARGET_SFSGCF, TARGET_SFLYRS, TARGET_SFPBFYRY, TRANS_XM, TRANS_ZY, TRANS_GZDW, TRANS_XZZ, 
+    KCDD, JCZ, KCRYMS, RESERVATION01, RESERVATION02, RESERVATION03, RESERVATION04, RESERVATION05, 
+    RESERVATION06, RESERVATION07, RESERVATION08, RESERVATION09, RESERVATION10, RESERVATION11, 
+    RESERVATION12, RESERVATION13, RESERVATION14, RESERVATION15, RESERVATION16, RESERVATION17, 
+    RESERVATION18, RESERVATION19, RESERVATION20, RESERVATION21, RESERVATION22, RESERVATION23, 
+    RESERVATION24, RESERVATION25, RESERVATION26, RESERVATION27, RESERVATION28, RESERVATION29, 
+    RESERVATION30, RESERVATION31, RESERVATION32, RESERVATION33, RESERVATION34, RESERVATION35, 
+    RESERVATION36, RESERVATION37, RESERVATION38, RESERVATION39, RESERVATION40, DEPARTMENTCODE, 
+    CREATOR, CREATEDTIME, LASTUPDATEDBY, LASTUPDATEDTIME, UPLOADFLAG, DOWNLOADFLAG, DELETEFLAG
+  </sql>
+  <sql id="Blob_Column_List" >
+    BODY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from V_ASJ_BL
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </select>
+  <select id="findBlData" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+     select * from (select rownum rnum,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from V_ASJ_BL where 1=1 
+    <if test="lastUpDateTime!=null and lastUpDateTime!=''">
+    	and LASTUPDATEDTIME &gt;to_date(substr(#{lastUpDateTime},1,19),'YYYY-MM-DD   HH24:MI:SS')
+    </if>
+    order by LASTUPDATEDTIME ASC) a
+    <if test="pageNum!=null and pageNum!=''">
+   		where rnum &gt; (#{pageNum} *#{eachSearch}) and rnum &lt;= ((#{pageNum}+1)*#{eachSearch})
+   	</if>
+  </select>
+  
+  <select id="findBlDataCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+    select 
+    count(*)
+    from V_ASJ_BL where 1=1 
+    <if test="lastUpDateTime!=null and lastUpDateTime!=''">
+    	and LASTUPDATEDTIME &gt;to_date(substr(#{lastUpDateTime},1,19),'YYYY-MM-DD   HH24:MI:SS')
+    </if>
+  </select>
+</mapper>

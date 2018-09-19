@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskJingzong.EpHotelMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpHotel" >
+    <id column="HNOHOTEL" property="hnohotel" jdbcType="VARCHAR" />
+    <result column="HNAME" property="hname" jdbcType="VARCHAR" />
+    <result column="LEGALPERSON" property="legalperson" jdbcType="VARCHAR" />
+    <result column="PRINCIPAL" property="principal" jdbcType="VARCHAR" />
+    <result column="SOCIALDUTY" property="socialduty" jdbcType="VARCHAR" />
+    <result column="HADDRESS" property="haddress" jdbcType="VARCHAR" />
+    <result column="TELPHONE" property="telphone" jdbcType="VARCHAR" />
+    <result column="SAFETEL" property="safetel" jdbcType="VARCHAR" />
+    <result column="ROOMNUM" property="roomnum" jdbcType="INTEGER" />
+    <result column="BEDNUM" property="bednum" jdbcType="INTEGER" />
+    <result column="STARS" property="stars" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="STATEDATE" property="statedate" jdbcType="VARCHAR" />
+    <result column="STATION" property="station" jdbcType="VARCHAR" />
+    <result column="VALIDATECODE" property="validatecode" jdbcType="VARCHAR" />
+    <result column="LINKDATE" property="linkdate" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="VARCHAR" />
+    <result column="INPUTTIME" property="inputtime" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="THIRDPART" property="thirdpart" jdbcType="VARCHAR" />
+    <result column="TRANSTYPE" property="transtype" jdbcType="VARCHAR" />
+    <result column="HOTELVER" property="hotelver" jdbcType="VARCHAR" />
+    <result column="HOTELTYPE" property="hoteltype" jdbcType="VARCHAR" />
+    <result column="FWBM" property="fwbm" jdbcType="VARCHAR" />
+    <result column="PSCODE" property="pscode" jdbcType="VARCHAR" />
+    <result column="QTLX" property="qtlx" jdbcType="VARCHAR" />
+    <result column="CSFS" property="csfs" jdbcType="VARCHAR" />
+    <result column="JYXZ" property="jyxz" jdbcType="VARCHAR" />
+    <result column="SJD" property="sjd" jdbcType="VARCHAR" />
+    <result column="SWD" property="swd" jdbcType="VARCHAR" />
+    <result column="STHZH" property="sthzh" jdbcType="VARCHAR" />
+    <result column="SGSZZH" property="sgszzh" jdbcType="VARCHAR" />
+    <result column="PSORGAN" property="psorgan" jdbcType="VARCHAR" />
+    <result column="SQJWS" property="sqjws" jdbcType="VARCHAR" />
+    <result column="HOTELKIND" property="hotelkind" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="FLOORS" property="floors" jdbcType="VARCHAR" />
+    <result column="DBENCRYPT" property="dbencrypt" jdbcType="VARCHAR" />
+    <result column="ZY_RKSJ" property="zyRksj" jdbcType="VARCHAR" />
+    <result column="REDFLAG" property="redflag" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    HNOHOTEL, HNAME, LEGALPERSON, PRINCIPAL, SOCIALDUTY, HADDRESS, TELPHONE, SAFETEL, 
+    ROOMNUM, BEDNUM, STARS, GRADE, STATE, STATEDATE, STATION, VALIDATECODE, LINKDATE, 
+    NUM, INPUTTIME, FLAG, THIRDPART, TRANSTYPE, HOTELVER, HOTELTYPE, FWBM, PSCODE, QTLX, 
+    CSFS, JYXZ, SJD, SWD, STHZH, SGSZZH, PSORGAN, SQJWS, HOTELKIND, REMARK, FLOORS, DBENCRYPT, 
+    ZY_RKSJ, REDFLAG, id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ep_hotel
+    where HNOHOTEL = #{hnohotel,jdbcType=VARCHAR}
+  </select>
+  <select id="selectHotelByPersonId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ep_hotel
+    where HNOHOTEL = (select NOHOTEL from ep_hotel_person where CCODE = #{ccode,jdbcType=VARCHAR} limit 0,1)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_hotel
+    where HNOHOTEL = #{hnohotel,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.task.EpHotel" >
+    insert into ep_hotel (HNOHOTEL, HNAME, LEGALPERSON, 
+      PRINCIPAL, SOCIALDUTY, HADDRESS, 
+      TELPHONE, SAFETEL, ROOMNUM, 
+      BEDNUM, STARS, GRADE, 
+      STATE, STATEDATE, STATION, 
+      VALIDATECODE, LINKDATE, NUM, 
+      INPUTTIME, FLAG, THIRDPART, 
+      TRANSTYPE, HOTELVER, HOTELTYPE, 
+      FWBM, PSCODE, QTLX, 
+      CSFS, JYXZ, SJD, SWD, 
+      STHZH, SGSZZH, PSORGAN, 
+      SQJWS, HOTELKIND, REMARK, 
+      FLOORS, DBENCRYPT, ZY_RKSJ, 
+      REDFLAG, id)
+    values (#{hnohotel,jdbcType=VARCHAR}, #{hname,jdbcType=VARCHAR}, #{legalperson,jdbcType=VARCHAR}, 
+      #{principal,jdbcType=VARCHAR}, #{socialduty,jdbcType=VARCHAR}, #{haddress,jdbcType=VARCHAR}, 
+      #{telphone,jdbcType=VARCHAR}, #{safetel,jdbcType=VARCHAR}, #{roomnum,jdbcType=INTEGER}, 
+      #{bednum,jdbcType=INTEGER}, #{stars,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{statedate,jdbcType=VARCHAR}, #{station,jdbcType=VARCHAR}, 
+      #{validatecode,jdbcType=VARCHAR}, #{linkdate,jdbcType=VARCHAR}, #{num,jdbcType=VARCHAR}, 
+      #{inputtime,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{thirdpart,jdbcType=VARCHAR}, 
+      #{transtype,jdbcType=VARCHAR}, #{hotelver,jdbcType=VARCHAR}, #{hoteltype,jdbcType=VARCHAR}, 
+      #{fwbm,jdbcType=VARCHAR}, #{pscode,jdbcType=VARCHAR}, #{qtlx,jdbcType=VARCHAR}, 
+      #{csfs,jdbcType=VARCHAR}, #{jyxz,jdbcType=VARCHAR}, #{sjd,jdbcType=VARCHAR}, #{swd,jdbcType=VARCHAR}, 
+      #{sthzh,jdbcType=VARCHAR}, #{sgszzh,jdbcType=VARCHAR}, #{psorgan,jdbcType=VARCHAR}, 
+      #{sqjws,jdbcType=VARCHAR}, #{hotelkind,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{floors,jdbcType=VARCHAR}, #{dbencrypt,jdbcType=VARCHAR}, #{zyRksj,jdbcType=VARCHAR}, 
+      #{redflag,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertEpHotelList" parameterType="java.util.List" >
+    insert into ep_hotel (
+    	HNOHOTEL, HNAME, LEGALPERSON, PRINCIPAL, SOCIALDUTY, HADDRESS, TELPHONE, 
+		SAFETEL, ROOMNUM, BEDNUM, STARS, GRADE, STATE, STATEDATE, STATION, 
+		VALIDATECODE, LINKDATE, NUM, INPUTTIME, FLAG, THIRDPART, TRANSTYPE, 
+		HOTELVER, HOTELTYPE, FWBM, PSCODE, QTLX, CSFS, JYXZ, SJD, SWD, STHZH, 
+		SGSZZH, PSORGAN, SQJWS, HOTELKIND, REMARK, FLOORS, DBENCRYPT, ZY_RKSJ, REDFLAG, id
+    )
+    values 
+    <foreach collection="ehlist" item="eh" separator=",">  
+	(
+	    #{eh.hnohotel},#{eh.hname},#{eh.legalperson},#{eh.principal},#{eh.socialduty},#{eh.haddress},
+		#{eh.telphone},#{eh.safetel},#{eh.roomnum},#{eh.bednum},#{eh.stars},#{eh.grade},#{eh.state},
+		#{eh.statedate},#{eh.station},#{eh.validatecode},#{eh.linkdate},#{eh.num},#{eh.inputtime},
+		#{eh.flag},#{eh.thirdpart},#{eh.transtype},#{eh.hotelver},#{eh.hoteltype},#{eh.fwbm},
+		#{eh.pscode},#{eh.qtlx},#{eh.csfs},#{eh.jyxz},#{eh.sjd},#{eh.swd},#{eh.sthzh},#{eh.sgszzh},
+		#{eh.psorgan},#{eh.sqjws},#{eh.hotelkind},#{eh.remark},#{eh.floors},#{eh.dbencrypt},
+		#{eh.zyRksj},#{eh.redflag},#{eh.id}
+	)
+    </foreach> 
+  </insert>
+  <select id="findLastZyRksj" resultType="String" parameterType="java.lang.String" >
+  		select max(eh.ZY_RKSJ) ZY_RKSJ from ep_hotel eh where eh.ZY_RKSJ regexp '^[0-9]+$' ;
+  </select>
+  <insert id="insertSelective" parameterType="com.entity.task.EpHotel" >
+    insert into ep_hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hnohotel != null" >
+        HNOHOTEL,
+      </if>
+      <if test="hname != null" >
+        HNAME,
+      </if>
+      <if test="legalperson != null" >
+        LEGALPERSON,
+      </if>
+      <if test="principal != null" >
+        PRINCIPAL,
+      </if>
+      <if test="socialduty != null" >
+        SOCIALDUTY,
+      </if>
+      <if test="haddress != null" >
+        HADDRESS,
+      </if>
+      <if test="telphone != null" >
+        TELPHONE,
+      </if>
+      <if test="safetel != null" >
+        SAFETEL,
+      </if>
+      <if test="roomnum != null" >
+        ROOMNUM,
+      </if>
+      <if test="bednum != null" >
+        BEDNUM,
+      </if>
+      <if test="stars != null" >
+        STARS,
+      </if>
+      <if test="grade != null" >
+        GRADE,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="statedate != null" >
+        STATEDATE,
+      </if>
+      <if test="station != null" >
+        STATION,
+      </if>
+      <if test="validatecode != null" >
+        VALIDATECODE,
+      </if>
+      <if test="linkdate != null" >
+        LINKDATE,
+      </if>
+      <if test="num != null" >
+        NUM,
+      </if>
+      <if test="inputtime != null" >
+        INPUTTIME,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="thirdpart != null" >
+        THIRDPART,
+      </if>
+      <if test="transtype != null" >
+        TRANSTYPE,
+      </if>
+      <if test="hotelver != null" >
+        HOTELVER,
+      </if>
+      <if test="hoteltype != null" >
+        HOTELTYPE,
+      </if>
+      <if test="fwbm != null" >
+        FWBM,
+      </if>
+      <if test="pscode != null" >
+        PSCODE,
+      </if>
+      <if test="qtlx != null" >
+        QTLX,
+      </if>
+      <if test="csfs != null" >
+        CSFS,
+      </if>
+      <if test="jyxz != null" >
+        JYXZ,
+      </if>
+      <if test="sjd != null" >
+        SJD,
+      </if>
+      <if test="swd != null" >
+        SWD,
+      </if>
+      <if test="sthzh != null" >
+        STHZH,
+      </if>
+      <if test="sgszzh != null" >
+        SGSZZH,
+      </if>
+      <if test="psorgan != null" >
+        PSORGAN,
+      </if>
+      <if test="sqjws != null" >
+        SQJWS,
+      </if>
+      <if test="hotelkind != null" >
+        HOTELKIND,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="floors != null" >
+        FLOORS,
+      </if>
+      <if test="dbencrypt != null" >
+        DBENCRYPT,
+      </if>
+      <if test="zyRksj != null" >
+        ZY_RKSJ,
+      </if>
+      <if test="redflag != null" >
+        REDFLAG,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hnohotel != null" >
+        #{h#{eh.hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="hname != null" >
+        #{hname,jdbcType=VARCHAR},
+      </if>
+      <if test="legalperson != null" >
+        #{legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="socialduty != null" >
+        #{socialduty,jdbcType=VARCHAR},
+      </if>
+      <if test="haddress != null" >
+        #{haddress,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="safetel != null" >
+        #{safetel,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnum != null" >
+        #{roomnum,jdbcType=INTEGER},
+      </if>
+      <if test="bednum != null" >
+        #{bednum,jdbcType=INTEGER},
+      </if>
+      <if test="stars != null" >
+        #{stars,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="statedate != null" >
+        #{statedate,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="validatecode != null" >
+        #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkdate != null" >
+        #{linkdate,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtime != null" >
+        #{inputtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdpart != null" >
+        #{thirdpart,jdbcType=VARCHAR},
+      </if>
+      <if test="transtype != null" >
+        #{transtype,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelver != null" >
+        #{hotelver,jdbcType=VARCHAR},
+      </if>
+      <if test="hoteltype != null" >
+        #{hoteltype,jdbcType=VARCHAR},
+      </if>
+      <if test="fwbm != null" >
+        #{fwbm,jdbcType=VARCHAR},
+      </if>
+      <if test="pscode != null" >
+        #{pscode,jdbcType=VARCHAR},
+      </if>
+      <if test="qtlx != null" >
+        #{qtlx,jdbcType=VARCHAR},
+      </if>
+      <if test="csfs != null" >
+        #{csfs,jdbcType=VARCHAR},
+      </if>
+      <if test="jyxz != null" >
+        #{jyxz,jdbcType=VARCHAR},
+      </if>
+      <if test="sjd != null" >
+        #{sjd,jdbcType=VARCHAR},
+      </if>
+      <if test="swd != null" >
+        #{swd,jdbcType=VARCHAR},
+      </if>
+      <if test="sthzh != null" >
+        #{sthzh,jdbcType=VARCHAR},
+      </if>
+      <if test="sgszzh != null" >
+        #{sgszzh,jdbcType=VARCHAR},
+      </if>
+      <if test="psorgan != null" >
+        #{psorgan,jdbcType=VARCHAR},
+      </if>
+      <if test="sqjws != null" >
+        #{sqjws,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelkind != null" >
+        #{hotelkind,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="floors != null" >
+        #{floors,jdbcType=VARCHAR},
+      </if>
+      <if test="dbencrypt != null" >
+        #{dbencrypt,jdbcType=VARCHAR},
+      </if>
+      <if test="zyRksj != null" >
+        #{zyRksj,jdbcType=VARCHAR},
+      </if>
+      <if test="redflag != null" >
+        #{redflag,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.task.EpHotel" >
+    update ep_hotel
+    <set >
+      <if test="hname != null" >
+        HNAME = #{hname,jdbcType=VARCHAR},
+      </if>
+      <if test="legalperson != null" >
+        LEGALPERSON = #{legalperson,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        PRINCIPAL = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="socialduty != null" >
+        SOCIALDUTY = #{socialduty,jdbcType=VARCHAR},
+      </if>
+      <if test="haddress != null" >
+        HADDRESS = #{haddress,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        TELPHONE = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="safetel != null" >
+        SAFETEL = #{safetel,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnum != null" >
+        ROOMNUM = #{roomnum,jdbcType=INTEGER},
+      </if>
+      <if test="bednum != null" >
+        BEDNUM = #{bednum,jdbcType=INTEGER},
+      </if>
+      <if test="stars != null" >
+        STARS = #{stars,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        GRADE = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="statedate != null" >
+        STATEDATE = #{statedate,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        STATION = #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="validatecode != null" >
+        VALIDATECODE = #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkdate != null" >
+        LINKDATE = #{linkdate,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        NUM = #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtime != null" >
+        INPUTTIME = #{inputtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdpart != null" >
+        THIRDPART = #{thirdpart,jdbcType=VARCHAR},
+      </if>
+      <if test="transtype != null" >
+        TRANSTYPE = #{transtype,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelver != null" >
+        HOTELVER = #{hotelver,jdbcType=VARCHAR},
+      </if>
+      <if test="hoteltype != null" >
+        HOTELTYPE = #{hoteltype,jdbcType=VARCHAR},
+      </if>
+      <if test="fwbm != null" >
+        FWBM = #{fwbm,jdbcType=VARCHAR},
+      </if>
+      <if test="pscode != null" >
+        PSCODE = #{pscode,jdbcType=VARCHAR},
+      </if>
+      <if test="qtlx != null" >
+        QTLX = #{qtlx,jdbcType=VARCHAR},
+      </if>
+      <if test="csfs != null" >
+        CSFS = #{csfs,jdbcType=VARCHAR},
+      </if>
+      <if test="jyxz != null" >
+        JYXZ = #{jyxz,jdbcType=VARCHAR},
+      </if>
+      <if test="sjd != null" >
+        SJD = #{sjd,jdbcType=VARCHAR},
+      </if>
+      <if test="swd != null" >
+        SWD = #{swd,jdbcType=VARCHAR},
+      </if>
+      <if test="sthzh != null" >
+        STHZH = #{sthzh,jdbcType=VARCHAR},
+      </if>
+      <if test="sgszzh != null" >
+        SGSZZH = #{sgszzh,jdbcType=VARCHAR},
+      </if>
+      <if test="psorgan != null" >
+        PSORGAN = #{psorgan,jdbcType=VARCHAR},
+      </if>
+      <if test="sqjws != null" >
+        SQJWS = #{sqjws,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelkind != null" >
+        HOTELKIND = #{hotelkind,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="floors != null" >
+        FLOORS = #{floors,jdbcType=VARCHAR},
+      </if>
+      <if test="dbencrypt != null" >
+        DBENCRYPT = #{dbencrypt,jdbcType=VARCHAR},
+      </if>
+      <if test="zyRksj != null" >
+        ZY_RKSJ = #{zyRksj,jdbcType=VARCHAR},
+      </if>
+      <if test="redflag != null" >
+        REDFLAG = #{redflag,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where HNOHOTEL = #{hnohotel,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.task.EpHotel" >
+    update ep_hotel
+    set HNAME = #{hname,jdbcType=VARCHAR},
+      LEGALPERSON = #{legalperson,jdbcType=VARCHAR},
+      PRINCIPAL = #{principal,jdbcType=VARCHAR},
+      SOCIALDUTY = #{socialduty,jdbcType=VARCHAR},
+      HADDRESS = #{haddress,jdbcType=VARCHAR},
+      TELPHONE = #{telphone,jdbcType=VARCHAR},
+      SAFETEL = #{safetel,jdbcType=VARCHAR},
+      ROOMNUM = #{roomnum,jdbcType=INTEGER},
+      BEDNUM = #{bednum,jdbcType=INTEGER},
+      STARS = #{stars,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      STATEDATE = #{statedate,jdbcType=VARCHAR},
+      STATION = #{station,jdbcType=VARCHAR},
+      VALIDATECODE = #{validatecode,jdbcType=VARCHAR},
+      LINKDATE = #{linkdate,jdbcType=VARCHAR},
+      NUM = #{num,jdbcType=VARCHAR},
+      INPUTTIME = #{inputtime,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      THIRDPART = #{thirdpart,jdbcType=VARCHAR},
+      TRANSTYPE = #{transtype,jdbcType=VARCHAR},
+      HOTELVER = #{hotelver,jdbcType=VARCHAR},
+      HOTELTYPE = #{hoteltype,jdbcType=VARCHAR},
+      FWBM = #{fwbm,jdbcType=VARCHAR},
+      PSCODE = #{pscode,jdbcType=VARCHAR},
+      QTLX = #{qtlx,jdbcType=VARCHAR},
+      CSFS = #{csfs,jdbcType=VARCHAR},
+      JYXZ = #{jyxz,jdbcType=VARCHAR},
+      SJD = #{sjd,jdbcType=VARCHAR},
+      SWD = #{swd,jdbcType=VARCHAR},
+      STHZH = #{sthzh,jdbcType=VARCHAR},
+      SGSZZH = #{sgszzh,jdbcType=VARCHAR},
+      PSORGAN = #{psorgan,jdbcType=VARCHAR},
+      SQJWS = #{sqjws,jdbcType=VARCHAR},
+      HOTELKIND = #{hotelkind,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      FLOORS = #{floors,jdbcType=VARCHAR},
+      DBENCRYPT = #{dbencrypt,jdbcType=VARCHAR},
+      ZY_RKSJ = #{zyRksj,jdbcType=VARCHAR},
+      REDFLAG = #{redflag,jdbcType=INTEGER},
+      id = #{id,jdbcType=VARCHAR}
+    where HNOHOTEL = #{hnohotel,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delHotelDistanceData">
+  	delete from ep_hotel_distance where 1=1 
+  </delete>
+  
+  <insert id="calculationAndStorage">
+  		insert INTO ep_hotel_distance(hotel_id,nearly_hotel_id,distance) select tid,hid,jl from(SELECT t.HNOHOTEL tid,h.HNOHOTEL hid,
+			 round(
+				6378.138 * 2 * asin(
+					sqrt(
+						pow(
+							sin(
+								(
+									t.SJD * pi() / 180 - h.SJD * pi() / 180
+								) / 2
+							),
+							2
+						) + cos(t.SJD * pi() / 180) * cos(h.SJD * pi() / 180) * pow(
+							sin(
+								(
+									t.SWD * pi() / 180 - h.SWD * pi() / 180
+								) / 2
+							),
+							2
+						)
+					)
+				) * 1000
+			) jl
+		from ep_hotel t  JOIN
+		 ep_hotel h 
+		where 1=1 and t.id &lt;&gt; h.id
+		ORDER BY t.HNOHOTEL desc, h.HNOHOTEL desc) a where 1=1 and jl &lt; 5000 
+  </insert>
+  
+</mapper>

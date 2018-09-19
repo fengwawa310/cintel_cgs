@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 加载配置文件 -->
+	<context:property-placeholder  ignore-resource-not-found="true"
+								   location="classpath:resource/*.properties,
+                                  file:/usr/web_home/manage/resource/*.properties" />
+	<!--dubbo配置文件加载-->
+	<!--<import resource="classpath:dubbo/dubbo-consumer.xml" />-->
+
+	<!--sprig-bean创建-->
+	<import resource="classpath:spring/spring-bean.xml" />
+	<import resource="classpath:spring/spring-task.xml" />
+	<!--fastdfs线程池创建-->
+	<!-- <bean name="fastDfsconnectionPool" class="com.service.fastdfs.FastDfsUtil"
+		  init-method="init">
+	</bean> -->
+</beans>

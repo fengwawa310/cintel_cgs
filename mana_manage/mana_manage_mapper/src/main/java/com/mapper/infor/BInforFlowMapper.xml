@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.infor.BInforFlowMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.infor.BInforFlow" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="INFOR_NO" property="inforNo" jdbcType="VARCHAR" />
+    <result column="FLOW_STEP" property="flowStep" jdbcType="INTEGER" />
+    <result column="FLOW_TYPE" property="flowType" jdbcType="INTEGER" />
+    <result column="IS_HANDOUT" property="isHandout" jdbcType="INTEGER" />
+    <result column="HANDOUT_UNIT" property="handoutUnit" jdbcType="VARCHAR" />
+    <result column="HANDOUT_PERSON" property="handoutPerson" jdbcType="VARCHAR" />
+    <result column="IS_SIGN" property="isSign" jdbcType="INTEGER" />
+    <result column="SIGN_UNIT" property="signUnit" jdbcType="VARCHAR" />
+    <result column="SIGN_PERSON" property="signPerson" jdbcType="VARCHAR" />
+    <result column="IS_ACCEPT" property="isAccept" jdbcType="INTEGER" />
+    <result column="ACCEPT_UNIT" property="acceptUnit" jdbcType="VARCHAR" />
+    <result column="ACCEPT_PERSON" property="acceptPerson" jdbcType="VARCHAR" />
+    <result column="IS_REPORT" property="isReport" jdbcType="INTEGER" />
+    <result column="REPORT_UNIT" property="reportUnit" jdbcType="VARCHAR" />
+    <result column="REPORT_PERSON" property="reportPerson" jdbcType="VARCHAR" />
+    <result column="IS_VERIFY" property="isVerify" jdbcType="INTEGER" />
+    <result column="VERIFY_UNIT" property="verifyUnit" jdbcType="VARCHAR" />
+    <result column="VERIFY_PERSON" property="verifyPerson" jdbcType="VARCHAR" />
+    <result column="IS_USE" property="isUse" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, INFOR_NO, FLOW_STEP, FLOW_TYPE, IS_HANDOUT, HANDOUT_UNIT, HANDOUT_PERSON, IS_SIGN, 
+    SIGN_UNIT, SIGN_PERSON, IS_ACCEPT, ACCEPT_UNIT, ACCEPT_PERSON, IS_REPORT, REPORT_UNIT, 
+    REPORT_PERSON, IS_VERIFY, VERIFY_UNIT, VERIFY_PERSON, IS_USE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from b_infor_flow
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from b_infor_flow
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.infor.BInforFlow" >
+    insert into b_infor_flow (ID, INFOR_NO, FLOW_STEP, 
+      FLOW_TYPE, IS_HANDOUT, HANDOUT_UNIT, 
+      HANDOUT_PERSON, IS_SIGN, SIGN_UNIT, 
+      SIGN_PERSON, IS_ACCEPT, ACCEPT_UNIT, 
+      ACCEPT_PERSON, IS_REPORT, REPORT_UNIT, 
+      REPORT_PERSON, IS_VERIFY, VERIFY_UNIT, 
+      VERIFY_PERSON, IS_USE)
+    values (#{id,jdbcType=VARCHAR}, #{inforNo,jdbcType=VARCHAR}, #{flowStep,jdbcType=INTEGER}, 
+      #{flowType,jdbcType=INTEGER}, #{isHandout,jdbcType=INTEGER}, #{handoutUnit,jdbcType=VARCHAR}, 
+      #{handoutPerson,jdbcType=VARCHAR}, #{isSign,jdbcType=INTEGER}, #{signUnit,jdbcType=VARCHAR}, 
+      #{signPerson,jdbcType=VARCHAR}, #{isAccept,jdbcType=INTEGER}, #{acceptUnit,jdbcType=VARCHAR}, 
+      #{acceptPerson,jdbcType=VARCHAR}, #{isReport,jdbcType=INTEGER}, #{reportUnit,jdbcType=VARCHAR}, 
+      #{reportPerson,jdbcType=VARCHAR}, #{isVerify,jdbcType=INTEGER}, #{verifyUnit,jdbcType=VARCHAR}, 
+      #{verifyPerson,jdbcType=VARCHAR}, #{isUse,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.infor.BInforFlow" >
+    insert into b_infor_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="inforNo != null" >
+        INFOR_NO,
+      </if>
+      <if test="flowStep != null" >
+        FLOW_STEP,
+      </if>
+      <if test="flowType != null" >
+        FLOW_TYPE,
+      </if>
+      <if test="isHandout != null" >
+        IS_HANDOUT,
+      </if>
+      <if test="handoutUnit != null" >
+        HANDOUT_UNIT,
+      </if>
+      <if test="handoutPerson != null" >
+        HANDOUT_PERSON,
+      </if>
+      <if test="isSign != null" >
+        IS_SIGN,
+      </if>
+      <if test="signUnit != null" >
+        SIGN_UNIT,
+      </if>
+      <if test="signPerson != null" >
+        SIGN_PERSON,
+      </if>
+      <if test="isAccept != null" >
+        IS_ACCEPT,
+      </if>
+      <if test="acceptUnit != null" >
+        ACCEPT_UNIT,
+      </if>
+      <if test="acceptPerson != null" >
+        ACCEPT_PERSON,
+      </if>
+      <if test="isReport != null" >
+        IS_REPORT,
+      </if>
+      <if test="reportUnit != null" >
+        REPORT_UNIT,
+      </if>
+      <if test="reportPerson != null" >
+        REPORT_PERSON,
+      </if>
+      <if test="isVerify != null" >
+        IS_VERIFY,
+      </if>
+      <if test="verifyUnit != null" >
+        VERIFY_UNIT,
+      </if>
+      <if test="verifyPerson != null" >
+        VERIFY_PERSON,
+      </if>
+      <if test="isUse != null" >
+        IS_USE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="inforNo != null" >
+        #{inforNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStep != null" >
+        #{flowStep,jdbcType=INTEGER},
+      </if>
+      <if test="flowType != null" >
+        #{flowType,jdbcType=INTEGER},
+      </if>
+      <if test="isHandout != null" >
+        #{isHandout,jdbcType=INTEGER},
+      </if>
+      <if test="handoutUnit != null" >
+        #{handoutUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="handoutPerson != null" >
+        #{handoutPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isSign != null" >
+        #{isSign,jdbcType=INTEGER},
+      </if>
+      <if test="signUnit != null" >
+        #{signUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="signPerson != null" >
+        #{signPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isAccept != null" >
+        #{isAccept,jdbcType=INTEGER},
+      </if>
+      <if test="acceptUnit != null" >
+        #{acceptUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptPerson != null" >
+        #{acceptPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isReport != null" >
+        #{isReport,jdbcType=INTEGER},
+      </if>
+      <if test="reportUnit != null" >
+        #{reportUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="reportPerson != null" >
+        #{reportPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isVerify != null" >
+        #{isVerify,jdbcType=INTEGER},
+      </if>
+      <if test="verifyUnit != null" >
+        #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyPerson != null" >
+        #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isUse != null" >
+        #{isUse,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.infor.BInforFlow" >
+    update b_infor_flow
+    <set >
+      <if test="inforNo != null" >
+        INFOR_NO = #{inforNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStep != null" >
+        FLOW_STEP = #{flowStep,jdbcType=INTEGER},
+      </if>
+      <if test="flowType != null" >
+        FLOW_TYPE = #{flowType,jdbcType=INTEGER},
+      </if>
+      <if test="isHandout != null" >
+        IS_HANDOUT = #{isHandout,jdbcType=INTEGER},
+      </if>
+      <if test="handoutUnit != null" >
+        HANDOUT_UNIT = #{handoutUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="handoutPerson != null" >
+        HANDOUT_PERSON = #{handoutPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isSign != null" >
+        IS_SIGN = #{isSign,jdbcType=INTEGER},
+      </if>
+      <if test="signUnit != null" >
+        SIGN_UNIT = #{signUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="signPerson != null" >
+        SIGN_PERSON = #{signPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isAccept != null" >
+        IS_ACCEPT = #{isAccept,jdbcType=INTEGER},
+      </if>
+      <if test="acceptUnit != null" >
+        ACCEPT_UNIT = #{acceptUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptPerson != null" >
+        ACCEPT_PERSON = #{acceptPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isReport != null" >
+        IS_REPORT = #{isReport,jdbcType=INTEGER},
+      </if>
+      <if test="reportUnit != null" >
+        REPORT_UNIT = #{reportUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="reportPerson != null" >
+        REPORT_PERSON = #{reportPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isVerify != null" >
+        IS_VERIFY = #{isVerify,jdbcType=INTEGER},
+      </if>
+      <if test="verifyUnit != null" >
+        VERIFY_UNIT = #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyPerson != null" >
+        VERIFY_PERSON = #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="isUse != null" >
+        IS_USE = #{isUse,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.infor.BInforFlow" >
+    update b_infor_flow
+    set INFOR_NO = #{inforNo,jdbcType=VARCHAR},
+      FLOW_STEP = #{flowStep,jdbcType=INTEGER},
+      FLOW_TYPE = #{flowType,jdbcType=INTEGER},
+      IS_HANDOUT = #{isHandout,jdbcType=INTEGER},
+      HANDOUT_UNIT = #{handoutUnit,jdbcType=VARCHAR},
+      HANDOUT_PERSON = #{handoutPerson,jdbcType=VARCHAR},
+      IS_SIGN = #{isSign,jdbcType=INTEGER},
+      SIGN_UNIT = #{signUnit,jdbcType=VARCHAR},
+      SIGN_PERSON = #{signPerson,jdbcType=VARCHAR},
+      IS_ACCEPT = #{isAccept,jdbcType=INTEGER},
+      ACCEPT_UNIT = #{acceptUnit,jdbcType=VARCHAR},
+      ACCEPT_PERSON = #{acceptPerson,jdbcType=VARCHAR},
+      IS_REPORT = #{isReport,jdbcType=INTEGER},
+      REPORT_UNIT = #{reportUnit,jdbcType=VARCHAR},
+      REPORT_PERSON = #{reportPerson,jdbcType=VARCHAR},
+      IS_VERIFY = #{isVerify,jdbcType=INTEGER},
+      VERIFY_UNIT = #{verifyUnit,jdbcType=VARCHAR},
+      VERIFY_PERSON = #{verifyPerson,jdbcType=VARCHAR},
+      IS_USE = #{isUse,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

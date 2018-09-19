@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>情报详情</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<!-- basic styles -->
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="../css/jquery.dataTables.min.css" />
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+<script src="../js/common.js"></script>
+<link rel="stylesheet" href="../css/commonStyle.css" />
+<link rel="stylesheet" href="../css/intelligence.css" />
+<script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- page specific plugin scripts -->
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript"></script>
+</head>
+<body>
+	<div
+		style="width: 100%; height: 100%; margin: 0 auto; padding: 8px; background: white">
+		<!--当前页面位置-->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+			<ul class="breadcrumb">
+				<li><span class="title">当前位置：</span> <span>情报管理>>情报详情</span></li>
+			</ul>
+		</div>
+		<!--情报基本信息录入-->
+		<div class="breadcrumbs"
+			style="width: auto; height: auto; padding: 0px">
+			<!--情报信息录入-->
+			<div class="row breadcrumbs"
+				style="text-align: center; margin: 0px; border-left: none; border-top: none; border-right: none">
+				<div class="col-md-12">
+					<span class="title" id="inforNo"></span>
+				</div>
+			</div>
+			<!--情报标题、情报类型-->
+			<div class="row breadcrumbs intelligenceContainer">
+				<div class="col-md-8 noPadding">
+					<div class="col-md-2 intelligenceTxt">
+						<span>情报标题</span>
+					</div>
+					<div class="col-md-10 intelligenceInfo">
+						<span id="inforTitle"></span>
+					</div>
+				</div>
+				<!--    <div class="col-md-4 noPadding">
+                <div class="col-md-4 intelligenceTxt">
+                    <span>情报类型</span>
+                </div>
+                <div class="col-md-8 intelligenceInfo lastInput">
+                    <span id="inforClass"></span>
+                </div>
+            </div> -->
+			</div>
+			<!--查证单位、单位办结状态、生成时间-->
+			<div class="row breadcrumbs intelligenceContainer">
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt">
+						<span>查证单位</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo">
+						<span id="receiveUnitName"></span>
+					</div>
+				</div>
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt">
+						<span>生成时间</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo">
+						<span id="creatTime"></span>
+					</div>
+				</div>
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt">
+						<span>下发时间</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo lastInput">
+						<span id="handoutTime"></span>
+					</div>
+				</div>
+			</div>
+			<!-- 审核人姓名、签发人姓名-->
+			<div class="row breadcrumbs intelligenceContainer">
+
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt">
+						<span>审核人姓名</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo">
+						<span id="authorizePersonName"></span>
+					</div>
+				</div>
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt" style=" border-bottom: 1px solid #D1E1FF;">
+						<span>签收审核单位</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo" style=" border-bottom: 1px solid #D1E1FF;">
+						<span id="authorizeUnitName"></span>
+					</div>
+				</div>
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt" style=" border-bottom: 1px solid #D1E1FF;">
+						<span>下发人姓名</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo lastInput" style=" border-bottom: 1px solid #D1E1FF;">
+						<span id="handoutPersonName"></span>
+					</div>
+				</div>
+				<div class="col-md-4 noPadding topBorder">
+					<div class="col-md-4 intelligenceTxt">
+						<span>下发人单位</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo">
+						<span id="handoutUnitName"></span>
+					</div>
+				</div>
+			</div>
+			<!--附件-->
+			<!--    <div class="row breadcrumbs intelligenceContainer">
+            <div class="col-md-2 intelligenceTxt" style="width: 11.11%">
+                <span>附件</span>
+            </div>
+            <div class="col-md-9 intelligenceInfo lastInput" style="width: 88.88%">
+                <span id="fujianUrl"></span>
+            </div>
+        </div> -->
+			<!--查证内容-->
+			<div class="row breadcrumbs intelligenceContainer textarea-input"
+				style="min-height: 200px;">
+				<div class="col-md-2 intelligenceTxt" style="width: 11.11%;">
+					<span class="detail-area-menu">查证内容</span>
+				</div>
+				<div class="col-md-10 intelligenceInfo lastInput"
+					style="width: 88.88%; min-height: 200px; line-height: 27px;">
+					<span id="inforContent"></span>
+				</div>
+			</div>
+			<!--嫌疑人信息栏-->
+			<div class="row breadcrumbs titleBadge">
+				<div class="row" style="padding-left: 12px">
+					<div class="col-md-11" style="text-align: left">
+						<span class="multiTitle">嫌疑人员</span>
+					</div>
+					<!--添加的图标-->
+					<div class="col-md-1" style="text-align: right"></div>
+				</div>
+			</div>
+			<div id="suspectDiv">
+				<!--嫌疑人标题栏-->
+				<div class="row breadcrumbs intelligenceContainer"
+					style="border-top: 1px solid #D1E1FF">
+					<div class="col-md-5 intelligenceTxt leftTxt">
+						<span>姓名</span>
+					</div>
+					<div class="col-md-7 intelligenceTxt leftTxt"
+						style="border-right: 0;">
+						<span>身份证</span>
+					</div>
+				</div>
+			</div>
+			<!--工作建议-->
+			<div class="row breadcrumbs intelligenceContainer">
+				<div class="col-md-2 intelligenceTxt" style="width: 11.11%">
+					<span>工作建议</span>
+				</div>
+				<div class="col-md-9 intelligenceInfo lastInput"
+					style="width: 88.88%">
+					<span id="advise"></span>
+				</div>
+			</div>
+			<!--提请办结单-->
+			<div class="row breadcrumbs"
+				style="text-align: center; margin: 0px; border-left: none; border-top: none; border-right: none">
+				<div class="col-md-12">
+					<span class="title" id="banjiedan"></span>
+				</div>
+			</div>
+			<!--查证单位、生成时间-->
+			<div class="row breadcrumbs intelligenceContainer">
+				<div class="col-md-4 noPadding">
+					<div class="col-md-4 intelligenceTxt">
+						<span>查证单位</span>
+					</div>
+					<div class="col-md-8 intelligenceInfo">
+						<span id="receiveUnitName2"></span>
+					</div>
+				</div>
+				<!-- <div class="col-md-8 noPadding">
+					<div class="col-md-2 intelligenceTxt">
+						<span>生成时间</span>
+					</div>
+					<div class="col-md-10 intelligenceInfo lastInput">
+						<span id="creatTime"></span>
+					</div>
+				</div> -->
+			</div>
+
+			<!--查证过程-->
+			<div class="row breadcrumbs intelligenceContainer textarea-input"
+				style="min-height: 80px">
+				<div class="col-md-2 intelligenceTxt"
+					style="width: 11.11%; min-height: 80px;">
+					<span class="detail-area-menu">查证过程</span>
+				</div>
+				<div class="col-md-10 intelligenceInfo lastInput"
+					style="width: 88.88%; min-height: 80px; line-height: 27px">
+					<span id="process"></span>
+				</div>
+			</div>
+			<!--查证结果-->
+			<div class="row breadcrumbs intelligenceContainer textarea-input"
+				style="min-height: 80px">
+				<div class="col-md-2 intelligenceTxt"
+					style="width: 11.11%; min-height: 80px;">
+					<span class="detail-area-menu">查证结果</span>
+				</div>
+				<div class="col-md-10 intelligenceInfo lastInput"
+					style="width: 88.88%; min-height: 80px; line-height: 27px">
+					<span id="result"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+    
+$(window).ready(function () {
+    var thisURL = document.URL;
+    var  getval =thisURL.split('?')[1];
+    var inforNo= getval.split("=")[1];
+    findList(inforNo);
+});
+    function findList(inforNo){
+        $.ajax({
+            type: 'post',
+            url: getRootPath_web() + "IntelligenceHandler/findListinforNo.action?inforNo="+inforNo,//发送请求
+            dataType : "json",
+            success: function(data) {
+                var json = $.parseJSON(data.data);
+                var jsonObj = json.data;
+                console.log(jsonObj.xianyirenList);
+                $("#inforNo").text("情报单("+jsonObj.inforNo+")信息");
+                $("#inforTitle").text(jsonObj.inforTitle == null?"":jsonObj.inforTitle);
+                $("#receiveUnitName").text(jsonObj.receiveUnitName == null?"":jsonObj.receiveUnitName);
+                $("#receiveUnitName2").text(jsonObj.receiveUnitName == null?"":jsonObj.receiveUnitName);
+                $("#banJieType").text(jsonObj.banJieType == null?"":jsonObj.banJieType);
+                $("#inforClass").text(jsonObj.inforClass == null?"":jsonObj.inforClass);
+                $("#creatTime").text(jsonObj.creatTime == null?"":jsonObj.creatTime);
+                $("#inforContent").text(jsonObj.inforContent == null?"":jsonObj.inforContent);
+                $("#advise").text(jsonObj.advise == null?"":jsonObj.advise);
+                $("#process").text(jsonObj.process == null?"":jsonObj.process);
+                $("#result").text(jsonObj.result == null?"":jsonObj.result);
+                $("#authorizeUnitName").text(jsonObj.authorizeUnitName == null?"":jsonObj.authorizeUnitName );
+                $("#authorizePersonName").text(jsonObj.authorizePersonName == null?"":jsonObj.authorizePersonName);
+                $("#handoutPersonName").text(jsonObj.handoutPersonName == null?"":jsonObj.handoutPersonName);
+                $("#handoutUnitName").text(jsonObj.handoutUnitName == null?"":jsonObj.handoutUnitName);
+                $("#handoutTime").text(jsonObj.handoutTime == null?"":jsonObj.handoutTime);
+             	//TODO 需要修改 提请办结单（刑事警察支队便衣大队五中队）
+                $("#banjiedan").text("提请办结单("+jsonObj.inforNo+")");
+ 
+			    var suspectArr = jsonObj.xianyirenList;
+			    for (var i = 0; i<suspectArr.length;i++){
+			        var name = suspectArr[i].name;
+			        var idCard = suspectArr[i].idcardNum;
+			        var suspectDiv = "<div class=\"row breadcrumbs intelligenceContainer\" style=\"border-bottom: none\">\n" +
+			            "            <div class=\"row breadcrumbs intelligenceContainer\">\n" +
+			            "                <div class=\"col-md-5 intelligenceInfo\">\n" +
+			            "                    <span id=\"\">"+name+"</span>\n" +
+			            "                </div>\n" +
+			            "                <div class=\"col-md-7 intelligenceInfo\" style=\"border-right: 0;\">\n" +
+			            "                    <span>"+idCard+"</span>\n" +
+			            "                </div>\n" +
+			            "            </div>\n" +
+			            "        </div>";
+			        $('#suspectDiv').append(suspectDiv);
+			    }
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

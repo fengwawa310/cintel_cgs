@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Shiro的Web过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"/>
+		<property name="loginUrl" value="/login/page.do"/>
+		<property name="successUrl" value="/"/>
+		<!-- 自定义filter，可用来更改默认的表单名称配置 -->
+		<property name="filters">
+			<util:map>
+				<!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 -->
+				<entry key="authc" value-ref="formAuthenticationFilter"/>
+				<entry key="sysUser" value-ref="sysUserFilter"/>
+			</util:map>
+		</property>
+		<property name="filterChainDefinitions">
+			<value>
+				/static/** = anon
+				/view/** = anon
+				/css/** = anon
+				/js/** = anon
+				/img/** = anon
+				/hui/* = anon
+				/hui/** = anon
+				/hui/*** = anon
+				/login.jsp = anon
+				/login.html = anon
+				/login/page.do = anon
+				/sysMenu/getSysConfig = anon
+				/login/login.do = anon
+				/loginCert/loginCert.do = anon
+				/** = authc,sysUser
+				/=authc
+				<!--/** = authc,sysUser-->
+			</value>
+		</property>
+	</bean>
+
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="userRealm"/>
+		<property name="sessionManager" ref="sessionManager"/>
+		<!--ehcatch缓存===若不配置则每次查询均走数据，极大的降低效率-->
+		<property name="cacheManager" ref="shiroCacheManager"/>
+		<!-- redis缓存====分布式存储，单点登录 -->
+		<!--<property name="cacheManager" ref="redisCacheManager" />-->
+		<property name="rememberMeManager" ref="rememberMeManager"/>
+
+	</bean>
+
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<!-- session的失效时长，单位毫秒 1小时: 3600000 -->
+		<!-- 设置全局会话超时时间，默认30分钟，即如果30分钟内没有访问会话将过期 1800000 -->
+		<property name="globalSessionTimeout" value="1800000"/>
+		<!-- <property name="sessionMode" value="10000"/>-->
+		<!-- <property name="deleteInvalidSessions" value="true"/>-->
+		<!-- 是否开启会话验证器，默认是开启的 -->
+		<property name="sessionValidationSchedulerEnabled" value="true"/>
+		<!--
+           Shiro提供了会话验证调度器，用于定期的验证会话是否已过期，如果过期将停止会话；
+           出于性能考虑，一般情况下都是获取会话时来验证会话是否过期并停止会话的；
+           但是如在web环境中，如果用户不主动退出是不知道会话是否过期的，因此需要定期的检测会话是否过期，
+           Shiro提供了会话验证调度器SessionValidationScheduler来做这件事情。
+        -->
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+		<!--ehcatch-session实现-->
+		<property name="sessionDAO" ref="sessionDAO"/>
+		<!-- redis-分布式session存储的实现 -->
+		<!--<property name="sessionDAO" ref="redisShiroSessionDAO" />-->
+		<property name="sessionIdCookieEnabled" value="true"/>
+		<property name="sessionIdCookie" ref="sessionIdCookie"/>
+		<!-- session 监听，可以多个。 -->
+		<property name="sessionListeners">
+			<list>
+				<!--<ref bean="customSessionListener"/>-->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
+	</bean>
+
+	<!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>-->
+	<!-- Realm实现 -->
+	<bean id="userRealm" class="com.controller.login.shiro.ShiroRealm">
+		<property name="cachingEnabled" value="false"/>
+		<property name="authenticationCachingEnabled" value="true"/>
+		<property name="authenticationCacheName" value="authenticationCache"/>
+		<!--catche-->
+		<property name="authorizationCachingEnabled" value="true"/>
+		<property name="authorizationCacheName" value="authorizationCache"/>                                 <!--catche-->
+	</bean>
+
+	<!-- 凭证匹配器 -->  <!--适用于没有对密码进行处理的情况-即前台页面没有对密码进行加密处理，密码过来用匹配器主动加密密码-->
+	<!-- <bean id="credentialsMatcher" class="com.login.shiro.cridenty.RetryLimitHashedCredentialsMatcher">
+        <constructor-arg ref="cacheManager"/>
+         <property name="hashAlgorithmName" value="md5"/>
+         <property name="hashIterations" value="2"/>
+         <property name="storedCredentialsHexEncoded" value="true"/>
+     </bean>-->
+
+	<!-- 会话Cookie模板 -->
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="lsJessionId"/>
+		<property name="httpOnly" value="true"/>
+		<property name="maxAge" value="-1"/>
+	</bean>
+
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe"/>
+		<property name="httpOnly" value="true"/>
+		<!-- 7天,采用spring el计算方便修改[细节决定成败]！ -->
+		<property name="maxAge" value="2592000"/><!--30天-->
+	</bean>
+
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
+		<property name="cipherKey"
+				  value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+		<property name="cookie" ref="rememberMeCookie"/>
+	</bean>
+	<!-- 会话ID生成器 -->
+	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+	<!-- 会话DAO -->
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>                     <!--一个cache存储-->
+		<property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+	</bean>
+
+	<!-- 会话验证调度器 -->
+	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+		<!-- session的失效时长，单位毫秒 1小时: 3600 000 -->
+		<property name="interval" value="3600000"/>
+		<property name="sessionManager" ref="sessionManager"/>
+	</bean>
+
+	<!-- custom shiro session listener -->
+	<!--<bean id="customSessionListener" class="com.login.shiro.listenter.CustomSessionListener">
+	</bean>-->
+
+	<!--用户登录时候会走-->
+	<bean id="sysUserFilter" class="com.controller.login.filter.SysUserFilter"/>
+
+	<!-- 基于Form表单的身份验证过滤器 -->
+	<!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
+	<!-- 可通过此配置，判断验证码 -->
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+		<property name="usernameParam" value="userName"/>
+		<property name="passwordParam" value="password"/>
+		<property name="rememberMeParam" value="rememberMe"/>
+	</bean>
+
+	<!--&lt;!&ndash; 自定义redisManager-redis &ndash;&gt;-->
+	<!--<bean id="redisCacheManager" class="com.service.shiro.RedisCacheManager">-->
+		<!--<property name="jedisClient" ref="jedisClient" />-->
+	<!--</bean>-->
+	<!--&lt;!&ndash; redis-session会话存储的实现类 &ndash;&gt;-->
+	<!--<bean id="redisShiroSessionDAO" class="com.service.shiro.RedisSessionDAO">-->
+		<!--<property name="jedisClient" ref="jedisClient" />-->
+	<!--</bean>-->
+
+	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+		<property name="arguments" ref="securityManager"/>
+	</bean>
+
+
+	<!-- Shiro生命周期处理器-->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+</beans>

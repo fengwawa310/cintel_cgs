@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.EtFriendsMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.suspect.EtFriends" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUSPECT_NO" property="suspectNo" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="INTEGER" />
+    <result column="ROLE_DES" property="roleDes" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="IDCARD" property="idcard" jdbcType="VARCHAR" />
+    <result column="RELATION" property="relation" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="HEAD_URL" property="headUrl" jdbcType="INTEGER" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUSPECT_NO, ROLE_TYPE, ROLE_DES, NAME, IDCARD, RELATION, ADDRESS, HEAD_URL, REMARKS, 
+    CREAT_TIME, MODIFY_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_friends
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectFriendsByPrimaryKey"  resultType="java.util.HashMap" parameterType="java.util.Map" >
+	   SELECT
+			SUSPECT_ID id,
+			SUSPECT_ID suspectNo,
+			'' roleType,
+			'' roleDes,
+			t.NAME 'name',
+			t.IDCARD_NUM idcard,
+			'' relation,
+			PERMANET_NOW address,
+			concat(#{fastFileUrl},HEAD_PHOTO_URL) headUrl,
+			DEMO remarks,
+			CREAT_TIME creatTime,
+			MODIFY_TIME modifyTime,
+			'' parentId
+		FROM
+			et_suspect t
+		WHERE
+			t.SUSPECT_ID =  #{id}
+		UNION ALL
+			SELECT
+				ID id,
+				SUSPECT_NO suspectNo,
+				(select DIC_DES from dic_common c where c.DIC_CODE=ROLE_TYPE) roleType,
+				ROLE_DES roleDes,
+				NAME 'name',
+				IDCARD idcard,
+				RELATION relation,
+				ADDRESS address,
+				concat(#{fastFileUrl},HEAD_URL) headUrl,
+				REMARKS remarks,
+				CREAT_TIME creatTime,
+				MODIFY_TIME modifyTime,
+				SUSPECT_NO parentId
+			FROM
+				et_friends
+			WHERE
+				SUSPECT_NO = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_friends
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.suspect.EtFriends" >
+    insert into et_friends (ID, SUSPECT_NO, ROLE_TYPE, 
+      ROLE_DES, NAME, IDCARD, 
+      RELATION, ADDRESS, HEAD_URL, 
+      REMARKS, CREAT_TIME, MODIFY_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{suspectNo,jdbcType=VARCHAR}, #{roleType,jdbcType=INTEGER}, 
+      #{roleDes,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{relation,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{headUrl,jdbcType=INTEGER}, 
+      #{remarks,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.suspect.EtFriends" >
+    insert into et_friends
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suspectNo != null" >
+        SUSPECT_NO,
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE,
+      </if>
+      <if test="roleDes != null" >
+        ROLE_DES,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="idcard != null" >
+        IDCARD,
+      </if>
+      <if test="relation != null" >
+        RELATION,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectNo != null" >
+        #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=INTEGER},
+      </if>
+      <if test="roleDes != null" >
+        #{roleDes,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        #{headUrl,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.EtFriends" >
+    update et_friends
+    <set >
+      <if test="suspectNo != null" >
+        SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE = #{roleType,jdbcType=INTEGER},
+      </if>
+      <if test="roleDes != null" >
+        ROLE_DES = #{roleDes,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IDCARD = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        RELATION = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL = #{headUrl,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.suspect.EtFriends" >
+    update et_friends
+    set SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      ROLE_TYPE = #{roleType,jdbcType=INTEGER},
+      ROLE_DES = #{roleDes,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      IDCARD = #{idcard,jdbcType=VARCHAR},
+      RELATION = #{relation,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      HEAD_URL = #{headUrl,jdbcType=INTEGER},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

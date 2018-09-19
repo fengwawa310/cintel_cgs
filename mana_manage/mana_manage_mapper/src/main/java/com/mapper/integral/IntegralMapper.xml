@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.integral.IntegralMapper">
+<resultMap id="StatisticsResultMap" type="com.entity.integral.StatisticsEntity">
+    <result column="zoneName" jdbcType="VARCHAR" property="zoneName" />
+    <result column="caseClass" jdbcType="VARCHAR" property="caseClass" />
+    <result column="caseNum" jdbcType="INTEGER" property="caseNum" />
+    <result column="suspectNum" jdbcType="INTEGER" property="suspectNum" />
+    <result column="inforNum" jdbcType="INTEGER" property="inforNum" />
+    <result column="alarmNum" jdbcType="INTEGER" property="alarmNum" />
+  </resultMap>
+	<!--每日通报-区域案件统计 -->
+	<select id="caseZoneStatistics" parameterType="java.lang.String" resultMap="StatisticsResultMap">
+		select IFNULL((SELECT NAME FROM sys_area WHERE id = zc),zc) zoneName,CAST(sl AS CHAR) caseNum from
+		(select
+		ec.ZONE_CODE as zc,count(ec.ID) sl
+		from et_case as ec	WHERE
+		ec.IS_ABANDON =0 and ec.IS_ARCHIVE = 0
+		and LENGTH(ec.ZONE_CODE)>0
+		<if test="_parameter != null ">
+			and date_format(ec.CREAT_TIME,'%Y-%m-%d') = #{creatTime,jdbcType=VARCHAR}
+		</if>
+		GROUP BY ec.ZONE_CODE) as a order by sl desc
+	</select>
+	<!--每日通报-案件按类型统计 -->
+	<select id="caseClassStatistics" parameterType="java.lang.String" resultMap="StatisticsResultMap">
+		select IFNULL((select DIC_VALUE from dic_common WHERE DIC_CODE = cc),cc) caseClass,CAST(sl AS CHAR) caseNum
+		from(
+				(
+				select ec.CASE_CLASS as cc,count(ec.ID) sl
+				from et_case as ec
+				WHERE ec.IS_ABANDON =0
+					and ec.IS_ARCHIVE = 0
+					AND ec.CASE_CLASS is NOT NULL
+					AND ec.CASE_CLASS!="0"
+					AND ec.CASE_CLASS!="1916"
+				<if test="_parameter != null ">
+					and date_format(ec.CREAT_TIME,'%Y-%m-%d') = #{creatTime,jdbcType=VARCHAR}
+				</if>
+					GROUP BY ec.CASE_CLASS
+				)
+			UNION ALL
+				(
+					SELECT 1916 AS cc, count(ec.ID) sl
+					FROM et_case AS ec
+					WHERE ec.IS_ABANDON = 0
+						AND ec.IS_ARCHIVE = 0
+						AND( ISNULL(ec.CASE_CLASS) OR ec.CASE_CLASS="0" OR ec.CASE_CLASS="1916")
+					<if test="_parameter != null ">
+						and date_format(ec.CREAT_TIME,'%Y-%m-%d') =	#{creatTime,jdbcType=VARCHAR}
+					</if>
+				)
+		) as a order by sl desc
+	</select>
+	
+	<!--每日统计 -->
+	<select id="dailyStatistics" parameterType="java.lang.String" resultMap="StatisticsResultMap">
+		select a.id as zoneCode,a.name as zoneName,ifnull(b.sl,0) caseNum,IFNULL(c.sl,0) suspectNum,IFNULL(d.sl,0) inforNum,IFNULL(e.sl,0) alarmNum  
+		from (SELECT id,name from dic_unit order by id) as a
+		LEFT JOIN (select ec.INPUT_UNIT_CODE as iuc,count(ec.ID) sl
+		from et_case as ec 
+		WHERE ec.IS_ABANDON  =0  and ec.IS_ARCHIVE = 0
+		<if test="_parameter != null ">
+			and date_format(ec.CREAT_TIME,'%Y-%m-%d') =	#{creatTime,jdbcType=VARCHAR}
+		</if>
+		and LENGTH(ec.INPUT_UNIT_CODE)>0
+		GROUP BY ec.INPUT_UNIT_CODE
+		) as b on a.id = b.iuc
+		LEFT JOIN 
+		(select es.ENTRY_UNIT as zc,count(es.ID) sl
+		from et_suspect as es
+		WHERE es.IS_ABANDON  = 0 and es.IS_ARCHIVE = 0 and LENGTH(es.ENTRY_UNIT)>0
+		<if test="_parameter != null ">
+			and date_format(es.CREAT_TIME,'%Y-%m-%d') =	#{creatTime,jdbcType=VARCHAR}
+		</if>
+		GROUP BY es.ENTRY_UNIT
+		) as c on a.id = c.zc
+		LEFT JOIN 
+		(select es.LAUNCH_UNIT_CODE as luc,count(es.ID) sl
+		from et_infor as es
+		WHERE LENGTH(es.LAUNCH_UNIT_CODE)>0
+		<if test="_parameter != null ">
+			and date_format(es.CREAT_TIME,'%Y-%m-%d') =	#{creatTime,jdbcType=VARCHAR}
+		</if>
+		GROUP BY es.LAUNCH_UNIT_CODE
+		) as d on a.id = d.luc
+		LEFT JOIN 
+		(
+		SELECT es.UNIT_CODE AS uc,count(es.ID) sl
+			FROM et_alarm AS es
+		WHERE es.IS_ARCHIVE = 0 and es.IS_ABANDON = 0 and LENGTH(es.UNIT_CODE) > 0
+		<if test="_parameter != null ">
+			and date_format(es.CREAT_TIME,'%Y-%m-%d') =	#{creatTime,jdbcType=VARCHAR}
+		</if>
+		GROUP BY es.UNIT_CODE
+		) as e on a.id = e.uc
+	</select>
+
+</mapper>

@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.EtJudgeflowMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.taskStu.EtJudgeflow" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CASE_NO" property="caseNo" jdbcType="VARCHAR" />
+    <result column="JUDGE_TYPE" property="judgeType" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="FLOW_STATE" property="flowState" jdbcType="INTEGER" />
+    <result column="AUDITOR_UNIT" property="auditorUnit" jdbcType="VARCHAR" />
+    <result column="AUDITOR_CODE" property="auditorCode" jdbcType="VARCHAR" />
+    <result column="AUDIT_OPINION" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="ISSUED_UNIT" property="issuedUnit" jdbcType="VARCHAR" />
+    <result column="ISSUTER_CODE" property="issuterCode" jdbcType="VARCHAR" />
+    <result column="ISSUED_TIME" property="issuedTime" jdbcType="TIMESTAMP" />
+    <result column="SIGN_UNIT" property="signUnit" jdbcType="VARCHAR" />
+    <result column="SIGN_CODE" property="signCode" jdbcType="VARCHAR" />
+    <result column="SIGN_OPINION" property="signOpinion" jdbcType="VARCHAR" />
+    <result column="SIGN_TIME" property="signTime" jdbcType="TIMESTAMP" />
+    <result column="JUDGE_CODE" property="judgeCode" jdbcType="VARCHAR" />
+    <result column="JUDGE_OPINION" property="judgeOpinion" jdbcType="VARCHAR" />
+    <result column="JUDGE_TIME" property="judgeTime" jdbcType="TIMESTAMP" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CASE_NO, JUDGE_TYPE, TITLE, FLOW_STATE, AUDITOR_UNIT, AUDITOR_CODE, AUDIT_OPINION,
+    AUDIT_TIME, ISSUED_UNIT, ISSUTER_CODE, ISSUED_TIME, SIGN_UNIT, SIGN_CODE, SIGN_OPINION,
+    SIGN_TIME, JUDGE_CODE, JUDGE_OPINION, JUDGE_TIME, CREAT_TIME, MODIFY_TIME
+  </sql>
+  <select id="selectEJFList" resultType="java.util.Map" parameterType="java.util.Map" >
+	    select * from (
+		    SELECT
+				j.ID id,
+				j.CASE_NO caseNo,
+				j.TITLE title,
+				j.JUDGE_TYPE judgeType,
+				j.ISSUED_TIME issuedTime,
+				(select name from dic_unit u where u.id=j.ISSUED_UNIT) issuedUnit,
+				j.FLOW_STATE flowState,
+				(select c.DIC_DES from dic_common c where c.DIC_CODE=j.FLOW_STATE) flowStateName,
+				a.LOCATION_CASE afdd,
+				a.ALARM_TIME afsj
+			FROM
+				et_judgeflow j
+			LEFT JOIN et_alarm a ON j.CASE_NO = a.ALARM_NO
+			WHERE
+				1 = 1
+			AND JUDGE_TYPE = 1
+			<if test="afdd!= null and afdd!='' ">
+				and a.LOCATION_CASE like '%${afdd}%'
+			</if>
+			<if test="zbdw!= null and zbdw!=''">
+				and j.ISSUED_UNIT='${zbdw}'
+			</if>
+			<if test="bjsjStart!= null and bjsjStart!=''">
+				and a.ALARM_TIME &gt;= STR_TO_DATE('${bjsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="bjsjEnd!= null and bjsjEnd!=''">
+				and a.ALARM_TIME &lt; STR_TO_DATE('${bjsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="xfsjStart!= null and xfsjStart!='' ">
+				and j.ISSUED_TIME &gt;= STR_TO_DATE('${xfsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="xfsjEnd!= null and xfsjEnd!='' ">
+				and j.ISSUED_TIME &lt; STR_TO_DATE('${xfsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="flowState!= null and flowState!='' ">
+				and j.FLOW_STATE in (${flowState})
+			</if>
+			<if test="pageCon!= null and pageCon!=''">
+				and j.FLOW_STATE in (${pageCon})
+					<if test="issuedUnit!=null and issuedUnit!=''">
+						AND ISSUED_UNIT=#{issuedUnit}
+					</if>
+			</if>
+		UNION ALL
+			SELECT
+				j.ID id,
+				j.CASE_NO caseNo,
+				j.TITLE title,
+				j.JUDGE_TYPE judgeType,
+				j.ISSUED_TIME issuedTime,
+				(select name from dic_unit u where u.id=j.ISSUED_UNIT) issuedUnit,
+				j.FLOW_STATE flowState,
+				(select c.DIC_DES from dic_common c where c.DIC_CODE=j.FLOW_STATE) flowStateName,
+				c.DETAL_ADDRESS afdd,
+				c.HAPPEN_TIME_UP afsj
+			FROM
+				et_judgeflow j
+			LEFT JOIN et_case c ON j.CASE_NO = c.ID
+			WHERE
+				1 = 1
+			AND JUDGE_TYPE = 0
+			<if test="afdd!= null and afdd!='' ">
+				and c.DETAL_ADDRESS like '%${afdd}%'
+			</if>
+			<if test="zbdw!= null and zbdw!='' ">
+				and j.ISSUED_UNIT='${zbdw}'
+			</if>
+			<if test="bjsjStart!= null and bjsjStart!='' ">
+				and c.HAPPEN_TIME_UP &gt;= STR_TO_DATE('${bjsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="bjsjEnd!= null and bjsjEnd!=''">
+				and c.HAPPEN_TIME_UP &lt; STR_TO_DATE('${bjsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="xfsjStart!= null and xfsjStart!='' ">
+				and j.ISSUED_TIME &gt;= STR_TO_DATE('${xfsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="xfsjEnd!= null and xfsjEnd!=''">
+				and j.ISSUED_TIME &lt; STR_TO_DATE('${xfsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="flowState!= null and flowState!=''">
+				and j.FLOW_STATE in (${flowState})
+			</if>
+			<if test="pageCon!= null and pageCon!='' ">
+				and j.FLOW_STATE in (${pageCon})
+					<if test="issuedUnit!=null and issuedUnit!=''">
+						AND ISSUED_UNIT=#{issuedUnit}
+					</if>
+			</if>
+		) a
+			<if test="pageCon!= null and pageCon!='' ">
+				ORDER BY field(a.flowState,5000,5001,5003,5004,5006,5002,5005) ,a.afsj ASC
+			</if>
+			<if test="pageCon== null or pageCon=='' ">
+				ORDER BY field(a.flowState,5000,5001,5005,5003,5004,5006,5002) ,a.afsj ASC
+			</if>
+		<if test="start!=null and start!='' and length!=null and length!=''">
+		    LIMIT ${start},${length}
+	    </if>
+  </select>
+  <select id="countSelectEJFList" resultType="java.lang.Long" parameterType="java.util.Map" >
+    select
+    	count(*)
+    from (
+		    SELECT
+				j.ID id,
+				j.CASE_NO caseNo,
+				j.TITLE title,
+				j.JUDGE_TYPE judgeType,
+				j.ISSUED_TIME issuedTime,
+				j.FLOW_STATE flowState,
+				a.LOCATION_CASE afdd,
+				a.ALARM_TIME afsj
+			FROM
+				et_judgeflow j
+			LEFT JOIN et_alarm a ON j.CASE_NO = a.ALARM_NO
+			WHERE
+				1 = 1
+			AND JUDGE_TYPE = 1
+			<if test="afdd!= null and afdd!='' ">
+				and a.LOCATION_CASE like '%${afdd}%'
+			</if>
+			<if test="zbdw!= null and zbdw!=''">
+				and j.ISSUED_UNIT='${zbdw}'
+			</if>
+			<if test="bjsjStart!= null and bjsjStart!=''">
+				and a.ALARM_TIME &gt;= STR_TO_DATE('${bjsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="bjsjEnd!= null and bjsjEnd!=''">
+				and a.ALARM_TIME &lt; STR_TO_DATE('${bjsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="xfsjStart!= null and xfsjStart!='' ">
+				and j.ISSUED_TIME &gt;= STR_TO_DATE('${xfsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="xfsjEnd!= null and xfsjEnd!='' ">
+				and j.ISSUED_TIME &lt; STR_TO_DATE('${xfsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="flowState!= null and flowState!='' ">
+				and j.FLOW_STATE in (${flowState})
+			</if>
+			<if test="pageCon!= null and pageCon!=''">
+				and j.FLOW_STATE in (${pageCon})
+				<if test="issuedUnit!=null and issuedUnit!=''">
+					AND ISSUED_UNIT=#{issuedUnit}
+				</if>
+			</if>
+		UNION ALL
+			SELECT
+				j.ID id,
+				j.CASE_NO caseNo,
+				j.TITLE title,
+				j.JUDGE_TYPE judgeType,
+				j.ISSUED_TIME issuedTime,
+				j.FLOW_STATE flowState,
+				c.DETAL_ADDRESS afdd,
+				c.HAPPEN_TIME_UP afsj
+			FROM
+				et_judgeflow j
+			LEFT JOIN et_case c ON j.CASE_NO = c.ID
+			WHERE
+				1 = 1
+			AND JUDGE_TYPE = 0
+			<if test="afdd!= null and afdd!='' ">
+				and c.DETAL_ADDRESS like '%${afdd}%'
+			</if>
+			<if test="zbdw!= null and zbdw!='' ">
+				and j.ISSUED_UNIT='${zbdw}'
+			</if>
+			<if test="bjsjStart!= null and bjsjStart!='' ">
+				and c.HAPPEN_TIME_UP &gt;= STR_TO_DATE('${bjsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="bjsjEnd!= null and bjsjEnd!=''">
+				and c.HAPPEN_TIME_UP &lt; STR_TO_DATE('${bjsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="xfsjStart!= null and xfsjStart!='' ">
+				and j.ISSUED_TIME &gt;= STR_TO_DATE('${xfsjStart}',"%Y-%m-%d")
+			</if>
+			<if test="xfsjEnd!= null and xfsjEnd!=''">
+				and j.ISSUED_TIME &lt; STR_TO_DATE('${xfsjEnd}',"%Y-%m-%d %T")
+			</if>
+			<if test="flowState!= null and flowState!=''">
+				and j.FLOW_STATE in (${flowState})
+			</if>
+			<if test="pageCon!= null and pageCon!='' ">
+				and j.FLOW_STATE in (${pageCon})
+				<if test="issuedUnit!=null and issuedUnit!=''">
+					AND ISSUED_UNIT=#{issuedUnit}
+				</if>
+			</if>
+    ) a
+  </select>
+  <select id="selectEJFListFastEn" resultType="java.util.Map" parameterType="java.util.Map" >
+	    SELECT
+			j.ID id,
+			j.TITLE title,
+			j.CASE_NO caseNo,
+			j.JUDGE_TYPE judgeType,
+			j.ISSUED_TIME issuedTime,
+			j.FLOW_STATE flowState
+		FROM
+			et_judgeflow j
+		WHERE
+			1 = 1
+			and j.FLOW_STATE in(5003,5004,5006)
+		<if test="signCode!=null and signCode!=''">
+			AND SIGN_CODE=#{signCode}
+		</if>
+		
+  </select>
+  <select id="countSelectEJFListFastEn" resultType="java.lang.Long" parameterType="java.util.Map" >
+	    SELECT
+			count(*)
+		FROM
+			et_judgeflow j
+		WHERE
+			1 = 1
+			and j.FLOW_STATE in(5003,5004,5006)
+		<if test="signCode!=null and signCode!=''">
+			AND SIGN_CODE=#{signCode}
+		</if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+      ID, CASE_NO, JUDGE_TYPE, TITLE, FLOW_STATE, AUDITOR_UNIT,
+       (select user_name from sys_user c where c.id=AUDITOR_CODE) AUDITOR_CODE,
+        AUDIT_OPINION,
+    AUDIT_TIME, ISSUED_UNIT, ISSUTER_CODE, ISSUED_TIME, SIGN_UNIT,
+    (select user_name from sys_user c where c.id=SIGN_CODE) SIGN_CODE,
+    SIGN_OPINION,
+    SIGN_TIME,
+    (select user_name from sys_user c where c.id=JUDGE_CODE) JUDGE_CODE,
+    JUDGE_OPINION, JUDGE_TIME, CREAT_TIME, MODIFY_TIME
+    from et_judgeflow
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_judgeflow
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.taskStu.EtJudgeflow" >
+    insert into et_judgeflow (ID, CASE_NO, JUDGE_TYPE,
+    TITLE, FLOW_STATE, AUDITOR_UNIT,
+    AUDITOR_CODE, AUDIT_OPINION, AUDIT_TIME,
+    ISSUED_UNIT, ISSUTER_CODE, ISSUED_TIME,
+    SIGN_UNIT, SIGN_CODE, SIGN_OPINION,
+    SIGN_TIME, JUDGE_CODE, JUDGE_OPINION,
+    JUDGE_TIME, CREAT_TIME, MODIFY_TIME
+    )
+    values (#{id,jdbcType=VARCHAR}, #{caseNo,jdbcType=VARCHAR}, #{judgeType,jdbcType=INTEGER},
+    #{title,jdbcType=VARCHAR}, #{flowState,jdbcType=INTEGER}, #{auditorUnit,jdbcType=VARCHAR},
+    #{auditorCode,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP},
+    #{issuedUnit,jdbcType=VARCHAR}, #{issuterCode,jdbcType=VARCHAR}, #{issuedTime,jdbcType=TIMESTAMP},
+    #{signUnit,jdbcType=VARCHAR}, #{signCode,jdbcType=VARCHAR}, #{signOpinion,jdbcType=VARCHAR},
+    #{signTime,jdbcType=TIMESTAMP}, #{judgeCode,jdbcType=VARCHAR}, #{judgeOpinion,jdbcType=VARCHAR},
+    #{judgeTime,jdbcType=TIMESTAMP}, #{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.taskStu.EtJudgeflow" >
+    insert into et_judgeflow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="caseNo != null" >
+        CASE_NO,
+      </if>
+      <if test="judgeType != null" >
+        JUDGE_TYPE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="flowState != null" >
+        FLOW_STATE,
+      </if>
+      <if test="auditorUnit != null" >
+        AUDITOR_UNIT,
+      </if>
+      <if test="auditorCode != null" >
+        AUDITOR_CODE,
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="issuedUnit != null" >
+        ISSUED_UNIT,
+      </if>
+      <if test="issuterCode != null" >
+        ISSUTER_CODE,
+      </if>
+      <if test="issuedTime != null" >
+        ISSUED_TIME,
+      </if>
+      <if test="signUnit != null" >
+        SIGN_UNIT,
+      </if>
+      <if test="signCode != null" >
+        SIGN_CODE,
+      </if>
+      <if test="signOpinion != null" >
+        SIGN_OPINION,
+      </if>
+      <if test="signTime != null" >
+        SIGN_TIME,
+      </if>
+      <if test="judgeCode != null" >
+        JUDGE_CODE,
+      </if>
+      <if test="judgeOpinion != null" >
+        JUDGE_OPINION,
+      </if>
+      <if test="judgeTime != null" >
+        JUDGE_TIME,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null" >
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeType != null" >
+        #{judgeType,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="flowState != null" >
+        #{flowState,jdbcType=INTEGER},
+      </if>
+      <if test="auditorUnit != null" >
+        #{auditorUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuedUnit != null" >
+        #{issuedUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issuterCode != null" >
+        #{issuterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedTime != null" >
+        #{issuedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signUnit != null" >
+        #{signUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="signCode != null" >
+        #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signOpinion != null" >
+        #{signOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="signTime != null" >
+        #{signTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="judgeCode != null" >
+        #{judgeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeOpinion != null" >
+        #{judgeOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeTime != null" >
+        #{judgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.taskStu.EtJudgeflow" >
+    update et_judgeflow
+    <set >
+      <if test="caseNo != null" >
+        CASE_NO = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeType != null" >
+        JUDGE_TYPE = #{judgeType,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="flowState != null" >
+        FLOW_STATE = #{flowState,jdbcType=INTEGER},
+      </if>
+      <if test="auditorUnit != null" >
+        AUDITOR_UNIT = #{auditorUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorCode != null" >
+        AUDITOR_CODE = #{auditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuedUnit != null" >
+        ISSUED_UNIT = #{issuedUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issuterCode != null" >
+        ISSUTER_CODE = #{issuterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issuedTime != null" >
+        ISSUED_TIME = #{issuedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signUnit != null" >
+        SIGN_UNIT = #{signUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="signCode != null" >
+        SIGN_CODE = #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signOpinion != null" >
+        SIGN_OPINION = #{signOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="signTime != null" >
+        SIGN_TIME = #{signTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="judgeCode != null" >
+        JUDGE_CODE = #{judgeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeOpinion != null" >
+        JUDGE_OPINION = #{judgeOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeTime != null" >
+        JUDGE_TIME = #{judgeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.taskStu.EtJudgeflow" >
+    update et_judgeflow
+    set CASE_NO = #{caseNo,jdbcType=VARCHAR},
+    JUDGE_TYPE = #{judgeType,jdbcType=INTEGER},
+    TITLE = #{title,jdbcType=VARCHAR},
+    FLOW_STATE = #{flowState,jdbcType=INTEGER},
+    AUDITOR_UNIT = #{auditorUnit,jdbcType=VARCHAR},
+    AUDITOR_CODE = #{auditorCode,jdbcType=VARCHAR},
+    AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+    AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+    ISSUED_UNIT = #{issuedUnit,jdbcType=VARCHAR},
+    ISSUTER_CODE = #{issuterCode,jdbcType=VARCHAR},
+    ISSUED_TIME = #{issuedTime,jdbcType=TIMESTAMP},
+    SIGN_UNIT = #{signUnit,jdbcType=VARCHAR},
+    SIGN_CODE = #{signCode,jdbcType=VARCHAR},
+    SIGN_OPINION = #{signOpinion,jdbcType=VARCHAR},
+    SIGN_TIME = #{signTime,jdbcType=TIMESTAMP},
+    JUDGE_CODE = #{judgeCode,jdbcType=VARCHAR},
+    JUDGE_OPINION = #{judgeOpinion,jdbcType=VARCHAR},
+    JUDGE_TIME = #{judgeTime,jdbcType=TIMESTAMP},
+    CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+    MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

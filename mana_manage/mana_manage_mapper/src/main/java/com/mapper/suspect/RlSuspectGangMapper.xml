@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.RlSuspectGangMapper">
+    <resultMap id="BaseResultMap" type="com.entity.suspect.RlSuspectGang">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="SUSPECT_ID" property="suspectId" jdbcType="VARCHAR"/>
+        <result column="GANG_ID" property="gangId" jdbcType="VARCHAR"/>
+        <result column="ROLE" property="role" jdbcType="INTEGER"/>
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR"/>
+        <result column="DEMO" property="demo" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, SUSPECT_ID, GANG_ID, ROLE, PARENT_ID, DEMO, CREATE_TIME, MODIFY_TIME
+  </sql>
+	<select id="selectByPrimaryKey" resultType="java.util.HashMap"
+		parameterType="java.lang.String">
+		SELECT
+		SG.*
+	FROM
+		rl_suspect_gang SG
+	LEFT JOIN et_suspect S ON SG.SUSPECT_ID = S.SUSPECT_ID
+	WHERE id=#{id}
+  </select>
+
+    <select id="selectRlsByGangId" resultType="com.entity.suspect.RlSuspectGang" parameterType="java.lang.String">
+      SELECT
+        <include refid="Base_Column_List"/>
+	FROM
+		rl_suspect_gang
+	WHERE GANG_ID=#{gangId}
+    </select>
+
+    <select id="findGangsBySuspectId" resultType="com.entity.suspect.RlSuspectGang" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rl_suspect_gang
+        WHERE SUSPECT_ID=#{suspectId}
+    </select>
+
+    <select id="selectByGangId" resultType="java.util.HashMap" parameterType="java.util.Map">
+    SELECT
+		SG.ID id,
+		IFNULL(SG.PARENT_ID ,'') parentId,
+		IFNULL(SG.ROLE ,'') role,
+		IFNULL(S.NAME,'')  name,
+		IFNULL(S.BYNAME,'')  byName,
+		concat(#{fastFileUrl},IFNULL(S.HEAD_PHOTO_URL,''))  headPhotoUrl,
+		IFNULL(s.ORIGIN,'')  origin,
+		IFNULL(s.PERMANET_NOW,'')  permanetNow,
+		IFNULL(S.IDCARD_NUM,'')  idcardNum,
+		IFNULL(S.SUSPECT_ID,'')  suspectId
+	FROM
+		rl_suspect_gang SG
+	LEFT JOIN et_suspect S ON SG.SUSPECT_ID = S.SUSPECT_ID
+	WHERE GANG_ID=#{id}
+  </select>
+
+    <select id="fuzzeyQuery" resultType="java.util.HashMap" parameterType="java.lang.String">
+        SELECT
+			id,
+			gangId,
+			parentId,
+			suspectId,
+			name,
+			byName,
+			idcardNum
+		FROM
+			(SELECT
+        		SG.ID id,
+		        IFNULL(SG.GANG_ID, '') gangId,
+		        IFNULL(SG.PARENT_ID, '') parentId,
+		        IFNULL(S.SUSPECT_ID, '') suspectId,
+		        IFNULL(S. NAME, '') name,
+		        IFNULL(S.BYNAME, '') byName,
+		        IFNULL(S.IDCARD_NUM, '') idcardNum
+		        FROM
+		        et_suspect S
+			        LEFT JOIN rl_suspect_gang SG ON SG.SUSPECT_ID = S.SUSPECT_ID
+			        LEFT JOIN oper_permission op ON op.SUSPECT_NO = s.SUSPECT_ID
+	            WHERE 1=1   and s.IS_ARCHIVE =0 and s.IS_ABANDON = 0 
+		        <if test="paramStr != null">
+		          	AND (S.NAME like CONCAT('%',#{paramStr,jdbcType=VARCHAR},'%')
+		            or S.BYNAME like CONCAT('%',#{paramStr,jdbcType=VARCHAR},'%')
+		            or S.IDCARD_NUM like CONCAT('%',#{paramStr,jdbcType=VARCHAR},'%'))
+		        </if>
+		        AND (
+			op.id IN (
+				SELECT
+					a.id
+				FROM
+					(
+						SELECT
+							u.id uid,
+							u.jobs,
+							u. LEVEL,
+							CASE
+								WHEN u. LEVEL = 1 THEN u.province
+								WHEN u. LEVEL = 2 THEN u.city
+								WHEN u. LEVEL = 3 THEN u.area
+								WHEN u. LEVEL = 4 THEN u.police_station
+								ELSE 0
+								END CODE,
+							op.id
+						FROM
+							oper_permission op
+						LEFT JOIN sys_user u ON op.USER_NO = u.id
+						WHERE
+							1 = 1
+						AND (
+							op.PERMISSION_CODE = 0
+							OR op.PERMISSION_CODE = 1
+							OR op.PERMISSION_CODE = 2
+						)
+					) a
+				WHERE
+					a. CODE IN (
+						SELECT
+							CASE
+								WHEN u. LEVEL = 1 THEN u.province
+								WHEN u. LEVEL = 2 THEN u.city
+								WHEN u. LEVEL = 3 THEN u.area
+								WHEN u. LEVEL = 4 THEN u.police_station
+								ELSE 0
+							END CODE
+							FROM
+								sys_user u
+							WHERE
+								u.id = #{userId}
+					)
+				AND  (a.uid=#{userId} or a.jobs=2)
+			)
+			OR s.ENTRY = #{userId}
+		)
+		order by SG.CREATE_TIME DESC
+	) b
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rl_suspect_gang
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.entity.suspect.RlSuspectGang">
+    insert into rl_suspect_gang (ID, SUSPECT_ID, GANG_ID, 
+      ROLE, PARENT_ID, DEMO, 
+      CREATE_TIME, MODIFY_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{suspectId,jdbcType=VARCHAR}, #{gangId,jdbcType=VARCHAR}, 
+      #{role,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{demo,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.entity.suspect.RlSuspectGang">
+        insert into rl_suspect_gang
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="suspectId != null">
+                SUSPECT_ID,
+            </if>
+            <if test="gangId != null">
+                GANG_ID,
+            </if>
+            <if test="role != null">
+                ROLE,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="demo != null">
+                DEMO,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="suspectId != null">
+                #{suspectId,jdbcType=VARCHAR},
+            </if>
+            <if test="gangId != null">
+                #{gangId,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="demo != null">
+                #{demo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.RlSuspectGang">
+        update rl_suspect_gang
+        <set>
+            <if test="suspectId != null">
+                SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+            </if>
+            <if test="gangId != null">
+                GANG_ID = #{gangId,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                ROLE = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="demo != null">
+                DEMO = #{demo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.suspect.RlSuspectGang">
+    update rl_suspect_gang
+    set SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+      GANG_ID = #{gangId,jdbcType=VARCHAR},
+      ROLE = #{role,jdbcType=INTEGER},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      DEMO = #{demo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <update id="upgrade" parameterType="java.lang.String">
+	  UPDATE rl_suspect_gang
+		SET PARENT_ID = (
+			SELECT
+				PARENT_ID
+			FROM
+				(
+					SELECT
+						PARENT_ID
+					FROM
+						rl_suspect_gang
+					WHERE
+						id = #{id}
+				) a
+		)
+		WHERE
+			PARENT_ID = #{id}
+  </update>
+
+    <delete id="deleteByGangId">
+    delete from rl_suspect_gang
+    	where GANG_ID = #{id}
+  </delete>
+</mapper>

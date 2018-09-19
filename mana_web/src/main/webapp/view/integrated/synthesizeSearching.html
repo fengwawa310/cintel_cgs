@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>综合检索-首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/report.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/js/layui-v2.2.5/layui/css/layui.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+    <!-- basic scripts -->
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script src="../assets/js/layer/layer.js"></script>
+    <script src="../assets/js/layui-v2.2.5/layui/layui.js"></script>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <style>
+        .clwi{
+            height: 26px;
+            margin: 0;
+            padding: 0 10px;
+            background: #cee3f7 !important;
+            color: #00559c !important;
+            border: none;
+            border-radius: 0;
+        }
+        .row_ul{
+            list-style: none;
+            margin: 0;
+            padding:0;
+            overflow: hidden;
+            border-top: 1px solid #ccc;
+        }
+        .row_ul li{
+            float: left;
+            line-height: 30px;
+        }
+        .row_ul li a{
+            color: #333;
+            cursor: pointer;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space: nowrap;
+        }
+        .row_ul_one li{
+            float: left;
+            line-height: 30px;
+        }
+        .row_ul_one{
+            background: #42a4ca59;
+            border:none;
+            overflow: hidden;
+        }
+        .row_ul li:nth-child(1){
+            width: 60px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+        .row_ul li:nth-child(2){
+            text-align: center;
+            text-indent: 20px;
+        }
+        .row_ul_one li:nth-child(1){
+            width: 60px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+        .row_ul_one li:nth-child(2){
+            text-align: center;
+            text-indent: 20px;
+        }
+        .page-content_ul{
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        .layui-laypage-default{
+            float: right;
+            margin-right: 10px;
+        }
+        .test{
+            overflow: hidden;
+        }
+        .content_h{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <div class="row-container searchAll search-condition">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-11 searchCon" style="border:none;padding-right: 0;">
+                        <input id="suspectNo" type="text" class="form-control" placeholder="支持身份证号/电话号/姓名/绰号/关键词">
+                    </div>
+                    <button class="clwi" style="margin-top: 3px;width: 100px;">检 索</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>案件检索结果：</h6>
+        <div class="page-content_ul">
+            <ul class="row_ul_one">
+                <li>
+                    <a>序号</a>
+                </li>
+                <li>
+                    <a>信息标题</a>
+                </li>
+            </ul>
+            <div class="polw">
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="test" id="test1"></div>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>警情检索结果：</h6>
+        <div class="page-content_ul">
+            <ul class="row_ul_one">
+                <li>
+                    <a>序号</a>
+                </li>
+                <li>
+                    <a>信息标题</a>
+                </li>
+            </ul>
+            <div class="polw">
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="test" id="test2"></div>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>重点人员检索结果：</h6>
+        <div class="page-content_ul">
+            <ul class="row_ul_one">
+                <li>
+                    <a>序号</a>
+                </li>
+                <li>
+                    <a>信息标题</a>
+                </li>
+            </ul>
+            <div class="polw">
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="test" id="test3"></div>
+    </div>
+    <div class="page-content">
+        <h6 class="content_h">>>>嫌疑人检索结果：</h6>
+        <div class="page-content_ul">
+            <ul class="row_ul_one">
+                <li>
+                    <a>序号</a>
+                </li>
+                <li>
+                    <a>信息标题</a>
+                </li>
+            </ul>
+            <div class="polw">
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+                <ul class="row_ul">
+                    <li>
+                        <a>1</a>
+                    </li>
+                    <li>
+                        <a>信息标题信息标题信息标题信息标题</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="test" id="test4"></div>
+    </div>
+    <script src="/static/build/layui.js"></script>
+    <script>
+        layui.use('laypage', function(){
+            var laypage = layui.laypage;
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                ,count: 50000 //数据总数，从服务端得到
+                ,first: "首页"
+                ,last: "末页"
+                ,skip: true
+                ,hash: "page"
+                ,jump: function (obj, first) {
+                    var curr = obj.curr;
+                    if (!first) {
+                        onpage = curr;
+                        layer.msg('第 ' + curr + ' 页', { time: 600 });
+                    }
+                }
+            });
+            laypage.render({
+                elem: 'test2' //注意，这里的 test2 是 ID，不用加 # 号
+                ,count: 20000 //数据总数，从服务端得到
+                ,first: "首页"
+                ,last: "末页"
+                ,skip: true
+                ,hash: "page"
+                ,jump: function (obj, first) {
+                    var curr = obj.curr;
+                    if (!first) {
+                        onpage = curr;
+                        layer.msg('第 ' + curr + ' 页', { time: 600 });
+                    }
+                }
+            });
+            laypage.render({
+                elem: 'test3' //注意，这里的 test3 是 ID，不用加 # 号
+                ,count: 300 //数据总数，从服务端得到
+                ,first: "首页"
+                ,last: "末页"
+                ,skip: true
+                ,hash: "page"
+                ,jump: function (obj, first) {
+                    var curr = obj.curr;
+                    if (!first) {
+                        onpage = curr;
+                        layer.msg('第 ' + curr + ' 页', { time: 600 });
+                    }
+                }
+            });
+            laypage.render({
+                elem: 'test4' //注意，这里的 test4 是 ID，不用加 # 号
+                ,count: 10000 //数据总数，从服务端得到
+                ,first: "首页"
+                ,last: "末页"
+                ,skip: true
+                ,hash: "page"
+                ,jump: function (obj, first) {
+                    var curr = obj.curr;
+                    if (!first) {
+                        onpage = curr;
+                        layer.msg('第 ' + curr + ' 页', { time: 600 });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

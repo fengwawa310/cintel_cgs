@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.utils.RlSuspectCaseMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.suspect.RlSuspectCase" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUSPECT_ID" property="suspectId" jdbcType="VARCHAR" />
+    <result column="CASE_ID" property="caseId" jdbcType="VARCHAR" />
+    <result column="LABEL" property="label" jdbcType="INTEGER" />
+    <result column="RELATION" property="relation" jdbcType="INTEGER" />
+    <result column="OPT_P_CODE" property="optPCode" jdbcType="VARCHAR" />
+    <result column="OPT_P_NAME" property="optPName" jdbcType="VARCHAR" />
+    <result column="DEMO" property="demo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="CaseResultMap" type="com.entity.caseInfo.EtCase">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CASE_NO" jdbcType="VARCHAR" property="caseNo" />
+    <result column="CASE_TITLE" jdbcType="VARCHAR" property="caseTitle" />
+    <result column="CASE_STATE" jdbcType="INTEGER" property="caseState" />
+    <result column="CASE_CLASS" jdbcType="INTEGER" property="caseClass" />
+    <result column="CASE_SOURCE" jdbcType="VARCHAR" property="caseSource" />
+    <result column="SOURCE_TYPE" jdbcType="INTEGER" property="sourceType" />
+    <result column="CASE_REMARKS" jdbcType="VARCHAR" property="caseRemarks" />
+    <result column="DETAL_ADDRESS" jdbcType="VARCHAR" property="detalAddress" />
+    <result column="HAPPEN_TIME_UP" jdbcType="VARCHAR" property="happenTimeUp" />
+    <result column="HAPPEN_TIME_DOWN" jdbcType="VARCHAR" property="happenTimeDown" />
+    <result column="ZONE_CODE" jdbcType="VARCHAR" property="zoneCode" />
+    <result column="ZONE_NAME" jdbcType="VARCHAR" property="zoneName" />
+    <result column="ACCEPT_UNIT_CODE" jdbcType="VARCHAR" property="acceptUnitCode" />
+    <result column="ACCEPT_UNIT_NAME" jdbcType="VARCHAR" property="acceptUnitName" />
+    <result column="ACCEPT_TIME" jdbcType="VARCHAR" property="acceptTime" />
+    <result column="HOST_UNIT_CODE" jdbcType="VARCHAR" property="hostUnitCode" />
+    <result column="HOST_UNIT_NAME" jdbcType="VARCHAR" property="hostUnitName" />
+    <result column="SPONSOR_CODE" jdbcType="VARCHAR" property="sponsorCode" />
+    <result column="SPONSOR_NAME" jdbcType="VARCHAR" property="sponsorName" />
+    <result column="SPONSOR_PHONE" jdbcType="VARCHAR" property="sponsorPhone" />
+    <result column="ASSIST_UNIT_CODE" jdbcType="VARCHAR" property="assistUnitCode" />
+    <result column="ASSIST_UNIT_NAME" jdbcType="VARCHAR" property="assistUnitName" />
+    <result column="ASSISTANT_CODE" jdbcType="VARCHAR" property="assistantCode" />
+    <result column="ASSISTANT_NAME" jdbcType="VARCHAR" property="assistantName" />
+    <result column="ASSISTANT_PHONE" jdbcType="VARCHAR" property="assistantPhone" />
+    <result column="INPUT_UNIT_CODE" property="inputUnitCode" jdbcType="VARCHAR" />
+    <result column="INPUT_UNIT_NAME" property="inputUnitName" jdbcType="VARCHAR" />
+    <result column="INPUTER_CODE" property="inputerCode" jdbcType="VARCHAR" />
+    <result column="INPUTER_NAME" property="inputerName" jdbcType="VARCHAR" />
+    <result column="IS_FOLLOW" jdbcType="INTEGER" property="isFollow" />
+    <result column="IS_APPROVAL" jdbcType="INTEGER" property="isApproval" />
+    <result column="IS_ARCHIVE" jdbcType="INTEGER" property="isArchive" />
+    <result column="ARCHIVE_DESC" jdbcType="VARCHAR" property="archiveDesc" />
+    <result column="IS_ABANDON" jdbcType="INTEGER" property="isAbandon" />
+    <result column="ABANDON_DESC" jdbcType="VARCHAR" property="abandonDesc" />
+    <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="dece_signs" jdbcType="VARCHAR" property="deceSigns" />
+    <result column="RELATION" jdbcType="VARCHAR" property="relation" />
+    <result column="LABLE" jdbcType="VARCHAR" property="lable" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUSPECT_ID, CASE_ID, LABEL, RELATION, OPT_P_CODE, OPT_P_NAME, DEMO, CREATE_TIME, 
+    MODIFY_TIME
+  </sql>
+  
+  <!--根据嫌疑人身份证号查询案件列表-->
+  <select id="findCaseByIDCardNum"  resultMap="CaseResultMap">
+    <choose>
+    	<when test="idcardNum != null and idcardNum !=''">
+    		SELECT  * from et_case where
+				id in (
+                      SELECT CASE_NO FROM ap_scarela WHERE STAFF_ID IN (
+                          SELECT STAFF_ID from ap_staff
+                          WHERE IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR}
+                      )
+                )
+    	</when>
+    	<otherwise>
+        	SELECT * from et_case where 1=2
+    	</otherwise>
+	</choose>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rl_suspect_case
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rl_suspect_case
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <!--人-案对应关系建立-->
+  <insert id="insert" parameterType="com.entity.suspect.RlSuspectCase" >
+    insert into rl_suspect_case
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suspectId != null" >
+        SUSPECT_ID,
+      </if>
+      <if test="caseId != null" >
+        CASE_ID,
+      </if>
+      <if test="label != null" >
+        LABEL,
+      </if>
+      <if test="relation != null" >
+        RELATION,
+      </if>
+      <if test="optPCode != null" >
+        OPT_P_CODE,
+      </if>
+      <if test="optPName != null" >
+        OPT_P_NAME,
+      </if>
+      <if test="demo != null" >
+        DEMO,
+      </if>
+        CREATE_TIME,
+        MODIFY_TIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectId != null" >
+        #{suspectId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=INTEGER},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="optPCode != null" >
+        #{optPCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optPName != null" >
+        #{optPName,jdbcType=VARCHAR},
+      </if>
+      <if test="demo != null" >
+        #{demo,jdbcType=VARCHAR},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.RlSuspectCase" >
+    update rl_suspect_case
+    <set >
+      <if test="suspectId != null" >
+        SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null" >
+        CASE_ID = #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        LABEL = #{label,jdbcType=INTEGER},
+      </if>
+      <if test="relation != null" >
+        RELATION = #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="optPCode != null" >
+        OPT_P_CODE = #{optPCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optPName != null" >
+        OPT_P_NAME = #{optPName,jdbcType=VARCHAR},
+      </if>
+      <if test="demo != null" >
+        DEMO = #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelectiveEL" parameterType="com.entity.suspect.RlSuspectCase" >
+    update rl_suspect_case
+    <set >
+      <if test="label != null" >
+        LABEL = #{label,jdbcType=INTEGER},
+      </if>
+      <if test="relation != null" >
+        RELATION = #{relation,jdbcType=INTEGER},
+      </if>
+      <if test="optPCode != null" >
+        OPT_P_CODE = #{optPCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optPName != null" >
+        OPT_P_NAME = #{optPName,jdbcType=VARCHAR},
+      </if>
+      <if test="demo != null" >
+        DEMO = #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SUSPECT_ID = #{suspectId,jdbcType=VARCHAR} AND CASE_ID = #{caseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.suspect.RlSuspectCase" >
+    update rl_suspect_case
+    set SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+      CASE_ID = #{caseId,jdbcType=VARCHAR},
+      LABEL = #{label,jdbcType=INTEGER},
+      RELATION = #{relation,jdbcType=INTEGER},
+      OPT_P_CODE = #{optPCode,jdbcType=VARCHAR},
+      OPT_P_NAME = #{optPName,jdbcType=VARCHAR},
+      DEMO = #{demo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByCaseId" parameterType="java.lang.String" >
+    delete from rl_suspect_case
+    where CASE_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>

@@ -1,0 +1,13 @@
+.notNull{
+    color: red;
+}
+.hint{
+    font-size: 11px;
+}
+.areaTxt{
+    width: 99%;
+    height: 95%;
+    margin-top: 2px;
+    margin-left: 4px;
+    border: 1px solid #D1E1FF;
+}

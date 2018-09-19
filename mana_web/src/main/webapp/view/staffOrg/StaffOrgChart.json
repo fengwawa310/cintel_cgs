@@ -1,0 +1,248 @@
+[{
+                        name: '张珊',
+                        value: 4,
+                        symbol: 'image://man.png',
+                        symbolSize: 50,
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: "{b}"
+                                },
+                                color: '#fa6900',
+                                borderWidth: 2,
+                                borderColor: '#cc66ff'
+
+                            },
+                            emphasis: {
+                                borderWidth: 0
+                            }
+                        },
+                        children: [
+                            {
+                                name: '妞儿',
+                                value: 4,
+                                symbol: 'image://gril.png',
+                                symbolSize: 50,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true,
+                                            position: 'top',
+                                            formatter: "{b}"
+                                        },
+                                        color: '#fa6900',
+                                        borderWidth: 2,
+                                        borderColor: '#cc66ff'
+
+                                    },
+                                    emphasis: {
+                                        borderWidth: 0
+                                    }
+                                },
+                                children: [
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                name: '妞儿',
+                                value: 4,
+                                symbol: 'image://gril.png',
+                                symbolSize: 50,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true,
+                                            position: 'top',
+                                            formatter: "{b}"
+                                        },
+                                        color: '#fa6900',
+                                        borderWidth: 2,
+                                        borderColor: '#cc66ff'
+
+                                    },
+                                    emphasis: {
+                                        borderWidth: 0
+                                    }
+                                },
+                                children: [
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '张珊',
+                                        value: 4,
+                                        symbol: 'image://man.png',
+                                        symbolSize: 50,
+                                        itemStyle: {
+                                            normal: {
+                                                label: {
+                                                    show: true,
+                                                    position: 'top',
+                                                    formatter: "{b}"
+                                                },
+                                                color: '#fa6900',
+                                                borderWidth: 2,
+                                                borderColor: '#cc66ff'
+
+                                            },
+                                            emphasis: {
+                                                borderWidth: 0
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                name: '妞儿',
+                                value: 4,
+                                symbol: 'image://gril.png',
+                                symbolSize: 50,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true,
+                                            position: 'top',
+                                            formatter: "{b}"
+                                        },
+                                        color: '#fa6900',
+                                        borderWidth: 2,
+                                        borderColor: '#cc66ff'
+
+                                    },
+                                    emphasis: {
+                                        borderWidth: 0
+                                    }
+                                }
+                            },
+                            {
+                                name: '妞儿',
+                                value: 4,
+                                symbol: 'image://gril.png',
+                                symbolSize: 50,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true,
+                                            position: 'top',
+                                            formatter: "{b}"
+                                        },
+                                        color: '#fa6900',
+                                        borderWidth: 2,
+                                        borderColor: '#cc66ff'
+
+                                    },
+                                    emphasis: {
+                                        borderWidth: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }]

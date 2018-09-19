@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>住宿详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 0px;background: white">
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px;padding-bottom: 8px">
+        <!--住宿信息-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">住宿信息</span>
+            </div>
+        </div>
+        <!--编号、姓名、性别-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>编号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="ccode"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>姓名</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="name"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>性别</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="sex"></span>
+                </div>
+            </div>
+        </div>
+        <!--民族、出生日期-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>民族</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="nation"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>出生日期</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="bdate"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--证件类型、身份证号-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>证件类型</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="idtype"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>身份证号</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="idcode"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--行政区划-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>行政区划</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="xzqh"></span>
+            </div>
+        </div>
+        <!--常住地址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>常住地址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="address"></span>
+            </div>
+        </div>
+        <!--入住旅馆、入住房号、入住时间-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>入住旅馆</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="nohotel"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>入住房号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="noroom"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+            </div>
+            <div class="col-md-4 noPadding" style="padding: 0px">
+                <div class="col-md-4 caseTxt">
+                    <span>入住时间</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="ltime"></span>
+                </div>
+            </div>
+        </div>
+        <!--入住当班人员、退房时间、离开当班人员-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>入住当班人员</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="lwaiter"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>退房时间</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="etime"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>离开当班人员</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="ewaiter"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--酒店信息-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">酒店信息</span>
+            </div>
+        </div>
+        <!--酒店名称-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>酒店名称</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="hname"></span>
+            </div>
+        </div>
+        <!--法人、注册资金、电话-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>法人</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="legalperson"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>注册资金</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="principal"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>电话</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="telphone"></span>
+                </div>
+            </div>
+        </div>
+        <!--酒店地址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>酒店地址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="haddress"></span>
+            </div>
+        </div>
+        <!--房间数、床位数、星级-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>房间数</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="roomnum"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>床位数</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="bednum"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+            </div>
+            <div class="col-md-4 noPadding" style="padding: 0px">
+                <div class="col-md-4 caseTxt">
+                    <span>星级</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="stars"></span>
+                </div>
+            </div>
+        </div>
+        <!--等级、国家、酒店类型-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>等级</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="grade"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>国家</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="state"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>酒店类型</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="hoteltype"></span>
+                </div>
+            </div>
+        </div>
+        <!--验证码、酒店驻地-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>验证码</span>
+                </div>
+                <div class="col-md-8 caseInfo ">
+                    <span id="validatecode"></span>
+                </div>
+            </div>
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>酒店驻地</span>
+                </div>
+                <div class="col-md-10 caseInfo lastInput">
+                    <span id="station"></span>
+                </div>
+            </div>
+
+        </div>
+        <!--备注、评论-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>备注、评论</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="remark"></span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(window).ready(function () {
+        var thisURL = document.URL;
+        var  getval =thisURL.split('?')[1];
+        console.log(getval);
+        var id= getval.split("=")[1];//此条数据id
+//         id="1";//因为es没有数据暂时用固定为1
+        console.log("es没有数据"+id);
+        findHotelDetail(id);
+        findHotelPersonDetail(id);
+    });
+
+    /*查询酒店基本信息*/
+    function findHotelDetail(id){
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"/hotel/selectById?id="+id,//发送请求
+            dataType : "json",
+            success: function(data) {
+//                    var json = $.parseJSON(data.data);
+                console.log(data);
+                var jsonObj = data.data;
+                for (var prop in jsonObj){
+                    if (prop.indexOf("Time") > 0){
+                        $("#"+prop).text((jsonObj[prop]==null?"":Common.dateFormat2(jsonObj[prop],"yyyy-MM-dd hh:mm:ss")));
+                    }else {
+                        $("#"+prop).text((jsonObj[prop]==null?"":jsonObj[prop]));
+                    }
+
+                }
+//                if(jsonObj["flowState"]!=5004){
+//                    $("#yanpanButton").attr("style","display:none;");//隐藏div
+//                }
+                /*审批、研判状态赋值*/
+//                $("#shenHeStateName").text((jsonObj["shenHeState"]==null?"":jsonObj["shenHeState"].name))
+//                $("#qianshouStateName").text((jsonObj["qianshouState"]==null?"":jsonObj["qianshouState"].name))
+//                $("#yanpanStateName").text((jsonObj["yanpanState"]==null?"":jsonObj["yanpanState"].name))
+
+            }
+        });
+    }
+    /*查询酒店基本信息*/
+    function findHotelPersonDetail(id){
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"/hotelPerson/selectById?id="+id,//发送请求
+            dataType : "json",
+            success: function(data) {
+//                    var json = $.parseJSON(data.data);
+                console.log(data);
+                var jsonObj = data.data;
+                for (var prop in jsonObj){
+                    if (prop.indexOf("Time") > 0){
+                        $("#"+prop).text((jsonObj[prop]==null?"":Common.dateFormat2(jsonObj[prop],"yyyy-MM-dd hh:mm:ss")));
+                    }else {
+                        $("#"+prop).text((jsonObj[prop]==null?"":jsonObj[prop]));
+                    }
+
+                }
+//                if(jsonObj["flowState"]!=5004){
+//                    $("#yanpanButton").attr("style","display:none;");//隐藏div
+//                }
+                /*审批、研判状态赋值*/
+//                $("#shenHeStateName").text((jsonObj["shenHeState"]==null?"":jsonObj["shenHeState"].name))
+//                $("#qianshouStateName").text((jsonObj["qianshouState"]==null?"":jsonObj["qianshouState"].name))
+//                $("#yanpanStateName").text((jsonObj["yanpanState"]==null?"":jsonObj["yanpanState"].name))
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+

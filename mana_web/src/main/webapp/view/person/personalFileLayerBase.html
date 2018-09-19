@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>全息档案</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<!-- basic styles -->
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="../assets/css/ace.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="../css/jquery.dataTables.min.css" />
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+<script src="../js/common.js"></script>
+<link rel="stylesheet" href="../css/commonStyle.css" />
+<link rel="stylesheet" href="../css/case.css" />
+<link rel="stylesheet" href="../css/person.css" />
+<script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- page specific plugin scripts -->
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript"></script>
+
+<!-- layOpen -->
+<script src="../assets/js/layer/layer.js"></script>
+<script src="../js/common.js"></script>
+
+<!--dataTables的样式需求-->
+<script src="../js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+</head>
+<body>
+
+	<div style="width: 100%; height: 500px; margin: 0 auto; background: #F7FBFF">
+		<!--页面的title-->
+		<div class="personTitle">
+			<div class="col-md-11" style="text-align: center;">
+				<span class="mainTitle">扫 黑 情 报 平 台 重 点 人 员 全 息 档 案</span>
+			</div>
+
+		</div>
+		<!--人员基本信息-->
+		<div class="frame" style="height: 59%;">
+			<!--人员结构数据-->
+			<div class="col-md-10 container noPadding" style="border:1px solid #D1E1FF">
+
+				<!--重点人员编号、姓名-->
+				<div class="row breadcrumbs noPadding rowStyle ">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">重点人员编号</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id="suspectId"></span>
+					</div>
+					<div class="col-md-2 personTxt ">
+						<span class="boldFont">姓名</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id="name" name="name"></span>
+					</div>
+				</div>
+				<!--别名、身份证号-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">别名</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">身份证号</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id="idcardNum"></span>
+					</div>
+				</div>
+				<!--性别、出生日期-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">性别</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id="gender"></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">出生日期</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id="birthdate"></span>
+					</div>
+				</div>
+				<!--户籍地址、现住址-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">户籍地址</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">现住址</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id=""></span>
+					</div>
+				</div>
+				<!--职业、手机号-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">职业</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">手机号</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id=""></span>
+					</div>
+
+				</div>
+				<!--QQ号、微信号-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">QQ号</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">微信号</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<!-- <img src="../assets/images/gallery/blue_star.png" width="15px"height="15px">  -->
+						<span id=""></span>
+					</div>
+				</div>
+				<!--录入人姓名、录入单位-->
+				<div class="row breadcrumbs noPadding rowStyle">
+
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">录入人姓名</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">录入单位</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id="entryUnit" style="display: none"></span> <span
+							id="entryUnitName"></span>
+					</div>
+				</div>
+				<!--录入人警号、重点人员状态-->
+				<div class="row breadcrumbs noPadding rowStyle">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">录入人警号</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+					
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">重点人员状态</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id=""></span>
+					</div>
+				</div>
+				<!--重点人员性质、纳入重点人员时间-->
+				<div class="row breadcrumbs noPadding rowStyle borderBnone" style="border-bottom: 1px solid #D1E1FF">
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">重点人员性质</span>
+					</div>
+					<div class="col-md-4 personTxt">
+						<span id=""></span>
+					</div>
+
+					<div class="col-md-2 personTxt">
+						<span class="boldFont">纳入重点人员时间</span>
+					</div>
+					<div class="col-md-4 personTxt borderRnone">
+						<span id=""></span>
+					</div>
+				</div>
+				<!--技战工具-->
+				<!--<div class="row breadcrumbs noPadding rowStyle borderBnone">-->
+					<!--<div  class="col-md-2 personTxt">-->
+						<!--<span>技战工具</span>-->
+					<!--</div>-->
+					<!--<div  class="col-md-10">-->
+						<!--<a class="operation">团伙信息</a>-->
+						<!--<a class="operation">亲友信息</a>-->
+						<!--<a class="operation">话单分析</a>-->
+					<!--</div>-->
+				<!--</div>-->
+				<input type="text" id="suspectNo" style="display: none" value="">
+			</div>
+			<!--人员头像-->
+			<div class="col-md-2 personImgDiv" style="height:281px">
+				<img src="../assets/images/gallery/person01.jpg" class="personImg"
+					id="headPhotoUrl">
+			</div>
+		</div>
+	</div>
+
+	<script>
+		//获取人员的ID
+
+		$(window).ready(function() {
+			var thisURL = document.URL;
+			//console.log(thisURL);
+			var getval = thisURL.split('?')[1];
+			var id = getval.split("=")[1];
+			//console.log(id);
+			findSuspectById(id);
+			//findSuspectByIdjifen(id);
+			$("#suspectNo").val(id);
+
+		});
+		//获取人员信息
+
+//		function findSuspectById(ids) {
+//			$.ajax({
+//				type : 'POST',
+//				url : getRootPath_web() + "suspecthandler/handlerfind",//发送请求
+//				data : {
+//					id : ids
+//				},
+//				dataType : "json",
+//				cache: false,
+//		        async: false,
+//				success : function(data) {
+//					//alert("11111111");
+//					//console.log(data);
+//					//var json  = eval('('+data.data+')');
+//					var context = data.data;
+//					//console.log(context);
+//					//var jsonObj = json.data;
+//					if (context.name ==null||context.name=='') {
+//						$("#name").text("未录入");
+//					}else{
+//						$("#name").text(context.name);
+//					}
+//						$("#suspectId").text(context.suspectId);
+//					if (context.mobilephone ==null||context.mobilephone=='') {
+//						$("#mobilephone").text("未录入");
+//					}else{
+//						$("#mobilephone").text(context.mobilephone);
+//					}
+//					if (context.idcardNum ==null||context.idcardNum=='') {
+//						$("#idcardNum").text("未录入");
+//					}else{
+//						$("#idcardNum").text(context.idcardNum);
+//					}
+//					if (context.gender == '1200') {
+//						$("#gender").text("女");
+//					} else if (context.gender == '1201') {
+//						$("#gender").text("男");
+//					} else if (context.gender == '1202') {
+//						$("#gender").text("其他");
+//					} else {
+//						$("#gender").text("未选择");
+//					}
+//					if (context.birthdate ==null||context.birthdate=='') {
+//						$("#birthdate").text("未录入");
+//					}else{
+//						$("#birthdate").text(context.birthdate);
+//					}
+//					if (context.suspectClass == '1300') {
+//						$("#suspectClass").text("重点人员");
+//					} else if (context.suspectClass == '1301') {
+//						$("#suspectClass").text("管控人员");
+//					} else if (context.suspectClass == '1302') {
+//						$("#suspectClass").text("在逃人员");
+//					} else {
+//						$("#suspectClass").text("未选择");
+//					}
+//					if (context.origin ==null||context.origin=='') {
+//						$("#origin").text("未录入");
+//					}else{
+//						$("#origin").text(context.origin);
+//					}
+//					if (context.suspectLevel ==null||context.suspectLevel=='') {
+//						$("#suspectLevel").text("暂无等级");
+//					}else{
+//						$("#suspectLevel").text(context.suspectLevel);
+//					}
+//					if (context.creatTime ==null||context.creatTime=='') {
+//						$("#creatTime").text("未录入");
+//					}else{
+//						$("#creatTime").text(context.creatTime);
+//					}
+//					if (context.entryUnitName ==null||context.entryUnitName=='') {
+//						$("#entryUnitName").text("未录入");
+//					}else{
+//						$("#entryUnitName").text(context.entryUnitName);
+//					}
+//					$("#entryUnit").text(context.entryUnit);
+//					$.ajax({
+//						type : 'POST',
+//						url : getRootPath_web()
+//								+ "integral/findSuspectIntegralforIdCard",//发送请求
+//						data : {
+//							idcardNum : context.idcardNum
+//						},
+//						dataType : "json",
+//						success : function(data) {
+//							if (data.data.total ==null||data.data.total=='') {
+//								$("#integral").text("未录入");
+//							}else{
+//								$("#integral").text(data.data.total);
+//							}
+//						},
+//					});
+//				//加载table
+//					load();
+//				},
+//			});
+//
+//		}
+        function findpersonById(){
+            var id=$("#id").val()
+            $.ajax({
+                type: 'POST',
+                url: getRootPath_web()+"/suspecthandler/findPersonById?id="+id,//发送请求
+                dataType : "json",
+                success: function(data) {
+                    var json = $.parseJSON(data.data);
+                    //案件信息
+                    var caseObj = json.data.etSuspect;
+                    for (var prop in caseObj) {
+                      var value = caseObj[prop];
+                        $("#my_suspect_form").find("[name='"+prop+"']").val((caseObj[prop]==null?"":caseObj[prop]));
+                    }
+                }
+            });
+        }
+	</script>
+
+</body>
+</html>

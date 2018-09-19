@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>建议详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/proposal.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 8px;background: white">
+    <!--当前页面位置-->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>建议详情</span>
+            </li>
+        </ul>
+    </div>
+    <!--建议基本信息录入-->
+    <div class="container breadcrumbs" style="max-width: 100%;height: auto;padding: 0px">
+        <!--建议信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">建议信息</span>
+            </div>
+        </div>
+        <!--发起单位-->
+        <div class="row breadcrumbs proposalContainer">
+            <div class="col-md-2 proposalTxt" style="width: 11.11%">
+                <span>发起单位</span>
+            </div>
+            <div class="col-md-9 proposalInfo lastInput" style="width: 88.88%">
+                <span id="sendUnitName"></span>
+            </div>
+        </div>
+        <!--接收单位-->
+        <div class="row breadcrumbs proposalContainer">
+            <div class="col-md-2 proposalTxt" style="width: 11.11%">
+                <span>接收单位</span>
+            </div>
+            <div class="col-md-9 proposalInfo lastInput" style="width: 88.88%">
+                <span id="receiveUnitName"></span>
+            </div>
+        </div>
+        <!--建议-->
+        <div class="row breadcrumbs proposalContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 proposalTxt" style="width:11.11%;">
+                <span class="detail-area-menu">建议</span>
+            </div>
+            <div class="col-md-10 proposalInfo lastInput" style="width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="msgText"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(window).ready(function () {
+    var thisURL = document.URL;
+    console.log(thisURL);
+    var  getval =thisURL.split('?')[1];
+    var id= getval.split("=")[1];
+    findCaseById(id);
+});
+/*查询案件信息*/
+function findCaseById(id){
+    $.ajax({
+        type: 'POST',
+        url: getRootPath_web()+"/proposalHandler/selectByPrimaryKey?id="+id,//发送请求
+        dataType : "json",
+        success: function(data) {
+            var json = $.parseJSON(data.data);
+            console.log(json.data);
+            var jsonObj = json.data;
+            for (var prop in jsonObj){
+                $("#"+prop).text((jsonObj[prop]==null?"":jsonObj[prop]));
+            }
+        }
+    });
+}
+
+</script>
+
+</body>
+</html>
+

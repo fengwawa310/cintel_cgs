@@ -1,0 +1,1737 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组织图谱</title>
+    <!--<link rel="stylesheet" href="../../static/plugins/layui-v2.2.45/layui/css/layui.css">-->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+
+    <link rel="stylesheet" href="../css/custom.css"/>
+    <link rel="stylesheet" href="../css/prettify.css"/>
+    <link rel="stylesheet" href="../css/tree/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="../css/awesome.css" />
+    <!-- jQuery includes -->
+    <script src="../assets/js/jquer-1.7.1.min.js"></script>
+    <script src="../js/jquery.ztree.core.js"></script>
+    <script src="../js/jquery.ztree.excheck.js"></script>
+    <script src="../js/jquery.ztree.exedit.js"></script>
+    <!-- 可拖拽插件 -->
+    <script id='ch_io' src="../js/jquery-ui.min.js"></script>
+    <!-- 组织结构图插件 -->
+    <script src="../js/jquery.jOrgChart.js"></script>
+    <!--<script src="../../static/plugins/layui-v2.2.45/layui/layui.js"></script>-->
+    <!-- 弹窗的插件 -->
+    <script src="../js/common.js"></script>
+    <script src="../js/import.js"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <!--<script src="../assets/js/bootstrap.min.js"></script>-->
+    <style>
+        .layui-form-pane .layui-form-label{
+            width: 160px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left:160px;
+        }
+        /*li{*/
+        /*border: 1px solid #dddddd;*/
+        /*padding: 5px;*/
+        /*}*/
+        .layui-colla-title {
+            line-height: 42px;
+            padding: 0 15px 0 35px;
+            background:none;
+            cursor: pointer;
+        }
+        .cusor p{
+            cursor: pointer;
+        }
+        tr{
+            cursor: pointer;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+        }
+        .jOrgChart .node {
+            border-radius: 4px;
+            cursor: pointer!important;
+            margin: 0 8px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hiw{
+            width: 280px;
+            display: inline-block;
+            float: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .hiw img{
+            width: 80px;
+            height: 100px;
+        }
+        .hiw p{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .hiw p:hover{
+            color: #000;
+        }
+        .hiw p.red{
+            color: #f00;
+        }{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .je_jia{
+            position: absolute;
+            font-size: 20px;
+            color: #333;
+            background: #fff;
+            right: -20px;
+            top: -20px;
+            width: 20px;
+        }
+        .com{
+            float: left;
+        }
+        .TheEditor{
+            position: absolute;
+            right: 0;
+            top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #3652e6;
+            display: none;
+        }
+        .hiw_ul{
+            width: 120px;
+            padding:0;
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            right: -150px;
+            top: -10px;
+            background: #fff;
+            padding: 10px;
+            border: none;
+            border: 1px solid #333;
+            border-radius: 5px;
+            list-style: none;
+            z-index: 100;
+            display: none;
+        }
+        .hiw_ul li{
+            width: 100px;
+            line-height: 20px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #333;
+            list-style:none;
+            margin: 5px 0px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove{
+            position: absolute;
+            right: 0;
+            top: -7px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .right_bxi{
+            width: 250px;
+            margin-left: 10px;
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            float: left;
+        }
+        .right_bxi > p{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 5px 0px;
+        }
+        .right_bxi > p > a{
+            color: #000;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: Webdings;
+        }
+        .right_bxi > p > input{
+            width: 105px;
+            font-size: 12px;
+        }
+        .right_bxi > p > input.jirong{
+            height: 26px;
+            text-indent: 10px;
+            background-color: #fff!important;
+        }
+        .left_nav{
+            float: left;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+        .left_nav_search{
+            overflow: hidden;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .left_nav_search > input{
+            width: 190px;
+            height: 30px;
+            border: none;
+            border: 1px solid #ccc;
+            float: left;
+            font-size: 12px;
+        }
+        .left_nav_search > button{
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            float: left;
+        }
+        .Name_head{
+            overflow: hidden;
+            padding: 0;
+            margin: 0 10px;
+            margin-top: 20px;
+
+        }
+        .crime_gang{
+            overflow: hidden;
+            overflow-y: scroll;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .Name_head > b{
+            padding: 0;
+            margin-bottom: 10px;
+            border: 0;
+            display: inline-block;
+            font-size: 14px;
+            color: #333;
+            text-indent: 20px;
+        }
+        .crime_gang li{
+            width: 215px;
+            margin: 5px 0px;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            border: 1px solid #fff;
+            color:#333;
+        }
+        .crime_gang li span{
+            float: left;
+            padding-left: 10px;
+        }
+        .crime_{
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .crime_gang li.bule{
+            color: #00b7ee;
+        }
+        .crime_gang li a{
+            color: #00b7ee;
+            font-size: 12px;
+            float: right;
+            margin-right: 10px;
+            display: none;
+        }
+        .crime_gang li span{
+            float: left;
+            margin-left: 10px;
+        }
+        .add_delete{
+            text-align: center;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        .add_delete_shuru{
+            width: 200px;
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            background: #f5f5f5;
+            z-index: 100;
+            display: none;
+        }
+        .add_delete button:nth-child(1){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            padding: 0 10px;
+        }
+        .add_delete button:nth-child(2){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #FD482C;
+            padding: 0 10px;
+        }
+        .add_delete_shuru > p{
+            margin: 10px 0px;
+        }
+        .add_delete_shuru > p > a {
+            color: #333;
+            font-size: 12px;
+        }
+        .add_delete_shuru textarea{
+            resize: none;
+            width: 115px;
+            height: 100px;
+        }
+        .add_delete_shuru > p > input{
+            height: 26px;
+            width: 115px;
+        }
+        .add_delete_shuru_bot{
+            margin-bottom: 10px;
+        }
+        .right_bxi_bianji{
+            float: right;
+            cursor: pointer;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            border: none;
+            padding: 0 10px;
+        }
+        .hiw_left{
+            float: left;
+        }
+        .hiw_right{
+            width: 190px;
+            float: left;
+            margin-left: 10px;
+        }
+        .bianji{
+            width: 500px;
+            height: 480px;
+            background: #fff;
+            position: fixed;
+            top:50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px rgba(0,0,0,.5);
+            display: none;
+        }
+        .com{
+            position: relative;
+        }
+        .oud{
+            float: left;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 80px;
+        }
+        .ziliao{
+            float: left;
+            margin-top: 20px;margin-right: 10px;
+        }
+        .form-group{
+            overflow: hidden;
+        }
+        .form-group > input{
+            float: left;
+            text-indent: 10px;
+        }
+        .form-group > label{
+            float: left;
+        }
+        #pic {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .bot_tyep{
+            text-align: center;
+        }
+        .tainjia{
+            width: 100%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 3px rgba(0,0,0,.5);
+            display: none;
+        }
+        .ztree li span.button.switch {
+            display: none;
+        }
+        #multiTree{
+            overflow: hidden;
+        }
+        #personTree li{
+            border: 1px solid #F7FBFF;
+        }
+        .col-md-7{
+            width: 100%;
+        }
+        /*.tishiyu{*/
+        /*overflow: hidden;*/
+        /*height: 20px;*/
+        /*margin-top: 75px;*/
+        /*text-indent: 20px;*/
+        /*margin-bottom: 10px;*/
+        /*}*/
+        input{
+            text-indent: 10px;
+        }
+        #addPerson{
+            display: none;
+            min-height: 800px;
+        }
+        #add_show{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 100%;
+            transform: translate(-100%, -100%);
+        }
+        #relationship{
+            display: none;
+        }
+        .wpq_com{
+            min-width: 600px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body id="body">
+<!--弹出层添加-->
+<!--左面导航选择框-->
+<div class="breadcrumbs searchAll search-condition" id="addPerson">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-7 searchCon borderBnone borderTnone" >
+                <input type="text" class="form-control" placeholder="可输入姓名、绰号、身份证号进行搜索">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 no-padding searchBtn withBack" style="border: none;height:38px;margin-top:4px">
+        <button class="btn btn-primary" type="button"> 搜索 </button>
+    </div>
+    <div class="col-md-12 tishiyu" style="color: #00559c;font-size: 14px;    margin-top: 40px;">请选择以下团伙人员</div>
+    <div id="multiTree" style="padding: 15px">
+        <ul id="personTree" class="ztree"></ul>
+    </div>
+    <div class="col-md-12 no-padding searchBtn withBack" style="border: none;margin-bottom: 10px;">
+        <button class="btn btn-primary" type="button" onclick="getNodes()"> 确定 </button>
+        <button class="btn btn-primary" type="button" onclick="None()" style="margin-left: 20px;">  取消 </button>
+    </div>
+</div>
+<!--显示组织架构图-->
+<div class="com">
+    <div class="left_nav">
+        <div class="left_nav_search">
+            <input type="text" name="gangName" id="gangName" placeholder=" 团伙名称">
+            <button type="button" onclick="searchForGangName()">搜 索</button>
+        </div>
+        <div class="Name_head">
+            <b>组织人员结构图</b>
+            <div class="crime_">
+                <ul class="crime_gang">
+                    <!--<li id="1" name="大郎团伙备注" type="涉黑团伙类型"><span>大郎团伙</span><a>删除</a></li>-->
+                    <!--<li id="2" name="2郎团伙备注" type="劫匪型"><span>2郎团伙</span><a>删除</a></li>-->
+                    <!--<li id="3" name="3郎团伙备注" type="涉黑团伙类型"><span>3郎团伙</span><a>删除</a></li>-->
+                    <!--<li id="4" name="4郎团伙备注" type="打手型"><span>4郎团伙</span><a>删除</a></li>-->
+                    <!--<li id="5" name="5郎团伙备注" type="地霸型"><span>5郎团伙</span><a>删除</a></li>-->
+                </ul>
+                <div class="add_delete">
+                    <button class="add_but_one">新增</button>
+                    <!--<button class="remove_but_one">删除</button>-->
+                    <!--<div class="add_delete_shuru">-->
+                    <!--<p><a>团伙名称：</a><input type="text" id="name"></p>-->
+                    <!--<p><a>团伙备注：</a><textarea id="note"></textarea></p>-->
+                    <!--<div class="add_delete_shuru_bot">-->
+                    <!--<button class="shuru_bot_one">确定</button>-->
+                    <!--<button class="shuru_bot_two">取消</button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="TheEditor">取消</div>
+    <div class="wpq_com">
+        <div class="right_bxi">
+            <button class=" right_bxi_bianji">编辑</button>
+            <p>
+                <a>团伙信息：</a>
+                <input class="jirong GangInformation" disabled="disabled" type="text" value="">
+            </p>
+            <p>
+                <a>团伙备注：</a>
+                <input class="jirong GangRemark" disabled="disabled" type="text" value="">
+            </p>
+            <p>
+                <a>团伙类型：</a>
+                <input class="jirong type" disabled="disabled" type="text" value="">
+            </p>
+        </div>
+        <div class="col-md-6 searchBtn" style="padding: 0;margin-top: 80px;border-top: 0;">
+            <div class="row">
+                <div class="col-md-4" style="margin-left: 60px;">
+                    <button class="btn" type="button" id="import" onclick="importRelationship()">关系人导入</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn" type="button" onclick="organization()">查看关系人</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--文件选择框-->
+    <div class="col-md-12 hide">
+        <form id='importExcel'  method='POST' enctype='multipart/form-data'>
+            <input type="file" id="excelFile" name='file' onchange="handleFile()">
+            <input type="hidden" id="gangIdForRPD" name="gangId" value="">
+        </form>
+    </div>
+    <div id='jOrgChart' style="padding-top: 20px;padding-left: 300px;"></div>
+    <button class="btn btn-primary" id="add_show"> 添 加 人 员 </button>
+</div>
+<div class="bianji">
+    <div class="col-md-2" style="width: 245px;margin-top: 20px;">
+        <!--<div style="width: 90%;height: 165px;padding: 3% 2%;margin: 2% 0 0 0;    display: none;">-->
+        <!--<input  multiple="" name="upSomeFile"  type="file" id="upSomeFile" onchange="upFile(this.value)"/>-->
+        <!--<input id="url" name="url" type="hidden">-->
+        <!--</div>-->
+    </div>
+    <div class="form-group ziliao" style="margin-right: 20px">
+        <div class="form-group">
+            <b for="name">名称</b>
+            <input type="text" class="form-control" id="name" name="" disabled="disabled" placeholder="请输入名称">
+        </div>
+        <div class="form-group">
+            <b for="nickname">绰号</b>
+            <input type="text" class="form-control" id="nickname" name=""disabled="disabled" placeholder="请输入绰号">
+        </div>
+        <div class="form-group">
+            <b for="NativePlace">籍贯</b>
+            <input type="text" class="form-control" id="NativePlace" name="" disabled="disabled"placeholder="请输入籍贯">
+        </div>
+        <div class="form-group">
+            <b for="IDnumber">身份证号</b>
+            <input type="text" class="form-control" id="IDnumber" name=""disabled="disabled" placeholder="请输入身份证号">
+        </div>
+        <div class="form-group">
+            <b for="PERMANET_NOW">现住址</b>
+            <input type="text" class="form-control" id="PERMANET_NOW" name=""disabled="disabled" placeholder="请输入现住址">
+        </div>
+        <div class="form-group">
+            <b for="role">扮演角色</b>
+            <input type="text" class="form-control" id="role" name="" placeholder="请输入扮演角色">
+        </div>
+    </div>
+    <div class="bot_tyep">
+        <button class="btn btn-default" id="tijiao">提交</button>
+        <button class="btn btn-default quxiao">取消</button>
+    </div>
+</div>
+<!--随着位置而改变的选项-->
+<ul class='hiw_ul'>
+    <div class="remove">×</div>
+    <li  class="similar" >同类添加</li>
+    <li  class="subordinates">下属添加</li>
+    <li  class="remove_hiw">删除</li>
+    <li  class="ToView" >编辑</li>
+</ul>
+<div class="tab-pane" id="relationship">
+    <table id="relationship-table"
+           class="cell-border table table-striped table-bordered table-hover dataTable"
+           cellspacing="0" width="100%">
+    </table>
+</div>
+<input type="hidden" id="mainPersonId">
+<script type='text/javascript'>
+    var mainPersonId = "";
+    $(window).ready(function () {
+        //文件上传input
+        excelFile = document.getElementById("excelFile");
+        menuThing();
+        //获取重点人员id
+        var mainPersonId = localStorage.getItem("mainPersonId");
+        $("#mainPersonId").val( mainPersonId );
+        window.onbeforeunload = function(event) {
+            localStorage.setItem("mainPersonId",mainPersonId);
+        };
+        if( mainPersonId == null || mainPersonId == 0 || mainPersonId == undefined ){
+            $(".TheEditor").text("取消");
+            $.ajax({
+                url: getRootPath_web()+"/etGangHandler/selectByUserId",
+                type:"POST",
+                dataType:"json",
+                success:function ( data) {
+                    //console.log(JSON.stringify(data));
+                    var data = data.data;
+                    var str = '';
+                    for( var i = 0 ; i < data.length;i++){
+                        str += "<li id="+ data[i].id +" name="+ data[i].gangDemo + " type="+ data[i].gangType + "><span>"+ data[i].gangName +"</span><a>删除</a></li>"
+                    }
+                    $(".crime_gang").append( str )
+                },
+                error:function (data) {
+                    alert("网络错误");
+                }
+            });
+            localStorage.setItem("mainPersonId","");
+        }else{
+            $(".TheEditor").text("编辑");
+            searchTree(mainPersonId,"");
+            $.ajax({
+                url: getRootPath_web()+"/etGangHandler/selectByUserId",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    suspectNo:mainPersonId
+                },
+                success:function ( data) {
+                    //console.log(JSON.stringify(data));
+                    var data = data.data;
+                    var str = '';
+                    for( var i = 0 ; i < data.length;i++){
+                        str += "<li id="+ data[i].id +" name="+ data[i].gangDemo + " type="+ data[i].gangType + "><span>"+ data[i].gangName +"</span><a>删除</a></li>"
+                    }
+                    $(".crime_gang").append( str )
+                },
+                error:function (data) {
+                    alert("网络错误");
+                }
+            });
+            $(".right_bxi_bianji").hide();
+            $("#import").hide();
+            $(".add_but_one").hide();
+            localStorage.setItem("mainPersonId","");
+        };
+    });
+    //左侧动态渲染
+    // var url = getRootPath_web()+"/etGangHandler/selectByUserId";
+    // $(function(){
+    // })
+    function organization() {
+        var gangId=$("#gangIdForRPD").val();
+        if(gangId==null||gangId==""){
+            alert("请选择团伙！");
+            return;
+        }
+        var dynamictable;
+        /*关系人列表数据*/
+        $(document).ready(function() {
+            $("#relationship-table_filter").css('display',
+                'block');
+            dynamictable = $("#relationship-table")
+                .DataTable(
+                    {
+                        "bLengthChange": false, /* 去掉每页显示多少条数据方法 */
+                        "processing": true, /*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength": 5, /*默认*/
+                        "lengthMenu": [
+                            [5, 10, 20, -1],
+                            [5, 10, 20, "全部"]],
+                        /*"deferRender": true,*/
+                        "searching": false, /*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide": true, /* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth": false, /*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                        /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                         [0, "desc"]
+                         ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy": true,
+                        "bFilter": false,
+                        "orderMulti": false, //启用多列排序
+                        "order": [], //取消默认排序查询,否则复选框一列会出现小箭头
+                        /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                        /*   "table-layout":fix, */
+                        "row-border": true,
+                        "oLanguage": {
+                            "sEmptyTable": "没有记录",
+                            "sProcessing": "处理中，请稍候...",
+                            "sLengthMenu": "每页显示 _MENU_ 条记录",
+                            "sZeroRecords": "没有记录",
+                            "sInfo": " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty": "记录数为0",
+                            "sInfoFiltered": "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix": "",
+                            "sLoadingRecords": "正在加载中,请稍候...",
+                            "sSearch": "搜索",
+                            "sUrl": "",
+                            "oPaginate": {
+                                "sFirst": "首页",
+                                "sPrevious": "上一页",
+                                "sNext": "下一页",
+                                "sLast": "末页"
+                            }
+                        },
+                        ajax: {
+                            url: getRootPath_web() + "RPDHan/selectByGangId",
+                            "type": "post",
+                            data: {
+                                // 重点人员身份证号码
+                                gangId: gangId
+                            }
+                        },
+                        /*序号自增长*/
+                        "fnDrawCallback": function () {
+                            this.api().column(0).nodes().each(function (cell, i) {
+                                cell.innerHTML = i + 1;
+                            });
+                        },
+                        "bDeferRender": true, /*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {
+                                "sTitle": '<font>序号</font>', 'sWidth': '3%', "sClass": "dt-left", 'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>姓名</font>',
+                                "sWidth": "5%",
+                                "sClass": "dt-left",
+                                'data': 'fullName',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>别名</font>',
+                                "sWidth": "7%",
+                                "sClass": "dt-left",
+                                'data': 'aliasName',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>户籍地、身份证、居住地址、家庭情况</font>',
+                                "sWidth": "15%",
+                                "sClass": "dt-left",
+                                'data': 'familySituation',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>相片</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'photoUrl',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    var fileName=data.split("$$")[1];
+                                    var imgUrl=projectPath+'/fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+data;
+
+                                    return "<div style=\"width: 100%;height: 100%;text-align: center\">\n" +
+                                        "<img src='" + imgUrl + "'style=\"width: 80px;height: 100px\">\n" +
+                                        "</div>";
+                                }
+                            },
+                            {
+                                "sTitle": '<font>使用的通讯工具、车辆</font>',
+                                "sWidth": "15%",
+                                "sClass": "dt-left",
+                                'data': 'communicationTool',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>前科</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'criminalRecord',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>涉嫌的未处理犯罪事实</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'untreatedCriminalFacts',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>车辆</font>',
+                                "sWidth": "8%",
+                                "sClass": "dt-left",
+                                'data': 'vehicle',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>备注</font>',
+                                "sWidth": "10%",
+                                "sClass": "dt-left",
+                                'data': 'remarks',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                "sTitle": '<font>证据情况</font>',
+                                "sWidth": "7%",
+                                "sClass": "dt-left",
+                                'data': 'evidence',
+                                'bSortable': false,
+                                'render': function (data, type, row, meta) {
+                                    if (data == "" || data == null) {
+                                        return "--";
+                                    }
+                                    return data;
+                                }
+                            }
+                        ]
+                    });
+            $("#relationship-table_filter").css("display",
+                "none");
+        });
+        layer.open({
+            offset : 20,
+            type : 1,
+            title : '关系人',
+            fix : false,
+            maxmin : true,
+            area : [ '90%', '80%' ],
+            shadeClose : true,
+            content : $("#relationship").show(),
+            end : function(){
+                $("#relationship").hide()
+            }
+        });
+    }
+    var setting = {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: true,
+            chkboxType :{ "Y" : "", "N" : "s" }
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+    var setting_One= {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: true,
+            chkStyle: 'radio',
+            radioType: "all"
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+    //键盘按下Enter键进行搜索
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            searchForGangName()
+        }
+    };
+    //点击搜索进行团伙搜索
+    function searchForGangName(){
+        var gangName=$("#gangName").val();
+        if(gangName==null||gangName==""){
+            var add = $("#mainPersonId").val();
+            searchTree(add,"");
+        }else{
+            searchTree("",gangName);
+        }
+    }
+    function searchTree(mainPersonId,gangName){
+        $.ajax({
+            url: getRootPath_web()+"/etGangHandler/selectGangBySuspectNo",
+            type:"POST",
+            dataType:"json",
+            data:{
+                suspectNo:mainPersonId,
+                gangName:gangName
+            },
+            success:function ( data) {
+                $(".crime_gang").html("");
+                var data = data.data;
+                var str = '';
+                for( var i = 0 ; i < data.length;i++){
+                    str += "<li id="+ data[i].id +" name="+ data[i].gangDemo + " type="+ data[i].gangType + "><span>"+ data[i].gangName +"</span><a>删除</a></li>"
+                }
+                $(".crime_gang").append( str )
+            },
+            error:function (data) {
+                alert("网络错误");
+            }
+        })
+    }
+    function None(){
+        $("#addPerson").hide();
+        layer.closeAll();
+        return false
+    }
+    $(".TheEditor").click(function () {
+        if( $(".TheEditor").text() == "编辑"){
+            $(".TheEditor").text("取消编辑");
+            //重启拖动元素插件
+            $('div.node').draggable('enable');
+        }else{
+            $(".TheEditor").text("编辑");
+            //禁止拖动元素插件
+            $('div.node').draggable('disable');
+        }
+    })
+    $(".quxiao").live('click',function () {
+        $(".bianji").hide();
+        return false
+    })
+    // 属性配置信息
+    //侧面点击传参
+    $(".crime_gang li").live('click',function () {
+        $(".hiw_ul").hide();
+        $("#jOrgChart").empty() ;
+        $(".crime_gang li").each(function () {
+            if( $(this).attr("type") == 0 ){
+                $(this).attr("type","涉黑团伙类型")
+            }else if( $(this).attr("type") == 1 ){
+                $(this).attr("type","劫匪型")
+            }else if( $(this).attr("type") == 2 ){
+                $(this).attr("type","打手型")
+            }else if( $(this).attr("type") == 3 ){
+                $(this).attr("type","地霸型")
+            }
+        });
+        $("#gangIdForRPD").val($(this).attr("id"))
+        var id_Tpe = $(this).attr("id");
+        var url = getRootPath_web()+"/rlSuspectGangHandler/selectByGangId";
+        if( id_Tpe != ""){
+            $.ajax({
+                url: url,
+                type:"POST",
+                dataType:"json",
+                data:{
+                    gangId:id_Tpe
+                },
+                success:function (data) {
+                    //将一位数组改变成树状结构图
+                    function treeObj(originObj){
+                        //对象深拷贝
+                        var obj ={};
+                        for (key in originObj){
+                            var val = originObj[key];
+                            obj[key] = typeof val === 'object' ? arguments.callee(val):val;
+                        }
+                        //对象新增children键值，用于存放子树
+                        obj['children'] = [];
+                        return obj;
+                    }
+                    //data：带转换成树形结构的对象数组
+                    //attributes：对象属性
+                    function toTreeData (data, attributes) {
+                        var resData = data;
+                        var tree = [];
+                        //找寻根节点 默认返回的parentId为空后期可以更改判断
+                        for (var i = 0; i < resData.length; i++) {
+                            if ( resData[i][attributes.parentId] === ''|| resData[i][attributes.parentId] === null ) {
+                                tree.push( treeObj(resData[i]) );
+                                resData.splice(i, 1);
+                                i--;
+                            }
+                        }
+                        run(tree);
+                        //找寻子树
+                        function run(chiArr) {
+                            if (resData.length !== 0) {
+                                for (var i = 0; i < chiArr.length; i++) {
+                                    for (var j = 0; j < resData.length; j++) {
+                                        if (chiArr[i][attributes.id] === resData[j][attributes.parentId]){
+                                            var obj = treeObj(resData[j]);
+                                            chiArr[i].children.push(obj);
+                                            resData.splice(j, 1);
+                                            j--;
+                                        }
+                                    }
+                                    run(chiArr[i].children);
+                                }
+                            }
+                        }
+                        return tree;
+                    }
+                    var  data = $.parseJSON(data.data).data;
+                    // 属性配置信息
+                    var attributes = {
+                        id: 'id',
+                        parentId: 'parentId',
+                    };
+                    var treeData = toTreeData(data, attributes);
+                    if( treeData.length == 0 ){
+                        $("#add_show").show();
+                    }else{
+                        $("#add_show").hide();
+                    }
+                    //点击菜单渲染树形菜单
+                    var showlist = $("<ul id='org' style='display:none'></ul>");
+                    showall(treeData,showlist);
+                    $("#jOrgChart"). append(showlist);
+                    $("#org").jOrgChart( {
+                        chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                        dragAndDrop : true //设置是否可拖动
+                        //chartClass [默认= 'jOrgChart']-分配给生成的标记的样式类的名称。
+                        //chartElement - 用于指定您想要附加OrgChart标记的HTML元素。[默认= '主体']
+                    });
+                    //循环递归显示数据数据
+                    function showall(menu_list,parent) {
+                        //循环人员列表
+                        $.each(menu_list, function(index,val) {
+                            var imgUrl = val.headPhotoUrl;
+                            console.log(imgUrl);
+                            var headPhotoUrl=val.headPhotoUrl.split('//')[2];
+                            var fileName=val.headPhotoUrl.split("$$")[1];
+                            if(val.children.length > 0){
+                                var li = $("<li></li>");
+                                var li_two = $("<li></li>");
+                                li.append(
+                                    "<a  class='hiw' onclick='add_click(this)'id="+val.id+">" +
+                                    "<div class='hiw_left'>"+
+                                    "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl +" >"+
+                                    "</div>"+
+                                    "<div class='hiw_right'>"+
+                                    "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                    "<p title="+ val.byName +" >"+ "绰号：<span>"+val.byName +"</span></p>"+
+                                    "<p title="+ val.origin +" >"+ "籍贯：<span>"+val.origin +"</span></p>"+
+                                    "<p title="+ val.idcardNum +">"+ "身份证号：<span>"+val.idcardNum     +"</span></p>"+
+                                    "<p title="+ val.permanetNow +">"+ "现住址：<span>"+val.permanetNow +"</span></p>"+
+                                    "<p title="+ val.role +">"+ "扮演角色：<span>"+val.role +"</span></p>"+
+                                    "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                    "</div>"+
+                                    "</a>"
+                                ).append("<ul></ul>").appendTo(parent);
+                                //递归显示
+                                showall( val.children, $(li).children().eq(1) );
+                            }else{
+                                $("<li></li>").append("<a  class='hiw' onclick='add_click(this)'id="+val.id+">" +
+                                    "<div class='hiw_left'>"+
+                                    "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl+" >"+
+                                    "</div>"+
+                                    "<div class='hiw_right'>"+
+                                    "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                    "<p title="+ val.byName +" >"+ "绰号：<span>"+val.byName +"</span></p>"+
+                                    "<p title="+ val.origin +" >"+ "籍贯：<span>"+val.origin +"</span></p>"+
+                                    "<p title="+ val.idcardNum +">"+ "身份证号：<span>"+val.idcardNum +"</span></p>"+
+                                    "<p title="+ val.permanetNow +">"+ "现住址：<span>"+val.permanetNow +"</span></p>"+
+                                    "<p title="+ val.role +">"+ "扮演角色：<span>"+ val.role +"</span></p>"+
+                                    "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                    "</div>"+
+                                    "</a>").appendTo(parent);
+                            }
+                        });
+                    };
+                },
+                error:function (data) {
+                    alert("网络错误");
+                }
+            })
+        }
+        //alert( "当前点击的侧面导航id为："+$(this).attr("id") );
+        $(this).addClass("bule").siblings().removeClass("bule");
+        $(".crime_gang li a").hide();
+        $(this).children("a").show();
+        $(".GangInformation").val( $(this).children("span").text() );
+        $(".GangRemark").val( $(this).attr("name") );
+        $(".type").val($(this).attr("type") );
+        $(".right_bxi").attr("id",$(this).attr("id") );
+        $(".right_bxi").attr("type",$(this).attr("type") );
+        $(".wpq_com").show();
+        $("#jOrgChart").show();
+    })
+    //数据返回
+    //判断是否伸缩
+    function  jiw(thiw,event) {
+        event.stopPropagation();
+        if( $(".TheEditor").text() != "编辑" ){
+            if( $(thiw).text() == "-" ){
+                $(thiw).text("+");
+                $(thiw).parent().parent().parent().parent().parent().find("tr").hide();
+                $(thiw).parent().parent().parent().parent().parent().find("tr").eq(0).show();
+            }else {
+                $(thiw).text("-");
+                $(thiw).parent().parent().parent().parent().parent().find("tr").show();
+                $(thiw).parent().parent().parent().parent().parent().find("tr").eq(0).hide();
+                $(thiw).parent().parent().parent().parent().show();
+            }
+        }
+    }
+    //给当前的元素点击下属关系明显
+    function  add_click( thiw ) {
+        var thed = $(thiw);
+        var cen_a = $(thiw).children("p").text();
+        var thpid =  $(thiw).children().children("p").attr("parentId");
+        var tid =  $(thiw).attr("id");
+        if( $(".TheEditor").text() != "编辑"){
+            $('.hiw_ul').hide();
+            var d = thed;
+            var pos = d.offset();
+            var t = pos.top + d.height() - 100; // 弹出框的上边位置
+            var l = pos.left + d.width() - 200;  // 弹出框的左边位置
+            $(".hiw_ul").css({ "top": t, "left": l })
+            $(".hiw_ul").show();
+            if( thpid == "" ||  thpid == null ){
+                $(".hiw_ul").children("li").eq(0).hide();
+                $(".hiw_ul").children("li").eq(2).hide();
+            }else{
+                $(".hiw_ul").children("li").eq(0).show();
+                $(".hiw_ul").children("li").eq(2).show();
+            }
+            //关闭侧面
+            $('.remove').unbind('click').click(function() {
+                $(this).parent().hide();
+            })
+            //点击同类添加
+            $('.similar').unbind('click').click(function() {
+                $(".hiw").attr("name","0");
+                $(".hiw").each(function () {
+                    if( $(this).attr("tyep") == "1"){
+                        $(this).attr("name","2");
+                    }
+                });
+                //当前节点父ID
+                //alert( thpid);
+                $("#addPerson").show();
+                var ii;
+                ii = layer.ready(function() {
+                    ii = layer.open({
+                        offset : 20,
+                        type : 1,
+                        title : '同级添加',
+                        fix : false,
+                        maxmin : true,
+                        shadeClose : true,
+                        area : [ '400px', '500px' ],
+                        content : $("#addPerson"),
+                        end : function() {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                            $("#addPerson").hide();
+                        }
+                    });
+                }).index;
+                $(".crime_gang li").each(function () {
+                    if( $(this).hasClass("bule") ){
+                        //团伙ID
+                        var pokw = $(this).attr("id");
+                        //初始化人员树状图
+                        $.ajax({
+                            url: getRootPath_web()+"suspecthandler/listSelectableTreeNodes",
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                gangId:pokw,
+                                pId:thpid
+                            },
+                            success:function (data) {
+                                var zNodes = data.data;
+                                if(zNodes){
+                                    for (var i = 0, len = zNodes.length; i < len; i++) {
+                                        var node = zNodes[i];
+                                        node.icon = getRootPath_web() + node.icon ;
+                                        //console.log(node.icon );
+                                    }
+                                    //console.log(zNodes);
+                                    $.fn.zTree.init($("#personTree"), setting,zNodes);
+                                    zTree = $.fn.zTree.getZTreeObj("personTree");
+
+                                }else {
+                                    alert("暂无数据！");
+                                }
+                            }
+                        });
+
+                    }
+                });
+                $(this).parent().hide();
+            })
+            //点击下属添加
+            $('.subordinates').unbind('click').click(function() {
+                //当前ID
+                //alert( tid );
+                $(".hiw").attr("name","0");
+                $(".hiw").each(function () {
+                    if( $(this).attr("tyep") == "1"){
+                        $(this).attr("name","1");
+                    }
+                });
+                $("#addPerson").show();
+                var ii;
+                ii = layer.ready(function() {
+                    ii = layer.open({
+                        offset : 20,
+                        type : 1,
+                        title : '下属添加',
+                        fix : false,
+                        maxmin : true,
+                        shadeClose : true,
+                        area : [ '400px', '500px' ],
+                        content : $("#addPerson"),
+                        end : function() {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                            $("#addPerson").hide();
+                        }
+                    });
+                }).index;
+                $(".crime_gang li").each(function () {
+                    if( $(this).hasClass("bule") ){
+                        //团伙ID
+                        var pokw = $(this).attr("id");
+                        //初始化人员树状图
+                        $.ajax({
+                            url: getRootPath_web()+"suspecthandler/listSelectableTreeNodes",
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                gangId:pokw,
+                                pId:tid
+                            },
+                            success:function (data) {
+                                var zNodes = data.data;
+                                if (zNodes){
+                                    for (var i = 0, len = zNodes.length; i < len; i++) {
+                                        var node = zNodes[i];
+                                        node.icon = getRootPath_web() + node.icon ;
+                                        //console.log(node.icon );
+                                    }
+                                    //console.log(zNodes);
+                                    $.fn.zTree.init($("#personTree"), setting,zNodes);
+                                    zTree = $.fn.zTree.getZTreeObj("personTree");
+
+                                }else {
+                                    alert("暂无数据！");
+                                }
+                            }
+                        });
+                    }
+                });
+                $(this).parent().hide();
+            })
+            //点击删除当前的
+            $('.remove_hiw').unbind('click').click(function() {
+                layer.open({
+                    content: '是否删除当前人员'
+                    ,btn: ['删除', '取消']
+                    ,yes: function(index){
+                        //alert( "当前id="+ tid +";他的父id为"+ thpid);
+                        thed.parent().parent().parent().remove();
+                        $.ajax({
+                            url: getRootPath_web()+"/rlSuspectGangHandler/deleteByPrimaryKey",
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                id :tid,
+                            },
+                        })
+                        layer.close(index);
+                    }
+                    ,btn2:function (index) {
+                        // alert( "当前id="+ tid +";他的父id为"+ thpid);
+                        // $.ajax({
+                        //     url: getRootPath_web()+"/",
+                        //     type:"POST",
+                        //     dataType:"json",
+                        //     data:{
+                        //         gangId:tid,
+                        //
+                        //     },
+                        // })
+                        // thed.parent().parent().parent().parent().remove();
+                        layer.close(index);
+                        //location.reload();
+                    }
+                });
+                $(this).parent().hide();
+            })
+            //点击查看
+            $('.ToView').unbind('click').click(function() {
+                $(this).parent().hide();
+                $(".hiw").each(function () {
+                    var tye_the = $(this);
+                    if( tye_the.attr("tyep") == "1"){
+                        $("#pic").attr("src",tye_the.children(".hiw_left").children("img").attr("src"));
+                        $("#name").val(tye_the.children(".hiw_right").children("p").eq(0).children("span").text() );
+                        $("#nickname").val(tye_the.children(".hiw_right").children("p").eq(1).children("span").text() );
+                        $("#NativePlace").val(tye_the.children(".hiw_right").children("p").eq(2).children("span").text() );
+                        $("#IDnumber").val(tye_the.children(".hiw_right").children("p").eq(3).children("span").text() );
+                        $("#PERMANET_NOW").val(tye_the.children(".hiw_right").children("p").eq(4).children("span").text() );
+                        $("#role").val(tye_the.children(".hiw_right").children("p").eq(5).children("span").text() );
+                    }
+                })
+                $('#tijiao').live('click',function (event) {
+                    event.stopPropagation();
+                    var role_the = $("#role").val();
+                    $(".hiw").each(function () {
+                        var tye_the = $(this);
+                        if( tye_the.attr("tyep") == "1"){
+                            //alert( $("#role").val( ) )
+                            tye_the.children(".hiw_right").children("p").eq(5).children("span").text(  $("#role").val( ) );
+                        }
+                    })
+                    $.ajax({
+                        url: getRootPath_web()+"/rlSuspectGangHandler/updateByPrimaryKey",
+                        type:"POST",
+                        dataType:"json",
+                        data:{
+                            id:tid,
+                            role:role_the
+                        },
+                    });
+                    $('.bianji').hide();
+                })
+                //获取选中node的方法
+
+            });
+            //保存属性
+        }else{
+            // layer.open({
+            //     content: cen_a //这里content是一个普通的String
+            // })
+            layer.alert('你目前没有权限！');
+        }
+        $(".hiw").children().children("p").removeClass("red");//删除所有高亮的字体
+        $(".hiw").attr("tyep","0");
+        $(thiw).attr("tyep","1");
+        $(thiw).children().children("p").addClass("red");//添加当前高亮的字
+    }
+    function getNodes() {
+        var nodes = zTree.getCheckedNodes();
+        $("#addPerson").hide();
+        layer.closeAll();
+        var woko = [];
+        for(var i=0;i<nodes.length;i++){
+            woko.push( nodes[i].id );
+        };
+        if( woko.length != 0 ){
+            if($(".hiw").length != 0 ){
+                $(".hiw").each(function () {
+                    var thed = '';
+                    var pokw = '';
+                    var pid = '';
+                    if( $(this).attr("tyep") == "1" ){
+                        var thed = $(this).attr("id");
+                        var pid =  $(this).children().children("p").attr("parentId");
+                        $(".crime_gang li").each(function () {
+                            if( $(this).hasClass("bule") ){
+                                //团伙ID
+                                var pokw = $(this).attr("id");
+                                //初始化人员树状图
+                                $(".hiw").each(function () {
+                                    if( $(this).attr("name") == "1" ){
+                                        $.ajax({
+                                            url: getRootPath_web()+"/rlSuspectGangHandler/insert",
+                                            type:"POST",
+                                            dataType:"json",
+                                            data:{
+                                                gangId:pokw,
+                                                suspectIds:JSON.stringify(woko),
+                                                parentId:thed
+                                            }
+                                        });
+                                        location.reload();
+                                    }else if( $(this).attr("name") == "2"  ){
+                                        $.ajax({
+                                            url: getRootPath_web()+"/rlSuspectGangHandler/insert",
+                                            type:"POST",
+                                            dataType:"json",
+                                            data:{
+                                                gangId:pokw,
+                                                suspectIds:JSON.stringify(woko),
+                                                parentId:pid
+                                            }
+                                        });
+                                        location.reload();
+                                    }
+
+                                });
+                            }
+                        });
+                    }
+                });
+            }else{
+                $(".crime_gang li").each(function () {
+                    if( $(this).hasClass("bule") ) {
+                        //团伙ID
+                        var pokw = $(this).attr("id");
+                        //初始化人员树状图
+                        $.ajax({
+                            url: getRootPath_web()+"/rlSuspectGangHandler/insert",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                gangId: pokw,
+                                suspectIds: JSON.stringify(woko),
+                            },
+                        })
+                        location.reload();
+                    }
+                });
+            }
+        }
+    }
+    //点击新增人员出现窗口
+    $(".add_but_one").live('click',function () {
+        layer.open({
+            type: 1,
+            title:'添加新的团伙信息',
+            area:['450px', 'auto'],
+            content: ' <div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+            +'<div class="col-sm-12">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙名称 :</span>'
+            +'<input id="nametwo" type="text" class="form-control" placeholder="请输入团伙信息">'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-sm-12" style="margin-top: 10px">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙备注 :</span>'
+            +'<input id="note" type="text" class="form-control" placeholder="请输入团伙备注">'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-sm-12" style="margin-top: 10px">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙类型 :</span>'
+            +'<select id="contr"  class="form-control">'
+            +'<option id="38" value ="0">涉黑团伙类型</option>'
+            +'<option id="3800" value ="1">劫匪型</option>'
+            +'<option id="3801" value="2">打手型</option>'
+            +'<option  id="3802"value="3">地霸型</option>'
+            +"</select>"
+            +'</div>'
+            +'</div>'
+            +'</div>',
+            btn:['保存','取消'],
+            btn1: function (index,layero) {
+                var name = $("#nametwo").val();
+                var note = $("#note").val();
+                var type = $("#contr").find("option:selected").val();
+                if( note == "" ){
+                    layer.open({
+                        content:"你还没有填入团伙备注"
+                    });
+                    return false
+                }else{
+                    if( $.trim(name) == "" || $.trim(name) == null){
+                        layer.open({
+                            content:"你还没有填入团伙信息"
+                        })
+                    }else{
+                        $.ajax({
+                            url: getRootPath_web()+"/etGangHandler/insert",
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                gangName:name,
+                                gangDemo:note,
+                                gangType:type,
+                            },
+                        });
+                        $(".crime_gang").append("<li name="+ note +"  type="+ type +" id=''><span>"+name+"</span> <a>删除</a></li>");
+                        location.reload();
+                    }
+                }
+
+                //  alert("团伙名称："+name)
+                //  alert("团伙备注："+note)
+                $("#name").val("");
+                $("#note").val("");
+                layer.closeAll();
+            },
+            btn2:function (index,layero) {
+                layer.closeAll(index);
+            }
+        });
+    });
+    //点击右上角修改
+    $(".right_bxi_bianji").live('click',function () {
+        var thd = $(this);
+        var tru_sel = $(this).parent().attr("type");
+        var gir = $(this).parent().attr("id");
+        layer.open({
+            type: 1,
+            title:'修改团伙信息',
+            area:['450px', 'auto'],
+            content: ' <div class="row" style="width: 420px;  margin-left:7px; margin-top:10px;">'
+            +'<div class="col-sm-12">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙信息 :</span>'
+            +'<input id="GangInformation" type="text" class="form-control" placeholder="请输入团伙信息">'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-sm-12" style="margin-top: 10px">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙备注 :</span>'
+            +'<input id="GangRemark" type="text" class="form-control" placeholder="请输入团伙备注">'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-sm-12" style="margin-top: 10px">'
+            +'<div class="input-group">'
+            +'<span class="input-group-addon"> 团伙类型 :</span>'
+            +'<select id="control"  class="form-control">'
+            +'<option id="38" value ="0">涉黑团伙类型</option>'
+            +'<option id="3800" value ="1">劫匪型</option>'
+            +'<option id="3801" value="2">打手型</option>'
+            +'<option  id="3802"value="3">地霸型</option>'
+            +"</select>"
+            +'</div>'
+            +'</div>'
+            +'</div>',
+            btn:['保存','取消'],
+            btn1: function (index,layero) {
+                var GangInformation = $("#GangInformation").val();
+                var GangRemark = $("#GangRemark").val();
+                var control  = $("#control").find("option:selected").val();
+                $.ajax({
+                    url: getRootPath_web()+"/etGangHandler/updateByPrimaryKeySelective",
+                    type:"POST",
+                    dataType:"json",
+                    data:{
+                        id:gir,
+                        gangName:GangInformation,
+                        gangDemo:GangRemark,
+                        gangType:control,
+
+                    },
+                })
+                $(".GangInformation").val( $("#GangInformation").val() );
+                $(".GangRemark").val( $("#GangRemark").val() );
+                $(".type").val( $("#control").find("option:selected").text() );
+                $(".crime_gang li").each(function () {
+                    if( $(this).hasClass("bule") ){
+                        $(this).children("span").text( $("#GangInformation").val() )
+                        $(this).attr("name",$("#GangRemark").val() )
+                        $(this).attr("type",$("#control").find("option:selected").text() )
+                    }
+                })
+                $("#GangInformation").val("");
+                $("#GangRemark").val("");
+                layer.close(index);
+            },
+            btn2:function (index,layero) {
+                layer.close(index);
+            }
+        });
+        $("#control").find("option").each(function () {
+            if( $(this).text() == tru_sel ){
+                $(this).attr("selected",true);
+            }
+        })
+        $("#GangInformation").val( $(".GangInformation").val() );
+        $("#GangRemark").val( $(".GangRemark").val() );
+    })
+    //点击删除判断
+    //点击删除侧面的导航
+    $(".crime_gang li a").live('click',function () {
+        var yhj = $(this).parent()
+        layer.open({
+            content: '确定要删除当前的团伙？'
+            ,btn: ['确定', '取消']
+            ,yes: function(index, layero){
+                //按钮【确定】的回调
+                var niuid = yhj.attr("id");
+                $.ajax({
+                    url: getRootPath_web()+"/etGangHandler/deleteByPrimaryKey",
+                    type:"POST",
+                    dataType:"json",
+                    data:{
+                        id:niuid
+                    },
+                })
+                if( $('.right_bxi').attr("id") == yhj.attr("id") ){
+                    $(".wpq_com").hide();
+                    $("#jOrgChart").hide();
+                    $("#add_show").hide();
+                }
+                yhj.remove();
+                layer.close(index)
+            }
+            ,btn2: function(index, layero){
+                //按钮【取消】的回调
+                layer.close(index)
+            }
+        });
+    })
+    //弹出编辑层
+    $(".ToView").live("click",function () {
+        $('.bianji').show();
+    })
+    //一级人员添加
+    $("#add_show").live("click",function () {
+        $("#add_show").attr("name",0);
+        $(this).attr("name",1);
+        var ii;
+        ii = layer.ready(function() {
+            ii = layer.open({
+                offset : 20,
+                type : 1,
+                title : '同级添加',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '400px', '500px' ],
+                content : $("#addPerson"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#addPerson").hide();
+                }
+            });
+        }).index;
+        $(".crime_gang li").each(function () {
+            if( $(this).hasClass("bule") ){
+                //团伙ID
+                var pokw = $(this).attr("id");
+                //初始化人员树状图
+                $.ajax({
+                    url: getRootPath_web()+"suspecthandler/listSelectableTreeNodes",
+                    type:"POST",
+                    dataType:"json",
+                    data:{
+                        gangId:pokw,
+                        pId:""
+                    },
+                    success:function (data) {
+                        var zNodes = data.data;
+                        if(zNodes){
+                            for (var i = 0, len = zNodes.length; i < len; i++) {
+                                var node = zNodes[i];
+                                node.icon = getRootPath_web() + node.icon ;
+                                //console.log(node.icon );
+                            }
+                            // console.log(zNodes);
+                            $.fn.zTree.init($("#personTree"),setting_One,zNodes);
+                            zTree = $.fn.zTree.getZTreeObj("personTree");
+                        }else {
+                            alert("暂无数据！");
+                        }
+                    }
+                });
+            }
+        });
+    });
+    //头像上传
+    $(function() {
+        $("#pic").click(function() {
+            $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+            $("#upload").on("change", function() {
+                var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                if(objUrl) {
+                    $("#pic").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                }
+            });
+        });
+    });
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null;
+        if(window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if(window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if(window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    //关系人导入点击事件
+    function importRelationship(){
+        var gangId=$("#gangIdForRPD").val();
+        if(gangId==null||gangId==""){
+            alert("请选择团伙！");
+            return;
+        }
+        $("#excelFile").click();
+        excelType = "关系人";
+    }
+    //根据路径获取文件名称
+    function getFileName(filePath) {
+        return filePath.substring(filePath.lastIndexOf("\\")+1,filePath.length);
+    }
+</script>
+</body>
+</html>

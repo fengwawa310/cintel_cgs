@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.infor.EtTipoffMemoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.infor.EtTipoffMemo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TIPOFF_ID" property="tipoffId" jdbcType="VARCHAR" />
+    <result column="OPERATE_TYPE" property="operateType" jdbcType="VARCHAR" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.infor.EtTipoffMemo" extends="BaseResultMap" >
+    <result column="MEMO_CONTENT" property="memoContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TIPOFF_ID, OPERATE_TYPE, OPERATOR, CREATE_TIME, MODIFY_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    MEMO_CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from et_topoff_memo
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_topoff_memo
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.infor.EtTipoffMemo" >
+    insert into et_topoff_memo (ID, TIPOFF_ID, OPERATE_TYPE, 
+      OPERATOR, CREATE_TIME, MODIFY_TIME, 
+      MEMO_CONTENT)
+    values (#{id,jdbcType=VARCHAR}, #{tipoffId,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, now(), now(), 
+      #{memoContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.infor.EtTipoffMemo" >
+    insert into et_topoff_memo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="tipoffId != null" >
+        TIPOFF_ID,
+      </if>
+      <if test="operateType != null" >
+        OPERATE_TYPE,
+      </if>
+      <if test="operator != null" >
+        OPERATOR,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="memoContent != null" >
+        MEMO_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tipoffId != null" >
+        #{tipoffId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memoContent != null" >
+        #{memoContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.infor.EtTipoffMemo" >
+    update et_topoff_memo
+    <set >
+      <if test="tipoffId != null" >
+        TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memoContent != null" >
+        MEMO_CONTENT = #{memoContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.infor.EtTipoffMemo" >
+    update et_topoff_memo
+    set TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      MEMO_CONTENT = #{memoContent,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.infor.EtTipoffMemo" >
+    update et_topoff_memo
+    set TIPOFF_ID = #{tipoffId,jdbcType=VARCHAR},
+      OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+<!-- 流转列表  -->
+  <select id="findetTipoffMemoByIdList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  	  select 
+		T.ID as id,
+		(select name from sys_user c where c.ID=t.OPERATOR ) as operatorName,
+     	T.TIPOFF_ID as tipoffId,
+     	T.MEMO_CONTENT as memoContent,
+    	T.OPERATE_TYPE as operateType,
+    	T.OPERATOR as operator,
+     	T.CREATE_TIME as createTime,
+     	T.MODIFY_TIME as modifyTime
+		from et_topoff_memo T
+	    where 1=1
+  	<!-- 以下为查询条件 --> 
+  	<if test="  tipoffId !=null and tipoffId !='' ">
+  		and t.TIPOFF_ID = #{tipoffId}
+  	</if>
+  	ORDER BY CREATE_TIME DESC
+    <if test="start != null and length !=null">
+		limit ${start},${length}
+	</if>
+  </select>
+  <!--   count -->
+  <select id="findetTipoffMemoByIdCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+  	  select 
+	  	count(*)
+		from et_topoff_memo t
+	    where 1=1
+  	<!-- 以下为查询条件 --> 
+  	<if test="  tipoffId !=null and tipoffId !='' ">
+  		and t.TIPOFF_ID = #{tipoffId}
+  	</if>
+  </select>
+  
+ 	 <!--案件列表-->
+  <select id="findCaseByIdInfo" resultType="com.entity.infor.ResponseVO"
+	parameterType="java.util.Map">
+	select
+	B.id as anjianId,
+	B.CASE_NO as caseNo,<!--案件编号 -->
+	B.CASE_TITLE as caseTitle,<!--案件名称 -->
+	B.HAPPEN_TIME_UP as happenTimeUp,<!--发案时间 -->
+	B.CASE_SOURCE as caseSource,<!--案件来源 -->
+	B.CASE_CLASS as caseClass,<!--案件类别 -->
+	B.CASE_STATE as caseState,<!--案件状态 -->
+	B.ACCEPT_UNIT_CODE as acceptUnitCode,<!--受理单位编码 -->
+	B.ACCEPT_UNIT_NAME as acceptUnitName,<!--受理单位名称 -->
+	B.INPUTER_CODE as inputerCode,<!--录入人编码 -->
+	B.INPUTER_NAME as inputerName,<!--录入人姓名 -->
+	B.INPUT_UNIT_CODE as inputUnitCode,<!--录入单位编码 -->
+	B.INPUT_UNIT_NAME as inputUnitName,<!--录入单位名称 -->
+	B.ZONE_CODE as zoneCode,<!--所属区划编码 -->
+	B.ZONE_NAME as zoneName,<!--所属区划名称 -->
+	B.CREAT_TIME as creatTime,<!--案件录入时间 -->
+	B.IS_FOLLOW as isFollow,<!--关注标识 -->
+	B.IS_ARCHIVE as isArchive,<!--归档标识 -->
+	B.SOURCE_TYPE as  sourceType<!--数据来源 -->
+	FROM AP_STAFF A
+	INNER JOIN AP_SCARELA C ON A.STAFF_ID = C.STAFF_ID
+	INNER JOIN ET_CASE B  ON  C.CASE_NO = B.ID 
+	where 1= 1
+	<if test=" reprotType == '1'.toString() "><!-- 1举报人 -->
+	AND A.IDCARD_NUM = #{reporterIdcard,jdbcType=VARCHAR}
+	OR   A.PHONE_NUM = #{reporterPhone,jdbcType=VARCHAR}
+	</if>
+	<if test=" reprotType == '2'.toString() "><!-- 被举报人 -->
+	<!-- 被举报人身份证号不为空 用身份证号查 -->
+	<if test=" beingReportedIdcard != null and beingReportedIdcard !='' ">
+		 AND A.IDCARD_NUM = #{beingReportedIdcard,jdbcType=VARCHAR}
+		 OR B.CASE_DESC LIKE CONCAT('%',#{beingReportedIdcard,jdbcType=VARCHAR},'%')
+	</if>
+	<!-- 被举报人身份证号为空 -->
+	<if test=" beingReportedIdcard == null and beingReportedIdcard =='' ">
+		<!-- 电话不为空 用电话查 -->
+		<if test=" beingReportedPhone != null and beingReportedPhone !='' ">
+			AND A.PHONE_NUM = #{beingReportedPhone,jdbcType=VARCHAR}
+		</if>
+		<!-- 电话为空 用姓名模糊查询 -->
+		<if test=" beingReportedPhone == null and beingReportedPhone =='' ">
+			AND A.NAME LIKE CONCAT('%',#{beingReported,jdbcType=VARCHAR},'%')
+		</if>
+	</if>
+	</if>
+	 <if test="start != null and length !=null">
+		limit ${start},${length}
+	</if>
+</select>
+	
+	
+	<!--根据案件count-->
+  <select id="findCaseByIdInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    	select
+	count(*)
+	FROM AP_STAFF A
+	INNER JOIN AP_SCARELA C ON A.STAFF_ID = C.STAFF_ID
+	INNER JOIN ET_CASE B  ON  C.CASE_NO = B.ID 
+	where 1= 1
+	<if test=" reprotType == '1'.toString() "><!-- 1举报人 -->
+	AND A.IDCARD_NUM = #{reporterIdcard,jdbcType=VARCHAR}
+	OR   A.PHONE_NUM = #{reporterPhone,jdbcType=VARCHAR}
+	</if>
+	<if test=" reprotType == '2'.toString() "><!-- 被举报人 -->
+	<!-- 被举报人身份证号不为空 用身份证号查 -->
+	<if test=" beingReportedIdcard != null and beingReportedIdcard !='' ">
+		 AND A.IDCARD_NUM = #{beingReportedIdcard,jdbcType=VARCHAR}
+		 OR B.CASE_DESC LIKE CONCAT('%',#{beingReportedIdcard,jdbcType=VARCHAR},'%')
+	</if>
+	<!-- 被举报人身份证号为空 -->
+	<if test=" beingReportedIdcard == null and beingReportedIdcard =='' ">
+		<!-- 电话不为空 用电话查 -->
+		<if test=" beingReportedPhone != null and beingReportedPhone !='' ">
+			AND A.PHONE_NUM = #{beingReportedPhone,jdbcType=VARCHAR}
+		</if>
+		<!-- 电话为空 用姓名模糊查询 -->
+		<if test=" beingReportedPhone == null and beingReportedPhone =='' ">
+			AND A.NAME LIKE CONCAT('%',#{beingReported,jdbcType=VARCHAR},'%')
+		</if>
+	</if>
+	</if>
+  </select>
+	
+	
+	
+	 <!--警情列表-->
+  <select id="findJingQingInfo" resultType="com.entity.infor.ResponseVO"
+	parameterType="java.util.Map">
+	select
+	A.id as jingqingId,
+	A.ALARM_NO as  alarmNo ,
+	A.UNIT_NAME as unitName,
+	A.LOCATION_CASE as locationCase,
+	(select t.DIC_DES from dic_common t where t.DIC_CODE= ALARM_CLASS) alarmClassName,
+	A.ALARM_PERSON_NAME as alarmPersonName,
+	A.ALARM_PERSON_PHONE as alarmPersonPhone 
+	FROM et_alarm A
+	where 1= 1
+	<if test=" reprotType == '1'.toString() "><!-- 1举报人 -->
+	 AND A.ALARM_DESC LIKE CONCAT('%',#{reporterIdcard,jdbcType=VARCHAR},'%') 
+	 OR  A.ALARM_PERSON_PHONE = #{reporterPhone,jdbcType=VARCHAR}
+	</if>
+	<if test=" reprotType == '2'.toString() "><!-- 被举报人 -->
+	<!-- 被举报人身份证号不为空 用身份证号查 -->
+	<if test=" beingReportedIdcard != null and beingReportedIdcard !='' ">
+		 AND A.ALARM_DESC LIKE CONCAT('%',#{beingReportedIdcard,jdbcType=VARCHAR},'%') 
+	</if>
+	<!-- 被举报人身份证号为空 -->
+	<if test=" beingReportedIdcard == null and beingReportedIdcard =='' ">
+		<!-- 电话不为空 用电话查 -->
+		<if test=" beingReportedPhone != null and beingReportedPhone !='' ">
+			AND A.ALARM_PERSON_PHONE = #{beingReportedPhone,jdbcType=VARCHAR}
+		</if>
+		<!-- 电话为空 用姓名模糊查询 -->
+		<if test=" beingReportedPhone == null and beingReportedPhone =='' ">
+			AND A.ALARM_PERSON_NAME LIKE CONCAT('%',#{beingReported,jdbcType=VARCHAR},'%')
+		</if>
+	</if>
+	
+	</if>
+	 <if test="start != null and length !=null">
+		limit ${start},${length}
+	</if>
+</select>
+	
+	
+	<!--根据警情count-->
+  <select id="findJingQingInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+   select
+	count(*)
+	FROM et_alarm A
+	where 1= 1
+	<if test=" reprotType == '1'.toString() "><!-- 1举报人 -->
+	AND A.ALARM_DESC LIKE CONCAT('%',#{reporterIdcard,jdbcType=VARCHAR},'%') 
+	OR   A.ALARM_PERSON_PHONE = #{reporterPhone,jdbcType=VARCHAR}
+	</if>
+	<if test=" reprotType == '2'.toString() "><!-- 被举报人 -->
+	<!-- 被举报人身份证号不为空 用身份证号查 -->
+	<if test=" beingReportedIdcard != null and beingReportedIdcard !='' ">
+		  AND A.ALARM_DESC LIKE CONCAT('%',#{beingReportedIdcard,jdbcType=VARCHAR},'%') 
+	</if>
+	<!-- 被举报人身份证号为空 -->
+	<if test=" beingReportedIdcard == null and beingReportedIdcard =='' ">
+		<!-- 电话不为空 用电话查 -->
+		<if test=" beingReportedPhone != null and beingReportedPhone !='' ">
+			AND A.ALARM_PERSON_PHONE = #{beingReportedPhone,jdbcType=VARCHAR}
+		</if>
+		<!-- 电话为空 用姓名模糊查询 -->
+		<if test=" beingReportedPhone == null and beingReportedPhone =='' ">
+			AND A.ALARM_PERSON_NAME LIKE CONCAT('%',#{beingReported,jdbcType=VARCHAR},'%')
+		</if>
+	</if>
+	
+	</if>
+  </select>
+	
+  
+</mapper>

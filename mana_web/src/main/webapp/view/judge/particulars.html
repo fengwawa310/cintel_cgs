@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案警详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/report.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/alarm.css" />
+
+    <!-- basic scripts -->
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <!-- select -->
+    <style>
+        .areaTxt{
+            background: #fff!important;
+            border: none;
+        }
+        .areaTxt_One{
+            width: 99%;
+            min-height: 95%;
+            margin-top: 2px;
+            margin-left: 4px;
+            border: 1px solid #D1E1FF;
+            resize: none;
+        }
+        .main-content{
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0px;
+        }
+        .warningInfo{
+            background: #fff;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!--警情信息-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+    <!--警情信息录入-->
+    <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+        <div class="col-md-12">
+            <span class="title">警情信息</span>
+        </div>
+    </div>
+    <!--警情编号、接警人员、接警单位-->
+    <div class="row breadcrumbs warningContainer">
+        <!--<div class="col-md-4 noPadding">-->
+        <!--<div class="col-md-4 warningTxt">-->
+        <!--<span>接警编号</span>-->
+        <!--</div>-->
+        <!--<div class="col-md-8 warningInfo">-->
+        <!--<span id="alarmNo"></span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>接警人员</span>
+            </div>
+            <div class="col-md-8 warningInfo">
+                <span id="officerName">dddddddddddddddddddddddd</span>
+            </div>
+        </div>
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>接警单位</span>
+            </div>
+            <div class="col-md-8 warningInfo ">
+                <span id="unitName"></span>
+            </div>
+        </div>
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>接警单位编码</span>
+            </div>
+            <div class="col-md-8 warningInfo lastInput">
+                <span id="unitCode"></span>
+            </div>
+        </div>
+    </div>
+    <!--接警单位编码、接警时间、报警人-->
+    <div class="row breadcrumbs warningContainer">
+
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>接警时间</span>
+            </div>
+            <div class="col-md-8 warningInfo">
+                <span id="alarmTime"></span>
+            </div>
+        </div>
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>报警人</span>
+            </div>
+            <div class="col-md-8 warningInfo ">
+                <span id="alarmPersonName"></span>
+            </div>
+        </div>
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>报警电话</span>
+            </div>
+            <div class="col-md-8 warningInfo lastInput">
+                <span id="alarmPersonPhone"></span>
+            </div>
+        </div>
+    </div>
+    <!--报警电话、发案地点-->
+    <div class="row breadcrumbs warningContainer">
+
+        <div class="col-md-8 noPadding">
+            <div class="col-md-2 warningTxt">
+                <span>发案地点</span>
+            </div>
+            <div class="col-md-10 warningInfo ">
+                <span id="locationCase"></span>
+            </div>
+        </div>
+        <div class="col-md-4 noPadding">
+            <div class="col-md-4 warningTxt">
+                <span>警情分类</span>
+            </div>
+            <div class="col-md-8 warningInput">
+                <span id="alarmClassName"></span>
+            </div>
+        </div>
+    </div>
+    <!--警情描述-->
+    <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+        <div class="col-md-2 warningTxt" style="width:11.11%;">
+            <span class="detail-area-menu">警情描述</span>
+        </div>
+        <div class="col-md-10 warningInfo lastInput" style="border-left: 1px solid #D1E1FF;width:88.88%;min-height: 200px;line-height: 27px;">
+            <span id="alarmDesc"></span>
+        </div>
+    </div>
+
+
+    <!--受理单位编码、系统创建时间、系统修改时间-->
+    <!--  <div class="row breadcrumbs warningContainer">
+         <div class="col-md-4 noPadding">
+             <div class="col-md-4 warningTxt">
+                 <span>系统创建时间</span>
+             </div>
+             <div class="col-md-8 warningInfo">
+                 <span id="creatTime"></span>
+             </div>
+         </div>
+         <div class="col-md-4 noPadding">
+             <div class="col-md-4 warningTxt">
+                 <span>系统修改时间</span>
+             </div>
+             <div class="col-md-8 warningInfo lastInput">
+                 <span id="modifyTime"></span>
+             </div>
+         </div>
+     </div> -->
+</div>
+    <!--警情信息-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">案件信息</span>
+            </div>
+        </div>
+        <!--案件状态、案件名称-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>案件名称</span>
+                </div>
+                <div class="col-md-10 caseInfo">
+                    <span id="caseTitle"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件状态</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="caseState"></span>
+                </div>
+            </div>
+        </div>
+        <!--案件编号、案件来源、案件类别-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件编号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="caseNo"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件类别</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="caseClass"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>警情编号</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="alarmNo"></span>
+                </div>
+            </div>
+        </div>
+        <!--备注-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>备注</span>
+            </div>
+            <div class="col-md-9 caseInfo lastInput" style="width: 88.88%">
+                <span id="caseRemarks"></span>
+            </div>
+        </div>
+        <!--发案时间、发案时间上限、发案时间下限-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>发案时间上限</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="happenTimeUp"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>发案时间下限</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="happenTimeDown"></span>
+                </div>
+            </div>
+        </div>
+        <!--简要案情-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>简要案情</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="caseDesc"></span>
+            </div>
+        </div>
+        <!--案发详细地址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>案发详细地址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="detalAddress"></span>
+            </div>
+        </div>
+        <!--案件主办人姓名、区域划分、案件受理时间-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件主办人</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="sponsorName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>区域划分</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="zoneName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+            </div>
+            <div class="col-md-4 noPadding" style="padding: 0px">
+                <div class="col-md-4 caseTxt">
+                    <span>案件受理时间</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="acceptTime"></span>
+                </div>
+            </div>
+        </div>
+        <!--案件受理单位、案件主办单位、案件协办单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件受理单位</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="acceptUnitName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件主办单位</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="hostUnitName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件协办单位</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="assistUnitName"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--嫌疑人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left">
+                    <span class="multiTitle">嫌疑人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                </div>
+            </div>
+        </div>
+        <!--嫌疑人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+                <span>手机号码</span>
+            </div>
+            <!--<div class="col-md-2 caseTxt leftTxt" >
+                <span>QQ</span>
+            </div>-->
+            <div class="col-md-5 caseTxt leftTxt" >
+                <span>备注</span>
+            </div>
+        </div>
+        <!--嫌疑人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="suspect">
+
+
+        </div>
+
+        <!--受害人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left;">
+                    <span class="multiTitle">受害人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                </div>
+            </div>
+        </div>
+        <!--受害人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+                <span>手机号码</span>
+            </div>
+            <!-- <div class="col-md-2 caseTxt leftTxt" >
+                 <span>QQ</span>
+             </div>-->
+            <div class="col-md-5 caseTxt leftTxt" >
+                <span>备注</span>
+            </div>
+        </div>
+        <!--受害人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="victim">
+
+        </div>
+
+    </div>
+    <!--审核结果-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">审核结果意见</span>
+            </div>
+        </div>
+        <!--审核结果-->
+        <div class="row breadcrumbs warningContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>审核结果</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="auditResult">dddddddddddddddddddddddd</span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>审核人</span>
+                </div>
+                <div class="col-md-8 warningInfo ">
+                    <span id="auditPerson"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>审核时间</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="auditTime"></span>
+                </div>
+            </div>
+        </div>
+        <!--审核意见-->
+        <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 warningTxt" style="width:11.11%;">
+                <span class="detail-area-menu">审核意见</span>
+            </div>
+            <div class="col-md-10 warningInfo lastInput" style="border-left: 1px solid #D1E1FF;width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="auditOpinion"></span>
+            </div>
+        </div>
+
+
+        <!--受理单位编码、系统创建时间、系统修改时间-->
+        <!--  <div class="row breadcrumbs warningContainer">
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统创建时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo">
+                     <span id="creatTime"></span>
+                 </div>
+             </div>
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统修改时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo lastInput">
+                     <span id="modifyTime"></span>
+                 </div>
+             </div>
+         </div> -->
+    </div>
+    <!--签收结果-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">签收结果意见</span>
+            </div>
+        </div>
+        <!--签收结果-->
+        <div class="row breadcrumbs warningContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>签收结果</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="signResult">dddddddddddddddddddddddd</span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>签收人</span>
+                </div>
+                <div class="col-md-8 warningInfo ">
+                    <span id="signPerson"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>签收时间</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="signTime"></span>
+                </div>
+            </div>
+        </div>
+        <!--签收意见-->
+        <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 warningTxt" style="width:11.11%;">
+                <span class="detail-area-menu">签收意见</span>
+            </div>
+            <div class="col-md-10 warningInfo lastInput" style="border-left: 1px solid #D1E1FF;width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="signOpinion"></span>
+            </div>
+        </div>
+
+
+        <!--受理单位编码、系统创建时间、系统修改时间-->
+        <!--  <div class="row breadcrumbs warningContainer">
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统创建时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo">
+                     <span id="creatTime"></span>
+                 </div>
+             </div>
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统修改时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo lastInput">
+                     <span id="modifyTime"></span>
+                 </div>
+             </div>
+         </div> -->
+    </div>
+    <!--研判结果-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">研判结果</span>
+            </div>
+        </div>
+        <!--研判结果-->
+
+        <div class="row breadcrumbs warningContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>研判结果</span>
+                </div>
+                <div class="col-md-8 warningInfo">
+                    <span id="studyResult">dddddddddddddddddddddddd</span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>研判人</span>
+                </div>
+                <div class="col-md-8 warningInfo ">
+                    <span id="studyPerson"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 warningTxt">
+                    <span>研判时间</span>
+                </div>
+                <div class="col-md-8 warningInfo lastInput">
+                    <span id="studyTime"></span>
+                </div>
+            </div>
+        </div>
+        <!--审核意见-->
+        <div class="row breadcrumbs warningContainer textarea-input" style=" min-height: 200px;">
+            <div class="col-md-2 warningTxt" style="width:11.11%;">
+                <span class="detail-area-menu">研判意见</span>
+            </div>
+            <div class="col-md-10 warningInfo lastInput" style="border-left: 1px solid #D1E1FF;width:88.88%;min-height: 200px;line-height: 27px;">
+                <span id="studyOpinion"></span>
+            </div>
+        </div>
+
+
+        <!--受理单位编码、系统创建时间、系统修改时间-->
+        <!--  <div class="row breadcrumbs warningContainer">
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统创建时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo">
+                     <span id="creatTime"></span>
+                 </div>
+             </div>
+             <div class="col-md-4 noPadding">
+                 <div class="col-md-4 warningTxt">
+                     <span>系统修改时间</span>
+                 </div>
+                 <div class="col-md-8 warningInfo lastInput">
+                     <span id="modifyTime"></span>
+                 </div>
+             </div>
+         </div> -->
+    </div>
+    <!--流转信息-->
+    <div class="wt100">
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">流转信息</span>
+            </div>
+        </div>
+        <table id="dynamic-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+        </table>
+    </div>
+    <script>
+        var dynamictable;
+        $(document).ready(function() {
+            dynamictableSearch("","","","");
+            //涉案类别
+            selectDicCommon(19,"caseClass");
+        });
+
+        //列表部分
+        function dynamictableSearch(startTime,endTime,caseClass,tipoffReporter,beingReported,clueTitle,operateType) {
+            $("#dynamic-table_filter").css('display', 'block');
+            dynamictable = $("#dynamic-table").DataTable(
+                {
+                    "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                    "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                    "pageLength" : 10,/*默认*/
+                    "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                        [ 5, 10, 20, "全部" ] ],
+                    /*"deferRender": true,*/
+                    "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                    "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                    "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                    /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                     [0, "desc"]
+                     ], */
+                    //因为需要多次初始化，所以需要设置允许销毁实例
+                    "destroy" : true,
+                    "bFilter" : false,
+                    "orderMulti" : false, //启用多列排序
+                    "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                    /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                    /*   "table-layout":fix, */
+                    "row-border" : true,
+                    "oLanguage" : {
+                        "sEmptyTable" : "没有记录",
+                        "sProcessing" : "处理中，请稍候...",
+                        "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                        "sZeroRecords" : "没有记录",
+                        "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                        "sInfoPostFix" : "",
+                        "sLoadingRecords" : "正在加载中,请稍候...",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate" : {
+                            "sFirst" : "首页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "末页"
+                        }
+                    },
+                    ajax : {
+                        url : getRootPath_web() + "reportHandler/etTipoffList",
+                        "type" : "post",
+                        "data":{
+                            startTime : startTime,
+                            endTime : endTime,
+                            caseClass : caseClass,
+                            tipoffReporter : tipoffReporter,
+                            beingReported : beingReported,
+                            clueTitle : clueTitle,
+                            operateType:operateType,
+                            belongPage:"feedbackPage"
+                        },
+                        async:true
+                    },
+                    /*序号自增长*/
+                    "fnDrawCallback" : function(){
+                        this.api().column(0).nodes().each(function(cell, i) {
+                            cell.innerHTML =  i + 1;
+                        });
+                    },
+                    "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                    "columns": [
+                        {"sTitle":'<font>序号</font>','sWidth' :'10%',"sClass" :"dt-left", 'bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>操作人</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'tipoffTime','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return Common.dateFormat2(data,"yyyy-MM-dd hh:mm:ss");
+                            }},
+                        {"sTitle":'<font>操作时间</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'tipoffReporter','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>操作类型</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'caseClassName','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                if(data== 1){
+                                    return "未审核";
+                                }
+                                if(data== 2){
+                                    return "已审核";
+                                }
+                                if(data== 3){
+                                    return "已下发";
+                                }
+                                if(data== 4){
+                                    return "已签收";
+                                }
+                                if(data== 5){
+                                    return "研判上报";
+                                }
+                                if(data== 6){
+                                    return "已复核";
+                                }
+                                return data;
+                            }},
+                        {"sTitle":'<font>备注内容</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'memoContent','bSortable': false,
+                            'render': function(data, type, row, meta) {
+                                if(data==""||data==null){
+                                    return "--";
+                                }
+                                return data;
+                            }},
+                    ]
+                });
+//        logEntry("1","举报查询");
+            $("#dynamic-table_filter").css("display", "none");
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/mainShow.css">
+    <link rel="stylesheet" href="css/commonStyle.css">
+
+    <title>综合统计</title>
+</head>
+<body id="body">
+<!--<div class="col-lg-12 row no-padding no-margin header navHeader" id="mainShowHeader" style="float: none;">-->
+<!--&lt;!&ndash;头部左侧logo部分&ndash;&gt;-->
+<!--<div class="col-lg-3 logoDiv">-->
+<!--<img class="logoImg" src="assets/images/gallery/logo.png" onclick="jumpToMain();">-->
+<!--<label class="sysTitle">涉黑涉恶情报研判系统</label>-->
+<!--</div>-->
+<!--&lt;!&ndash;头部右侧&ndash;&gt;-->
+<!--<div class="col-lg-9 row no-padding no-margin rightHeaderDiv">-->
+<!--&lt;!&ndash;上部欢迎退出&ndash;&gt;-->
+<!--<div class="col-lg-12 no-margin"-->
+<!--style="height: 25px;font-size: 11px">-->
+<!--<ul class="nav ace-nav" id="welcomeTitle">-->
+<!--<li>-->
+<!--<span href=""class="time"></span>-->
+<!--</li>-->
+<!--<li>-->
+<!--<span href="">系统管理综合研判组</span>-->
+<!--</li>-->
+<!--<li>-->
+<!--<span href="" id="userName"></span>-->
+<!--</li>-->
+<!--<li>-->
+<!--<span href="">欢迎你！！</span>-->
+<!--</li>-->
+<!--<li class="">-->
+<!--<a  class="dropdown-toggle" onclick="jumpToMessage();" href="#">-->
+<!--<i class="icon-bell-alt"></i>-->
+<!--<span class="badge badge-important" id="lingdang"></span>-->
+<!--</a>-->
+
+<!--</li>-->
+<!--<li class="">-->
+<!--<a  class="dropdown-toggle" onclick="jumpToNotice();" href="#">-->
+<!--<i class="icon-bullhorn icon-animated-bullhorn"></i>-->
+<!--<span class="badge badge-important" id="message"></span>-->
+<!--</a>-->
+
+<!--</li>-->
+<!--<li class="">-->
+<!--<a  class="dropdown-toggle" onclick="jumpToProposal();" href="#">-->
+<!--<i class="icon-envelope-alt"></i>-->
+<!--<span class="badge badge-important"></span>-->
+<!--</a>-->
+
+<!--</li>-->
+<!--<li>-->
+<!--<a style="margin-left: 15px;margin-right: 6px" onclick="logout();">退出</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--&lt;!&ndash;下方菜单&ndash;&gt;-->
+<!--<div class="col-lg-12 no-margin menuDiv">-->
+<!--<div class="navbar-collapse collapse no-padding"	>-->
+<!--<ul class="nav navbar-nav navbar-right down-menu" id="mainMenu">-->
+
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+</div>
+<div class="main-container" id="main-container">
+    <div class="main-container-inner" id="div_main_dp">
+        <div id="iframe_dp" class="main-container-inner">
+            <div class='wrap'>
+                <div class='section'>
+                    <div class='statistical_chart'>
+                        <div id='chart_left'>
+                            <p></p>
+                        </div>
+                        <div class='chart_middle'>
+                            <div id='middleTop'>
+                                <h2 class='info_title'>最新警情</h2>
+                                <ul id='info_list'></ul>
+                            </div>
+                            <div id='middleBottom'>
+                                <h2 class='info_title'>综合统计</h2>
+                                <div class="middleBottom_person">
+                                    <img src="assets/images/gallery/person.png" alt="">
+                                    <label class="middleBottom_label"></label>
+                                </div>
+                                <div class="middleBottom_case">
+                                    <img src="assets/images/gallery/case.png" alt="">
+                                    <label class="middleBottom_label"></label>
+                                </div>
+                                <div class="middleBottom_alarm">
+                                    <img src="assets/images/gallery/alarm.png" alt="">
+                                    <label class="middleBottom_label"></label>
+                                </div>
+                                <div class="middleBottom_info">
+                                    <img src="assets/images/gallery/intelligence.png" alt="">
+                                    <label class="middleBottom_label"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id='chart_right'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='assets/js/jquery-2.0.3.min.js'></script>
+<script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/typeahead-bs2.min.js"></script>
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+<script src="/static/js/system/jy/jy.main.js"></script>
+<script src='js/echarts.min.js'></script>
+<script src="assets/js/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/mainShow.js"></script>
+
+</body>
+<script>
+    $(window).ready(function () {
+        $('#userName').text(localStorage.getItem("userName"));
+        menuThing();
+        //设置大屏区域高度
+        var wHeight = $(window).height() - $("#mainShowHeader").height();
+        $("#iframe_dp").height(wHeight);
+
+        //定时刷新页面
+        //timer = setInterval(reflashMainShow,60000);
+        //直接在页面加载时调用不刷新
+        reflashMainShow()
+    });
+
+</script>
+</html>

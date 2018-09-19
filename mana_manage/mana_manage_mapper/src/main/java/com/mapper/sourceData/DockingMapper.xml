@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.sourceData.DockingMapper" >
+  <!--添加案件清洗分类数据-->
+  <insert id="insertCS" parameterType="java.util.Map" >
+    insert into  ap_cassclassify (ID, CASE_NO, CS_ID,CS_NAME,IS_CONFIRM,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.CS_ID},
+      #{item.CS_NAME},
+      0,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+  <!--添加案件关键字数据-->
+  <insert id="insertKW" parameterType="java.util.Map" >
+    insert into ap_casskeyword (ID, CASE_NO, KEYWORD,WEIGHT,IS_CONFIRM,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.KEY},
+      #{item.WEIGHT},
+      0,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+  <!--添加案件中涉案身份证号数据-->
+  <insert id="insertIDNUM" parameterType="java.util.Map" >
+    insert into ap_cassidnums (ID, CASE_NO, IDNUM,IS_CONFIRM,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.IDNUM},
+      0,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+  <!--查询案件编号对应案件的标题-->
+  <select id="selectCaseTitle" resultType="java.lang.String" parameterType="java.lang.String">
+    select CASE_TITLE from et_case WHERE CASE_NO=#{ajbh}
+  </select>
+  <!--查询案件编号对应警情的标题-->
+  <select id="selectAlarmTitle" resultType="java.lang.String" parameterType="java.lang.String">
+    select LOCATION_CASE from et_alarm WHERE CASE_NO=#{ajbh}
+  </select>
+
+  <!--添加案警研判任务流数据-->
+  <insert id="insertJudgeflow" parameterType="java.util.Map" >
+    insert into et_judgeflow (ID,CASE_NO,JUDGE_TYPE,TITLE,FLOW_STATE,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.JUDGE_TYPE},
+      #{item.TITLE},
+      5000,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+
+  <!--添加案件分类信息数据  本公司分析得到-->
+  <insert id="caseClassifyInsert" parameterType="java.util.Map" >
+    insert into  ap_cassclassify (ID, CASE_NO, CS_DIME,CS_NAME,IS_CONFIRM,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.CS_DIME},
+      #{item.CS_NAME},
+      0,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+  <!--添加案件身份证信息数据  本公司分析得到-->
+  <insert id="caseIdNumInsert" parameterType="java.util.Map" >
+    insert into ap_cassidnums (ID, CASE_NO, IDNUM,IS_CONFIRM,CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.ID},
+      #{item.CASE_NO},
+      #{item.IDNUM},
+      0,
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+</mapper>

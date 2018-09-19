@@ -1,0 +1,19 @@
+{
+  "recordsTotal": 3,
+  "recordsFiltered": 3,
+  "draw": null,
+  "data": [
+    {
+      "warningType":"涉案预警",
+      "warningSketch":"福田区新发案件，触发XXX布控的预警信息！"
+    },
+	{
+      "warningType":"警情预警",
+      "warningSketch":"XX区新录入警情，触发XXX布控的预警信息！"
+    },
+	{
+      "warningType":"情报预警",
+      "warningSketch":"XXX新发布的情报信息，触发人员预警！"
+    }
+	]
+}

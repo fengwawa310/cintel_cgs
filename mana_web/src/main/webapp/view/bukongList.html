@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<!-- basic styles -->		
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<!-- <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" /> -->
+		<!-- <link rel="stylesheet" href="assets/css/chosen.css" /> -->
+		<!-- <link rel="stylesheet" href="assets/css/colorpicker.css" /> -->
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="assets/css/ace.min.css" />
+		<!-- <link rel="stylesheet" href="assets/css/ace-rtl.min.css" /> -->
+		<!-- <link rel="stylesheet" href="assets/css/ace-skins.min.css" /> -->
+
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<!--<script src="assets/js/ace-extra.min.js"></script>-->
+		<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css" />
+		<script src="assets/js/jquery-2.0.3.min.js"></script>
+	    <script src="js/jquery.dataTables.min.js"></script>
+
+	    <link rel="stylesheet" href="common/bootstrap/bootstrap-datetimepicker.min.css">
+
+	    <script src="common/bootstrap/moment-with-locales(1).js"></script>
+	    <script src="common/bootstrap/bootstrap-datetimepicker.min.js"></script>
+	    <script src="common/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+		<!-- inline scripts related to this page 弹框插件-->
+		<script src="assets/js/layer/layer.js"></script>
+
+		<script src="js/common.js"></script>
+		<script src="js/table.js"></script>
+		<link rel="stylesheet" href="css/commonStyle.css" />
+	</head>
+	<body>
+		<!-- 上方导航栏 -->
+		<iframe src="index.html" style="width:100%;height:65px;"></iframe>	
+		<div class="main-container" id="main-container">
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+				<!-- 左侧导航栏 -->
+				<iframe src="sidebar.html" class="sidebar_iframe"></iframe>		
+				<!-- 右侧部分 -->
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+						<ul class="breadcrumb">
+							<li>
+								<span class="title">当前位置：</span>
+								<span>人员管理>>布控列表</span>
+							</li>
+						</ul>					
+					</div>
+					<div class="page-content">
+						<div class="row-container searchAll search-condition">
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle borderLnone">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon ">
+						                <select>
+						                    <option value ="">--请选择--</option>
+						                    <option value ="saab">Saab</option>
+						                    <option value="opel">Opel</option>
+						                    <option value="audi">Audi</option>
+						                </select>
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle ">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon ">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle ">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon ">
+						                <input type="text" class="form-control" disabled="disabled" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle borderLnone">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle borderLnone ">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle borderLnone">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type='text' class="form-control searchTime" id='dateStart' />至
+						                <input type='text' class="form-control searchTime" id='dateEnd'/>
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle">
+						                <p>
+						                    人员姓名:
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon">
+						                <input type='text' class="form-control searchTime"/>-
+						                <input type='text' class="form-control searchTime"/>
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col-md-4">
+						        <div class="row">
+						            <div class="col-md-5 searchTitle borderLnone borderBnone">
+						                <p>升级
+						                    <select>
+						                        <option value ="">--请选择--</option>
+						                        <option value ="saab">二级人员</option>
+						                        <option value="opel">Opel</option>
+						                        <option value="audi">Audi</option>
+						                    </select>
+						                    时间
+						                </p>
+						            </div>
+						            <div class="col-md-7 searchCon borderBnone">
+						                <input type="text" class="form-control" placeholder="请输入名称">
+						            </div>
+						        </div>
+						    </div>
+						   
+						    <div class="col-md-12 searchBtn" >
+						        <div class="row">
+						            <div class="col-md-12 ">
+						                <button class="btn btn-primary" type="button" onclick="showConfirm();"> 查询 </button>
+										<button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+						                <button class="btn btn-primary" type="button"> 导出 </button>
+						                <button class="btn btn-primary" type="button"> Excel模板下载 </button>
+						                <button class="btn btn-primary" type="button">  Excel导入</button>
+						                <button class="btn btn-primary" type="button"> 导出辨认照片 </button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-md-12 care-text" style="">
+						    testtt
+						</div>
+						<!--tab切换标签-->
+						<ul id="myTab" class="nav nav-tabs mytab">
+						    <li class="active">
+						        <a href="#home" data-toggle="tab">手动录入</a>
+						    </li>
+						    <li>
+						        <a href="#ios" data-toggle="tab">平台导入</a>
+						    </li>
+						</ul>
+						<!--tab切换内容-->
+						<div id="myTabContent" class="tab-content">
+						    <div class="tab-pane fade in active" id="home">
+						        <div class="wt100">
+						            <table id="example" class="cell-border  table-bordered"  cellspacing="0" width="100%">
+						                <thead>
+						                <tr>
+						                    <th>序列</th>
+						                    <th><input type="checkbox" id="checkAll"></th>
+						                    <th>人员编号</th>
+						                    <th>姓名</th>
+						                    <th>身份证号</th>
+						                    <th>人员级别</th>
+						                    <th>性别</th>
+						                    <th>管控人</th>
+						                    <th>管控单位</th>
+						                    <th>清洗理由</th>
+						                    <th>建档日期</th>
+						                    <th>清洗停用日期</th>
+						                    <th>状态</th>
+						                    <th>操作</th>
+						                </tr>
+						                </thead>
+						                <tbody>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#"  onfocus="this.blur();" data-toggle="modal" data-target="#myModal">详情</a></span>&nbsp;
+						                        <span><a href="#" data-toggle="modal" data-target="#myModal" onfocus="this.blur();">研判信息</a></span>
+						                    </td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                <tr>
+						                    <td></td>
+						                    <td>
+						                        <input type="checkbox" name="checkList"></td>
+						                    <td>sssssssss</td>
+						                    <td>A</td>
+						                    <td>222222222222222222222sssssssss</td>
+						                    <td>二级人员</td>
+						                    <td>男性</td>
+						                    <td>S</td>
+						                    <td>A局C部门</td>
+						                    <td>经营</td>
+						                    <td>2017-12-12</td>
+						                    <td>2017-12-13</td>
+						                    <td>未审批</td>
+						                    <td><span><a href="#">详情</a></span>&nbsp;<span><a href="#">研判信息</a></span></td>
+						                </tr>
+						                </tbody>
+						            </table>
+						        </div>
+						    </div>
+						    <div class="tab-pane fade" id="ios" class="hahaha">
+						        <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
+						            TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse" onclick="haha">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div>
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="assets/js/jquery/2.0.3/jquery.min.js"></script>
+
+		<!-- <![endif]-->
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>
+		<script src="http://bootboxjs.com/bootbox.js"></script>  
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			
+		</script>
+	</body>
+
+<script>
+	function showConfirm(){
+		layer.confirm('是否确认删除案件？', {
+			btn: ['确认','取消'] //按钮
+		}, function(){
+			layer.msg('删除成功！', {icon: 1});
+		}, function(){
+			/*进行取消操作*/
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,221 @@
+{
+       "recordsTotal":"10",
+       "recordsFiltered":"20",
+       "data": [{
+              "opositeNumber": "17046768909",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "40046768909",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "55555",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "00046768909",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "88888",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "99999",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170841",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170842",
+              "calledFrequency": 1,
+              "inputNumber": "13919170843",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "44444",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "66666",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170843",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "55555",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "88888",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "99999",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "77777",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170842",
+              "calledFrequency": 1,
+              "inputNumber": "13919170841",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "44444",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "66666",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170843",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "55555",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "77777",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "99999",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "88888",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0752",
+              "location": "",
+              "callingFrequency": 1
+       }, {
+              "opositeNumber": "13919170841",
+              "calledFrequency": 1,
+              "inputNumber": "13919170842",
+              "domain": "",
+              "allFrequency": 2,
+"areacode":"0755",
+              "location": "",
+              "callingFrequency": 1
+       }]
+}

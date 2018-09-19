@@ -1,0 +1,1376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskJingzong.EpAsjBlMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpAsjBl" >
+    <id column="SYSTEMID" property="systemid" jdbcType="VARCHAR" />
+    <result column="AJBH" property="ajbh" jdbcType="VARCHAR" />
+    <result column="SER_NO" property="serNo" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="SCEN_SYSTEMID" property="scenSystemid" jdbcType="VARCHAR" />
+    <result column="TARGET" property="target" jdbcType="VARCHAR" />
+    <result column="FJ" property="fj" jdbcType="VARCHAR" />
+    <result column="STARTTIME" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="ENDTIME" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="JLDD" property="jldd" jdbcType="VARCHAR" />
+    <result column="CREATOR_NAME" property="creatorName" jdbcType="VARCHAR" />
+    <result column="CREATE_DEPT" property="createDept" jdbcType="VARCHAR" />
+    <result column="RECORDER" property="recorder" jdbcType="VARCHAR" />
+    <result column="RECORDER_DEPT" property="recorderDept" jdbcType="VARCHAR" />
+    <result column="TARGET_XM" property="targetXm" jdbcType="VARCHAR" />
+    <result column="TARGET_CYM" property="targetCym" jdbcType="VARCHAR" />
+    <result column="TARGET_XB" property="targetXb" jdbcType="VARCHAR" />
+    <result column="TARGET_CSRQ" property="targetCsrq" jdbcType="TIMESTAMP" />
+    <result column="TARGET_WHCD" property="targetWhcd" jdbcType="VARCHAR" />
+    <result column="TARGET_MZ" property="targetMz" jdbcType="VARCHAR" />
+    <result column="TARGET_HJSZD" property="targetHjszd" jdbcType="VARCHAR" />
+    <result column="TARGET_XZZ" property="targetXzz" jdbcType="VARCHAR" />
+    <result column="TARGET_ZJZL" property="targetZjzl" jdbcType="VARCHAR" />
+    <result column="TARGET_ZJHM" property="targetZjhm" jdbcType="VARCHAR" />
+    <result column="TARGET_GZDW" property="targetGzdw" jdbcType="VARCHAR" />
+    <result column="TARGET_LXDH" property="targetLxdh" jdbcType="VARCHAR" />
+    <result column="TARGET_ARRIVALTIME" property="targetArrivaltime" jdbcType="TIMESTAMP" />
+    <result column="TARGET_LEFTTIME" property="targetLefttime" jdbcType="TIMESTAMP" />
+    <result column="TARGET_BM" property="targetBm" jdbcType="VARCHAR" />
+    <result column="TARGET_YWM" property="targetYwm" jdbcType="VARCHAR" />
+    <result column="TARGET_GJ" property="targetGj" jdbcType="VARCHAR" />
+    <result column="TARGET_CH" property="targetCh" jdbcType="VARCHAR" />
+    <result column="TARGET_JG" property="targetJg" jdbcType="VARCHAR" />
+    <result column="TARGET_ZZMM" property="targetZzmm" jdbcType="VARCHAR" />
+    <result column="TARGET_JTQK" property="targetJtqk" jdbcType="VARCHAR" />
+    <result column="TARGET_SHJL" property="targetShjl" jdbcType="VARCHAR" />
+    <result column="TARGET_SFSGCF" property="targetSfsgcf" jdbcType="VARCHAR" />
+    <result column="TARGET_SFLYRS" property="targetSflyrs" jdbcType="VARCHAR" />
+    <result column="TARGET_SFPBFYRY" property="targetSfpbfyry" jdbcType="VARCHAR" />
+    <result column="TRANS_XM" property="transXm" jdbcType="VARCHAR" />
+    <result column="TRANS_ZY" property="transZy" jdbcType="VARCHAR" />
+    <result column="TRANS_GZDW" property="transGzdw" jdbcType="VARCHAR" />
+    <result column="TRANS_XZZ" property="transXzz" jdbcType="VARCHAR" />
+    <result column="KCDD" property="kcdd" jdbcType="VARCHAR" />
+    <result column="JCZ" property="jcz" jdbcType="VARCHAR" />
+    <result column="KCRYMS" property="kcryms" jdbcType="VARCHAR" />
+    <result column="RESERVATION01" property="reservation01" jdbcType="VARCHAR" />
+    <result column="RESERVATION02" property="reservation02" jdbcType="VARCHAR" />
+    <result column="RESERVATION03" property="reservation03" jdbcType="VARCHAR" />
+    <result column="RESERVATION04" property="reservation04" jdbcType="VARCHAR" />
+    <result column="RESERVATION05" property="reservation05" jdbcType="VARCHAR" />
+    <result column="RESERVATION06" property="reservation06" jdbcType="VARCHAR" />
+    <result column="RESERVATION07" property="reservation07" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION08" property="reservation08" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION09" property="reservation09" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION10" property="reservation10" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION11" property="reservation11" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION12" property="reservation12" jdbcType="TIMESTAMP" />
+    <result column="RESERVATION13" property="reservation13" jdbcType="VARCHAR" />
+    <result column="RESERVATION14" property="reservation14" jdbcType="VARCHAR" />
+    <result column="RESERVATION15" property="reservation15" jdbcType="VARCHAR" />
+    <result column="RESERVATION16" property="reservation16" jdbcType="VARCHAR" />
+    <result column="RESERVATION17" property="reservation17" jdbcType="VARCHAR" />
+    <result column="RESERVATION18" property="reservation18" jdbcType="VARCHAR" />
+    <result column="RESERVATION19" property="reservation19" jdbcType="VARCHAR" />
+    <result column="RESERVATION20" property="reservation20" jdbcType="VARCHAR" />
+    <result column="RESERVATION21" property="reservation21" jdbcType="VARCHAR" />
+    <result column="RESERVATION22" property="reservation22" jdbcType="VARCHAR" />
+    <result column="RESERVATION23" property="reservation23" jdbcType="VARCHAR" />
+    <result column="RESERVATION24" property="reservation24" jdbcType="VARCHAR" />
+    <result column="RESERVATION25" property="reservation25" jdbcType="VARCHAR" />
+    <result column="RESERVATION26" property="reservation26" jdbcType="VARCHAR" />
+    <result column="RESERVATION27" property="reservation27" jdbcType="VARCHAR" />
+    <result column="RESERVATION28" property="reservation28" jdbcType="VARCHAR" />
+    <result column="RESERVATION29" property="reservation29" jdbcType="VARCHAR" />
+    <result column="RESERVATION30" property="reservation30" jdbcType="VARCHAR" />
+    <result column="RESERVATION31" property="reservation31" jdbcType="VARCHAR" />
+    <result column="RESERVATION32" property="reservation32" jdbcType="VARCHAR" />
+    <result column="RESERVATION33" property="reservation33" jdbcType="VARCHAR" />
+    <result column="RESERVATION34" property="reservation34" jdbcType="VARCHAR" />
+    <result column="RESERVATION35" property="reservation35" jdbcType="VARCHAR" />
+    <result column="RESERVATION36" property="reservation36" jdbcType="VARCHAR" />
+    <result column="RESERVATION37" property="reservation37" jdbcType="VARCHAR" />
+    <result column="RESERVATION38" property="reservation38" jdbcType="VARCHAR" />
+    <result column="RESERVATION39" property="reservation39" jdbcType="VARCHAR" />
+    <result column="RESERVATION40" property="reservation40" jdbcType="VARCHAR" />
+    <result column="DEPARTMENTCODE" property="departmentcode" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATEDTIME" property="createdtime" jdbcType="TIMESTAMP" />
+    <result column="LASTUPDATEDBY" property="lastupdatedby" jdbcType="VARCHAR" />
+    <result column="LASTUPDATEDTIME" property="lastupdatedtime" jdbcType="TIMESTAMP" />
+    <result column="UPLOADFLAG" property="uploadflag" jdbcType="VARCHAR" />
+    <result column="DOWNLOADFLAG" property="downloadflag" jdbcType="VARCHAR" />
+    <result column="DELETEFLAG" property="deleteflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.task.EpAsjBl" extends="BaseResultMap" >
+    <result column="BODY" property="body" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SYSTEMID, AJBH, SER_NO, NAME, TYPE, SCEN_SYSTEMID, TARGET, FJ, STARTTIME, ENDTIME, 
+    JLDD, CREATOR_NAME, CREATE_DEPT, RECORDER, RECORDER_DEPT, TARGET_XM, TARGET_CYM, 
+    TARGET_XB, TARGET_CSRQ, TARGET_WHCD, TARGET_MZ, TARGET_HJSZD, TARGET_XZZ, TARGET_ZJZL, 
+    TARGET_ZJHM, TARGET_GZDW, TARGET_LXDH, TARGET_ARRIVALTIME, TARGET_LEFTTIME, TARGET_BM, 
+    TARGET_YWM, TARGET_GJ, TARGET_CH, TARGET_JG, TARGET_ZZMM, TARGET_JTQK, TARGET_SHJL, 
+    TARGET_SFSGCF, TARGET_SFLYRS, TARGET_SFPBFYRY, TRANS_XM, TRANS_ZY, TRANS_GZDW, TRANS_XZZ, 
+    KCDD, JCZ, KCRYMS, RESERVATION01, RESERVATION02, RESERVATION03, RESERVATION04, RESERVATION05, 
+    RESERVATION06, RESERVATION07, RESERVATION08, RESERVATION09, RESERVATION10, RESERVATION11, 
+    RESERVATION12, RESERVATION13, RESERVATION14, RESERVATION15, RESERVATION16, RESERVATION17, 
+    RESERVATION18, RESERVATION19, RESERVATION20, RESERVATION21, RESERVATION22, RESERVATION23, 
+    RESERVATION24, RESERVATION25, RESERVATION26, RESERVATION27, RESERVATION28, RESERVATION29, 
+    RESERVATION30, RESERVATION31, RESERVATION32, RESERVATION33, RESERVATION34, RESERVATION35, 
+    RESERVATION36, RESERVATION37, RESERVATION38, RESERVATION39, RESERVATION40, DEPARTMENTCODE, 
+    CREATOR, CREATEDTIME, LASTUPDATEDBY, LASTUPDATEDTIME, UPLOADFLAG, DOWNLOADFLAG, DELETEFLAG
+  </sql>
+  <sql id="Blob_Column_List" >
+    BODY
+  </sql>
+  <select id="findNotesList"  resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ep_asj_bl
+      <where>
+        <if test="targetXm != null" >
+          TARGET_XM=#{targetXm}
+        </if>
+        <if test="targetLxdh != null" >
+          OR TARGET_LXDH=#{targetLxdh}
+        </if>
+        <if test="targetZjhm != null" >
+          OR TARGET_ZJHM=#{targetZjhm}
+        </if>
+        <if test="targetCh != null" >
+          OR TARGET_CH=#{targetCh}
+        </if>
+      </where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ep_asj_bl
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_asj_bl
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.task.EpAsjBl" >
+    insert into ep_asj_bl (SYSTEMID, AJBH, SER_NO, 
+      NAME, TYPE, SCEN_SYSTEMID, 
+      TARGET, FJ, STARTTIME, 
+      ENDTIME, JLDD, CREATOR_NAME, 
+      CREATE_DEPT, RECORDER, RECORDER_DEPT, 
+      TARGET_XM, TARGET_CYM, TARGET_XB, 
+      TARGET_CSRQ, TARGET_WHCD, TARGET_MZ, 
+      TARGET_HJSZD, TARGET_XZZ, TARGET_ZJZL, 
+      TARGET_ZJHM, TARGET_GZDW, TARGET_LXDH, 
+      TARGET_ARRIVALTIME, TARGET_LEFTTIME, 
+      TARGET_BM, TARGET_YWM, TARGET_GJ, 
+      TARGET_CH, TARGET_JG, TARGET_ZZMM, 
+      TARGET_JTQK, TARGET_SHJL, TARGET_SFSGCF, 
+      TARGET_SFLYRS, TARGET_SFPBFYRY, TRANS_XM, 
+      TRANS_ZY, TRANS_GZDW, TRANS_XZZ, 
+      KCDD, JCZ, KCRYMS, 
+      RESERVATION01, RESERVATION02, RESERVATION03, 
+      RESERVATION04, RESERVATION05, RESERVATION06, 
+      RESERVATION07, RESERVATION08, RESERVATION09, 
+      RESERVATION10, RESERVATION11, RESERVATION12, 
+      RESERVATION13, RESERVATION14, RESERVATION15, 
+      RESERVATION16, RESERVATION17, RESERVATION18, 
+      RESERVATION19, RESERVATION20, RESERVATION21, 
+      RESERVATION22, RESERVATION23, RESERVATION24, 
+      RESERVATION25, RESERVATION26, RESERVATION27, 
+      RESERVATION28, RESERVATION29, RESERVATION30, 
+      RESERVATION31, RESERVATION32, RESERVATION33, 
+      RESERVATION34, RESERVATION35, RESERVATION36, 
+      RESERVATION37, RESERVATION38, RESERVATION39, 
+      RESERVATION40, DEPARTMENTCODE, CREATOR, 
+      CREATEDTIME, LASTUPDATEDBY, LASTUPDATEDTIME, 
+      UPLOADFLAG, DOWNLOADFLAG, DELETEFLAG, 
+      BODY)
+    values (#{systemid,jdbcType=VARCHAR}, #{ajbh,jdbcType=VARCHAR}, #{serNo,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{scenSystemid,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{fj,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{jldd,jdbcType=VARCHAR}, #{creatorName,jdbcType=VARCHAR}, 
+      #{createDept,jdbcType=VARCHAR}, #{recorder,jdbcType=VARCHAR}, #{recorderDept,jdbcType=VARCHAR}, 
+      #{targetXm,jdbcType=VARCHAR}, #{targetCym,jdbcType=VARCHAR}, #{targetXb,jdbcType=VARCHAR}, 
+      #{targetCsrq,jdbcType=TIMESTAMP}, #{targetWhcd,jdbcType=VARCHAR}, #{targetMz,jdbcType=VARCHAR}, 
+      #{targetHjszd,jdbcType=VARCHAR}, #{targetXzz,jdbcType=VARCHAR}, #{targetZjzl,jdbcType=VARCHAR}, 
+      #{targetZjhm,jdbcType=VARCHAR}, #{targetGzdw,jdbcType=VARCHAR}, #{targetLxdh,jdbcType=VARCHAR}, 
+      #{targetArrivaltime,jdbcType=TIMESTAMP}, #{targetLefttime,jdbcType=TIMESTAMP}, 
+      #{targetBm,jdbcType=VARCHAR}, #{targetYwm,jdbcType=VARCHAR}, #{targetGj,jdbcType=VARCHAR}, 
+      #{targetCh,jdbcType=VARCHAR}, #{targetJg,jdbcType=VARCHAR}, #{targetZzmm,jdbcType=VARCHAR}, 
+      #{targetJtqk,jdbcType=VARCHAR}, #{targetShjl,jdbcType=VARCHAR}, #{targetSfsgcf,jdbcType=VARCHAR}, 
+      #{targetSflyrs,jdbcType=VARCHAR}, #{targetSfpbfyry,jdbcType=VARCHAR}, #{transXm,jdbcType=VARCHAR}, 
+      #{transZy,jdbcType=VARCHAR}, #{transGzdw,jdbcType=VARCHAR}, #{transXzz,jdbcType=VARCHAR}, 
+      #{kcdd,jdbcType=VARCHAR}, #{jcz,jdbcType=VARCHAR}, #{kcryms,jdbcType=VARCHAR}, 
+      #{reservation01,jdbcType=VARCHAR}, #{reservation02,jdbcType=VARCHAR}, #{reservation03,jdbcType=VARCHAR}, 
+      #{reservation04,jdbcType=VARCHAR}, #{reservation05,jdbcType=VARCHAR}, #{reservation06,jdbcType=VARCHAR}, 
+      #{reservation07,jdbcType=TIMESTAMP}, #{reservation08,jdbcType=TIMESTAMP}, #{reservation09,jdbcType=TIMESTAMP}, 
+      #{reservation10,jdbcType=TIMESTAMP}, #{reservation11,jdbcType=TIMESTAMP}, #{reservation12,jdbcType=TIMESTAMP}, 
+      #{reservation13,jdbcType=VARCHAR}, #{reservation14,jdbcType=VARCHAR}, #{reservation15,jdbcType=VARCHAR}, 
+      #{reservation16,jdbcType=VARCHAR}, #{reservation17,jdbcType=VARCHAR}, #{reservation18,jdbcType=VARCHAR}, 
+      #{reservation19,jdbcType=VARCHAR}, #{reservation20,jdbcType=VARCHAR}, #{reservation21,jdbcType=VARCHAR}, 
+      #{reservation22,jdbcType=VARCHAR}, #{reservation23,jdbcType=VARCHAR}, #{reservation24,jdbcType=VARCHAR}, 
+      #{reservation25,jdbcType=VARCHAR}, #{reservation26,jdbcType=VARCHAR}, #{reservation27,jdbcType=VARCHAR}, 
+      #{reservation28,jdbcType=VARCHAR}, #{reservation29,jdbcType=VARCHAR}, #{reservation30,jdbcType=VARCHAR}, 
+      #{reservation31,jdbcType=VARCHAR}, #{reservation32,jdbcType=VARCHAR}, #{reservation33,jdbcType=VARCHAR}, 
+      #{reservation34,jdbcType=VARCHAR}, #{reservation35,jdbcType=VARCHAR}, #{reservation36,jdbcType=VARCHAR}, 
+      #{reservation37,jdbcType=VARCHAR}, #{reservation38,jdbcType=VARCHAR}, #{reservation39,jdbcType=VARCHAR}, 
+      #{reservation40,jdbcType=VARCHAR}, #{departmentcode,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedby,jdbcType=VARCHAR}, #{lastupdatedtime,jdbcType=TIMESTAMP}, 
+      #{uploadflag,jdbcType=VARCHAR}, #{downloadflag,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR}, 
+      #{body,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.task.EpAsjBl" >
+    insert into ep_asj_bl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="systemid != null" >
+        SYSTEMID,
+      </if>
+      <if test="ajbh != null" >
+        AJBH,
+      </if>
+      <if test="serNo != null" >
+        SER_NO,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="scenSystemid != null" >
+        SCEN_SYSTEMID,
+      </if>
+      <if test="target != null" >
+        TARGET,
+      </if>
+      <if test="fj != null" >
+        FJ,
+      </if>
+      <if test="starttime != null" >
+        STARTTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+      <if test="jldd != null" >
+        JLDD,
+      </if>
+      <if test="creatorName != null" >
+        CREATOR_NAME,
+      </if>
+      <if test="createDept != null" >
+        CREATE_DEPT,
+      </if>
+      <if test="recorder != null" >
+        RECORDER,
+      </if>
+      <if test="recorderDept != null" >
+        RECORDER_DEPT,
+      </if>
+      <if test="targetXm != null" >
+        TARGET_XM,
+      </if>
+      <if test="targetCym != null" >
+        TARGET_CYM,
+      </if>
+      <if test="targetXb != null" >
+        TARGET_XB,
+      </if>
+      <if test="targetCsrq != null" >
+        TARGET_CSRQ,
+      </if>
+      <if test="targetWhcd != null" >
+        TARGET_WHCD,
+      </if>
+      <if test="targetMz != null" >
+        TARGET_MZ,
+      </if>
+      <if test="targetHjszd != null" >
+        TARGET_HJSZD,
+      </if>
+      <if test="targetXzz != null" >
+        TARGET_XZZ,
+      </if>
+      <if test="targetZjzl != null" >
+        TARGET_ZJZL,
+      </if>
+      <if test="targetZjhm != null" >
+        TARGET_ZJHM,
+      </if>
+      <if test="targetGzdw != null" >
+        TARGET_GZDW,
+      </if>
+      <if test="targetLxdh != null" >
+        TARGET_LXDH,
+      </if>
+      <if test="targetArrivaltime != null" >
+        TARGET_ARRIVALTIME,
+      </if>
+      <if test="targetLefttime != null" >
+        TARGET_LEFTTIME,
+      </if>
+      <if test="targetBm != null" >
+        TARGET_BM,
+      </if>
+      <if test="targetYwm != null" >
+        TARGET_YWM,
+      </if>
+      <if test="targetGj != null" >
+        TARGET_GJ,
+      </if>
+      <if test="targetCh != null" >
+        TARGET_CH,
+      </if>
+      <if test="targetJg != null" >
+        TARGET_JG,
+      </if>
+      <if test="targetZzmm != null" >
+        TARGET_ZZMM,
+      </if>
+      <if test="targetJtqk != null" >
+        TARGET_JTQK,
+      </if>
+      <if test="targetShjl != null" >
+        TARGET_SHJL,
+      </if>
+      <if test="targetSfsgcf != null" >
+        TARGET_SFSGCF,
+      </if>
+      <if test="targetSflyrs != null" >
+        TARGET_SFLYRS,
+      </if>
+      <if test="targetSfpbfyry != null" >
+        TARGET_SFPBFYRY,
+      </if>
+      <if test="transXm != null" >
+        TRANS_XM,
+      </if>
+      <if test="transZy != null" >
+        TRANS_ZY,
+      </if>
+      <if test="transGzdw != null" >
+        TRANS_GZDW,
+      </if>
+      <if test="transXzz != null" >
+        TRANS_XZZ,
+      </if>
+      <if test="kcdd != null" >
+        KCDD,
+      </if>
+      <if test="jcz != null" >
+        JCZ,
+      </if>
+      <if test="kcryms != null" >
+        KCRYMS,
+      </if>
+      <if test="reservation01 != null" >
+        RESERVATION01,
+      </if>
+      <if test="reservation02 != null" >
+        RESERVATION02,
+      </if>
+      <if test="reservation03 != null" >
+        RESERVATION03,
+      </if>
+      <if test="reservation04 != null" >
+        RESERVATION04,
+      </if>
+      <if test="reservation05 != null" >
+        RESERVATION05,
+      </if>
+      <if test="reservation06 != null" >
+        RESERVATION06,
+      </if>
+      <if test="reservation07 != null" >
+        RESERVATION07,
+      </if>
+      <if test="reservation08 != null" >
+        RESERVATION08,
+      </if>
+      <if test="reservation09 != null" >
+        RESERVATION09,
+      </if>
+      <if test="reservation10 != null" >
+        RESERVATION10,
+      </if>
+      <if test="reservation11 != null" >
+        RESERVATION11,
+      </if>
+      <if test="reservation12 != null" >
+        RESERVATION12,
+      </if>
+      <if test="reservation13 != null" >
+        RESERVATION13,
+      </if>
+      <if test="reservation14 != null" >
+        RESERVATION14,
+      </if>
+      <if test="reservation15 != null" >
+        RESERVATION15,
+      </if>
+      <if test="reservation16 != null" >
+        RESERVATION16,
+      </if>
+      <if test="reservation17 != null" >
+        RESERVATION17,
+      </if>
+      <if test="reservation18 != null" >
+        RESERVATION18,
+      </if>
+      <if test="reservation19 != null" >
+        RESERVATION19,
+      </if>
+      <if test="reservation20 != null" >
+        RESERVATION20,
+      </if>
+      <if test="reservation21 != null" >
+        RESERVATION21,
+      </if>
+      <if test="reservation22 != null" >
+        RESERVATION22,
+      </if>
+      <if test="reservation23 != null" >
+        RESERVATION23,
+      </if>
+      <if test="reservation24 != null" >
+        RESERVATION24,
+      </if>
+      <if test="reservation25 != null" >
+        RESERVATION25,
+      </if>
+      <if test="reservation26 != null" >
+        RESERVATION26,
+      </if>
+      <if test="reservation27 != null" >
+        RESERVATION27,
+      </if>
+      <if test="reservation28 != null" >
+        RESERVATION28,
+      </if>
+      <if test="reservation29 != null" >
+        RESERVATION29,
+      </if>
+      <if test="reservation30 != null" >
+        RESERVATION30,
+      </if>
+      <if test="reservation31 != null" >
+        RESERVATION31,
+      </if>
+      <if test="reservation32 != null" >
+        RESERVATION32,
+      </if>
+      <if test="reservation33 != null" >
+        RESERVATION33,
+      </if>
+      <if test="reservation34 != null" >
+        RESERVATION34,
+      </if>
+      <if test="reservation35 != null" >
+        RESERVATION35,
+      </if>
+      <if test="reservation36 != null" >
+        RESERVATION36,
+      </if>
+      <if test="reservation37 != null" >
+        RESERVATION37,
+      </if>
+      <if test="reservation38 != null" >
+        RESERVATION38,
+      </if>
+      <if test="reservation39 != null" >
+        RESERVATION39,
+      </if>
+      <if test="reservation40 != null" >
+        RESERVATION40,
+      </if>
+      <if test="departmentcode != null" >
+        DEPARTMENTCODE,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdtime != null" >
+        CREATEDTIME,
+      </if>
+      <if test="lastupdatedby != null" >
+        LASTUPDATEDBY,
+      </if>
+      <if test="lastupdatedtime != null" >
+        LASTUPDATEDTIME,
+      </if>
+      <if test="uploadflag != null" >
+        UPLOADFLAG,
+      </if>
+      <if test="downloadflag != null" >
+        DOWNLOADFLAG,
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG,
+      </if>
+      <if test="body != null" >
+        BODY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="systemid != null" >
+        #{systemid,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null" >
+        #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="serNo != null" >
+        #{serNo,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="scenSystemid != null" >
+        #{scenSystemid,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="fj != null" >
+        #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jldd != null" >
+        #{jldd,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDept != null" >
+        #{createDept,jdbcType=VARCHAR},
+      </if>
+      <if test="recorder != null" >
+        #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="recorderDept != null" >
+        #{recorderDept,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXm != null" >
+        #{targetXm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCym != null" >
+        #{targetCym,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXb != null" >
+        #{targetXb,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCsrq != null" >
+        #{targetCsrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetWhcd != null" >
+        #{targetWhcd,jdbcType=VARCHAR},
+      </if>
+      <if test="targetMz != null" >
+        #{targetMz,jdbcType=VARCHAR},
+      </if>
+      <if test="targetHjszd != null" >
+        #{targetHjszd,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXzz != null" >
+        #{targetXzz,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZjzl != null" >
+        #{targetZjzl,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZjhm != null" >
+        #{targetZjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetGzdw != null" >
+        #{targetGzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="targetLxdh != null" >
+        #{targetLxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="targetArrivaltime != null" >
+        #{targetArrivaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetLefttime != null" >
+        #{targetLefttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetBm != null" >
+        #{targetBm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetYwm != null" >
+        #{targetYwm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetGj != null" >
+        #{targetGj,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCh != null" >
+        #{targetCh,jdbcType=VARCHAR},
+      </if>
+      <if test="targetJg != null" >
+        #{targetJg,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZzmm != null" >
+        #{targetZzmm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetJtqk != null" >
+        #{targetJtqk,jdbcType=VARCHAR},
+      </if>
+      <if test="targetShjl != null" >
+        #{targetShjl,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSfsgcf != null" >
+        #{targetSfsgcf,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSflyrs != null" >
+        #{targetSflyrs,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSfpbfyry != null" >
+        #{targetSfpbfyry,jdbcType=VARCHAR},
+      </if>
+      <if test="transXm != null" >
+        #{transXm,jdbcType=VARCHAR},
+      </if>
+      <if test="transZy != null" >
+        #{transZy,jdbcType=VARCHAR},
+      </if>
+      <if test="transGzdw != null" >
+        #{transGzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="transXzz != null" >
+        #{transXzz,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        #{kcdd,jdbcType=VARCHAR},
+      </if>
+      <if test="jcz != null" >
+        #{jcz,jdbcType=VARCHAR},
+      </if>
+      <if test="kcryms != null" >
+        #{kcryms,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation01 != null" >
+        #{reservation01,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation02 != null" >
+        #{reservation02,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation03 != null" >
+        #{reservation03,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation04 != null" >
+        #{reservation04,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation05 != null" >
+        #{reservation05,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation06 != null" >
+        #{reservation06,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation07 != null" >
+        #{reservation07,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation08 != null" >
+        #{reservation08,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation09 != null" >
+        #{reservation09,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation10 != null" >
+        #{reservation10,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation11 != null" >
+        #{reservation11,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation12 != null" >
+        #{reservation12,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation13 != null" >
+        #{reservation13,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation14 != null" >
+        #{reservation14,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation15 != null" >
+        #{reservation15,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation16 != null" >
+        #{reservation16,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation17 != null" >
+        #{reservation17,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation18 != null" >
+        #{reservation18,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation19 != null" >
+        #{reservation19,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation20 != null" >
+        #{reservation20,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation21 != null" >
+        #{reservation21,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation22 != null" >
+        #{reservation22,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation23 != null" >
+        #{reservation23,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation24 != null" >
+        #{reservation24,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation25 != null" >
+        #{reservation25,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation26 != null" >
+        #{reservation26,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation27 != null" >
+        #{reservation27,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation28 != null" >
+        #{reservation28,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation29 != null" >
+        #{reservation29,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation30 != null" >
+        #{reservation30,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation31 != null" >
+        #{reservation31,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation32 != null" >
+        #{reservation32,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation33 != null" >
+        #{reservation33,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation34 != null" >
+        #{reservation34,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation35 != null" >
+        #{reservation35,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation36 != null" >
+        #{reservation36,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation37 != null" >
+        #{reservation37,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation38 != null" >
+        #{reservation38,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation39 != null" >
+        #{reservation39,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation40 != null" >
+        #{reservation40,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentcode != null" >
+        #{departmentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null" >
+        #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdatedby != null" >
+        #{lastupdatedby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedtime != null" >
+        #{lastupdatedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadflag != null" >
+        #{uploadflag,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadflag != null" >
+        #{downloadflag,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.task.EpAsjBl" >
+    update ep_asj_bl
+    <set >
+      <if test="ajbh != null" >
+        AJBH = #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="serNo != null" >
+        SER_NO = #{serNo,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="scenSystemid != null" >
+        SCEN_SYSTEMID = #{scenSystemid,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        TARGET = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="fj != null" >
+        FJ = #{fj,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jldd != null" >
+        JLDD = #{jldd,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDept != null" >
+        CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      </if>
+      <if test="recorder != null" >
+        RECORDER = #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="recorderDept != null" >
+        RECORDER_DEPT = #{recorderDept,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXm != null" >
+        TARGET_XM = #{targetXm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCym != null" >
+        TARGET_CYM = #{targetCym,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXb != null" >
+        TARGET_XB = #{targetXb,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCsrq != null" >
+        TARGET_CSRQ = #{targetCsrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetWhcd != null" >
+        TARGET_WHCD = #{targetWhcd,jdbcType=VARCHAR},
+      </if>
+      <if test="targetMz != null" >
+        TARGET_MZ = #{targetMz,jdbcType=VARCHAR},
+      </if>
+      <if test="targetHjszd != null" >
+        TARGET_HJSZD = #{targetHjszd,jdbcType=VARCHAR},
+      </if>
+      <if test="targetXzz != null" >
+        TARGET_XZZ = #{targetXzz,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZjzl != null" >
+        TARGET_ZJZL = #{targetZjzl,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZjhm != null" >
+        TARGET_ZJHM = #{targetZjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetGzdw != null" >
+        TARGET_GZDW = #{targetGzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="targetLxdh != null" >
+        TARGET_LXDH = #{targetLxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="targetArrivaltime != null" >
+        TARGET_ARRIVALTIME = #{targetArrivaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetLefttime != null" >
+        TARGET_LEFTTIME = #{targetLefttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetBm != null" >
+        TARGET_BM = #{targetBm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetYwm != null" >
+        TARGET_YWM = #{targetYwm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetGj != null" >
+        TARGET_GJ = #{targetGj,jdbcType=VARCHAR},
+      </if>
+      <if test="targetCh != null" >
+        TARGET_CH = #{targetCh,jdbcType=VARCHAR},
+      </if>
+      <if test="targetJg != null" >
+        TARGET_JG = #{targetJg,jdbcType=VARCHAR},
+      </if>
+      <if test="targetZzmm != null" >
+        TARGET_ZZMM = #{targetZzmm,jdbcType=VARCHAR},
+      </if>
+      <if test="targetJtqk != null" >
+        TARGET_JTQK = #{targetJtqk,jdbcType=VARCHAR},
+      </if>
+      <if test="targetShjl != null" >
+        TARGET_SHJL = #{targetShjl,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSfsgcf != null" >
+        TARGET_SFSGCF = #{targetSfsgcf,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSflyrs != null" >
+        TARGET_SFLYRS = #{targetSflyrs,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSfpbfyry != null" >
+        TARGET_SFPBFYRY = #{targetSfpbfyry,jdbcType=VARCHAR},
+      </if>
+      <if test="transXm != null" >
+        TRANS_XM = #{transXm,jdbcType=VARCHAR},
+      </if>
+      <if test="transZy != null" >
+        TRANS_ZY = #{transZy,jdbcType=VARCHAR},
+      </if>
+      <if test="transGzdw != null" >
+        TRANS_GZDW = #{transGzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="transXzz != null" >
+        TRANS_XZZ = #{transXzz,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        KCDD = #{kcdd,jdbcType=VARCHAR},
+      </if>
+      <if test="jcz != null" >
+        JCZ = #{jcz,jdbcType=VARCHAR},
+      </if>
+      <if test="kcryms != null" >
+        KCRYMS = #{kcryms,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation01 != null" >
+        RESERVATION01 = #{reservation01,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation02 != null" >
+        RESERVATION02 = #{reservation02,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation03 != null" >
+        RESERVATION03 = #{reservation03,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation04 != null" >
+        RESERVATION04 = #{reservation04,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation05 != null" >
+        RESERVATION05 = #{reservation05,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation06 != null" >
+        RESERVATION06 = #{reservation06,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation07 != null" >
+        RESERVATION07 = #{reservation07,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation08 != null" >
+        RESERVATION08 = #{reservation08,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation09 != null" >
+        RESERVATION09 = #{reservation09,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation10 != null" >
+        RESERVATION10 = #{reservation10,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation11 != null" >
+        RESERVATION11 = #{reservation11,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation12 != null" >
+        RESERVATION12 = #{reservation12,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservation13 != null" >
+        RESERVATION13 = #{reservation13,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation14 != null" >
+        RESERVATION14 = #{reservation14,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation15 != null" >
+        RESERVATION15 = #{reservation15,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation16 != null" >
+        RESERVATION16 = #{reservation16,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation17 != null" >
+        RESERVATION17 = #{reservation17,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation18 != null" >
+        RESERVATION18 = #{reservation18,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation19 != null" >
+        RESERVATION19 = #{reservation19,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation20 != null" >
+        RESERVATION20 = #{reservation20,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation21 != null" >
+        RESERVATION21 = #{reservation21,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation22 != null" >
+        RESERVATION22 = #{reservation22,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation23 != null" >
+        RESERVATION23 = #{reservation23,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation24 != null" >
+        RESERVATION24 = #{reservation24,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation25 != null" >
+        RESERVATION25 = #{reservation25,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation26 != null" >
+        RESERVATION26 = #{reservation26,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation27 != null" >
+        RESERVATION27 = #{reservation27,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation28 != null" >
+        RESERVATION28 = #{reservation28,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation29 != null" >
+        RESERVATION29 = #{reservation29,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation30 != null" >
+        RESERVATION30 = #{reservation30,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation31 != null" >
+        RESERVATION31 = #{reservation31,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation32 != null" >
+        RESERVATION32 = #{reservation32,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation33 != null" >
+        RESERVATION33 = #{reservation33,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation34 != null" >
+        RESERVATION34 = #{reservation34,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation35 != null" >
+        RESERVATION35 = #{reservation35,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation36 != null" >
+        RESERVATION36 = #{reservation36,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation37 != null" >
+        RESERVATION37 = #{reservation37,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation38 != null" >
+        RESERVATION38 = #{reservation38,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation39 != null" >
+        RESERVATION39 = #{reservation39,jdbcType=VARCHAR},
+      </if>
+      <if test="reservation40 != null" >
+        RESERVATION40 = #{reservation40,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentcode != null" >
+        DEPARTMENTCODE = #{departmentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null" >
+        CREATEDTIME = #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastupdatedby != null" >
+        LASTUPDATEDBY = #{lastupdatedby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatedtime != null" >
+        LASTUPDATEDTIME = #{lastupdatedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadflag != null" >
+        UPLOADFLAG = #{uploadflag,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadflag != null" >
+        DOWNLOADFLAG = #{downloadflag,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG = #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        BODY = #{body,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.task.EpAsjBl" >
+    update ep_asj_bl
+    set AJBH = #{ajbh,jdbcType=VARCHAR},
+      SER_NO = #{serNo,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      SCEN_SYSTEMID = #{scenSystemid,jdbcType=VARCHAR},
+      TARGET = #{target,jdbcType=VARCHAR},
+      FJ = #{fj,jdbcType=VARCHAR},
+      STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      JLDD = #{jldd,jdbcType=VARCHAR},
+      CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      RECORDER = #{recorder,jdbcType=VARCHAR},
+      RECORDER_DEPT = #{recorderDept,jdbcType=VARCHAR},
+      TARGET_XM = #{targetXm,jdbcType=VARCHAR},
+      TARGET_CYM = #{targetCym,jdbcType=VARCHAR},
+      TARGET_XB = #{targetXb,jdbcType=VARCHAR},
+      TARGET_CSRQ = #{targetCsrq,jdbcType=TIMESTAMP},
+      TARGET_WHCD = #{targetWhcd,jdbcType=VARCHAR},
+      TARGET_MZ = #{targetMz,jdbcType=VARCHAR},
+      TARGET_HJSZD = #{targetHjszd,jdbcType=VARCHAR},
+      TARGET_XZZ = #{targetXzz,jdbcType=VARCHAR},
+      TARGET_ZJZL = #{targetZjzl,jdbcType=VARCHAR},
+      TARGET_ZJHM = #{targetZjhm,jdbcType=VARCHAR},
+      TARGET_GZDW = #{targetGzdw,jdbcType=VARCHAR},
+      TARGET_LXDH = #{targetLxdh,jdbcType=VARCHAR},
+      TARGET_ARRIVALTIME = #{targetArrivaltime,jdbcType=TIMESTAMP},
+      TARGET_LEFTTIME = #{targetLefttime,jdbcType=TIMESTAMP},
+      TARGET_BM = #{targetBm,jdbcType=VARCHAR},
+      TARGET_YWM = #{targetYwm,jdbcType=VARCHAR},
+      TARGET_GJ = #{targetGj,jdbcType=VARCHAR},
+      TARGET_CH = #{targetCh,jdbcType=VARCHAR},
+      TARGET_JG = #{targetJg,jdbcType=VARCHAR},
+      TARGET_ZZMM = #{targetZzmm,jdbcType=VARCHAR},
+      TARGET_JTQK = #{targetJtqk,jdbcType=VARCHAR},
+      TARGET_SHJL = #{targetShjl,jdbcType=VARCHAR},
+      TARGET_SFSGCF = #{targetSfsgcf,jdbcType=VARCHAR},
+      TARGET_SFLYRS = #{targetSflyrs,jdbcType=VARCHAR},
+      TARGET_SFPBFYRY = #{targetSfpbfyry,jdbcType=VARCHAR},
+      TRANS_XM = #{transXm,jdbcType=VARCHAR},
+      TRANS_ZY = #{transZy,jdbcType=VARCHAR},
+      TRANS_GZDW = #{transGzdw,jdbcType=VARCHAR},
+      TRANS_XZZ = #{transXzz,jdbcType=VARCHAR},
+      KCDD = #{kcdd,jdbcType=VARCHAR},
+      JCZ = #{jcz,jdbcType=VARCHAR},
+      KCRYMS = #{kcryms,jdbcType=VARCHAR},
+      RESERVATION01 = #{reservation01,jdbcType=VARCHAR},
+      RESERVATION02 = #{reservation02,jdbcType=VARCHAR},
+      RESERVATION03 = #{reservation03,jdbcType=VARCHAR},
+      RESERVATION04 = #{reservation04,jdbcType=VARCHAR},
+      RESERVATION05 = #{reservation05,jdbcType=VARCHAR},
+      RESERVATION06 = #{reservation06,jdbcType=VARCHAR},
+      RESERVATION07 = #{reservation07,jdbcType=TIMESTAMP},
+      RESERVATION08 = #{reservation08,jdbcType=TIMESTAMP},
+      RESERVATION09 = #{reservation09,jdbcType=TIMESTAMP},
+      RESERVATION10 = #{reservation10,jdbcType=TIMESTAMP},
+      RESERVATION11 = #{reservation11,jdbcType=TIMESTAMP},
+      RESERVATION12 = #{reservation12,jdbcType=TIMESTAMP},
+      RESERVATION13 = #{reservation13,jdbcType=VARCHAR},
+      RESERVATION14 = #{reservation14,jdbcType=VARCHAR},
+      RESERVATION15 = #{reservation15,jdbcType=VARCHAR},
+      RESERVATION16 = #{reservation16,jdbcType=VARCHAR},
+      RESERVATION17 = #{reservation17,jdbcType=VARCHAR},
+      RESERVATION18 = #{reservation18,jdbcType=VARCHAR},
+      RESERVATION19 = #{reservation19,jdbcType=VARCHAR},
+      RESERVATION20 = #{reservation20,jdbcType=VARCHAR},
+      RESERVATION21 = #{reservation21,jdbcType=VARCHAR},
+      RESERVATION22 = #{reservation22,jdbcType=VARCHAR},
+      RESERVATION23 = #{reservation23,jdbcType=VARCHAR},
+      RESERVATION24 = #{reservation24,jdbcType=VARCHAR},
+      RESERVATION25 = #{reservation25,jdbcType=VARCHAR},
+      RESERVATION26 = #{reservation26,jdbcType=VARCHAR},
+      RESERVATION27 = #{reservation27,jdbcType=VARCHAR},
+      RESERVATION28 = #{reservation28,jdbcType=VARCHAR},
+      RESERVATION29 = #{reservation29,jdbcType=VARCHAR},
+      RESERVATION30 = #{reservation30,jdbcType=VARCHAR},
+      RESERVATION31 = #{reservation31,jdbcType=VARCHAR},
+      RESERVATION32 = #{reservation32,jdbcType=VARCHAR},
+      RESERVATION33 = #{reservation33,jdbcType=VARCHAR},
+      RESERVATION34 = #{reservation34,jdbcType=VARCHAR},
+      RESERVATION35 = #{reservation35,jdbcType=VARCHAR},
+      RESERVATION36 = #{reservation36,jdbcType=VARCHAR},
+      RESERVATION37 = #{reservation37,jdbcType=VARCHAR},
+      RESERVATION38 = #{reservation38,jdbcType=VARCHAR},
+      RESERVATION39 = #{reservation39,jdbcType=VARCHAR},
+      RESERVATION40 = #{reservation40,jdbcType=VARCHAR},
+      DEPARTMENTCODE = #{departmentcode,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATEDTIME = #{createdtime,jdbcType=TIMESTAMP},
+      LASTUPDATEDBY = #{lastupdatedby,jdbcType=VARCHAR},
+      LASTUPDATEDTIME = #{lastupdatedtime,jdbcType=TIMESTAMP},
+      UPLOADFLAG = #{uploadflag,jdbcType=VARCHAR},
+      DOWNLOADFLAG = #{downloadflag,jdbcType=VARCHAR},
+      DELETEFLAG = #{deleteflag,jdbcType=VARCHAR},
+      BODY = #{body,jdbcType=LONGVARCHAR}
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.task.EpAsjBl" >
+    update ep_asj_bl
+    set AJBH = #{ajbh,jdbcType=VARCHAR},
+      SER_NO = #{serNo,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      SCEN_SYSTEMID = #{scenSystemid,jdbcType=VARCHAR},
+      TARGET = #{target,jdbcType=VARCHAR},
+      FJ = #{fj,jdbcType=VARCHAR},
+      STARTTIME = #{starttime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      JLDD = #{jldd,jdbcType=VARCHAR},
+      CREATOR_NAME = #{creatorName,jdbcType=VARCHAR},
+      CREATE_DEPT = #{createDept,jdbcType=VARCHAR},
+      RECORDER = #{recorder,jdbcType=VARCHAR},
+      RECORDER_DEPT = #{recorderDept,jdbcType=VARCHAR},
+      TARGET_XM = #{targetXm,jdbcType=VARCHAR},
+      TARGET_CYM = #{targetCym,jdbcType=VARCHAR},
+      TARGET_XB = #{targetXb,jdbcType=VARCHAR},
+      TARGET_CSRQ = #{targetCsrq,jdbcType=TIMESTAMP},
+      TARGET_WHCD = #{targetWhcd,jdbcType=VARCHAR},
+      TARGET_MZ = #{targetMz,jdbcType=VARCHAR},
+      TARGET_HJSZD = #{targetHjszd,jdbcType=VARCHAR},
+      TARGET_XZZ = #{targetXzz,jdbcType=VARCHAR},
+      TARGET_ZJZL = #{targetZjzl,jdbcType=VARCHAR},
+      TARGET_ZJHM = #{targetZjhm,jdbcType=VARCHAR},
+      TARGET_GZDW = #{targetGzdw,jdbcType=VARCHAR},
+      TARGET_LXDH = #{targetLxdh,jdbcType=VARCHAR},
+      TARGET_ARRIVALTIME = #{targetArrivaltime,jdbcType=TIMESTAMP},
+      TARGET_LEFTTIME = #{targetLefttime,jdbcType=TIMESTAMP},
+      TARGET_BM = #{targetBm,jdbcType=VARCHAR},
+      TARGET_YWM = #{targetYwm,jdbcType=VARCHAR},
+      TARGET_GJ = #{targetGj,jdbcType=VARCHAR},
+      TARGET_CH = #{targetCh,jdbcType=VARCHAR},
+      TARGET_JG = #{targetJg,jdbcType=VARCHAR},
+      TARGET_ZZMM = #{targetZzmm,jdbcType=VARCHAR},
+      TARGET_JTQK = #{targetJtqk,jdbcType=VARCHAR},
+      TARGET_SHJL = #{targetShjl,jdbcType=VARCHAR},
+      TARGET_SFSGCF = #{targetSfsgcf,jdbcType=VARCHAR},
+      TARGET_SFLYRS = #{targetSflyrs,jdbcType=VARCHAR},
+      TARGET_SFPBFYRY = #{targetSfpbfyry,jdbcType=VARCHAR},
+      TRANS_XM = #{transXm,jdbcType=VARCHAR},
+      TRANS_ZY = #{transZy,jdbcType=VARCHAR},
+      TRANS_GZDW = #{transGzdw,jdbcType=VARCHAR},
+      TRANS_XZZ = #{transXzz,jdbcType=VARCHAR},
+      KCDD = #{kcdd,jdbcType=VARCHAR},
+      JCZ = #{jcz,jdbcType=VARCHAR},
+      KCRYMS = #{kcryms,jdbcType=VARCHAR},
+      RESERVATION01 = #{reservation01,jdbcType=VARCHAR},
+      RESERVATION02 = #{reservation02,jdbcType=VARCHAR},
+      RESERVATION03 = #{reservation03,jdbcType=VARCHAR},
+      RESERVATION04 = #{reservation04,jdbcType=VARCHAR},
+      RESERVATION05 = #{reservation05,jdbcType=VARCHAR},
+      RESERVATION06 = #{reservation06,jdbcType=VARCHAR},
+      RESERVATION07 = #{reservation07,jdbcType=TIMESTAMP},
+      RESERVATION08 = #{reservation08,jdbcType=TIMESTAMP},
+      RESERVATION09 = #{reservation09,jdbcType=TIMESTAMP},
+      RESERVATION10 = #{reservation10,jdbcType=TIMESTAMP},
+      RESERVATION11 = #{reservation11,jdbcType=TIMESTAMP},
+      RESERVATION12 = #{reservation12,jdbcType=TIMESTAMP},
+      RESERVATION13 = #{reservation13,jdbcType=VARCHAR},
+      RESERVATION14 = #{reservation14,jdbcType=VARCHAR},
+      RESERVATION15 = #{reservation15,jdbcType=VARCHAR},
+      RESERVATION16 = #{reservation16,jdbcType=VARCHAR},
+      RESERVATION17 = #{reservation17,jdbcType=VARCHAR},
+      RESERVATION18 = #{reservation18,jdbcType=VARCHAR},
+      RESERVATION19 = #{reservation19,jdbcType=VARCHAR},
+      RESERVATION20 = #{reservation20,jdbcType=VARCHAR},
+      RESERVATION21 = #{reservation21,jdbcType=VARCHAR},
+      RESERVATION22 = #{reservation22,jdbcType=VARCHAR},
+      RESERVATION23 = #{reservation23,jdbcType=VARCHAR},
+      RESERVATION24 = #{reservation24,jdbcType=VARCHAR},
+      RESERVATION25 = #{reservation25,jdbcType=VARCHAR},
+      RESERVATION26 = #{reservation26,jdbcType=VARCHAR},
+      RESERVATION27 = #{reservation27,jdbcType=VARCHAR},
+      RESERVATION28 = #{reservation28,jdbcType=VARCHAR},
+      RESERVATION29 = #{reservation29,jdbcType=VARCHAR},
+      RESERVATION30 = #{reservation30,jdbcType=VARCHAR},
+      RESERVATION31 = #{reservation31,jdbcType=VARCHAR},
+      RESERVATION32 = #{reservation32,jdbcType=VARCHAR},
+      RESERVATION33 = #{reservation33,jdbcType=VARCHAR},
+      RESERVATION34 = #{reservation34,jdbcType=VARCHAR},
+      RESERVATION35 = #{reservation35,jdbcType=VARCHAR},
+      RESERVATION36 = #{reservation36,jdbcType=VARCHAR},
+      RESERVATION37 = #{reservation37,jdbcType=VARCHAR},
+      RESERVATION38 = #{reservation38,jdbcType=VARCHAR},
+      RESERVATION39 = #{reservation39,jdbcType=VARCHAR},
+      RESERVATION40 = #{reservation40,jdbcType=VARCHAR},
+      DEPARTMENTCODE = #{departmentcode,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      CREATEDTIME = #{createdtime,jdbcType=TIMESTAMP},
+      LASTUPDATEDBY = #{lastupdatedby,jdbcType=VARCHAR},
+      LASTUPDATEDTIME = #{lastupdatedtime,jdbcType=TIMESTAMP},
+      UPLOADFLAG = #{uploadflag,jdbcType=VARCHAR},
+      DOWNLOADFLAG = #{downloadflag,jdbcType=VARCHAR},
+      DELETEFLAG = #{deleteflag,jdbcType=VARCHAR}
+    where SYSTEMID = #{systemid,jdbcType=VARCHAR}
+  </update>
+  
+    <!-- insert add by liyang start-->
+  
+  <insert id="insertEpAsjBlList" parameterType="java.util.List" >
+  	insert into ep_asj_bl (SYSTEMID, AJBH, SER_NO, 
+      NAME, TYPE, SCEN_SYSTEMID, 
+      TARGET, FJ, STARTTIME, 
+      ENDTIME, JLDD, CREATOR_NAME, 
+      CREATE_DEPT, RECORDER, RECORDER_DEPT, 
+      TARGET_XM, TARGET_CYM, TARGET_XB, 
+      TARGET_CSRQ, TARGET_WHCD, TARGET_MZ, 
+      TARGET_HJSZD, TARGET_XZZ, TARGET_ZJZL, 
+      TARGET_ZJHM, TARGET_GZDW, TARGET_LXDH, 
+      TARGET_ARRIVALTIME, TARGET_LEFTTIME, 
+      TARGET_BM, TARGET_YWM, TARGET_GJ, 
+      TARGET_CH, TARGET_JG, TARGET_ZZMM, 
+      TARGET_JTQK, TARGET_SHJL, TARGET_SFSGCF, 
+      TARGET_SFLYRS, TARGET_SFPBFYRY, TRANS_XM, 
+      TRANS_ZY, TRANS_GZDW, TRANS_XZZ, 
+      KCDD, JCZ, KCRYMS, 
+      RESERVATION01, RESERVATION02, RESERVATION03, 
+      RESERVATION04, RESERVATION05, RESERVATION06, 
+      RESERVATION07, RESERVATION08, RESERVATION09, 
+      RESERVATION10, RESERVATION11, RESERVATION12, 
+      RESERVATION13, RESERVATION14, RESERVATION15, 
+      RESERVATION16, RESERVATION17, RESERVATION18, 
+      RESERVATION19, RESERVATION20, RESERVATION21, 
+      RESERVATION22, RESERVATION23, RESERVATION24, 
+      RESERVATION25, RESERVATION26, RESERVATION27, 
+      RESERVATION28, RESERVATION29, RESERVATION30, 
+      RESERVATION31, RESERVATION32, RESERVATION33, 
+      RESERVATION34, RESERVATION35, RESERVATION36, 
+      RESERVATION37, RESERVATION38, RESERVATION39, 
+      RESERVATION40, DEPARTMENTCODE, CREATOR, 
+      CREATEDTIME, LASTUPDATEDBY, LASTUPDATEDTIME, 
+      UPLOADFLAG, DOWNLOADFLAG, DELETEFLAG, 
+      BODY)
+    values 
+    <foreach collection="epAsjBlList" item="eab" separator=",">  
+	    (#{eab.systemid,jdbcType=VARCHAR}, #{eab.ajbh,jdbcType=VARCHAR}, #{eab.serNo,jdbcType=INTEGER}, 
+      #{eab.name,jdbcType=VARCHAR}, #{eab.type,jdbcType=VARCHAR}, #{eab.scenSystemid,jdbcType=VARCHAR}, 
+      #{eab.target,jdbcType=VARCHAR}, #{eab.fj,jdbcType=VARCHAR}, #{eab.starttime,jdbcType=TIMESTAMP}, 
+      #{eab.endtime,jdbcType=TIMESTAMP}, #{eab.jldd,jdbcType=VARCHAR}, #{eab.creatorName,jdbcType=VARCHAR}, 
+      #{eab.createDept,jdbcType=VARCHAR}, #{eab.recorder,jdbcType=VARCHAR}, #{eab.recorderDept,jdbcType=VARCHAR}, 
+      #{eab.targetXm,jdbcType=VARCHAR}, #{eab.targetCym,jdbcType=VARCHAR}, #{eab.targetXb,jdbcType=VARCHAR}, 
+      #{eab.targetCsrq,jdbcType=TIMESTAMP}, #{eab.targetWhcd,jdbcType=VARCHAR}, #{eab.targetMz,jdbcType=VARCHAR}, 
+      #{eab.targetHjszd,jdbcType=VARCHAR}, #{eab.targetXzz,jdbcType=VARCHAR}, #{eab.targetZjzl,jdbcType=VARCHAR}, 
+      #{eab.targetZjhm,jdbcType=VARCHAR}, #{eab.targetGzdw,jdbcType=VARCHAR}, #{eab.targetLxdh,jdbcType=VARCHAR}, 
+      #{eab.targetArrivaltime,jdbcType=TIMESTAMP}, #{eab.targetLefttime,jdbcType=TIMESTAMP}, 
+      #{eab.targetBm,jdbcType=VARCHAR}, #{eab.targetYwm,jdbcType=VARCHAR}, #{eab.targetGj,jdbcType=VARCHAR}, 
+      #{eab.targetCh,jdbcType=VARCHAR}, #{eab.targetJg,jdbcType=VARCHAR}, #{eab.targetZzmm,jdbcType=VARCHAR}, 
+      #{eab.targetJtqk,jdbcType=VARCHAR}, #{eab.targetShjl,jdbcType=VARCHAR}, #{eab.targetSfsgcf,jdbcType=VARCHAR}, 
+      #{eab.targetSflyrs,jdbcType=VARCHAR}, #{eab.targetSfpbfyry,jdbcType=VARCHAR}, #{eab.transXm,jdbcType=VARCHAR}, 
+      #{eab.transZy,jdbcType=VARCHAR}, #{eab.transGzdw,jdbcType=VARCHAR}, #{eab.transXzz,jdbcType=VARCHAR}, 
+      #{eab.kcdd,jdbcType=VARCHAR}, #{eab.jcz,jdbcType=VARCHAR}, #{eab.kcryms,jdbcType=VARCHAR}, 
+      #{eab.reservation01,jdbcType=VARCHAR}, #{eab.reservation02,jdbcType=VARCHAR}, #{eab.reservation03,jdbcType=VARCHAR}, 
+      #{eab.reservation04,jdbcType=VARCHAR}, #{eab.reservation05,jdbcType=VARCHAR}, #{eab.reservation06,jdbcType=VARCHAR}, 
+      #{eab.reservation07,jdbcType=TIMESTAMP}, #{eab.reservation08,jdbcType=TIMESTAMP}, #{eab.reservation09,jdbcType=TIMESTAMP}, 
+      #{eab.reservation10,jdbcType=TIMESTAMP}, #{eab.reservation11,jdbcType=TIMESTAMP}, #{eab.reservation12,jdbcType=TIMESTAMP}, 
+      #{eab.reservation13,jdbcType=VARCHAR}, #{eab.reservation14,jdbcType=VARCHAR}, #{eab.reservation15,jdbcType=VARCHAR}, 
+      #{eab.reservation16,jdbcType=VARCHAR}, #{eab.reservation17,jdbcType=VARCHAR}, #{eab.reservation18,jdbcType=VARCHAR}, 
+      #{eab.reservation19,jdbcType=VARCHAR}, #{eab.reservation20,jdbcType=VARCHAR}, #{eab.reservation21,jdbcType=VARCHAR}, 
+      #{eab.reservation22,jdbcType=VARCHAR}, #{eab.reservation23,jdbcType=VARCHAR}, #{eab.reservation24,jdbcType=VARCHAR}, 
+      #{eab.reservation25,jdbcType=VARCHAR}, #{eab.reservation26,jdbcType=VARCHAR}, #{eab.reservation27,jdbcType=VARCHAR}, 
+      #{eab.reservation28,jdbcType=VARCHAR}, #{eab.reservation29,jdbcType=VARCHAR}, #{eab.reservation30,jdbcType=VARCHAR}, 
+      #{eab.reservation31,jdbcType=VARCHAR}, #{eab.reservation32,jdbcType=VARCHAR}, #{eab.reservation33,jdbcType=VARCHAR}, 
+      #{eab.reservation34,jdbcType=VARCHAR}, #{eab.reservation35,jdbcType=VARCHAR}, #{eab.reservation36,jdbcType=VARCHAR}, 
+      #{eab.reservation37,jdbcType=VARCHAR}, #{eab.reservation38,jdbcType=VARCHAR}, #{eab.reservation39,jdbcType=VARCHAR}, 
+      #{eab.reservation40,jdbcType=VARCHAR}, #{eab.departmentcode,jdbcType=VARCHAR}, #{eab.creator,jdbcType=VARCHAR}, 
+      #{eab.createdtime,jdbcType=TIMESTAMP}, #{eab.lastupdatedby,jdbcType=VARCHAR}, #{eab.lastupdatedtime,jdbcType=TIMESTAMP}, 
+      #{eab.uploadflag,jdbcType=VARCHAR}, #{eab.downloadflag,jdbcType=VARCHAR}, #{eab.deleteflag,jdbcType=VARCHAR}, 
+      #{eab.body,jdbcType=LONGVARCHAR})
+    </foreach>  
+  </insert>
+  
+  <!-- insert add by liyang end-->
+  <!-- select lastUpdateTime start -->
+  <select id="findNearlyDateTime" resultType="String" parameterType="java.lang.String">
+  	select max(bl.LASTUPDATEDTIME) LASTUPDATEDTIME from ep_asj_bl bl
+  </select>
+  
+</mapper>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>举报详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <link rel="stylesheet" href="../css/report.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+    <!-- basic scripts -->
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/format.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <style>
+        .areaTxt{
+            background: #fff!important;
+            border: none;
+        }
+        .areaTxt_One{
+            width: 99%;
+            height: 95%;
+            margin-top: 2px;
+            margin-left: 4px;
+            border: 1px solid #D1E1FF;
+            resize: none;
+        }
+        .main-content{
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0px;
+        }
+        .caseText{
+            /*height: 30px;*/
+            border: 1px solid #D1E1FF;
+            border-top: none;
+            border-left: none;
+            border-bottom: none;
+            background-color: white;
+            min-height: 30px;
+            line-height: 30px;
+            padding: 0;
+            text-align: left;
+            color: #0A5CA0 !important;
+        }
+        .remark{
+            margin-top: 2%;
+        }
+        .caseInput input, .caseInput select {
+            width: 96%;
+            height: 80%;
+            margin-top: 0px;
+            margin-left: 4px;
+            border: 1px solid #D1E1FF;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;margin:10px auto;background: white">
+    <!--案件基本信息录入-->
+    <div class="breadcrumbs" style="margin: 0;width: auto;height: auto;padding: 0px;overflow: hidden;">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">举报信息</span>
+                <input type="hidden" id="tipoffId"/>
+            </div>
+        </div>
+        <form action="">
+            <!--举报人姓名、举报人电话、举报人身份证号-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>举报人姓名</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <span id="tipoffReporter" class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>举报人电话</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <span id="reporterPhone"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>举报人身份证号</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <span  id="reporterIdcard"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+            </div>
+            <!--被举报人姓名、被举报人电话、-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>被举报人姓名</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <span  id="beingReported"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>被举报人电话</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <span  id="beingReportedPhone"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>被举报人身份证号</span>
+                    </div>
+                    <div class="col-md-8 caseInput lastInput">
+                        <span id="beingReportedIdcard"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+            </div>
+            <!--案件地域、涉案类别-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>案件地域</span>
+                    </div>
+                    <div class="col-md-8 caseInput">
+                        <span id="caseUnitName"   class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <div class="col-md-4 noPadding">
+                    <div class="col-md-4 caseTxt">
+                        <span>涉案类别</span>
+                    </div>
+                    <div class="col-md-8 caseInput borderRnone">
+                        <span  id="caseClassName"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                    </div>
+                </div>
+                <!--当涉案类别选择其他时展示-->
+                 <div class="col-md-4 noPadding lastInput" style="background: white">
+                        <div class="col-md-8 caseInput borderRnone" style="margin-left: 30px">
+                            <input  id="caseClassMemo" name="caseClassMemo" class="hint hide" placeholder="  请输入其他涉案类别"/>
+                        </div>
+                    </div>
+            </div>
+            <!--线索标题-->
+            <div class="row breadcrumbs caseContainer">
+                <div class="col-md-2 caseTxt" style="width: 11.11%">
+                    <span>线索标题</span>
+                </div>
+                <div class="col-md-9 caseInput lastInput" style="width: 88.88%">
+                    <span id="clueTitle"  class="clowp" style="background-color: #fff!important;padding-left: 10px;" ></span>
+                </div>
+            </div>
+            <!--简要案情-->
+            <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+                <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                    <span>线索内容</span>
+                </div>
+                <div class="col-md-10 caseInput lastInput" style="width:88.88%;min-height: 80px">
+                    <span id="clueContent"  class="areaTxt" type="text" style="resize: none;"></span>
+                </div>
+            </div>
+            <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+                <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                    <span>研判结论</span>
+                </div>
+                <div class="col-md-10 caseInput lastInput" style="width:88.88%;min-height: 80px">
+                    <span id="judgeContent"  class="areaTxt" type="text" style="resize: none;"></span>
+                </div>
+            </div>
+            <div class="wt100">
+                <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+                    <div class="col-md-12">
+                        <span class="title">流转信息</span>
+                    </div>
+                </div>
+                <table id="dynamic-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+                </table>
+            </div>
+            <!--按钮操作-->
+            <div class="col-md-12 searchBtn" style="border:none;">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <button id="btn_sh" class="btn btn-primary" type="button" onclick="alertPass()" style="display:none"> 审核 </button>
+                        <button id="btn_xf" class="btn btn-primary" type="button" onclick="alertIssue()" style="display:none"> 下发 </button>
+                        <button id="btn_qs" class="btn btn-primary" type="button" onclick="alertSign();" style="display:none"> 签收 </button>
+                        <button id="btn_yp" class="btn btn-primary" type="button" onclick="Readread()" style="display:none"> 研判 </button>
+                        <button id="btn_fs" class="btn btn-primary" type="button" onclick="reAudit();" style="display:none"> 复审 </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--审核弹框-->
+    <div class="row hide" id="pass">
+        <div>
+            <!--模态框内容-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>备注</span>
+                </div>
+                <div>
+                    <textarea class="remarkFrame" id="passRemark"></textarea>
+                </div>
+            </div>
+            <!--模态框按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" style="margin-right: 30px" onclick="auditPass('审核通过',iiMark);">
+                        审核通过
+                    </button>
+                    <button class="btn btn-primary" onclick="noAuditPass('审核不通过',iiMark);">审核不通过</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--复审弹框-->
+    <div class="row hide" id="rePass">
+        <div>
+            <!--模态框内容-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>备注</span>
+                </div>
+                <div>
+                    <textarea class="remarkFrame" id="rePassRemark"></textarea>
+                </div>
+            </div>
+            <!--模态框按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" style="margin-right: 30px" onclick="auditPass('复审通过',iiMark4);">
+                        复审
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--下发弹框-->
+    <div class="row hide" id="issue">
+        <div>
+            <!--模态框内容-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2 caseTxt">
+                            <span class="notNull">* </span>
+                            <span>下发单位</span>
+                        </div>
+                        <div class="col-md-10 caseInput bottomBorder topBorder">
+                            <select id="caseUnit">
+                                <option>--- 请选择 ---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 remark">
+                        <div class="col-md-2 caseTxt borderRnone">
+                            <span>备注</span>
+                        </div>
+                        <div class="col-md-10 caseText borderRnone">
+                            <textarea class="remarkFrame" id="issueRemark"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--模态框按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" style="margin-right: 30px" onclick="auditPass('下发成功',iiMark2);">
+                        下发
+                    </button>
+                    <button class="btn btn-primary" onclick="noAuditPass('取消下发',iiMark2);">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--签收弹框-->
+    <div class="row hide" id="sign">
+        <div>
+            <!--模态框内容-->
+            <div class="breadcrumbs bottomBorder modalBodyContainer">
+                <div>
+                    <span>备注</span>
+                </div>
+                <div>
+                    <textarea class="remarkFrame" id="signRemark"></textarea>
+                </div>
+            </div>
+            <!--模态框按钮-->
+            <div class="no-padding">
+                <div class="searchBtn" style="border: none; padding: 6px 0 6px 0">
+                    <button class="btn btn-primary" style="margin-right: 30px" onclick="auditPass('签收成功',iiMark3);">
+                        签收
+                    </button>
+                    <button class="btn btn-primary" onclick="noAuditPass('取消',iiMark3);">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$("#caseClass").on("change",function(){
+    if($("option:selected",this).val()==1916){
+        $("#caseClassMemo").attr('class','show');
+    }else{
+        $("#caseClassMemo").attr('class','hide');
+    }
+});
+
+var update=0;
+    $(function(){
+        var my_dicUnit;
+        //查询所有单位机构
+        $.ajax({
+            type: 'POST',
+            url: projectPath+"dic/findDicUnit?falg=true",//发送请求
+            cache: false,
+            async: false,
+            dataType : "json",
+            success: function(data) {
+                my_dicUnit=data;
+            }
+        });
+        $("#caseUnit").html(my_dicUnit.html);
+        //案件地域
+        selectDicUnit("");
+        //涉案类别
+        selectDicCommon(19,"caseClass");
+    })
+/* -----举报信息-----start----------------------  */
+/* $(window).ready(function () {
+    var thisURL = document.URL;
+    var getval =thisURL.split('?')[1];
+    var tipoffId= getval.split("=")[1];
+    findList(tipoffId);
+}); */
+function findList(tipoffId,menuType){
+    $.ajax({
+        type: 'post',
+        url: getRootPath_web() + "reportHandler/findReportById?tipoffId="+tipoffId,//发送请求
+        dataType : "json",
+        success: function(data) {
+            var json = $.parseJSON(data.data);
+            var jsonObj = json.data.etTipoff;
+            console.log(jsonObj);
+            $("#tipoffReporter").text(jsonObj.tipoffReporter == null?"":jsonObj.tipoffReporter);
+            $("#clueTitle").text(jsonObj.clueTitle== null?"":jsonObj.clueTitle);
+            $("#reporterPhone").text(jsonObj.reporterPhone== null?"":jsonObj.reporterPhone);
+            $("#reporterIdcard").text(jsonObj.reporterIdcard== null?"":jsonObj.reporterIdcard);
+            $("#beingReported").text(jsonObj.beingReported== null?"":jsonObj.beingReported);
+            $("#beingReportedPhone").text(jsonObj.beingReportedPhone== null?"":jsonObj.beingReportedPhone);
+            $("#beingReportedIdcard").text(jsonObj.beingReportedIdcard== null?"":jsonObj.beingReportedIdcard);
+            $("#caseClassName").text(jsonObj.caseClassName== null?"":jsonObj.caseClassName);
+            $("#caseUnitName").text(jsonObj.caseUnitName== null?"":jsonObj.caseUnitName);
+            $("#clueContent").text(jsonObj.clueContent== null?"":jsonObj.clueContent);
+            $("#judgeContent").text(jsonObj.judgeContent== null?"":jsonObj.judgeContent);
+            if($("#caseClass").val()==1916){
+                $("#caseClassMemo").attr('class','show');
+            }else{
+                $("#caseClassMemo").attr('class','hide');
+            }
+            //
+            controlButtons(menuType,jsonObj.operateType);
+        }
+    });
+}
+/* -----举报信息-----end----------------------  */
+    //审核弹框
+    var iiMark;
+    function alertPass(){
+        $("#pass").attr('class','show');
+
+        iiMark = layer.ready(function() {
+            iiMark = layer.open({
+                offset : 20,
+                type : 1,
+                title : '举报审核',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#pass"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#pass").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+    //复审弹框
+    var iiMark4;
+    function reAudit(id){
+        $("#rePass").attr('class','show');
+
+        iiMark4 = layer.ready(function() {
+            iiMark4 = layer.open({
+                offset : 20,
+                type : 1,
+                title : '举报审核',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#rePass"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#rePass").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+    //点击通过
+    function auditPass(obj,index) {
+        if("审核通过" == obj){
+        	 $.ajax({
+ 	    		url:getRootPath_web() + "reportHandler/etTipoffUpdate",
+ 	    		type:"post",
+ 	    		dataType:"json",
+ 	    		data:{
+ 	    			operationSign:2,//审核
+ 	    			remark:$("#passRemark").val(),
+ 	    			tipoffId:$("#tipoffId").val()
+ 	    		},
+ 	    		success:function(json){
+ 			        parent.layer.msg(obj, {icon: 1,time:1000});
+ 			        setTimeout(function () {
+ 			            layer.close(index);
+ 			        },1000);
+ 			       window.parent.parent.location.reload();
+ 	    		},
+ 	    		error:function(json){
+ 	    			
+ 	    		}
+ 	    	})
+        }else if("下发成功" == obj){
+        	$.ajax({
+	    		url:getRootPath_web() + "reportHandler/etTipoffUpdate",
+	    		type:"post",
+	    		dataType:"json",
+	    		data:{
+	    			operationSign:3,//下发
+	    			remark:$("#issueRemark").val(),
+	    			caseUnit:$("#caseUnit").val(),
+	    			tipoffId:$("#tipoffId").val()
+	    		},
+	    		success:function(json){
+			        parent.layer.msg(obj, {icon: 1,time:1000});
+			        setTimeout(function () {
+			            layer.close(index);
+			        },1000);
+			        window.parent.parent.location.reload();
+	    		},
+	    		error:function(json){
+	    			
+	    		}
+	    	})
+        }else if("签收成功" == obj){
+        	 $.ajax({
+ 	    		url:getRootPath_web() + "reportHandler/etTipoffUpdate",
+ 	    		type:"post",
+ 	    		dataType:"json",
+ 	    		data:{
+ 	    			operationSign:4,//签收
+ 	    			remark:$("#signRemark").val(),
+ 	    			tipoffId:$("#tipoffId").val()
+ 	    		},
+ 	    		success:function(json){
+ 	    			parent.layer.msg(obj, {icon: 1,time:1000});
+ 	    	        setTimeout(function () {
+ 	    	            layer.close(index);
+ 	    	        },1000);
+ 	    	       window.parent.parent.location.reload();
+ 	    		},
+ 	    		error:function(json){
+ 	    			
+ 	    		}
+ 	    	})
+        }else if("复审通过" == obj){
+        	$.ajax({
+ 	    		url:getRootPath_web() + "reportHandler/etTipoffUpdate",
+ 	    		type:"post",
+ 	    		dataType:"json",
+ 	    		data:{
+ 	    			operationSign:6,//复审
+ 	    			remark:$("#rePassRemark").val(),
+ 	    			tipoffId:$("#tipoffId").val()
+ 	    		},
+ 	    		success:function(json){
+ 	    			parent.layer.msg(obj, {icon: 1,time:1000});
+ 	    	        setTimeout(function () {
+ 	    	            layer.close(index);
+ 	    	        },1000);
+ 	    	       window.parent.parent.location.reload();
+ 	    		},
+ 	    		error:function(json){
+ 	    			
+ 	    		}
+ 	    	})
+        }
+    }
+    //点击不通过
+    function noAuditPass(obj,index) {
+        if("审核不通过" == obj){
+//            alert("此时执行审核不通过的方法");
+        }else if("取消下发" == obj){
+//            alert("此时执行取消下发的方法");
+        }
+        parent.layer.msg(obj, {icon: 2,time:1000});
+        setTimeout(function () {
+            layer.close(index);
+        },1000);
+    }
+    //下发弹框
+    var iiMark2;
+    function alertIssue(id){
+        $("#issue").attr('class','show');
+
+        iiMark2 = layer.ready(function() {
+            iiMark2 = layer.open({
+                offset : 20,
+                type : 1,
+                title : '举报下发',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#issue"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#issue").attr('class','hide');
+                }
+            });
+        }).index;
+    }
+
+    //签收弹框
+    var iiMark3;
+    function alertSign(id){
+        $("#sign").attr('class','show');
+
+        iiMark3 = layer.ready(function() {
+            iiMark3 = layer.open({
+                offset : 20,
+                type : 1,
+                title : '举报签收',
+                fix : false,
+                maxmin : true,
+                shadeClose : true,
+                area : [ '500px', '260px' ],
+                content : $("#sign"),
+                end : function() {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                    $("#sign").attr('class','hide');
+                }
+            });
+        }).index;
+    };
+
+    //研判弹框
+    function Readread(tipoffId) {
+    	var tipoffId=$("#tipoffId").val();
+        var ii;
+        ii = layer.ready(function () {
+            ii = layer.open({
+                offset: 20,
+                type: 2,
+                title: '研判',
+                fix: false,
+                maxmin: true,
+                shadeClose: true,
+                area: ['90%', '90%'],
+                content: 'ReadDetails.html?tipoffId='+tipoffId,
+                end: function () {
+                    $('#form-dialogdsss').attr("style", "display:none");
+                }
+            });
+        }).index;
+    }
+  /*   function Readread() {
+        layer.ready(function () {
+            layer.open({
+                offset: 20,
+                type: 2,
+                title: '研判详情',
+                fix: false,
+                maxmin: true,
+                shadeClose: true,
+                area: ['1000px', '500px'],
+                content: 'ReadDetails.html',
+            });
+        });
+    } */
+    var dynamictable;
+    $(document).ready(function() {
+    	 var thisURL = document.URL;
+    	    var  getval =thisURL.split('?')[1];
+    	    var  tipoffId = getval.split("&")[0].split("=")[1];
+    	    var  menuType = getval.split("&")[1].split("=")[1];
+    	    $("#tipoffId").val(tipoffId);
+    	   // console.log('menuType is ' + menuType)
+        $("#dynamic-table_filter").css('display', 'block');
+        dynamictable = $("#dynamic-table").DataTable(
+            {
+                "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                "pageLength" : 5,/*默认*/
+                "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                    [ 5, 10, 20, "全部" ] ],
+                /*"deferRender": true,*/
+                "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+                /*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+                 [0, "desc"]
+                 ], */
+                //因为需要多次初始化，所以需要设置允许销毁实例
+                "destroy" : true,
+                "bFilter" : false,
+                "orderMulti" : false, //启用多列排序
+                "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+                /* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+                /*   "table-layout":fix, */
+                "row-border" : true,
+                "oLanguage" : {
+                    "sEmptyTable" : "没有记录",
+                    "sProcessing" : "处理中，请稍候...",
+                    "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                    "sZeroRecords" : "没有记录",
+                    "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                    "sInfoPostFix" : "",
+                    "sLoadingRecords" : "正在加载中,请稍候...",
+                    "sSearch" : "搜索",
+                    "sUrl" : "",
+                    "oPaginate" : {
+                        "sFirst" : "首页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "末页"
+                    }
+                },
+                ajax : {
+                    url : getRootPath_web()+"reportHandler/findetTipoffMemoById?tipoffId="+tipoffId,
+                    "type" : "post"
+                },
+                /*序号自增长*/
+                "fnDrawCallback" : function(){
+                    this.api().column(0).nodes().each(function(cell, i) {
+                        cell.innerHTML =  i + 1;
+                    });
+                },
+                "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                "columns": [
+                    {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>操作人</font>',"sWidth":"5%","sClass":"dt-left", 'data': 'operatorName','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>操作时间</font>',"sWidth":"5%","sClass":"dt-left", 'data': 'modifyTime','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data.substring(0,data.indexOf('.0'));
+                        }},
+                    {"sTitle":'<font>操作类型</font>',"sWidth":"5%","sClass":"dt-left", 'data': 'operateType','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            if(data== 1){
+                                return "未审核";
+                            }
+                            if(data== 2){
+                                return "已审核";
+                            }
+                            if(data== 3){
+                                return "已下发";
+                            }
+                            if(data== 4){
+                                return "已签收";
+                            }
+                            if(data== 5){
+                                return "研判上报";
+                            }
+                            if(data== 6){
+                                return "已复核";
+                            }
+                            return data;
+                        }},
+                    {"sTitle":'<font>备注内容</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'memoContent','bSortable': false,
+                        'render': function(data, type, row, meta) {
+                            if(data==""||data==null){
+                                return "--";
+                            }
+                            return data;
+                        }},
+                ]
+            });
+        $("#dynamic-table_filter").css("display", "none");
+        findList(tipoffId,menuType);
+    });
+    function controlButtons(menuType,tipoffStatus){
+    console.log('menuType is ' + menuType +'  tipoffStatus is '+tipoffStatus)
+    	if(menuType == 2){
+    		if(tipoffStatus == 1){
+    			$("#btn_sh").show();
+    		}
+    		else if(tipoffStatus == 2){
+    			$("#btn_xf").show();
+    		}
+    	}else if(menuType == 3){
+    		if(tipoffStatus == 3){
+    			$("#btn_qs").show();
+    		}else if(tipoffStatus == 4){
+    			$("#btn_yp").show();
+    		}
+    	}else if(menuType == 4){
+    		if(tipoffStatus == 5)
+    			$("#btn_fs").show();
+    	}
+    }
+</script>
+</body>
+</html>

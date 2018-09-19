@@ -1,0 +1,109 @@
+.breadcrumbs .title{
+    color: #0A5CA0 !important;
+}
+.caseContainer{
+    text-align: center;
+    margin: 0px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    padding: 0px;
+}
+.caseTxt{
+    height: 30px;
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: #F7FBFF;
+    min-height: 30px;
+    line-height: 30px;
+    text-align: right;
+    color: #0A5CA0 !important;
+    padding: 0px 12px 0 0;
+}
+.caseInfo{
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: #F7FBFF;
+    min-height: 30px;
+    line-height: 30px;
+    text-align: left;
+    color: #0A5CA0 !important;
+    padding: 0px 0 0 12px;
+}
+.caseInput{
+    height: 30px;
+    border: 1px solid #D1E1FF;
+    border-top: none;
+    border-left:none;
+    border-bottom: none;
+    background-color: white;
+    min-height: 30px;
+    line-height: 30px;
+    padding: 0;
+    text-align: left;
+    color: #0A5CA0 !important;
+}
+.caseInput input , .caseInput select{
+    width: 96%;
+    height: 88%;
+    margin-top: 2px;
+    margin-left: 4px;
+    border: 1px solid #D1E1FF
+}
+.lastInput{
+    border-right: none;
+}
+.noPadding{
+    padding: 0px
+}
+.multiTitle{
+    font-weight: bold;
+    color: #902B34
+}
+.leftTxt{
+    text-align: left;
+    padding-left: 12px;
+}
+.titleBadge{
+    margin: 0px;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    border-top: 1px solid #D1E1FF
+}
+.iconStyle{
+    font-weight: bold;
+    font-size: large
+}
+.required{
+    color: red;
+}
+.searchConMake{
+    padding: 2px 0px 2px 4px;
+    border: 1px solid #cedfff;
+    border-bottom: none;
+    border-left: none;
+    border-top:none;
+    background: white;
+}
+.searchConMake input, .searchConMake select{
+    width: 100%;
+    color: #00559c;
+    height: 26px;
+    border-radius: 0;
+    border: 1px solid #cedfff;
+    font-size: 12px;
+}
+.searchConMake .searchTime{
+    width: 45%;
+    display: inline-block;
+}
+.allWidth{
+    width: 98%;
+}

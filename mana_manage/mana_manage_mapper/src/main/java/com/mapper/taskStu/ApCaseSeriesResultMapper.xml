@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.ApCaseSeriesResultMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.taskStu.ApCaseSeriesResult" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CASE_EVENT_ID" property="caseEventId" jdbcType="VARCHAR" />
+    <result column="AJBH" property="ajbh" jdbcType="VARCHAR" />
+    <result column="SIMILAR" property="similar" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.entity.taskStu.ApCaseSeriesResult" >
+    insert into ap_case_series_result (ID, CASE_EVENT_ID, AJBH,
+    SIMILAR, CREAT_TIME, MODIFY_TIME
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},
+      #{item.caseEventId},
+      #{item.ajbh},
+      #{item.similar},
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+  <!--查询案件串并结果-->
+  <select id="selectSeriesResult" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ap_case_series_result
+    where CASE_EVENT_ID = #{eventId,jdbcType=VARCHAR}
+  </select>
+
+  <sql id="Base_Column_List" >
+    ID, CASE_EVENT_ID, AJBH, SIMILAR, CREAT_TIME, MODIFY_TIME
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ap_case_series_result
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ap_case_series_result
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.entity.taskStu.ApCaseSeriesResult" >
+    insert into ap_case_series_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="caseEventId != null" >
+        CASE_EVENT_ID,
+      </if>
+      <if test="ajbh != null" >
+        AJBH,
+      </if>
+      <if test="similar != null" >
+        SIMILAR,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="caseEventId != null" >
+        #{caseEventId,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null" >
+        #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="similar != null" >
+        #{similar,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.taskStu.ApCaseSeriesResult" >
+    update ap_case_series_result
+    <set >
+      <if test="caseEventId != null" >
+        CASE_EVENT_ID = #{caseEventId,jdbcType=VARCHAR},
+      </if>
+      <if test="ajbh != null" >
+        AJBH = #{ajbh,jdbcType=VARCHAR},
+      </if>
+      <if test="similar != null" >
+        SIMILAR = #{similar,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.taskStu.ApCaseSeriesResult" >
+    update ap_case_series_result
+    set CASE_EVENT_ID = #{caseEventId,jdbcType=VARCHAR},
+      AJBH = #{ajbh,jdbcType=VARCHAR},
+      SIMILAR = #{similar,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

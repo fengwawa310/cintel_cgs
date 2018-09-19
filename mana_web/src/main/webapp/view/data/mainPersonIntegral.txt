@@ -1,0 +1,16 @@
+{
+  "recordsTotal": 1,
+  "recordsFiltered": 1,
+  "draw": null,
+  "data": [
+    {
+      "name":"Jack",
+      "idCard":"400165198708764425",
+      "type":"在逃人员",
+      "warning":"已预警",
+      "sumIntegral":"35",
+      "inTime":"2018-01-04 05:00:08",
+      "calculateTime":"2018-01-04 05:00:08"
+    }
+	]
+}

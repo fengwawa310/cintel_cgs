@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>亲友图</title>
+    <!--<link rel="stylesheet" href="../../static/plugins/layui-v2.2.45/layui/css/layui.css">-->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/jquery.jOrgChart.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="../css/custom.css"/>
+    <link rel="stylesheet" href="../css/prettify.css"/>
+    <link rel="stylesheet" href="../css/tree/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="../css/awesome.css" />
+    <!-- 可拖拽插件 -->
+    <!-- jQuery includes -->
+    <script src="../assets/js/jquer-1.7.1.min.js"></script>
+    <!-- 可拖拽插件 -->
+    <!-- 组织结构图插件 -->
+    <script src="../js/jquery.jOrgChart.js"></script>
+    <script src="../js/common.js"></script>
+    <script src='../assets/js/echarts-all.js'></script>
+    <!--<script src="../../static/plugins/layui-v2.2.45/layui/layui.js"></script>-->
+    <!-- 弹窗的插件 -->
+    <script src="../assets/js/layer/layer.js"></script>
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../js/ajaxfileupload.js"></script>
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <script src="../js/common.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <style>
+        .layui-form-pane .layui-form-label{
+            width: 160px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left:160px;
+        }
+        /*li{*/
+        /*border: 1px solid #dddddd;*/
+        /*padding: 5px;*/
+        /*}*/
+        .layui-colla-title {
+            line-height: 42px;
+            padding: 0 15px 0 35px;
+            background:none;
+            cursor: pointer;
+        }
+        .cusor p{
+            cursor: pointer;
+        }
+        tr{
+            cursor: pointer;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+        }
+        .jOrgChart .node {
+            border-radius: 4px;
+            cursor: pointer!important;
+            margin: 0 8px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hiw{
+            width: 270px;
+            display: inline-block;
+            float: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .hiw img{
+            width: 80px;
+            height: 100px;
+        }
+        .hiw p{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .hiw p:hover{
+            color: #000;
+        }
+        .hiw p.red{
+            color: #f00;
+        }{
+            width: 100%;
+            margin-top: 4px;
+            line-height: 14px;
+            color: #666;
+            font-size: 12px;
+            text-align: left;
+        }
+        .je_jia{
+            position: absolute;
+            font-size: 20px;
+            color: #333;
+            background: #fff;
+            right: -20px;
+            top: -20px;
+            width: 20px;
+        }
+        .com{
+            float: left;
+        }
+        .TheEditor{
+            position: absolute;
+            right: 0;
+            top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #3652e6;
+            display: none;
+        }
+        .hiw_ul{
+            width: 120px;
+            padding:0;
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            right: -150px;
+            top: -10px;
+            background: #fff;
+            padding: 10px;
+            border: none;
+            border: 1px solid #333;
+            border-radius: 5px;
+            list-style: none;
+            z-index: 100;
+            display: none;
+        }
+        .hiw_ul li{
+            width: 100px;
+            line-height: 20px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #333;
+            list-style:none;
+            margin: 5px 0px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .remove{
+            position: absolute;
+            right: 0;
+            top: -7px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .right_bxi{
+            width: 220px;
+            position: absolute;
+            left: 30px;
+            top: 40px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .right_bxi > p{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 5px 0px;
+        }
+        .right_bxi > p > a{
+            color: #000;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: Webdings;
+        }
+        .right_bxi > p > input{
+            width: 105px;
+            font-size: 12px;
+        }
+        .right_bxi > p > input.jirong{
+            border: none;
+            background-color: #fff;
+        }
+        .left_nav{
+            float: left;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+        .left_nav_search{
+            overflow: hidden;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .left_nav_search > input{
+            width: 190px;
+            height: 30px;
+            border: none;
+            border: 1px solid #ccc;
+            float: left;
+            font-size: 12px;
+        }
+
+        .left_nav_search > button{
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            float: left;
+        }
+        .Name_head{
+            overflow: hidden;
+            padding: 0;
+            margin: 0 10px;
+            margin-top: 20px;
+        }
+        .crime_gang{
+            overflow: hidden;
+            max-height: 600px;
+            overflow-y: scroll;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        .Name_head > b{
+            padding: 0;
+            margin-bottom: 10px;
+            border: 0;
+            display: inline-block;
+            font-size: 14px;
+            color: #333;
+            text-indent: 20px;
+        }
+        .crime_gang li{
+            width: 215px;
+            margin: 5px 0px;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            overflow: hidden;
+            border: 1px solid #fff;
+            color: #333;
+        }
+        .crime_gang li span{
+            float: left;
+            padding-left: 10px;
+        }
+        .crime_gang li.bule{
+            color: #00b7ee;
+        }
+        .crime_gang li a{
+            color: #00b7ee;
+            font-size: 12px;
+            float: right;
+            margin-right: 10px;
+            display: none;
+        }
+        .add_delete{
+            text-align: center;
+            position: relative;
+        }
+        .add_delete_shuru{
+            width: 200px;
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            background: #f5f5f5;
+            z-index: 100;
+            display: none;
+        }
+        .add_delete button:nth-child(1){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #00b7ee;
+            padding: 0 10px;
+        }
+        .add_delete button:nth-child(2){
+            border: none;
+            color: #fff;
+            height: 30px;
+            background: #FD482C;
+            padding: 0 10px;
+        }
+        .add_delete_shuru > p{
+            margin: 10px 0px;
+        }
+        .add_delete_shuru > p > a {
+            color: #333;
+            font-size: 12px;
+        }
+        .add_delete_shuru textarea{
+            resize: none;
+            width: 115px;
+            height: 100px;
+        }
+        .add_delete_shuru > p > input{
+            height: 26px;
+            width: 115px;
+        }
+        .add_delete_shuru_bot{
+            margin-bottom: 10px;
+        }
+        .right_bxi_bianji{
+            color: #333;
+            float: right;
+            cursor: pointer;
+        }
+        .hiw_left{
+            float: left;
+        }
+        .hiw_right{
+            width: 180px;
+            float: left;
+            margin-left: 10px;
+        }
+        .bianji{
+            width: 500px;
+            height: 500px;
+            background: #fff;
+            position: fixed;
+            top:50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px rgba(0,0,0,.5);
+            display: none;
+        }
+        .com{
+            position: relative;
+        }
+        .oud{
+            float: left;
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 80px;
+            position: relative;
+        }
+        .oud input{
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            z-index: 100;
+        }
+        .ziliao{
+            float: left;
+            margin-top: 20px;
+            margin-right: 40px;
+        }
+        .form-group{
+            overflow: hidden;
+        }
+        .form-group > input{
+            float: left;
+            text-indent: 10px;
+        }
+        .form-group > label{
+            float: left;
+        }
+        #pic{
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+        .bot_tyep{
+            text-align: center;
+        }
+        #jOrgChart{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body id="body">
+<!--左面导航选择框-->
+<!--显示组织架构图-->
+<div class="com">
+    <div class="left_nav">
+        <div class="left_nav_search">
+            <input type="text" name="searchValue" id="searchValue" placeholder=" 姓名/身份证号/绰号">
+            <button type="button" onclick="forSearch()">搜 索</button>
+        </div>
+        <div class="Name_head">
+            <b>重点人员列表</b>
+            <ul class="crime_gang">
+
+            </ul>
+        </div>
+    </div>
+    <div class="TheEditor">取消</div>
+    <div id='jOrgChart' style="padding-top: 50px;" ></div>
+</div>
+<!--随着位置而改变的选项-->
+<ul class='hiw_ul'>
+    <div class="remove">×</div>
+    <li  class="similar" >添加</li>
+    <li  class="remove_hiw">删除</li>
+    <li  class="ToView" >编辑</li>
+</ul>
+<div role="form" class="bianji">
+    <div class="col-md-2" style="width: 245px;margin-top: 20px;">
+        <div style="width: 90%;height: 165px;padding: 3% 2%;margin: 2% 0 0 0;">
+            <input  multiple="" name="upSomeFile"  type="file" id="upSomeFile" onchange="upFile(this.value)"/>
+            <input id="url" name="url" type="hidden">
+        </div>
+    </div>
+    <div class="form-group ziliao">
+        <div class="form-group">
+            <b for="name">名称</b>
+            <input type="text" class="form-control" id="name" placeholder="请输入名称">
+        </div>
+        <div class="form-group">
+            <b for="IDnumber">身份证号</b>
+            <input type="text" class="form-control" id="IDnumber" placeholder="请输入身份证号">
+        </div>
+
+        <div class="form-group">
+            <b for="PERMANET_NOW">现住址</b>
+            <input type="text" class="form-control" id="PERMANET_NOW" placeholder="请输入现住址">
+        </div>
+        <div class="form-group">
+            <b for="note">备注</b>
+            <input type="text" class="form-control" id="note" placeholder="请输入备注">
+        </div>
+        <div class="form-group">
+            <b for="roleType">亲友关系</b>
+            <select id="roleType" class="form-control" name="roleType" >
+                <option>亲属</option>
+            </select>
+        </div>
+    </div>
+    <div class="bot_tyep">
+        <button id="submit" class="btn btn-default">提交</button>
+        <button class="btn btn-default quxiao">取消</button>
+    </div>
+</div>
+<script type='text/javascript'>
+    $(".com").css({
+        "width":$(window).width()-30,
+        "height":$(window).height()
+    })
+    $.ajax({
+        url: getRootPath_web()+"/suspecthandler/listAllForOperator",
+        type:"POST",
+        dataType:"json",
+        success:function ( data) {
+            var data = data.data;
+            var str = '';
+            for( var i = 0 ; i < data.length;i++){
+                str += "<li id="+ data[i].id +"><span>"+ data[i].name +"</span></li>"
+            }
+            $(".crime_gang").append( str )
+        },
+        error:function (data) {
+            alert("网络错误");
+        }
+    })
+    $(document).ready(function () {
+        menuThing();
+        //获取重点人员id
+        var mainPersonId = localStorage.getItem("mainPersonId");
+        selectDicCommon(41,"roleType");
+        if( mainPersonId == null || mainPersonId == 0 || mainPersonId == undefined ){
+            $(".TheEditor").text("取消");
+        }else{
+            $(".TheEditor").text("编辑");
+            var url = getRootPath_web()+"/etFriendsHandler/selectFriendsByPrimaryKey";
+            $.ajax({
+                url: url,
+                type:"POST",
+                dataType:"json",
+                data:{
+                    id:mainPersonId
+                },
+                success:function (data) {
+                    // console.log(data)
+                    //将一位数组改变成树状结构图
+                    function treeObj(originObj){
+                        //对象深拷贝
+                        var obj ={};
+                        for (key in originObj){
+                            var val = originObj[key];
+                            obj[key] = typeof val === 'object' ? arguments.callee(val):val;
+                        }
+                        //对象新增children键值，用于存放子树
+                        obj['children'] = [];
+                        return obj;
+                    }
+                    //data：带转换成树形结构的对象数组
+                    //attributes：对象属性
+                    function toTreeData (data, attributes) {
+                        var resData = data;
+                        var tree = [];
+                        //找寻根节点 默认返回的parentId为空后期可以更改判断
+                        for (var i = 0; i < resData.length; i++) {
+                            if ( resData[i][attributes.parentId] === ''|| resData[i][attributes.parentId] === null ) {
+                                tree.push( treeObj(resData[i]) );
+                                resData.splice(i, 1);
+                                i--;
+                            }
+                        }
+                        run(tree);
+                        //找寻子树
+                        function run(chiArr) {
+                            if (resData.length !== 0) {
+                                for (var i = 0; i < chiArr.length; i++) {
+                                    for (var j = 0; j < resData.length; j++) {
+                                        if (chiArr[i][attributes.id] === resData[j][attributes.parentId]){
+                                            var obj = treeObj(resData[j]);
+                                            chiArr[i].children.push(obj);
+                                            resData.splice(j, 1);
+                                            j--;
+                                        }
+                                    }
+                                    run(chiArr[i].children);
+                                }
+                            }
+                        }
+                        return tree;
+                    }
+                    var  data = data.data;
+                    // 属性配置信息
+                    var attributes = {
+                        id: 'id',
+                        parentId: 'parentId',
+                    };
+                    var treeData = toTreeData(data, attributes);
+                    //点击菜单渲染树形菜单
+                    var showlist = $("<ul id='org' style='display:none'></ul>");
+                    showall(treeData,showlist);
+                    $("#jOrgChart"). append(showlist);
+                    $("#org").jOrgChart( {
+                        chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                        dragAndDrop : false //设置是否可拖动
+                        //chartClass [默认= 'jOrgChart']-分配给生成的标记的样式类的名称。
+                        //chartElement - 用于指定您想要附加OrgChart标记的HTML元素。[默认= '主体']
+                    });
+                    //循环递归显示数据数据
+                    function showall(menu_list,parent) {
+                        //循环人员列表
+                        $.each(menu_list, function(index,val) {
+                            var imgUrl = val.headUrl;
+                            console.log(imgUrl);
+                            var headPhotoUrl=val.headUrl.split('//')[2];
+                            var fileName=val.headUrl.split("$$")[1];
+
+                            if(val.children.length > 0){
+                                var li = $("<li></li>");
+                                var li_two = $("<li></li>");
+                                li.append(
+                                    "<a  class='hiw' onclick='add_click(this)' id="+val.id+">" +
+                                    "<div class='hiw_left'>"+
+                                    "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl +" >"+
+                                    "</div>"+
+                                    "<div class='hiw_right'>"+
+                                    "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                    "<p style='display: none;' title="+ val.phone +" >"+ "联系电话：<span>"+val.phone +"</span></p>"+
+                                    "<p title="+ val.idcard +">"+ "身份证号：<span>"+val.idcard +"</span></p>"+
+                                    "<p style='display: none;'title="+ val.NativePlace +" >"+ "籍贯：<span>"+val.NativePlace +"</span></p>"+
+                                    "<p title="+ val.address +">"+ "现住址：<span>"+val.address +"</span></p>"+
+                                    "<p title="+ val.remarks +">"+ "备注：<span>"+val.remarks +"</span></p>"+
+                                    "<p title="+ val.roleType +">"+ "亲友关系：<span class='val_un'>"+ val.roleType+"</span></p>"+
+                                    "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                    "</div>"+
+                                    "</a>"
+                                ).append("<ul></ul>").appendTo(parent);
+                                //递归显示
+                                showall( val.children, $(li).children().eq(1) );
+                            }else{
+                                $("<li></li>").append("<a  class='hiw' onclick='add_click(this)'id="+val.id+">" +
+                                    "<div class='hiw_left'>"+
+                                    "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl +" >"+
+                                    "</div>"+
+                                    "<div class='hiw_right'>"+
+                                    "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                    "<p style='display: none;' title="+ val.phone +" >"+ "联系电话：<span>"+val.phone +"</span></p>"+
+                                    "<p title="+ val.idcard +">"+ "身份证号：<span>"+val.idcard +"</span></p>"+
+                                    "<p style='display: none;'title="+ val.NativePlace +" >"+ "籍贯：<span>"+val.NativePlace +"</span></p>"+
+                                    "<p title="+ val.address +">"+ "现住址：<span>"+val.address +"</span></p>"+
+                                    "<p title="+ val.remarks +">"+ "备注：<span>"+val.remarks +"</span></p>"+
+                                    "<p title="+ val.roleType +">"+ "亲友关系：<span class='val_un'>"+val.roleType +"</span></p>"+
+                                    "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                    "</div>"+
+                                    "</a>").appendTo(parent);
+                            }
+                        });
+                    };
+                }
+            });
+            $(".val_un").each(function () {
+                if( $(this).text() == "undefined" ){
+                    $(this).text("");
+                }
+            })
+            $(".crime_gang li").each(function () {
+                var tiow = $(this);
+                if( tiow.attr("id") == mainPersonId ){
+                    tiow.addClass("bule").siblings().removeClass("bule");
+                }
+            })
+        }
+        localStorage.setItem("mainPersonId","0");
+    });
+    $(".crime_gang li").live('click',function () {
+        $("#jOrgChart").empty() ;
+        $(this).addClass("bule").siblings().removeClass("bule");
+        $(".crime_gang li a").hide();
+        $(this).children("a").show();
+        $(".GangInformation").val( $(this).children("span").text() );
+        $(".GangRemark").val( $(this).attr("name") );
+        $(".right_bxi").attr("id",$(this).attr("id") );
+        $(".com").show();
+        var id_Tpe = $(this).attr("id");
+        var url = getRootPath_web()+"/etFriendsHandler/selectFriendsByPrimaryKey";
+        $.ajax({
+            url: url,
+            type:"POST",
+            dataType:"json",
+            data:{
+                id:id_Tpe
+            },
+            success:function (data) {
+                //console.log(data )
+                //将一位数组改变成树状结构图
+                function treeObj(originObj){
+                    //对象深拷贝
+                    var obj ={};
+                    for (key in originObj){
+                        var val = originObj[key];
+                        obj[key] = typeof val === 'object' ? arguments.callee(val):val;
+                    }
+                    //对象新增children键值，用于存放子树
+                    obj['children'] = [];
+                    return obj;
+                }
+                //data：带转换成树形结构的对象数组
+                //attributes：对象属性
+                function toTreeData (data, attributes) {
+                    var resData = data;
+                    var tree = [];
+                    //找寻根节点 默认返回的parentId为空后期可以更改判断
+                    for (var i = 0; i < resData.length; i++) {
+                        if ( resData[i][attributes.parentId] === ''|| resData[i][attributes.parentId] === null ) {
+                            tree.push( treeObj(resData[i]) );
+                            resData.splice(i, 1);
+                            i--;
+                        }
+                    }
+                    run(tree);
+                    //找寻子树
+                    function run(chiArr) {
+                        if (resData.length !== 0) {
+                            for (var i = 0; i < chiArr.length; i++) {
+                                for (var j = 0; j < resData.length; j++) {
+                                    if (chiArr[i][attributes.id] === resData[j][attributes.parentId]){
+                                        var obj = treeObj(resData[j]);
+                                        chiArr[i].children.push(obj);
+                                        resData.splice(j, 1);
+                                        j--;
+                                    }
+                                }
+                                run(chiArr[i].children);
+                            }
+                        }
+                    }
+                    return tree;
+                }
+                var  data = data.data;
+                // 属性配置信息
+                var attributes = {
+                    id: 'id',
+                    parentId: 'parentId',
+                };
+                var treeData = toTreeData(data, attributes);
+                //点击菜单渲染树形菜单
+                var showlist = $("<ul id='org' style='display:none'></ul>");
+                showall(treeData,showlist);
+                $("#jOrgChart"). append(showlist);
+                $("#org").jOrgChart( {
+                    chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                    dragAndDrop : false //设置是否可拖动
+                    //chartClass [默认= 'jOrgChart']-分配给生成的标记的样式类的名称。
+                    //chartElement - 用于指定您想要附加OrgChart标记的HTML元素。[默认= '主体']
+                });
+                //循环递归显示数据数据
+                function showall(menu_list,parent) {
+                    //循环人员列表
+                    $.each(menu_list, function(index,val) {
+                        var imgUrl = val.headUrl;
+                        console.log(imgUrl);
+                        var headPhotoUrl=val.headUrl.split('//')[2];
+                        var fileName=val.headUrl.split("$$")[1];
+                        if(val.children.length > 0){
+                            var li = $("<li></li>");
+                            var li_two = $("<li></li>");
+                            li.append(
+                                "<a  class='hiw' onclick='add_click(this)' id="+val.id+">" +
+                                "<div class='hiw_left'>"+
+                                "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl +" >"+
+                                "</div>"+
+                                "<div class='hiw_right'>"+
+                                "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                "<p style='display: none;' title="+ val.phone +" >"+ "联系电话：<span>"+val.phone +"</span></p>"+
+                                "<p title="+ val.idcard +">"+ "身份证号：<span>"+val.idcard +"</span></p>"+
+                                "<p style='display: none;'title="+ val.NativePlace +" >"+ "籍贯：<span>"+val.NativePlace +"</span></p>"+
+                                "<p title="+ val.address +">"+ "现住址：<span>"+val.address +"</span></p>"+
+                                "<p title="+ val.remarks +">"+ "备注：<span>"+val.remarks +"</span></p>"+
+                                "<p title="+ val.roleType +">"+ "亲友关系：<span class='val_un'>"+val.roleType +"</span></p>"+
+                                "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                "</div>"+
+                                "</a>"
+                            ).append("<ul></ul>").appendTo(parent);
+                            //递归显示
+                            showall( val.children, $(li).children().eq(1) );
+                        }else{
+                            $("<li></li>").append("<a  class='hiw' onclick='add_click(this)'id="+val.id+">" +
+                                "<div class='hiw_left'>"+
+                                "<img class='img_hide'  src="+ projectPath+'fileCRUD/downLoadFile?fileName='+fileName+'&fileURL='+imgUrl +" >"+
+                                "</div>"+
+                                "<div class='hiw_right'>"+
+                                "<p title="+ val.name +" parentId="+ val.parentId +">"+ "姓名：<span>"+val.name +"</span></p>"+
+                                "<p style='display: none;' title="+ val.phone +" >"+ "联系电话：<span>"+val.phone +"</span></p>"+
+                                "<p title="+ val.idcard +">"+ "身份证号：<span>"+val.idcard +"</span></p>"+
+                                "<p style='display: none;'title="+ val.NativePlace +" >"+ "籍贯：<span>"+val.NativePlace +"</span></p>"+
+                                "<p title="+ val.address +">"+ "现住址：<span>"+val.address +"</span></p>"+
+                                "<p title="+ val.remarks +">"+ "备注：<span>"+val.remarks +"</span></p>"+
+                                "<p title="+ val.roleType +">"+ "亲友关系：<span class='val_un'>"+val.roleType +"</span></p>"+
+                                "<div class='je_jia'  style='display: none;' onclick='jiw(this,event)'>-</div>"+
+                                "</div>"+
+                                "</a>").appendTo(parent);
+                        }
+                    });
+                };
+                $(".val_un").each(function () {
+                    if( $(this).text() == "undefined" ){
+                        $(this).text("");
+                    }
+                })
+            }
+        })
+    })
+    $(".TheEditor").click(function () {
+        if( $(".TheEditor").text() == "编辑"){
+            $(".TheEditor").text("取消编辑");
+            //重启拖动元素插件
+            $('div.node').draggable('enable');
+        }else{
+            $(".TheEditor").text("编辑");
+            //禁止拖动元素插件
+            $('div.node').draggable('disable');
+        }
+    })
+    function forSearch(){
+        var value=$("#searchValue").val();
+        if(value==null||value==""){
+            alert("请填写查询内容");
+            return ;
+        }else{
+            $.ajax({
+                url: getRootPath_web()+"/suspecthandler/listAllForOperator",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    searchValue:value
+                },
+                success:function ( data) {
+                    $(".crime_gang").html("");
+                    var data = data.data;
+                    var str = '';
+                    for( var i = 0 ; i < data.length;i++){
+                        str += "<li id="+ data[i].id +"><span>"+ data[i].name +"</span></li>"
+                    }
+                    $(".crime_gang").append( str )
+                },
+                error:function (data) {
+                    alert("网络错误");
+                }
+            });
+        }
+    }
+    // 属性配置信息
+    //数据返回
+    //判断是否伸缩
+    function  jiw(thiw,event) {
+        event.stopPropagation();
+        if( $(".TheEditor").text() != "编辑" ){
+            if( $(thiw).text() == "-" ){
+                $(thiw).text("+");
+                $(thiw).parent().parent().parent().parent().parent().find("tr").hide();
+                $(thiw).parent().parent().parent().parent().parent().find("tr").eq(0).show();
+            }else {
+                $(thiw).text("-");
+                $(thiw).parent().parent().parent().parent().parent().find("tr").show();
+                $(thiw).parent().parent().parent().parent().parent().find("tr").eq(0).hide();
+                $(thiw).parent().parent().parent().parent().show();
+            }
+        }
+    }
+    //给当前的元素点击下属关系明显
+    function  add_click( thiw ) {
+        var thed = $(thiw);
+        var cen_a = $(thiw).children("p").text();
+        var thpid =  $(thiw).children().children("p").attr("parentId");
+        var tid =  $(thiw).attr("id");
+        //查看是否有权利查看或编辑
+        if( $(".TheEditor").text() != "编辑"){
+            $('.hiw_ul').hide();
+            var d = thed;
+            var pos = d.offset();
+            var t = pos.top + d.height() -100; // 弹出框的上边位置
+            var l = pos.left + d.width() -200;  // 弹出框的左边位置
+            $(".hiw_ul").css({ "top": t, "left": l });
+            $(".hiw_ul").show();
+            if( thpid == "" ||  thpid == null ){
+                $(".hiw_ul").children("li").eq(0).show();
+                $(".hiw_ul").children("li").eq(1).hide();
+            }else{
+                $(".hiw_ul").children("li").eq(0).hide();
+                $(".hiw_ul").children("li").eq(1).show();
+            }
+            //关闭侧面
+            $('.remove').unbind('click').click(function() {
+                $(this).parent().hide();
+            })
+            //点击同类添加
+            $('.similar').unbind('click').click(function() {
+                $(this).parent().hide();
+                $(".bianji").show();
+                $(".form-group > input").val("");
+                $(".bianji").attr("id","0");
+            })
+            //点击提交
+            $("#submit").live("click",function () {
+                var form_id = $(".bianji").attr("id");
+                var name = $("#name").val();
+                var remarks = $("#note").val();
+                var roleType = $("#roleType option:selected").val();
+                var address = $("#PERMANET_NOW").val();
+                var idcard = $("#IDnumber").val();
+                var headUrl = $("#url").val();
+                if( form_id == 0 ){
+                    $.ajax({
+                        url: getRootPath_web()+"/etFriendsHandler/insert",
+                        type: "POST",
+                        dataType: "json",
+                        cache:false,
+                        async:false,
+                        data: {
+                            suspectNo: tid,
+                            name: name,
+                            remarks: remarks,
+                            roleType: roleType,
+                            address: address,
+                            idcard: idcard,
+                            headUrl: headUrl,
+                        },
+                    })
+                }else if( form_id == 1 ){
+                    $.ajax({
+                        url: getRootPath_web()+"/etFriendsHandler/updateByPrimaryKeySelective",
+                        type: "POST",
+                        dataType: "json",
+                        cache:false,
+                        async:false,
+                        data: {
+                            id: tid,
+                            name: name,
+                            remarks: remarks,
+                            roleType: roleType,
+                            address: address,
+                            idcard: idcard,
+                            headUrl: headUrl,
+                        },
+                    })
+                }
+                $('.bianji').hide();
+                location.reload();
+                return false
+            })
+            //点击删除当前的
+            $('.remove_hiw').unbind('click').click(function() {
+                layer.open({
+                    content: '是否删除当前的人员？'
+                    ,btn: ['删除', '取消']
+                    ,yes: function(index){
+                        $.ajax({
+                            url: getRootPath_web()+"/etFriendsHandler/deleteByPrimaryKey",
+                            type:"POST",
+                            dataType:"json",
+                            data:{
+                                id:tid
+                            },
+                        });
+                        thed.parent().parent().parent().remove();
+                        layer.close(index);
+                        //location.reload();
+                    }
+                    ,btn2:function (index) {
+                        //alert( "当前id="+ tid +";他的父id为"+ thpid);
+                        //thed.parent().parent().parent().parent().remove();
+                        layer.close(index);
+                        //location.reload();
+                    }
+                });
+                $(this).parent().hide();
+            })
+            //点击编辑
+            $('.ToView').unbind('click').click(function() {
+                if( thpid === "" ){
+                    layer.alert('一级人员不可以编辑！');
+                }else{
+                    $(".bianji").attr("id","1");
+                    $('.bianji').show();
+                }
+                $(this).parent().hide();
+                $(".hiw").each(function () {
+                    var tye_the = $(this);
+                    if( tye_the.attr("tyep") == "1"){
+                        $("#pic").attr("src",tye_the.children(".hiw_left").children("img").attr("src"));
+                        $("#name").val(tye_the.children(".hiw_right").children("p").eq(0).children("span").text() );
+                        $("#IDnumber").val(tye_the.children(".hiw_right").children("p").eq(2).children("span").text() );
+                        $("#PERMANET_NOW").val(tye_the.children(".hiw_right").children("p").eq(4).children("span").text() );
+                        $("#note").val(tye_the.children(".hiw_right").children("p").eq(5).children("span").text() );
+                        $("#roleType option").eq(0).text( tye_the.children(".hiw_right").children("p").eq(6).children("span").text() );
+                        if( tye_the.children(".hiw_right").children("p").eq(6).children("span").text() == "朋友"){
+                            $("#roleType option").eq(0).val("4101");
+                        }else if( tye_the.children(".hiw_right").children("p").eq(6).children("span").text() == "亲属"){
+                            $("#roleType option").eq(0).val("4100");
+                        }
+                    }
+                })
+            })
+        }else{
+            layer.alert('你目前没有权限！');
+        }
+        $(".hiw").children().children("p").removeClass("red");//删除所有高亮的字体
+        $(".hiw").attr("tyep","0");
+        $(thiw).attr("tyep","1");
+        $(thiw).children().children("p").addClass("red");//添加当前高亮的字体
+        //先删除所有的下属关系的红线
+        // $(".down").css({"background-color": "#000"});
+        // $(".top").css({"border-top": "3px solid #000"});
+        // $(".left").css({"border-right": "3px solid #000"});
+        // $(".right").css({"border-left": "3px solid #000"});
+        // $(thiw).parent().parent().parent().parent().find("tr").each(function () {
+        //     if( !$(this).hasClass("node-cells")){
+        //         $(this).each(function () {
+        //             if( !$(this).hasClass("node-cells") ){
+        //                 $(this).find(".down").css({
+        //                     "background-color": "#f00"
+        //                 });
+        //                 $(this).find(".top").css({
+        //                     "border-top": "3px solid #f00"
+        //                 });
+        //                 $(this).find(".left").css({
+        //                     "border-right": "3px solid #f00"
+        //                 });
+        //                 $(this).find(".right").css({
+        //                     "border-left": "3px solid #f00"
+        //                 });
+        //             }
+        //         })
+        //     }
+        // })
+    }
+    //侧面点击传参
+    //点击新增人员出现窗口
+    $(".add_but_one").live('click',function () {
+        $(".add_delete_shuru").show();
+    })
+    $(".shuru_bot_one").live('click',function () {
+        var name = $("#name").val();
+        var note = $("#note").val();
+        $(".crime_gang").append("<li id='' name="+ note +"><span>"+name+"</span> </li>")
+        //alert("团伙名称："+name)
+        //alert("团伙备注："+note)
+        $("#name").val("");
+        $("#note").val("");
+        $(".add_delete_shuru").hide();
+    })
+    $(".shuru_bot_two").live('click',function () {
+        $(".add_delete_shuru").hide();
+    })
+    //取消隐藏弹框
+    $(".quxiao").live("click",function () {
+        $('.bianji').hide();
+    })
+    //点击保存进行交互
+    //头像上传
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null;
+        if(window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if(window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if(window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>刑侦画布</title>
+	<link rel="stylesheet" href="./dep/bootstrap-3.3.7/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/caseInference.css">
+	<link href="./css/iconfont.css" rel="stylesheet" />
+</head>
+<body>
+	<!-- <div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar">
+				</span><span class="icon-bar"></span>
+			</button>
+			<span class="navbar-brand"><img src="./img/deeplogo.png"></span>
+			<ul class="nav navbar-nav " id="nav-ul-left">
+				<li><a><i class="iconfont">&#xe60f;</i> 地 图</a></li>
+				<li><a style="color: #b7c0c9;"><i class="iconfont">&#xe60e;</i> 刑侦画布</a></li>
+				<li id="reporter-btn"><a><i class="iconfont">&#xe60d;</i> 数据中心</a href="reporter.html"></li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+			<ul class="navbar-nav " id="nav-ul-right">
+				<li id="personal-center" style="width: 64px;height: 64px;"><a><i class="iconfont">&#xe610;</i></a></li>
+				<li id="message-center" style="width: 64px;height: 64px;"><a><i class="iconfont">&#xe60c;</i></a></li>
+			</ul>
+		</div>
+		<div class="personal hide">
+			<div class="personal-top">
+				<img src="./img/personal-center.png">
+				<span class="name">李明</span>
+				<span class="position">警员</span><span class="station">朝阳区麦子店派出所</span>
+			</div>
+			<div class="personal-bottom">
+				<i class="iconfont" style="font-size: 14px;color: #54b9ef">&#xe62e;</i>
+				<span>退出登录</span>
+			</div>
+		</div>
+		<div class="message hide">
+			<div class="message-top">
+				<span class="left">消息</span>
+				<span class="right"><i class="iconfont" style="color: #8fbfe7;font-size: 15px;">&#xe62d;</i><label>清空</label></span>
+			</div>
+			<div class="message-content"></div>
+		</div>
+	</div> -->
+	<div class="container" id="wrapper" style="height: 100%;overflow: hidden;">
+		<div class="row">
+			<div class="col-sm-3" id="left-nav" style="width:30%;height:100%;background-color: #f8f9fb;">
+				<div class="search-box"><input type="text" name="input_left" id="search-value" style="border: none;">
+					<i class="iconfont" style="position:absolute; right: 50px;top: 17.5px;font-size: 22px;cursor: pointer;display: inline-block;color: #868d94;" onclick="search()">&#xe60a;</i>
+				</div>
+				<div id="node-left" style="display: none; height:700px; overflow:auto;"></div>
+				<div class="search-result" id="search-left" style="display: block;">
+					<div id="search-phone" style="display: none;">
+						<p style="font-weight:bold;">手机号分析</p>
+						<p style="font-weight:bold;">手机号 18600072007</p>
+						<span onclick="moreDetails(this)">
+						<label style="font-weight:500;cursor:pointer;">查看更多</label>
+						<i class="iconfont icon-xingzhenhuabuchakangengduo" style="padding-bottom: 3px;margin-left: 3px;font-size: 13px;display: inline-block;"></i>
+						</span>
+						<img src="img/graph_open.png" class="addition" onclick="loadCanvas(this)" id="addition0">
+						<div class="details"></div>
+					</div>
+					<div id="search-idcard" style="display: none;">
+						<p style="font-weight:bold;">身份证号分析</p>
+						<p style="font-weight:bold;">身份证号 441623198701083000</p>
+						<span onclick="moreDetails(this)">
+						<label style="font-weight:500;cursor:pointer;">查看更多</label>
+						<i class="iconfont icon-xingzhenhuabuchakangengduo" style="padding-bottom: 3px;margin-left: 3px;font-size: 13px;display: inline-block;"></i>
+						</span>
+						<img src="img/graph_open.png" class="addition" onclick="loadCanvas(this)" id="addition1">
+						<div class="details"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9" id="right-common" style="width: 70%;height:100%;text-align: center;display: table-cell;vertical-align: middle; ">
+				<div class="content-header" style="width: 100%;height: 33px;position: relative;">
+					<div class="tab-prev" id="page-prev" style="cursor: pointer;">
+						<i class="iconfont icon-xingzhenhuabuzuohua" style="color: #cbcccd;display: block;margin-top: 3px;"></i>
+					</div>
+					<div class="tab-next" id="page-next" style="cursor: pointer;">
+						<i class="iconfont icon-xingzhenhuabuyouhua" style="color: #cbcccd;display: block;margin-top: 3px;"></i>
+					</div>
+					<div class="div1">
+						<div id="nav-ul" style="padding: 0px;margin: 0px; height: 33px;width: 10000px;border: 0px;">
+							<ul id="tab-ul" class="nav nav-tabs" role="tablist" style="padding: 0px;margin: 0px; height: 33px;border: 0px;"></ul>
+						</div>
+					</div>
+					<div class="div2" style="cursor: pointer;" onclick="addTab(-1)">
+						<i class="iconfont icon-tianjiahuabu" style="color: #0a5bb4;display: block;margin-top: 3px;"></i>
+					</div>
+				</div>
+				<div class="tab-content content-body" id="content-body" style="height: calc(100% - 33px);width: 100%;">
+					<i class="iconfont icon-tianjia middle-add" style="cursor: pointer;font-size: 92px;color: #e5e5e5;" onclick="addTab(-1)"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- <div class="popBox">	
+					<div class="ttBox">			
+						<span class="tt">温馨提示</span>
+					</div>	
+					<div class="txtBox">		
+						<p><label>您尚未登录，</label><b id="s2">5</b><label>秒后将跳转到登录页面!</label></p>
+					</div>	
+					<div class="btnArea">		
+						<a class="sgBtn ok" onclick="skipToLogin()">确定</a>
+					</div>
+		</div> -->
+			<script src="caseInference.min.js"></script>
+	</body>
+</html>

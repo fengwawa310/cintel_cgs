@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.OperPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.suspect.OperPermission" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUSPECT_NO" property="suspectNo" jdbcType="VARCHAR" />
+    <result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+    <result column="PERMISSION_CODE" property="permissionCode" jdbcType="INTEGER" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUSPECT_NO, USER_NO, PERMISSION_CODE, CREAT_TIME, MODIFY_TIME
+  </sql>
+   <sql id="Base_Column_List_Opmasion">
+	op.ID,op.USER_NO,op.PERMISSION_CODE,op.PERMISSION_CODE,op.CREAT_TIME,op.MODIFY_TIME
+   </sql>
+     <resultMap type="com.entity.suspect.OperPermission" id="ListOpmision">
+     <result column="ID" jdbcType="VARCHAR" property="id"/>
+     <result column="USER_NO" jdbcType="VARCHAR" property="userNo"/>
+     <result column="SUSPECT_NO" jdbcType="VARCHAR" property="suspectNo"/>
+     <result column="PERMISSION_CODE" jdbcType="INTEGER" property="permissionCode"/>
+     <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime"/>
+     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+  <update id="updateBySuspectNoAndUserNoSelective">
+    update oper_permission
+    <set >
+      <!--<if test="suspectNo != null" >
+        SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null" >
+        USER_NO = #{userNo,jdbcType=VARCHAR},
+      </if>-->
+      <if test="permissionCode != null" >
+        PERMISSION_CODE = #{permissionCode,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR}
+    AND USER_NO= #{userNo,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteBySuspectNoAndUserNo">
+    delete from oper_permission
+     WHERE SUSPECT_NO=#{suspectNo,jdbcType=VARCHAR}
+    AND USER_NO =#{userNo,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="selectOperPermissionBySuspectNoAndUserNo" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" /> FROM oper_permission
+    WHERE SUSPECT_NO=#{suspectNo,jdbcType=VARCHAR}
+    AND USER_NO =#{userNo,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据重点人查询授予警官权限信息-->
+  <select id="suspectAndpoliceList" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" /> FROM oper_permission
+      WHERE SUSPECT_NO=#{suspectId,jdbcType=VARCHAR}
+      AND PERMISSION_CODE !=0
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oper_permission
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oper_permission
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.suspect.OperPermission" >
+    insert into oper_permission (ID, SUSPECT_NO, USER_NO, 
+      PERMISSION_CODE, CREAT_TIME, MODIFY_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{suspectNo,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR}, 
+      #{permissionCode,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.suspect.OperPermission" >
+    insert into oper_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suspectNo != null" >
+        SUSPECT_NO,
+      </if>
+      <if test="userNo != null" >
+        USER_NO,
+      </if>
+      <if test="permissionCode != null" >
+        PERMISSION_CODE,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectNo != null" >
+        #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null" >
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionCode != null" >
+        #{permissionCode,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.OperPermission" >
+    update oper_permission
+    <set >
+      <if test="suspectNo != null" >
+        SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null" >
+        USER_NO = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionCode != null" >
+        PERMISSION_CODE = #{permissionCode,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.suspect.OperPermission" >
+    update oper_permission
+    set SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      USER_NO = #{userNo,jdbcType=VARCHAR},
+      PERMISSION_CODE = #{permissionCode,jdbcType=INTEGER},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 根据重点人员编号查询该重点人员的授权信息列表 -->
+     <select id="selectBySuspectId"  parameterType="com.entity.suspect.EtSuspect" 
+    	resultMap="ListOpmision">
+	    SELECT
+			<include refid="Base_Column_List_Opmasion"/>,us.NAME as  SUSPECT_NO
+			<!-- op.ID as IDS,
+			op.SUSPECT_NO as SUSPECT_NOS,op.CRATE_TIME as CRATE_TIMES,op.MODIFY_TIME as MODIFY_TIMES -->
+		FROM 
+			oper_permission op  
+		LEFT JOIN sys_user us ON op.USER_NO=us.id
+		WHERE op.SUSPECT_NO=#{suspectId}
+    </select>
+</mapper>

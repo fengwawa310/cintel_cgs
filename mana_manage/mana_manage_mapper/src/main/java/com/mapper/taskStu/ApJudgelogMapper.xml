@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.ApJudgelogMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.taskStu.ApJudgelog" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="RELATE_NO" property="relateNo" jdbcType="VARCHAR" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+    <result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+    <result column="OPER_UNIT_CODE" property="operUnitCode" jdbcType="VARCHAR" />
+    <result column="OPER_UNIT_NAME" property="operUnitName" jdbcType="VARCHAR" />
+    <result column="OPER_TIME" property="operTime" jdbcType="TIMESTAMP" />
+    <result column="OPER_TYPE" property="operType" jdbcType="INTEGER" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.taskStu.ApJudgelog" extends="BaseResultMap" >
+    <result column="REMARK" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Blob_Column_List" >
+    REMARK
+  </sql>
+  <select id="selectJudgeDetailLog"  resultMap="BaseResultMap">
+    SELECT
+        ID,
+        RELATE_NO,
+       (select user_name from sys_user c where c.id=OPERATOR_CODE) OPERATOR_CODE,
+        OPERATOR_NAME,
+        OPER_UNIT_CODE,
+        OPER_UNIT_NAME,
+        OPER_TIME,
+        OPER_TYPE,
+        CREAT_TIME,
+        MODIFY_TIME,
+        REMARK
+       FROM ap_judgelog WHERE RELATE_NO=#{id,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="com.entity.taskStu.ApJudgelog" >
+    insert into ap_judgelog (ID, RELATE_NO, OPERATOR_CODE, 
+      OPERATOR_NAME, OPER_UNIT_CODE, OPER_UNIT_NAME, 
+      OPER_TIME, OPER_TYPE, CREAT_TIME, 
+      MODIFY_TIME, REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{relateNo,jdbcType=VARCHAR}, #{operatorCode,jdbcType=VARCHAR}, 
+      #{operatorName,jdbcType=VARCHAR}, #{operUnitCode,jdbcType=VARCHAR}, #{operUnitName,jdbcType=VARCHAR}, 
+      #{operTime,jdbcType=TIMESTAMP}, #{operType,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.taskStu.ApJudgelog" >
+    insert into ap_judgelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="relateNo != null" >
+        RELATE_NO,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME,
+      </if>
+      <if test="operUnitCode != null" >
+        OPER_UNIT_CODE,
+      </if>
+      <if test="operUnitName != null" >
+        OPER_UNIT_NAME,
+      </if>
+      <if test="operTime != null" >
+        OPER_TIME,
+      </if>
+      <if test="operType != null" >
+        OPER_TYPE,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="relateNo != null" >
+        #{relateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operUnitCode != null" >
+        #{operUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operUnitName != null" >
+        #{operUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="operTime != null" >
+        #{operTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operType != null" >
+        #{operType,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

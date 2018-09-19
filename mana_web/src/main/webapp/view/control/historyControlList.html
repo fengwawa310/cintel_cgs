@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>布控历史库列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<!-- basic styles -->		
+		<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<!--<script src="assets/js/ace-extra.min.js"></script>-->
+		<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+		<script src="../assets/js/jquery-2.0.3.min.js"></script>
+	    <script src="../js/jquery.dataTables.min.js"></script>
+
+		<script src="../js/common.js"></script>
+		<script src="../js/table.js"></script>
+
+		<script src="../assets/js/jquery.dataTables.min.js"></script>
+		<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+		<!-- <![endif]-->
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+
+		<script src="../assets/js/datepicker/WdatePicker.js"></script>
+		<link rel="stylesheet" href="../css/commonStyle.css" />
+
+		!-- inline scripts related to this page -->
+		<script src="../assets/js/layer/layer.js"></script>
+	</head>
+	<body>
+		<!-- 上方导航栏 -->
+		<iframe src="../index.html" style="width:100%;height:65px;"></iframe>
+		<div class="main-container" id="main-container">
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+				<!-- 左侧导航栏 -->
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+                        try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+					<ul class="nav nav-list">
+						<!--首页-->
+						<li>
+							<a href="#">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 首页 </span>
+							</a>
+						</li>
+						<!--消息-->
+						<li>
+							<a href="../messageList.html">
+								<i class="icon-bell-alt"></i>
+								<span class="menu-text"> 消息 </span>
+							</a>
+						</li>
+						<!--人员管理-->
+						<li class="active">
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-group"></i>
+								<span class="menu-text"> 人员管理</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="../person/personList.html">
+										<i class="icon-double-angle-right"></i>
+										人员管理
+									</a>
+								</li>
+								<li>
+									<a href="../person/comparisonPersonList.html">
+										<i class="icon-double-angle-right"></i>
+										人员信息比对
+									</a>
+								</li>
+								<li>
+									<a href="../person/historyPersonList.html">
+										<i class="icon-double-angle-right"></i>
+										人员历史库
+									</a>
+								</li>
+								<li>
+									<a href="../person/recyclePersonList.html">
+										<i class="icon-double-angle-right"></i>
+										人员回收站
+									</a>
+								</li>
+								<li>
+									<a href="../person/multiInvolvedPersonList.html">
+										<i class="icon-double-angle-right"></i>
+										多次涉案人员
+									</a>
+								</li>
+								<li class="active">
+									<a href="../control/controlList.html">
+										<i class="icon-double-angle-right"></i>
+										人员布控
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--案件管理-->
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-legal"></i>
+								<span class="menu-text"> 案件管理</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="../case/caseList.html">
+										<i class="icon-double-angle-right"></i>
+										案件信息管理
+									</a>
+								</li>
+								<li>
+									<a href="../case/historyCaselist.html">
+										<i class="icon-double-angle-right"></i>
+										历史案件管理
+									</a>
+								</li>
+								<li>
+									<a href="../case/recycleCaselist.html">
+										<i class="icon-double-angle-right"></i>
+										案件回收站
+									</a>
+								</li>
+								<li>
+									<a href="../case/serialCaselist.html">
+										<i class="icon-double-angle-right"></i>
+										案件串并
+									</a>
+								</li>
+								<li>
+									<a href="../case/attentionCaselist.html">
+										<i class="icon-double-angle-right"></i>
+										我的关注
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--警情管理-->
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-folder-open-alt"></i>
+								<span class="menu-text"> 警情管理</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="../alarm/alarmList.html">
+										<i class="icon-double-angle-right"></i>
+										警情信息管理
+									</a>
+								</li>
+								<li>
+									<a href="../alarm/recycleAlarmList.html">
+										<i class="icon-double-angle-right"></i>
+										警情回收站
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--情报管理-->
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-desktop"></i>
+								<span class="menu-text">情报管理</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="../intelligence/intelligenceUpperList.html">
+										<i class="icon-double-angle-right"></i>
+										情报新增下发
+									</a>
+								</li>
+
+								<li>
+									<a href="../intelligence/intelligenceLowerList.html">
+										<i class="icon-double-angle-right"></i>
+										情报研判接收
+									</a>
+								</li>
+								<li>
+									<a href="../intelligence/intelligenceUpperList.html">
+										<i class="icon-double-angle-right"></i>
+										情报接受审核
+									</a>
+								</li>
+
+								<li>
+									<a href="../intelligence/intelligenceLowerList.html">
+										<i class="icon-double-angle-right"></i>
+										情报研判上报
+									</a>
+								</li>
+								<li>
+									<a href="../intelligence/intelligenceUpperList.html">
+										<i class="icon-double-angle-right"></i>
+										情报研判处理
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--积分统计-->
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-bar-chart"></i>
+								<span class="menu-text"> 积分统计</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="../IntegralStatistic/daily_briefing.html">
+										<i class="icon-double-angle-right"></i>
+										每日通报
+									</a>
+								</li>
+
+								<li>
+									<a href="../IntegralStatistic/daily_statistics.html">
+										<i class="icon-double-angle-right"></i>
+										每日统计表
+									</a>
+								</li>
+								<li>
+									<a href="../IntegralStatistic/szdryjf.html">
+										<i class="icon-double-angle-right"></i>
+										重点人员积分
+									</a>
+								</li>
+								<li>
+									<a href="../IntegralStatistic/ztryyj.html">
+										<i class="icon-double-angle-right"></i>
+										在逃人员积分
+									</a>
+								</li>
+								<li>
+									<a href="../IntegralStatistic/bgkryjf.html">
+										<i class="icon-double-angle-right"></i>
+										被管控人员积分
+									</a>
+								</li>
+								<li>
+									<a href="../IntegralStatistic/">
+										<i class="icon-double-angle-right"></i>
+										单位激励积分
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--系统管理-->
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-cogs"></i>
+								<span class="menu-text"> 系统管理</span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										权限管理
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										系统日志
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										系统建议
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										系统公告
+									</a>
+								</li>
+							</ul>
+						</li>
+
+					</ul>
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+                        try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+				<!-- 右侧部分 -->
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+						<ul class="breadcrumb">
+							<li>
+								<span class="title">当前位置：</span>
+								<span>人员管理>>布控历史库列表</span>
+							</li>
+						</ul>					
+					</div>
+					<div class="page-content">
+						<!--查询条件-->
+						<div class="row-container searchAll search-condition">
+							<!--布控人员编号-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle borderLnone">
+										<p>
+											布控人员编号
+										</p>
+									</div>
+									<div class="col-md-7 searchCon">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!--布控人身份证号-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle ">
+										<p>
+											布控人身份证号
+										</p>
+									</div>
+									<div class="col-md-7 searchCon ">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!--布控时间-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle">
+										<p>
+											布控时间
+										</p>
+									</div>
+									<div class="col-md-7 searchCon">
+										<input type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>至
+										<input type='text' class="form-control searchTime" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', maxDate: '%y-%M-%d'}); "/>
+									</div>
+								</div>
+							</div>
+
+							<!--布控人姓名-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle borderLnone borderBnone">
+										<p>
+											布控人姓名
+										</p>
+									</div>
+									<div class="col-md-7 searchCon">
+										<select>
+											<option value ="">--请选择--</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<!--管控单位-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle borderBnone">
+										<p>
+											管控单位
+										</p>
+									</div>
+									<div class="col-md-7 searchCon borderBnone">
+										<input type='text' class="form-control"  />
+									</div>
+								</div>
+							</div>
+							<!--空白位置-->
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-5 searchTitle borderBnone" style="border-right: none;background: white">
+									</div>
+									<!--<div class="col-md-7 searchCon noBorder">
+									</div>-->
+								</div>
+							</div>
+
+						    <div class="col-md-12 searchBtn" >
+						        <div class="row">
+						            <div class="col-md-12 ">
+						                <button class="btn btn-primary" type="button"> 查询 </button>
+										<button class="btn btn-primary" type="button" onclick="reset()"> 重置 </button>
+									</div>
+						        </div>
+						    </div>
+						</div>
+						<!--tab切换标签 为后期平台带入预留-->
+						<!--<ul id="myTab" class="nav nav-tabs mytab">
+						    <li class="active">
+						        <a href="#manual" data-toggle="tab">手动录入</a>
+						    </li>
+						    <li>
+						        <a href="#auto" data-toggle="tab">平台导入</a>
+						    </li>
+						</ul>-->
+						<!--tab切换内容-->
+						<div id="myTabContent" class="tab-content">
+						    <div class="tab-pane fade in active" id="manual">
+								<div class="wt100">
+									<table id="control-table" class="cell-border table table-striped table-bordered table-hover dataTable"  cellspacing="0" width="100%">
+									</table>
+								</div>
+						    </div>
+						    <!--<div class="tab-pane fade" id="auto">
+						    </div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- basic scripts -->
+
+		<script>
+            var dynamictable;
+            //列表部分
+            $(document).ready(function() {
+                $("#control-table_filter").css('display', 'block');
+                dynamictable = $("#control-table").DataTable(
+                    {
+                        "bLengthChange" : false, /* 去掉每页显示多少条数据方法 */
+                        "processing" : true,/*控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现. 样式需要定义,否则比较丑.*/
+                        "pageLength" : 5,/*默认*/
+                        "lengthMenu" : [ [ 5, 10, 20, -1 ],
+                            [ 5, 10, 20, "全部" ] ],
+						/*"deferRender": true,*/
+                        "searching" : true,/*控制控件的搜索功能,如果为false,控件的搜索功能被完全禁用,而且默认搜索组件会被隐藏.*/
+                        "serverSide" : true,/* 启用服务器端分页,当设为true时,列表的过滤,搜索和排序信息会传递到Server端进行处理,实现真翻页方案的必需属性.反之,所有的列表功能都在客户端计算并执行*/
+                        "autoWidth" : false,/*用来启用或禁用自动列的宽度计算。通常被禁用作为优化（它需要一个有限的时间量来计算的宽度），默认值是true，所以通常将它设为false*/
+						/*  "order": [   //表示先对第1列进行升序排序，再按照第二列升序排序，最后按照第三列降序排序
+						 [0, "desc"]
+						 ], */
+                        //因为需要多次初始化，所以需要设置允许销毁实例
+                        "destroy" : true,
+                        "bFilter" : false,
+                        "orderMulti" : false, //启用多列排序
+                        "order" : [], //取消默认排序查询,否则复选框一列会出现小箭头
+						/* "pagingType": "full_numbers", *///分页样式：simple,simple_numbers,full,full_numbers
+						/*   "table-layout":fix, */
+                        "row-border" : true,
+                        "oLanguage" : {
+                            "sEmptyTable" : "没有记录",
+                            "sProcessing" : "处理中，请稍候...",
+                            "sLengthMenu" : "每页显示 _MENU_ 条记录",
+                            "sZeroRecords" : "没有记录",
+                            "sInfo" : " _START_ 到  _END_ 条记录,总记录数为 _TOTAL_ 条",
+                            "sInfoEmpty" : "记录数为0",
+                            "sInfoFiltered" : "(从全部记录数 _MAX_ 条中过滤)",
+                            "sInfoPostFix" : "",
+                            "sLoadingRecords" : "正在加载中,请稍候...",
+                            "sSearch" : "搜索",
+                            "sUrl" : "",
+                            "oPaginate" : {
+                                "sFirst" : "首页",
+                                "sPrevious" : "上一页",
+                                "sNext" : "下一页",
+                                "sLast" : "末页"
+                            }
+                        },
+                        ajax : {
+                            url : "../data/controlList.txt",
+                            "type" : "post"
+                        },
+						/*序号自增长*/
+                        "fnDrawCallback" : function(){
+                            this.api().column(0).nodes().each(function(cell, i) {
+                                cell.innerHTML =  i + 1;
+                            });
+                        },
+                        "bDeferRender" : true,/*是否启用延迟加载：当你使用AJAX数据源时，可以提升速度。*/
+                        "columns": [
+                            {"sTitle":'<font>序号</font>','sWidth' :'5%',"sClass" :"dt-left", 'bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>布控人员编号</font>',"sWidth":"12%","sClass":"dt-left", 'data': 'controlId','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>布控人姓名</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'controlName','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>布控人身份证号</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'controlCardId','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>布控人性别</font>',"sWidth":"8%","sClass":"dt-left", 'data': 'controlSex','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>入库时间</font>',"sWidth":"15%","sClass":"dt-left", 'data': 'inTime','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>管控人</font>',"sWidth":"5%","sClass":"dt-left", 'data': 'charger','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }},
+                            {"sTitle":'<font>管控单位</font>',"sWidth":"10%","sClass":"dt-left", 'data': 'chargeUnit','bSortable': false,
+                                'render': function(data, type, row, meta) {
+                                    if(data==""||data==null){
+                                        return "--";
+                                    }
+                                    return data;
+                                }}
+                        ],
+                        "columnDefs": [{"sTitle":'<font>操作</font>',
+                            "sWidth":"15%",
+                            "data": "describe",
+                            "sClass" : "dt-left",//字体居中dt-center
+                            'targets': [8],
+                            'render': function(data, type, row, meta) {
+                                return  '<a href="#" class="operation" onclick="alertDetail();">详情</a><a href="#" class="operation" onclick="alertDelete()">彻底删除</a>';
+                            },
+                            'bSortable': false
+                        }]
+                    });
+                $("#control-table_filter").css("display", "none");
+            });
+
+            //彻底删除弹框
+            function alertDelete() {
+                layer.msg('彻底删除成功！', {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    //do something
+                });
+            }
+
+            //布控详情弹框
+            function alertDetail() {
+				/*var test = "ajbh:123456";*/
+                var ii;
+                ii = layer.ready(function () {
+                    ii = layer.open({
+                        offset: 20,
+                        type: 2,
+                        title: '布控预警详情',
+                        fix: false,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['1000px', '500px'],
+						/*content: '../case/caseDetailLayer.html?test='+test,*/
+                        content: '../control/controlDetail.html',
+                        end: function () {
+                            $('#form-dialogdsss').attr("style", "display:none");
+                        }
+                    });
+                }).index;
+            }
+		</script>
+
+	</body>
+</html>

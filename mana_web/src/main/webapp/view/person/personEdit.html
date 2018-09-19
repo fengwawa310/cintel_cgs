@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>重点人员录入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+
+    <!--日期插件-->
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../assets/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/keyPersonnelEntry.css" />
+</head>
+<body>
+<div class="main-container" id="main-container">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="row-container searchAll">
+                <div class="col-md-12 search-title">
+                    <p>
+                        基本信息
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle borderLnone">
+                            <p>
+                                <span class="required">*</span> 姓名:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon ">
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle ">
+                            <p>
+                                <span class="required">*</span> 绰号:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon ">
+                            <input type="text" class="form-control" id="byname">
+                        </div>
+                    </div>
+                </div>
+                
+                  <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 人员类型:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                           <!--  <input required type="select" class="form-control" placeholder="请输入名称"> -->
+                            <select required  class="form-control"  id="suspectClass">
+                            		<option value="">-请选择-</option>
+                            		<option value="1300">重点人员</option>
+                            		<option value="1302">在逃人员</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle ">
+                            <p>
+                                <span class="required">*</span>  身份证号:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon ">
+                            <input type="text" class="form-control"  id="idcardNum" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle borderLnone">
+                            <p>
+                                <span class="required">*</span> 出生日期:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" required  id="birthdate"  oninvalid="setCustomValidity('请输入发案时间上限！');"onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd', maxDate: '%y-%M-%d'});"  oninput="setCustomValidity('');"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 性别:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <!-- <input type="text" class="form-control" placeholder="请输入性别" id="gender"> -->
+                            
+                            <select required  class="form-control"  id="gender">
+                            		<option value="">-请选择-</option>
+                            		<option value="1200">女</option>
+                            		<option value="1201">男</option>
+                            		<option value="1202">其他</option>
+                            
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 民族:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control" id="nation">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle borderLnone ">
+                            <p>
+                                <span class="required">*</span> 文化程度:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control" id="educationDegree">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 籍贯:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control"  id="origin">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 职业:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control"id="occupation">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle borderLnone ">
+                            <p>
+                                <span class="required">*</span> 身高:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control"  id="height">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 体型:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input type="text" class="form-control"  id="shape">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 血型:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input required type="text" class="form-control"  id="bloodType">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 手机:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input required type="text" class="form-control"  id="mobilephone">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 searchTitle">
+                            <p>
+                                <span class="required">*</span> 座机:
+                            </p>
+                        </div>
+                        <div class="col-md-7 searchCon">
+                            <input required type="text" class="form-control" id="telephone">
+                        </div>
+                    </div>
+                </div>
+              
+
+                <!--<div class="col-md-12 searchBtn" >-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12 ">-->
+                            <!--<button class="btn btn-primary" type="button"> 查询 </button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary search-btn" type="button" id="suspect_submit" value=""> 提交 </button>
+</div>
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<!--<script src="assets/js/jquery/2.0.3/jquery.min.js"></script>-->
+
+<!-- <![endif]-->
+<!--[if !IE]> -->
+<script type="text/javascript">
+window.jQuery || document.write("<script src='../assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+//获取人员的ID
+
+$(window).ready(function () {
+    var thisURL = document.URL;
+    //console.log(thisURL);
+    var  getval =thisURL.split('?')[1];
+    var id= getval.split("=")[1];
+    //console.log(id);
+    findSuspectById(id);
+    
+});
+
+//回显原值
+function findSuspectById(ids){
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"suspecthandler/handlerfind",//发送请求
+            data:{id:ids},
+            dataType : "json",
+            success: function(data) {
+            		//alert("11111111");
+            		//console.log(data);
+                //var json  = eval('('+data.data+')');
+                var context=data.data;
+                console.log(data);
+                //var jsonObj = json.data;
+                $("#name").val(context.name);                
+                $("#byname").val(context.byname);                
+                $("#idcardNum").val(context.idcardNum);                
+                $("#gender").val(context.gender);                
+                $("#birthdate").val(context.birthdate);                
+                $("#suspectClass").val(context.suspectClass);                
+                $("#origin").val(context.origin);                
+                $("#nation").val(context.nation);                
+                $("#educationDegree").val(context.educationDegree);                
+                $("#occupation").val(context.occupation);                
+                $("#height").val(context.height);                
+                $("#shape").val(context.shape);                
+                $("#bloodType").val(context.bloodType);                
+                $("#mobilephone").val(context.mobilephone);                
+                $("#telephone").val(context.telephone);                
+                $("#integral").val(context.name);                
+                $("#suspectLevel").val(context.suspectLevel);                
+                $("#creatTime").val(context.creatTime);                
+                $("#suspect_submit").val(ids);  
+
+            }
+        });
+    }
+ 
+    //提交修改值
+    $(function(){
+        $('#suspect_submit').click(function(){
+        	
+        	/* alert("name"+$("#name").val()),
+        	alert("byname"+$("#byname").val()),
+        	alert("birthdate"+$("#birthdate").val()), */
+        	
+             $.ajax({
+                 type: "POST",
+                 url: getRootPath_web()+"suspecthandler/handlerupdate",
+                 data: {
+                	 		id:$("#suspect_submit").val(),
+                	 		name:$("#name").val(),
+                	 	    byname:$("#byname").val(),
+                	 	    suspectClass:$("#suspectClass").val(),
+                	 	    idcardNum:$("#idcardNum").val(),
+                	 	    birthdate:$("#birthdate").val(),
+	                	 	gender:$("#gender").val(),
+	                	 	nation:$("#nation").val(),
+	                	 	educationDegree:$("#educationDegree").val(),
+	                	 	origin:$("#origin").val(),
+	                	 	occupation:$("#occupation").val(),
+	                	 	height:$("#height").val(),
+	                	 	shape:$("#shape").val(),
+	                	 	bloodType:$("#bloodType").val(),
+	                	 	mobilephone:$("#mobilephone").val(),
+	                	 	telephone:$("#telephone").val()
+                	 	   
+                 },
+                 dataType: "json",
+                 success: function(data){
+                 	 layer.msg('修改成功!', {
+                         icon: 1,
+                         time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                     }, function(){
+                    	 window.parent.location.reload();
+                         var index=parent.layer.getFrameIndex(window.name);
+                         parent.layer.close(index);
+                     });
+                 },
+                	 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                		 layer.msg('修改失败！请检查存储服务是否正常启动', {
+                             icon: 1,
+                             time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                         }, function(){
+                        	 window.parent.location.reload();
+                             var index=parent.layer.getFrameIndex(window.name);
+                             parent.layer.close(index);
+                         });
+                 },
+             });
+           //关闭弹框刷新页面
+             window.parent.location.reload();
+             var index=parent.layer.getFrameIndex(window.name);
+             parent.layer.close(index);
+        });
+    });
+    
+    
+</script>
+
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<script src="http://bootboxjs.com/bootbox.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript" src="../js/keyPersonnelEntry.js"></script>
+</body>
+</html>

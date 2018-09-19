@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.utils.PublicEtSuspectMapper">
+    <resultMap id="BaseResultMap" type="com.entity.suspect.EtSuspect">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="SUSPECT_ID" jdbcType="VARCHAR" property="suspectId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="BYNAME" jdbcType="VARCHAR" property="byname"/>
+        <result column="IDCARD_NUM" jdbcType="VARCHAR" property="idcardNum"/>
+        <result column="HEAD_PHOTO_URL" jdbcType="VARCHAR" property="headPhotoUrl"/>
+        <result column="BIRTHDATE" jdbcType="TIMESTAMP" property="birthdate"/>
+        <result column="GENDER" jdbcType="INTEGER" property="gender"/>
+        <result column="NATION" jdbcType="VARCHAR" property="nation"/>
+        <result column="EDUCATION_DEGREE" jdbcType="VARCHAR" property="educationDegree"/>
+        <result column="ORIGIN" jdbcType="VARCHAR" property="origin"/>
+        <result column="OCCUPATION" jdbcType="VARCHAR" property="occupation"/>
+        <result column="MOBILEPHONE" jdbcType="VARCHAR" property="mobilephone"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone"/>
+        <result column="HEIGHT" jdbcType="VARCHAR" property="height"/>
+        <result column="BLOOD_TYPE" jdbcType="VARCHAR" property="bloodType"/>
+        <result column="SHAPE" jdbcType="VARCHAR" property="shape"/>
+        <result column="ENTRY_UNIT" jdbcType="VARCHAR" property="entryUnit"/>
+        <result column="ENTRY_UNIT_NAME" jdbcType="VARCHAR" property="entryUnitName"/>
+        <result column="ENTRY" jdbcType="VARCHAR" property="entry"/>
+        <result column="ENTRY_NAME" jdbcType="VARCHAR" property="entryName"/>
+        <result column="SUSPECT_CLASS" jdbcType="INTEGER" property="suspectClass"/>
+        <result column="SUSPECT_LEVEL" jdbcType="INTEGER" property="suspectLevel"/>
+        <result column="SOURCE_TYPE" jdbcType="INTEGER" property="sourceType"/>
+        <result column="IS_ARCHIVE" jdbcType="INTEGER" property="isArchive"/>
+        <result column="ARCHIVE_DESC" jdbcType="VARCHAR" property="archiveDesc"/>
+        <result column="IS_ABANDON" jdbcType="INTEGER" property="isAbandon"/>
+        <result column="LEVEL_SET" jdbcType="INTEGER" property="levelSet"/>
+        <result column="ABANDON_DESC" jdbcType="VARCHAR" property="abandonDesc"/>
+        <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="OPT_UNIT_CODE" jdbcType="VARCHAR" property="optUnitCode"/>
+        <result column="OPT_UNIT_NAME" jdbcType="VARCHAR" property="optUnitName"/>
+        <result column="OPT_P_CODE" jdbcType="VARCHAR" property="optPCode"/>
+        <result column="OPT_P_NAME" jdbcType="VARCHAR" property="optPName"/>
+        <result column="OPT_TIME" jdbcType="TIMESTAMP" property="optTime"/>
+        <result column="PERMANET" jdbcType="VARCHAR" property="permanet"/>
+        <result column="PERMANET_NOW" jdbcType="VARCHAR" property="permanetNow"/>
+        <result column="WORK" jdbcType="VARCHAR" property="work"/>
+        <result column="WEIXIN_NO" jdbcType="VARCHAR" property="weixinNo"/>
+        <result column="QQ_NO" jdbcType="VARCHAR" property="qqNo"/>
+        <result column="ENTRY_POLICE_NO" jdbcType="VARCHAR" property="entryPoliceNo"/>
+        <result column="SUSPECT_TYPE" jdbcType="INTEGER" property="suspectType"/>
+        <result column="DEMO" jdbcType="VARCHAR" property="demo"/>
+        <result column="IS_INTL" jdbcType="INTEGER" property="isIntl"/>
+        
+    </resultMap>
+    <sql id="Base_Column_List">
+		ID, SUSPECT_ID, NAME, BYNAME, IDCARD_NUM, HEAD_PHOTO_URL, BIRTHDATE,
+		GENDER, NATION,
+		EDUCATION_DEGREE, ORIGIN, OCCUPATION, MOBILEPHONE, TELEPHONE, HEIGHT, BLOOD_TYPE,
+		SHAPE, ENTRY_UNIT, SUSPECT_CLASS, SOURCE_TYPE, IS_ARCHIVE,
+		ARCHIVE_DESC, IS_ABANDON,
+		ABANDON_DESC, CREAT_TIME,
+		MODIFY_TIME,OPT_UNIT_CODE,OPT_UNIT_NAME,OPT_P_CODE,OPT_P_NAME,
+		OPT_TIME,ENTRY_UNIT_NAME,ENTRY_NAME,ENTRY,SUSPECT_LEVEL,LEVEL_SET,
+		PERMANET,PERMANET_NOW,WORK,WEIXIN_NO,QQ_NO,ENTRY_POLICE_NO,SUSPECT_TYPE,
+		DEMO,IS_INTL
+	</sql>
+
+    <select id="selectByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from et_suspect
+        where SUSPECT_ID = #{suspectNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from et_suspect
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from et_suspect
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+    <insert id="insert" parameterType="com.entity.suspect.EtSuspect">
+		insert into et_suspect (ID, SUSPECT_ID, NAME,
+		BYNAME, IDCARD_NUM, HEAD_PHOTO_URL,
+		BIRTHDATE, GENDER, NATION,
+		EDUCATION_DEGREE, ORIGIN, OCCUPATION,
+		MOBILEPHONE, TELEPHONE, HEIGHT,
+		BLOOD_TYPE, SHAPE, ENTRY_UNIT,
+		SUSPECT_CLASS, SOURCE_TYPE, IS_ARCHIVE,
+		ARCHIVE_DESC, IS_ABANDON, ABANDON_DESC,
+		CREAT_TIME, MODIFY_TIME)
+		values (#{id,jdbcType=VARCHAR}, #{suspectId,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{byname,jdbcType=VARCHAR}, #{idcardNum,jdbcType=VARCHAR}, #{headPhotoUrl,jdbcType=VARCHAR},
+		#{birthdate,jdbcType=TIMESTAMP}, #{gender,jdbcType=INTEGER},
+		#{nation,jdbcType=VARCHAR},
+		#{educationDegree,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR},
+		#{mobilephone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},
+		#{height,jdbcType=VARCHAR},
+		#{bloodType,jdbcType=VARCHAR}, #{shape,jdbcType=VARCHAR}, #{entryUnit,jdbcType=VARCHAR},
+		#{suspectClass,jdbcType=INTEGER}, #{sourceType,jdbcType=INTEGER},
+		#{isArchive,jdbcType=INTEGER},
+		#{archiveDesc,jdbcType=VARCHAR}, #{isAbandon,jdbcType=INTEGER}, #{abandonDesc,jdbcType=VARCHAR},
+		#{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+	</insert>
+    <insert id="insertSelective" parameterType="com.entity.suspect.EtSuspect">
+        insert into et_suspect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="suspectId != null">
+                SUSPECT_ID,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="byname != null">
+                BYNAME,
+            </if>
+            <if test="idcardNum != null">
+                IDCARD_NUM,
+            </if>
+            <if test="headPhotoUrl != null">
+                HEAD_PHOTO_URL,
+            </if>
+            <if test="birthdate != null">
+                BIRTHDATE,
+            </if>
+            <if test="gender != null">
+                GENDER,
+            </if>
+            <if test="nation != null">
+                NATION,
+            </if>
+            <if test="educationDegree != null">
+                EDUCATION_DEGREE,
+            </if>
+            <if test="origin != null">
+                ORIGIN,
+            </if>
+            <if test="occupation != null">
+                OCCUPATION,
+            </if>
+            <if test="mobilephone != null">
+                MOBILEPHONE,
+            </if>
+            <if test="telephone != null">
+                TELEPHONE,
+            </if>
+            <if test="height != null">
+                HEIGHT,
+            </if>
+            <if test="bloodType != null">
+                BLOOD_TYPE,
+            </if>
+            <if test="shape != null">
+                SHAPE,
+            </if>
+            <if test="entryUnit != null">
+                ENTRY_UNIT,
+            </if>
+            <if test="entry != null">
+                ENTRY,
+            </if>
+            <if test="suspectClass != null">
+                SUSPECT_CLASS,
+            </if>
+            <if test="sourceType != null">
+                SOURCE_TYPE,
+            </if>
+            <if test="isArchive != null">
+                IS_ARCHIVE,
+            </if>
+            <if test="archiveDesc != null">
+                ARCHIVE_DESC,
+            </if>
+            <if test="isAbandon != null">
+                IS_ABANDON,
+            </if>
+            <if test="abandonDesc != null">
+                ABANDON_DESC,
+            </if>
+            <if test="entryName != null">
+                ENTRY_NAME,
+            </if>
+            <if test="entryUnitName != null">
+                ENTRY_UNIT_NAME,
+            </if>
+            <if test="optUnitCode != null">
+                OPT_UNIT_CODE,
+            </if>
+            <if test="optUnitName != null">
+                OPT_UNIT_NAME,
+            </if>
+            <if test="optPCode != null">
+                OPT_P_CODE,
+            </if>
+            <if test="optPName != null">
+                OPT_P_NAME,
+            </if>
+            <if test="optTime != null">
+                OPT_TIME,
+            </if>
+            <if test="creatTime != null">
+                CREAT_TIME,
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="suspectId != null">
+                #{suspectId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="byname != null">
+                #{byname,jdbcType=VARCHAR},
+            </if>
+            <if test="idcardNum != null">
+                #{idcardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="headPhotoUrl != null">
+                #{headPhotoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="birthdate != null">
+                #{birthdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="nation != null">
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="educationDegree != null">
+                #{educationDegree,jdbcType=VARCHAR},
+            </if>
+            <if test="origin != null">
+                #{origin,jdbcType=VARCHAR},
+            </if>
+            <if test="occupation != null">
+                #{occupation,jdbcType=VARCHAR},
+            </if>
+            <if test="mobilephone != null">
+                #{mobilephone,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null">
+                #{height,jdbcType=VARCHAR},
+            </if>
+            <if test="bloodType != null">
+                #{bloodType,jdbcType=VARCHAR},
+            </if>
+            <if test="shape != null">
+                #{shape,jdbcType=VARCHAR},
+            </if>
+            <if test="entryUnit != null">
+                #{entryUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="entry != null">
+                #{entry,jdbcType=VARCHAR},
+            </if>
+            <if test="suspectClass != null">
+                #{suspectClass,jdbcType=INTEGER},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=INTEGER},
+            </if>
+            <if test="isArchive != null">
+                #{isArchive,jdbcType=INTEGER},
+            </if>
+            <if test="archiveDesc != null">
+                #{archiveDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="isAbandon != null">
+                #{isAbandon,jdbcType=INTEGER},
+            </if>
+            <if test="abandonDesc != null">
+                #{abandonDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="entryName != null">
+                #{entryName,jdbcType=VARCHAR},
+            </if>
+            <if test="entryUnitName != null">
+                #{entryUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="optUnitCode != null">
+                #{optUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="optUnitName != null">
+                #{optUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="optPCode != null">
+                #{optPCode,jdbcType=VARCHAR},
+            </if>
+            <if test="optPName != null">
+                #{optPname,jdbcType=VARCHAR},
+            </if>
+            <if test="optTime != null">
+                #{optTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.EtSuspect">
+        update et_suspect
+        <set>
+            <if test="suspectId != null">
+                SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="byname != null">
+                BYNAME = #{byname,jdbcType=VARCHAR},
+            </if>
+            <if test="idcardNum != null">
+                IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+            </if>
+            <if test="headPhotoUrl != null">
+                HEAD_PHOTO_URL = #{headPhotoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="birthdate != null">
+                BIRTHDATE = #{birthdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gender != null">
+                GENDER = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="nation != null">
+                NATION = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="educationDegree != null">
+                EDUCATION_DEGREE = #{educationDegree,jdbcType=VARCHAR},
+            </if>
+            <if test="origin != null">
+                ORIGIN = #{origin,jdbcType=VARCHAR},
+            </if>
+            <if test="occupation != null">
+                OCCUPATION = #{occupation,jdbcType=VARCHAR},
+            </if>
+            <if test="mobilephone != null">
+                MOBILEPHONE = #{mobilephone,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                TELEPHONE = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null">
+                HEIGHT = #{height,jdbcType=VARCHAR},
+            </if>
+            <if test="bloodType != null">
+                BLOOD_TYPE = #{bloodType,jdbcType=VARCHAR},
+            </if>
+            <if test="shape != null">
+                SHAPE = #{shape,jdbcType=VARCHAR},
+            </if>
+            <if test="entryUnit != null and entryUnit !=''">
+                ENTRY_UNIT = #{entryUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="entryUnitName != null and entryUnitName !=''">
+                ENTRY_UNIT_NAME = #{entryUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="entry != null and entry !=''">
+                ENTRY = #{entry,jdbcType=VARCHAR},
+            </if>
+            <if test="entryName != null and entryName !=''">
+                ENTRY_NAME = #{entryName,jdbcType=VARCHAR},
+            </if>
+            <if test="optUnitCode != null">
+                OPT_UNIT_CODE = #{optUnitCode,jdbcType=VARCHAR},
+            </if>
+            <if test="optUnitName != null">
+                OPT_UNIT_NAME = #{optUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="optPCode != null">
+                OPT_P_CODE = #{optPCode,jdbcType=VARCHAR},
+            </if>
+            <if test="optPName != null">
+                OPT_P_NAME = #{optPName,jdbcType=VARCHAR},
+            </if>
+            <if test="optTime != null">
+                OPT_TIME = #{optTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="suspectClass != null">
+                SUSPECT_CLASS = #{suspectClass,jdbcType=INTEGER},
+            </if>
+            <if test="sourceType != null">
+                SOURCE_TYPE = #{sourceType,jdbcType=INTEGER},
+            </if>
+            <if test="levelSet != null">
+                LEVEL_SET = #{levelSet,jdbcType=INTEGER},
+            </if>
+            <if test="isArchive != null">
+                IS_ARCHIVE = #{isArchive,jdbcType=INTEGER},
+            </if>
+            <if test="archiveDesc != null">
+                ARCHIVE_DESC = #{archiveDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="isAbandon != null">
+                IS_ABANDON = #{isAbandon,jdbcType=INTEGER},
+            </if>
+            <if test="abandonDesc != null">
+                ABANDON_DESC = #{abandonDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.suspect.EtSuspect">
+		update et_suspect
+		set SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+		NAME = #{name,jdbcType=VARCHAR},
+		BYNAME = #{byname,jdbcType=VARCHAR},
+		IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+		HEAD_PHOTO_URL = #{headPhotoUrl,jdbcType=VARCHAR},
+		BIRTHDATE = #{birthdate,jdbcType=TIMESTAMP},
+		GENDER = #{gender,jdbcType=INTEGER},
+		NATION = #{nation,jdbcType=VARCHAR},
+		EDUCATION_DEGREE = #{educationDegree,jdbcType=VARCHAR},
+		ORIGIN = #{origin,jdbcType=VARCHAR},
+		OCCUPATION = #{occupation,jdbcType=VARCHAR},
+		MOBILEPHONE = #{mobilephone,jdbcType=VARCHAR},
+		TELEPHONE = #{telephone,jdbcType=VARCHAR},
+		HEIGHT = #{height,jdbcType=VARCHAR},
+		BLOOD_TYPE = #{bloodType,jdbcType=VARCHAR},
+		SHAPE = #{shape,jdbcType=VARCHAR},
+		ENTRY_UNIT = #{entryUnit,jdbcType=VARCHAR},
+		SUSPECT_CLASS = #{suspectClass,jdbcType=INTEGER},
+		SOURCE_TYPE = #{sourceType,jdbcType=INTEGER},
+		IS_ARCHIVE = #{isArchive,jdbcType=INTEGER},
+		ARCHIVE_DESC = #{archiveDesc,jdbcType=VARCHAR},
+		IS_ABANDON = #{isAbandon,jdbcType=INTEGER},
+		ABANDON_DESC = #{abandonDesc,jdbcType=VARCHAR},
+		CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+		MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+    <select id="findAll" parameterType="com.entity.suspect.EtSuspect"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from et_suspect 
+        where 1=1
+        <if test="suspectId != null and suspectId !=''">
+            and SUSPECT_ID='${suspectId}'
+        </if>
+        <if test="name != null and name !=''">
+            and NAME like '%${name}%'
+        </if>
+        <!-- <if test="by != null"> and BYNAME = #{byname}, </if> -->
+        <if test="idcardNum != null and idcardNum !=''">
+            and IDCARD_NUM = '${idcardNum}'
+        </if>
+        <!-- <if test="suspectId != null"> and HEAD_PHOTO_URL = #{headPhotoUrl},
+            </if> <if test="suspectId != null"> and BIRTHDATE = #{birthdate}, </if> <if
+            test="suspectId != null"> and GENDER = #{gender}, </if> <if test="suspectId
+            != null"> and NATION = #{nation}, </if> <if test="suspectId != null"> and
+            EDUCATION_DEGREE = #{educationDegree}, </if> <if test="suspectId != null">
+            and ORIGIN = #{origin}, </if> <if test="suspectId != null"> and OCCUPATION
+            = #{occupation}, </if> <if test="suspectId != null"> and MOBILEPHONE = #{mobilephone},
+            </if> <if test="suspectId != null"> and TELEPHONE = #{telephone}, </if> <if
+            test="suspectId != null"> and HEIGHT = #{height}, </if> <if test="suspectId
+            != null"> and BLOOD_TYPE = #{bloodType}, </if> <if test="suspectId != null">
+            and SHAPE = #{shape}, </if> -->
+        <if test="entry != null ">
+            and entry = '${entry}'
+        </if>
+        <if test="suspectClass != null and suspectClass !=''">
+            and SUSPECT_CLASS = '${suspectClass}'
+        </if>
+        <if test="suspectLevel != null and suspectLevel !=''">
+            and SUSPECT_LEVEL = '${suspectLevel}'
+        </if>
+        <!-- <if test="suspectId != null"> and SOURCE_TYPE = #{sourceType}, </if> -->
+        <if test="isArchive != null">
+            and IS_ARCHIVE =${isArchive}
+        </if>
+        <!--<if test="suspectId != null"> and ARCHIVE_DESC = #{archiveDesc}, </if> -->
+        <if test="isAbandon != null ">
+            and IS_ABANDON = ${isAbandon}
+        </if>
+        <!-- <if test="suspectId != null"> and ABANDON_DESC = #{abandonDesc}, </if> -->
+        <!--登记时间 -->
+        <if test="startTime != null and startTime != '' ">
+            AND CREAT_TIME &gt;= #{startTime}
+        </if>
+        <!--登记时间 -->
+        <if test="endTime != null and endTime != '' ">
+            AND CREAT_TIME &lt;= #{endTime}
+        </if>
+        order by CREAT_TIME DESC
+        <!-- <if test="suspectId != null"> and MODIFY_TIME = #{modifyTime} </if> -->
+    </select>
+
+    <select id="searchIdCard" parameterType="com.entity.suspect.EtSuspect"
+            resultMap="BaseResultMap">
+        select count(*)
+
+        from (
+        select
+        <include refid="Base_Column_List"/>
+        from et_suspect
+        where 1=1
+        <if test="idcardNum != null">
+            and IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR}
+        </if>
+        )
+        order by CREAT_TIME DESC
+    </select>
+    <select id="selectByNoAll" 
+            resultMap="BaseResultMap">
+        select 
+         <include refid="Base_Column_List"/>
+        from et_suspect
+    </select>
+</mapper>

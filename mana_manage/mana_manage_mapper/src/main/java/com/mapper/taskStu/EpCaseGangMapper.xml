@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskStu.EpCaseGangMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.taskStu.EpCaseGang" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERPETRATOR_CLASS" property="perpetratorClass" jdbcType="INTEGER" />
+    <result column="PERPETRATOR" property="perpetrator" jdbcType="VARCHAR" />
+    <result column="CASE_TITLE" property="caseTitle" jdbcType="VARCHAR" />
+    <result column="CASE_NO" property="caseNo" jdbcType="VARCHAR" />
+    <result column="CASE_DESC" property="caseDesc" jdbcType="VARCHAR" />
+    <result column="CASE_SUSPECT" property="caseSuspect" jdbcType="VARCHAR" />
+    <result column="UNTREATED_PERSONNEL" property="untreatedPersonnel" jdbcType="VARCHAR" />
+    <result column="WITNESS" property="witness" jdbcType="VARCHAR" />
+    <result column="EXISTING_PROBLEMS" property="existingProblems" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="INPUT_UNIT_CODE" property="inputUnitCode" jdbcType="VARCHAR" />
+    <result column="INPUT_UNIT_NAME" property="inputUnitName" jdbcType="VARCHAR" />
+    <result column="INPUTER_CODE" property="inputerCode" jdbcType="VARCHAR" />
+    <result column="INPUTER_NAME" property="inputerName" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PERPETRATOR_CLASS, PERPETRATOR, CASE_TITLE,CASE_NO,
+    CASE_DESC,
+    CASE_SUSPECT,
+    UNTREATED_PERSONNEL,
+    WITNESS, EXISTING_PROBLEMS, REMARK, INPUT_UNIT_CODE, INPUT_UNIT_NAME,
+    INPUTER_CODE, INPUTER_NAME, CREAT_TIME, MODIFY_TIME
+  </sql>
+
+  <insert id="insert" parameterType="com.entity.taskStu.EpCaseGang" >
+    insert into ep_case_gang (ID, PERPETRATOR_CLASS,
+    CASE_TITLE, CASE_NO, CASE_DESC, CASE_SUSPECT,
+    UNTREATED_PERSONNEL, WITNESS, EXISTING_PROBLEMS, REMARK,
+    INPUT_UNIT_CODE, INPUT_UNIT_NAME, INPUTER_CODE, INPUTER_NAME,
+    CREAT_TIME,MODIFY_TIME)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},
+      #{item.perpetratorClass},
+      #{item.caseTitle},
+      #{item.caseNo},
+      #{item.caseDesc},
+      #{item.caseSuspect},
+      #{item.untreatedPersonnel},
+      #{item.witness},
+      #{item.existingProblems},
+      #{item.remark},
+      #{item.inputUnitCode},
+      #{item.inputUnitName},
+      #{item.inputerCode},
+      #{item.inputerName},
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+  <select id="findImportCase" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+      ID, PERPETRATOR_CLASS, PERPETRATOR, CASE_TITLE,CASE_NO,
+      <![CDATA[
+      replace(
+        replace(
+          replace(
+            replace(CASE_DESC,
+            '${name}', '<font color="red">${name}</font>'),
+          '${byname}', '<font color="red">${byname}</font>'),
+        '${idcardNum}', '<font color="red">${idcardNum}</font>'),
+      '${mobilephone}', '<font color="red">${mobilephone}</font>') CASE_DESC,
+      replace(
+        replace(
+          replace(
+            replace(CASE_SUSPECT,
+            '${name}', '<font color="red">${name}</font>'),
+          '${byname}', '<font color="red">${byname}</font>'),
+        '${idcardNum}', '<font color="red">${idcardNum}</font>'),
+      '${mobilephone}', '<font color="red">${mobilephone}</font>') CASE_SUSPECT,
+      replace(
+        replace(
+          replace(
+            replace(UNTREATED_PERSONNEL,
+            '${name}', '<font color="red">${name}</font>'),
+          '${byname}', '<font color="red">${byname}</font>'),
+        '${idcardNum}', '<font color="red">${idcardNum}</font>'),
+      '${mobilephone}', '<font color="red">${mobilephone}</font>') UNTREATED_PERSONNEL,
+      ]]>
+      WITNESS, EXISTING_PROBLEMS, REMARK, INPUT_UNIT_CODE, INPUT_UNIT_NAME,
+      INPUTER_CODE, INPUTER_NAME, CREAT_TIME, MODIFY_TIME
+    from ep_case_gang
+    where 1=1 AND (
+    <if test="name != null and name != ''" >
+      CASE_DESC LIKE '%${name}%' OR CASE_SUSPECT LIKE '%${name}%' OR UNTREATED_PERSONNEL LIKE '%${name}%'
+    </if>
+    <if test="byname != null and byname != ''" >
+      OR CASE_DESC LIKE '%${byname}%' OR CASE_SUSPECT LIKE '%${byname}%' OR UNTREATED_PERSONNEL LIKE '%${byname}%'
+    </if>
+    <if test="idcardNum != null and idcardNum != ''" >
+      OR CASE_DESC LIKE '%${idcardNum}%' OR CASE_SUSPECT LIKE '%${idcardNum}%' OR UNTREATED_PERSONNEL LIKE '%${idcardNum}%'
+    </if>
+    <if test="mobilephone != null and mobilephone !=''" >
+      OR CASE_DESC LIKE '%${mobilephone}%' OR CASE_SUSPECT LIKE '%${mobilephone}%' OR UNTREATED_PERSONNEL LIKE '%${mobilephone}%'
+    </if>
+    )
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ep_case_gang
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_case_gang
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.entity.taskStu.EpCaseGang" >
+    insert into ep_case_gang
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="perpetratorClass != null" >
+        PERPETRATOR_CLASS,
+      </if>
+      <if test="perpetrator != null" >
+        PERPETRATOR,
+      </if>
+      <if test="caseTitle != null" >
+        CASE_TITLE,
+      </if>
+      <if test="caseNo != null" >
+        CASE_NO,
+      </if>
+      <if test="caseDesc != null" >
+        CASE_DESC,
+      </if>
+      <if test="caseSuspect != null" >
+        CASE_SUSPECT,
+      </if>
+      <if test="untreatedPersonnel != null" >
+        UNTREATED_PERSONNEL,
+      </if>
+      <if test="witness != null" >
+        WITNESS,
+      </if>
+      <if test="existingProblems != null" >
+        EXISTING_PROBLEMS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="inputUnitCode != null" >
+        INPUT_UNIT_CODE,
+      </if>
+      <if test="inputUnitName != null" >
+        INPUT_UNIT_NAME,
+      </if>
+      <if test="inputerCode != null" >
+        INPUTER_CODE,
+      </if>
+      <if test="inputerName != null" >
+        INPUTER_NAME,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="perpetratorClass != null" >
+        #{perpetratorClass,jdbcType=INTEGER},
+      </if>
+      <if test="perpetrator != null" >
+        #{perpetrator,jdbcType=VARCHAR},
+      </if>
+      <if test="caseTitle != null" >
+        #{caseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null" >
+        #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDesc != null" >
+        #{caseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="caseSuspect != null" >
+        #{caseSuspect,jdbcType=VARCHAR},
+      </if>
+      <if test="untreatedPersonnel != null" >
+        #{untreatedPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="witness != null" >
+        #{witness,jdbcType=VARCHAR},
+      </if>
+      <if test="existingProblems != null" >
+        #{existingProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUnitCode != null" >
+        #{inputUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUnitName != null" >
+        #{inputUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputerCode != null" >
+        #{inputerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inputerName != null" >
+        #{inputerName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.taskStu.EpCaseGang" >
+    update ep_case_gang
+    <set >
+      <if test="perpetratorClass != null" >
+        PERPETRATOR_CLASS = #{perpetratorClass,jdbcType=INTEGER},
+      </if>
+      <if test="perpetrator != null" >
+        PERPETRATOR = #{perpetrator,jdbcType=VARCHAR},
+      </if>
+      <if test="caseTitle != null" >
+        CASE_TITLE = #{caseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="caseNo != null" >
+        CASE_NO = #{caseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDesc != null" >
+        CASE_DESC = #{caseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="caseSuspect != null" >
+        CASE_SUSPECT = #{caseSuspect,jdbcType=VARCHAR},
+      </if>
+      <if test="untreatedPersonnel != null" >
+        UNTREATED_PERSONNEL = #{untreatedPersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="witness != null" >
+        WITNESS = #{witness,jdbcType=VARCHAR},
+      </if>
+      <if test="existingProblems != null" >
+        EXISTING_PROBLEMS = #{existingProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUnitCode != null" >
+        INPUT_UNIT_CODE = #{inputUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUnitName != null" >
+        INPUT_UNIT_NAME = #{inputUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputerCode != null" >
+        INPUTER_CODE = #{inputerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inputerName != null" >
+        INPUTER_NAME = #{inputerName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.taskStu.EpCaseGang" >
+    update ep_case_gang
+    set PERPETRATOR_CLASS = #{perpetratorClass,jdbcType=INTEGER},
+      PERPETRATOR = #{perpetrator,jdbcType=VARCHAR},
+      CASE_TITLE = #{caseTitle,jdbcType=VARCHAR},
+      CASE_NO = #{caseNo,jdbcType=VARCHAR},
+      CASE_DESC = #{caseDesc,jdbcType=VARCHAR},
+      CASE_SUSPECT = #{caseSuspect,jdbcType=VARCHAR},
+      UNTREATED_PERSONNEL = #{untreatedPersonnel,jdbcType=VARCHAR},
+      WITNESS = #{witness,jdbcType=VARCHAR},
+      EXISTING_PROBLEMS = #{existingProblems,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      INPUT_UNIT_CODE = #{inputUnitCode,jdbcType=VARCHAR},
+      INPUT_UNIT_NAME = #{inputUnitName,jdbcType=VARCHAR},
+      INPUTER_CODE = #{inputerCode,jdbcType=VARCHAR},
+      INPUTER_NAME = #{inputerName,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

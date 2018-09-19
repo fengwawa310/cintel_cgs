@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.utils.EtSuspectIntegralMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.integral.EtSuspectIntegral" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUSPECT_ID" property="suspectId" jdbcType="VARCHAR" />
+    <result column="IDCARD_NUM" property="idcardNum" jdbcType="VARCHAR" />
+    <result column="SUSPECT_NAME" property="suspectName" jdbcType="VARCHAR" />
+    <result column="SUSPECT_CLASS" property="suspectClass" jdbcType="INTEGER" />
+    <result column="LEVEL_SET" property="levelSet" jdbcType="INTEGER" />
+    <result column="INTEGRAL" property="integral" jdbcType="INTEGER" />
+    <result column="warning_sign" property="warningSign" jdbcType="INTEGER" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="dece_signs" jdbcType="VARCHAR" property="deceSigns" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUSPECT_ID, IDCARD_NUM, SUSPECT_NAME, INTEGRAL, CREAT_TIME, MODIFY_TIME
+  </sql>
+  <insert id="mergeSuspectIntegral" parameterType="java.util.List" >  	
+    	INSERT INTO et_suspect_integral (
+			<include refid="Base_Column_List" />
+		    )
+		VALUES
+	    	<foreach collection="list" item="item" index="index" separator="," >  
+	        	(
+		        	#{item.id},
+		        	#{item.suspectId},
+		        	#{item.idcardNum},
+		        	#{item.suspectName},
+		        	#{item.integral},
+		        	now(),
+		        	now()
+	        	)  
+	    	</foreach> 
+	   	ON DUPLICATE KEY UPDATE
+			INTEGRAL = INTEGRAL + values(INTEGRAL),
+			MODIFY_TIME = values(MODIFY_TIME),
+			SUSPECT_NAME = values(SUSPECT_NAME)
+  </insert>
+  <select id="findSuspectIntegral" resultMap="BaseResultMap" parameterType="com.entity.integral.EtSuspectIntegral" >
+    select * from 
+	(
+	SELECT esi.ID, esi.SUSPECT_ID, es.IDCARD_NUM, es.NAME SUSPECT_NAME, 
+    es.SUSPECT_CLASS, es.LEVEL_SET,
+    <include refid="com.mapper.communal.SysLogMapper.DECE_SIGNS_COLUMN" />
+ 	(SELECT dic_value from dic_common where DIC_CODE='3000') warning_sign, 
+    esi.INTEGRAL, esi.CREAT_TIME, esi.MODIFY_TIME 
+	from et_suspect_integral esi 
+	LEFT JOIN et_suspect es on esi.SUSPECT_ID = es.SUSPECT_ID 
+	LEFT JOIN sys_user su on su.id = es.ENTRY
+	) a
+	where 1=1 
+    <if test="idcardNum != null and idcardNum !=''" >
+      and IDCARD_NUM LIKE '${idcardNum}%'
+    </if>
+    <if test="suspectName != null and suspectName !=''" >
+      and SUSPECT_NAME LIKE '${suspectName}%'
+    </if>
+    <if test="suspectClass != null and suspectClass !=''" >
+      and SUSPECT_CLASS = '${suspectClass}'
+    </if>
+	<!--分权分域标识-->
+    <if test="deceSigns != null and deceSigns !=''" >
+			<!--modify on 180206 增加用户类型判断，以0,0,0,开头为派出所用户-->
+			<choose>
+    			<when test="deceSigns.indexOf('0,0,0,') == 0">
+					AND dece_signs LIKE '${deceSigns}%'
+    			</when>
+    			<otherwise>
+					AND (dece_signs LIKE '${deceSigns}%' or dece_signs LIKE '0,0,0,%')
+    			</otherwise>
+  			</choose>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_suspect_integral
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_suspect_integral
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.integral.EtSuspectIntegral" >
+    insert into et_suspect_integral (ID, SUSPECT_ID, IDCARD_NUM, 
+      SUSPECT_NAME, INTEGRAL, 
+      CREAT_TIME, MODIFY_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{suspectId,jdbcType=VARCHAR}, #{idcardNum,jdbcType=VARCHAR}, 
+      #{suspectName,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.integral.EtSuspectIntegral" >
+    insert into et_suspect_integral
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suspectId != null" >
+        SUSPECT_ID,
+      </if>
+      <if test="idcardNum != null" >
+        IDCARD_NUM,
+      </if>
+      <if test="bCtrlIdcardNum != null" >
+        SUSPECT_NAME,
+      </if>
+      <if test="integral != null" >
+        INTEGRAL,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectId != null" >
+        #{suspectId,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNum != null" >
+        #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bCtrlIdcardNum != null" >
+        #{bCtrlIdcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectClass != null" >
+        #{suspectClass,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.integral.EtSuspectIntegral" >
+    update et_suspect_integral
+    <set >
+      <if test="suspectId != null" >
+        SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNum != null" >
+        IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bCtrlIdcardNum != null" >
+        SUSPECT_NAME = #{suspectName,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null" >
+        INTEGRAL = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.integral.EtSuspectIntegral" >
+    update et_suspect_integral
+    set SUSPECT_ID = #{suspectId,jdbcType=VARCHAR},
+      IDCARD_NUM = #{idcardNum,jdbcType=VARCHAR},
+      SUSPECT_NAME = #{suspectName,jdbcType=VARCHAR},
+      INTEGRAL = #{integral,jdbcType=INTEGER},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

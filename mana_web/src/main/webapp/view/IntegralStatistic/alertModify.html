@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>修改配置</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+
+    <style>
+        .caseTxt{
+            border-right: none;
+            width:14%;
+        }
+
+        .caseInput{
+            /*margin-left: 10px;*/
+            padding-left: 10px;
+            width:14%;
+            border: none;
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <span class="title">当前位置：</span>
+            <span>积分统计>>单位积分配置>>配置修改</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class=" breadcrumbs" style="width: auto;height: auto;padding: 0px">
+
+    <!--嫌疑人标题栏-->
+    <div class="row breadcrumbs caseContainer">
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>单位名称</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>基本分</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>奖励扣除积分</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>案件积分</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>警情积分</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>人员上报积分</span>
+        </div>
+        <div class="col-md-1 caseTxt leftTxt">
+            <span>情报上报积分</span>
+        </div>
+    </div>
+    <!--嫌疑人编辑栏-->
+    <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="suspect">
+       <form action="" id="unitIntegral_form" name="unitIntegral_form">
+       
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-1 caseInput">
+   		        <input id="id" name="id" type="text" hidden="true" value="" />
+                <span id="unitName"></span>
+            </div>
+            <div class="col-md-1 caseInput">
+                <input id="basePoints" name="basePoints" type="text" value="" />
+            </div>
+            <div class="col-md-1 caseInput">
+                <input id="awardsDeducPoints" name="awardsDeducPoints" type="text" value="" />
+            </div>
+            <div class="col-md-1 caseInput">
+                <span id="casePoints"></span>
+            </div>
+            <div class="col-md-1 caseInput">
+                <span id="alarmPoints"></span>
+            </div>
+            <div class="col-md-1 caseInput">
+                <span id="suspectReportPoints"></span>
+            </div>
+            <div class="col-md-1 caseInput">
+                <span id="inforReportPoints"></span>
+            </div>
+        </div>
+	</form>
+
+    </div>
+
+    <!--提交栏-->
+    <div class="row breadcrumbs titleBadge">
+        <div class="col-md-12 searchBtn" style="border: none; background: none">
+            <button class="btn btn-primary" type="button" style="background: #cee3f7" onclick="save()"> 提交 </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- basic scripts -->
+
+<!-- <![endif]-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/typeahead-bs2.min.js"></script>
+
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- page specific plugin scripts -->
+
+<script src="../assets/js/jquery.dataTables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript"></script>
+
+<!-- inline scripts related to this page 弹框插件-->
+<script src="../assets/js/layer/layer.js"></script>
+
+<script>
+
+	function save(){
+    		var unitIntegral_form=$("#unitIntegral_form");
+            var formStr=Common.validateForm(unitIntegral_form);
+            if(formStr==""){
+                return;
+            }
+            $.ajax({
+                    type: 'POST',
+                    url: projectPath+"integral/updateUnitIntegral",//发送请求
+                    data:{"unitIntegral":formStr},
+                    dataType : "json",
+                    success: function(data) {
+                        if(data.data.flag){
+                            window.parent.layer.closeAll('loading');
+                        	layer.msg(data.data.msg, {icon: 1,time:3000});
+                            layer.alert(data.data.msg,{
+                                icon: 1,
+                                skin: 'layer-ext-moon',
+                                end: function () {
+                                    var index=parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(index);
+                                    parent.dynamictable.draw();
+                                }
+                            });
+                        }else{
+                            window.parent.layer.closeAll('loading');
+                        	layer.msg(data.data.msg, {icon: 2,time:3000,anim: 6});
+                            layer.alert(data.data.msg,{
+                                icon: 2,
+                                skin: 'layer-ext-moon'
+                            });
+                        }
+                    }
+                });
+    	}
+
+    $(window).ready(function () {
+        var thisURL = document.URL;
+        var getval =thisURL.split('?')[1];
+        var mapStr = getval.split("&");
+        var contentArr = [];
+        //使用数组接收url中的各个参数
+        for(var i=0;i<mapStr.length;i++){
+            //console.log(mapStr[i].split("=")[1]);
+            contentArr.push(mapStr[i].split("=")[1]);
+        }
+        //部门名称
+        $('#unitName').text(decodeURI(contentArr[0]));//中文需要解码
+        //基本分
+        $('#basePoints').val(contentArr[1]);
+        //警情积分
+        $('#alarmPoints').text(contentArr[3]);
+        //案件积分
+        $('#casePoints').text(contentArr[2]);
+        //人员积分
+        $('#suspectReportPoints').text(contentArr[4]);
+        //情报积分
+        $('#inforReportPoints').text(contentArr[5]);
+		//
+        $('#id').val(contentArr[6]);
+        //嘉奖扣除积分
+        $('#awardsDeducPoints').val(0);
+        //$('#awardsDeducPoints').val(contentArr[7]);
+
+    });
+</script>
+
+</body>
+</html>

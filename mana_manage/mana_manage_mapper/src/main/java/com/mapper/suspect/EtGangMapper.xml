@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.EtGangMapper">
+	<resultMap id="BaseResultMap" type="com.entity.suspect.EtGang">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="GANG_NAME" property="gangName" jdbcType="VARCHAR" />
+		<result column="GANG_TAG" property="gangTag" jdbcType="VARCHAR" />
+		<result column="GANG_TYPE" property="gangType" jdbcType="INTEGER" />
+		<result column="GANG_ADDR_CODE" property="gangAddrCode"
+			jdbcType="VARCHAR" />
+		<result column="GANG_ADDR" property="gangAddr" jdbcType="VARCHAR" />
+		<result column="GANG_LEAD" property="gangLead" jdbcType="VARCHAR" />
+		<result column="GANG_DEMO" property="gangDemo" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, GANG_NAME, GANG_TAG,GANG_TYPE, GANG_ADDR_CODE, GANG_ADDR, GANG_LEAD, GANG_DEMO,
+		CREATE_TIME,
+		MODIFY_TIME,USER_ID
+	</sql>
+
+	<select id="selectAll" resultMap="BaseResultMap"
+			parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from et_gang
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from et_gang
+		where GANG_LEAD = #{gangLead,jdbcType=VARCHAR}
+	</select>
+	<select id="selectGangBySuspectNo" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select 
+		<include refid="Base_Column_List" />
+		from et_gang where 1=1 
+		<if test="suspectNo!=null and suspectNo!='' and gangName!=null and gangName!=''">
+			and id in (
+				select DISTINCT(sg.GANG_ID) id from rl_suspect_gang sg where sg.SUSPECT_ID=#{suspectNo}
+					union 
+				select id from et_gang g where g.GANG_LEAD=#{suspectNo}
+			)
+			or  GANG_NAME like concat("%",#{gangName},"%")
+		</if>
+		<if test="suspectNo!=null and suspectNo!=''  and (gangName==null or gangName=='')">
+			and  id in (
+				select DISTINCT(sg.GANG_ID) id from rl_suspect_gang sg where sg.SUSPECT_ID=#{suspectNo}
+					union 
+				select id from et_gang g where g.GANG_LEAD=#{suspectNo}
+			)
+		</if>
+		<if test="(suspectNo==null or suspectNo=='') and gangName!=null and gangName!=''">
+			and GANG_NAME like concat("%",#{gangName},"%")
+		</if>
+		<if test="userId!=null and userId!=''">
+			and USER_ID =#{userId}
+		</if>
+	</select>
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from et_gang
+		where USER_ID = #{userId,jdbcType=VARCHAR}
+	</select>
+	<select id="getGangNum" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM et_gang;
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from et_gang
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.entity.suspect.EtGang">
+		insert into et_gang (ID, GANG_NAME, GANG_TAG,GANG_TYPE,
+		GANG_ADDR_CODE, GANG_ADDR, GANG_LEAD,
+		GANG_DEMO, CREATE_TIME, MODIFY_TIME,USER_ID
+		)
+		values (#{id,jdbcType=VARCHAR}, #{gangName,jdbcType=VARCHAR},
+		#{gangTag,jdbcType=VARCHAR},#{gangType,jdbcType=INTEGER},
+		#{gangAddrCode,jdbcType=VARCHAR}, #{gangAddr,jdbcType=VARCHAR}, #{gangLead,jdbcType=VARCHAR},
+		#{gangDemo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{modifyTime,jdbcType=TIMESTAMP},
+		#{userId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertMap" parameterType="java.util.Map">
+		insert into et_gang (ID, GANG_NAME, GANG_TAG,GANG_TYPE,
+		GANG_ADDR_CODE, GANG_ADDR, GANG_LEAD,
+		GANG_DEMO, CREATE_TIME, MODIFY_TIME,USER_ID
+		)
+		values (#{id}, #{gangName}, #{gangTag},#{gangType},
+		#{gangAddrCode}, #{gangAddr}, #{gangLead},
+		#{gangDemo}, #{createTime}, #{modifyTime}, #{userId}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="java.util.Map">
+		insert into et_gang
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="gangName != null">
+				GANG_NAME,
+			</if>
+			<if test="gangTag != null">
+				GANG_TAG,
+			</if>
+			<if test="gangType != null">
+				GANG_TYPE,
+			</if>
+			<if test="gangAddrCode != null">
+				GANG_ADDR_CODE,
+			</if>
+			<if test="gangAddr != null">
+				GANG_ADDR,
+			</if>
+			<if test="gangLead != null">
+				GANG_LEAD,
+			</if>
+			<if test="gangDemo != null">
+				GANG_DEMO,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+				CREATE_TIME,
+				MODIFY_TIME,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="gangName != null">
+				#{gangName,jdbcType=VARCHAR},
+			</if>
+			<if test="gangTag != null">
+				#{gangTag,jdbcType=VARCHAR},
+			</if>
+			<if test="gangType != null">
+				#{gangType,jdbcType=VARCHAR},
+			</if>
+			<if test="gangAddrCode != null">
+				#{gangAddrCode,jdbcType=VARCHAR},
+			</if>
+			<if test="gangAddr != null">
+				#{gangAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="gangLead != null">
+				#{gangLead,jdbcType=VARCHAR},
+			</if>
+			<if test="gangDemo != null">
+				#{gangDemo,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			now(),
+			now()
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.EtGang">
+		update et_gang
+		<set>
+			<if test="gangName != null">
+				GANG_NAME = #{gangName,jdbcType=VARCHAR},
+			</if>
+			<if test="gangTag != null ">
+				GANG_TAG = #{gangTag,jdbcType=VARCHAR},
+			</if>
+			<if test="gangType != null and gangType != ''">
+				GANG_TYPE = #{gangType,jdbcType=INTEGER},
+			</if>
+			<if test="gangAddrCode != null">
+				GANG_ADDR_CODE = #{gangAddrCode,jdbcType=VARCHAR},
+			</if>
+			<if test="gangAddr != null">
+				GANG_ADDR = #{gangAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="gangLead != null">
+				GANG_LEAD = #{gangLead,jdbcType=VARCHAR},
+			</if>
+			<if test="gangDemo != null">
+				GANG_DEMO = #{gangDemo,jdbcType=VARCHAR},
+			</if>
+				MODIFY_TIME = now()
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.entity.suspect.EtGang">
+		update et_gang
+		set GANG_NAME = #{gangName,jdbcType=VARCHAR},
+		GANG_TAG = #{gangTag,jdbcType=VARCHAR},
+		GANG_TYPE = #{gangType,jdbcType=INTEGER},
+		GANG_ADDR_CODE = #{gangAddrCode,jdbcType=VARCHAR},
+		GANG_ADDR = #{gangAddr,jdbcType=VARCHAR},
+		GANG_LEAD = #{gangLead,jdbcType=VARCHAR},
+		GANG_DEMO = #{gangDemo,jdbcType=VARCHAR},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

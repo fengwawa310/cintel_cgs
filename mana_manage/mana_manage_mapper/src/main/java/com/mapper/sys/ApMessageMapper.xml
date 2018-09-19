@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.sys.ApMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.proposal.ApMessage" >
+    <id column="MSG_NO" property="msgNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.proposal.ApMessage" extends="BaseResultMap" >
+    <result column="MSG_TEXT" property="msgText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MSG_NO
+  </sql>
+  <sql id="Blob_Column_List" >
+    MSG_TEXT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ap_message
+    where MSG_NO = #{msgNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ap_message
+    where MSG_NO = #{msgNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.proposal.ApMessage" >
+    insert into ap_message (MSG_NO, MSG_TEXT)
+    values (#{msgNo,jdbcType=VARCHAR}, #{msgText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.proposal.ApMessage" >
+    insert into ap_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgNo != null" >
+        MSG_NO,
+      </if>
+      <if test="msgText != null" >
+        MSG_TEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgNo != null" >
+        #{msgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="msgText != null" >
+        #{msgText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.proposal.ApMessage" >
+    update ap_message
+    <set >
+      <if test="msgText != null" >
+        MSG_TEXT = #{msgText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where MSG_NO = #{msgNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.proposal.ApMessage" >
+    update ap_message
+    set MSG_TEXT = #{msgText,jdbcType=LONGVARCHAR}
+    where MSG_NO = #{msgNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

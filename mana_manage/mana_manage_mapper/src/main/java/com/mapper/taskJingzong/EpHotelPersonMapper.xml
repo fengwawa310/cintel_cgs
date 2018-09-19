@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.taskJingzong.EpHotelPersonMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.task.EpHotelPerson" >
+    <id column="CCODE" property="ccode" jdbcType="VARCHAR" />
+    <result column="GCODE" property="gcode" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NAMEPY" property="namepy" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="NATION" property="nation" jdbcType="VARCHAR" />
+    <result column="BDATE" property="bdate" jdbcType="VARCHAR" />
+    <result column="IDTYPE" property="idtype" jdbcType="VARCHAR" />
+    <result column="IDCODE" property="idcode" jdbcType="VARCHAR" />
+    <result column="XZQH" property="xzqh" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="NOHOTEL" property="nohotel" jdbcType="VARCHAR" />
+    <result column="NOROOM" property="noroom" jdbcType="VARCHAR" />
+    <result column="LTIME" property="ltime" jdbcType="TIMESTAMP" />
+    <result column="LWAITER" property="lwaiter" jdbcType="VARCHAR" />
+    <result column="ETIME" property="etime" jdbcType="VARCHAR" />
+    <result column="EWAITER" property="ewaiter" jdbcType="VARCHAR" />
+    <result column="CARDTYPE" property="cardtype" jdbcType="VARCHAR" />
+    <result column="CARDNO" property="cardno" jdbcType="VARCHAR" />
+    <result column="STIME" property="stime" jdbcType="VARCHAR" />
+    <result column="RTIME" property="rtime" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="VARCHAR" />
+    <result column="INPUTTIME" property="inputtime" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="RKSJ" property="rksj" jdbcType="TIMESTAMP" />
+    <result column="SSPCS" property="sspcs" jdbcType="VARCHAR" />
+    <result column="REVSTATUS" property="revstatus" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PIC" property="pic" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CCODE, GCODE, NAME, NAMEPY, SEX, NATION, BDATE, IDTYPE, IDCODE, XZQH, ADDRESS, NOHOTEL, 
+    NOROOM, LTIME, LWAITER, ETIME, EWAITER, CARDTYPE, CARDNO, STIME, RTIME, CREATETIME, 
+    NUM, INPUTTIME, FLAG, RKSJ, SSPCS, REVSTATUS, ID, PIC
+  </sql>
+  <select id="findHotelPersonList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ep_hotel_person
+    <where>
+      <if test="name != null" >
+        NAME=#{name}
+      </if>
+      <if test="idcode != null" >
+        OR IDCODE=#{idcode}
+      </if>
+    </where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ep_hotel_person
+    where CCODE = #{ccode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ep_hotel_person
+    where CCODE = #{ccode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.entity.task.EpHotelPerson" >
+    insert into ep_hotel_person (CCODE, GCODE, NAME, 
+      NAMEPY, SEX, NATION, 
+      BDATE, IDTYPE, IDCODE, 
+      XZQH, ADDRESS, NOHOTEL, 
+      NOROOM, LTIME, LWAITER, 
+      ETIME, EWAITER, CARDTYPE, 
+      CARDNO, STIME, RTIME, 
+      CREATETIME, NUM, INPUTTIME, 
+      FLAG, RKSJ, SSPCS, 
+      REVSTATUS, ID, PIC)
+    values (#{ccode,jdbcType=VARCHAR}, #{gcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{namepy,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{bdate,jdbcType=VARCHAR}, #{idtype,jdbcType=VARCHAR}, #{idcode,jdbcType=VARCHAR}, 
+      #{xzqh,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{nohotel,jdbcType=VARCHAR}, 
+      #{noroom,jdbcType=VARCHAR}, #{ltime,jdbcType=TIMESTAMP}, #{lwaiter,jdbcType=VARCHAR}, 
+      #{etime,jdbcType=VARCHAR}, #{ewaiter,jdbcType=VARCHAR}, #{cardtype,jdbcType=VARCHAR}, 
+      #{cardno,jdbcType=VARCHAR}, #{stime,jdbcType=VARCHAR}, #{rtime,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{num,jdbcType=VARCHAR}, #{inputtime,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=VARCHAR}, #{rksj,jdbcType=TIMESTAMP}, #{sspcs,jdbcType=VARCHAR}, 
+      #{revstatus,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{pic,jdbcType=REAL})
+  </insert>
+  <insert id="insertEpHotelPersonList" parameterType="java.util.List" >
+    insert into ep_hotel_person (
+    	CCODE, GCODE, NAME, NAMEPY, SEX, NATION, BDATE, IDTYPE, 
+		IDCODE, XZQH, ADDRESS, NOHOTEL, NOROOM, LTIME, LWAITER, 
+		ETIME, EWAITER, CARDTYPE, CARDNO, STIME, RTIME, CREATETIME, 
+		NUM, INPUTTIME, FLAG, RKSJ, SSPCS, REVSTATUS, ID
+    )
+    values 
+    <foreach collection="ehplist" item="ehp" separator=",">  
+	(
+	   #{ehp.ccode,jdbcType=VARCHAR}, #{ehp.gcode,jdbcType=VARCHAR}, #{ehp.name,jdbcType=VARCHAR}, 
+      #{ehp.namepy,jdbcType=VARCHAR}, #{ehp.sex,jdbcType=VARCHAR}, #{ehp.nation,jdbcType=VARCHAR}, 
+      #{ehp.bdate,jdbcType=VARCHAR}, #{ehp.idtype,jdbcType=VARCHAR}, #{ehp.idcode,jdbcType=VARCHAR}, 
+      #{ehp.xzqh,jdbcType=VARCHAR}, #{ehp.address,jdbcType=VARCHAR}, #{ehp.nohotel,jdbcType=VARCHAR}, 
+      #{ehp.noroom,jdbcType=VARCHAR}, #{ehp.ltime,jdbcType=TIMESTAMP}, #{ehp.lwaiter,jdbcType=VARCHAR}, 
+      #{ehp.etime,jdbcType=VARCHAR}, #{ehp.ewaiter,jdbcType=VARCHAR}, #{ehp.cardtype,jdbcType=VARCHAR}, 
+      #{ehp.cardno,jdbcType=VARCHAR}, #{ehp.stime,jdbcType=VARCHAR}, #{ehp.rtime,jdbcType=VARCHAR}, 
+      #{ehp.createtime,jdbcType=VARCHAR}, #{ehp.num,jdbcType=VARCHAR}, #{ehp.inputtime,jdbcType=VARCHAR}, 
+      #{ehp.flag,jdbcType=VARCHAR}, #{ehp.rksj,jdbcType=TIMESTAMP}, #{ehp.sspcs,jdbcType=VARCHAR}, 
+      #{ehp.revstatus,jdbcType=VARCHAR}, #{ehp.id,jdbcType=VARCHAR}
+	)
+    </foreach> 
+  </insert>
+  <select id="findLastRksj" resultType="String" parameterType="java.lang.String" >
+  		select max(ehp.RKSJ) from ep_hotel_person ehp
+  </select>
+  <insert id="insertSelective" parameterType="com.entity.task.EpHotelPerson" >
+    insert into ep_hotel_person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ccode != null" >
+        CCODE,
+      </if>
+      <if test="gcode != null" >
+        GCODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="namepy != null" >
+        NAMEPY,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="nation != null" >
+        NATION,
+      </if>
+      <if test="bdate != null" >
+        BDATE,
+      </if>
+      <if test="idtype != null" >
+        IDTYPE,
+      </if>
+      <if test="idcode != null" >
+        IDCODE,
+      </if>
+      <if test="xzqh != null" >
+        XZQH,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="nohotel != null" >
+        NOHOTEL,
+      </if>
+      <if test="noroom != null" >
+        NOROOM,
+      </if>
+      <if test="ltime != null" >
+        LTIME,
+      </if>
+      <if test="lwaiter != null" >
+        LWAITER,
+      </if>
+      <if test="etime != null" >
+        ETIME,
+      </if>
+      <if test="ewaiter != null" >
+        EWAITER,
+      </if>
+      <if test="cardtype != null" >
+        CARDTYPE,
+      </if>
+      <if test="cardno != null" >
+        CARDNO,
+      </if>
+      <if test="stime != null" >
+        STIME,
+      </if>
+      <if test="rtime != null" >
+        RTIME,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="num != null" >
+        NUM,
+      </if>
+      <if test="inputtime != null" >
+        INPUTTIME,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="rksj != null" >
+        RKSJ,
+      </if>
+      <if test="sspcs != null" >
+        SSPCS,
+      </if>
+      <if test="revstatus != null" >
+        REVSTATUS,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pic != null" >
+        PIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ccode != null" >
+        #{ccode,jdbcType=VARCHAR},
+      </if>
+      <if test="gcode != null" >
+        #{gcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="namepy != null" >
+        #{namepy,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="bdate != null" >
+        #{bdate,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idcode != null" >
+        #{idcode,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqh != null" >
+        #{xzqh,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="nohotel != null" >
+        #{nohotel,jdbcType=VARCHAR},
+      </if>
+      <if test="noroom != null" >
+        #{noroom,jdbcType=VARCHAR},
+      </if>
+      <if test="ltime != null" >
+        #{ltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lwaiter != null" >
+        #{lwaiter,jdbcType=VARCHAR},
+      </if>
+      <if test="etime != null" >
+        #{etime,jdbcType=VARCHAR},
+      </if>
+      <if test="ewaiter != null" >
+        #{ewaiter,jdbcType=VARCHAR},
+      </if>
+      <if test="cardtype != null" >
+        #{cardtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=VARCHAR},
+      </if>
+      <if test="rtime != null" >
+        #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtime != null" >
+        #{inputtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="rksj != null" >
+        #{rksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sspcs != null" >
+        #{sspcs,jdbcType=VARCHAR},
+      </if>
+      <if test="revstatus != null" >
+        #{revstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.task.EpHotelPerson" >
+    update ep_hotel_person
+    <set >
+      <if test="gcode != null" >
+        GCODE = #{gcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="namepy != null" >
+        NAMEPY = #{namepy,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        NATION = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="bdate != null" >
+        BDATE = #{bdate,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null" >
+        IDTYPE = #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idcode != null" >
+        IDCODE = #{idcode,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqh != null" >
+        XZQH = #{xzqh,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="nohotel != null" >
+        NOHOTEL = #{nohotel,jdbcType=VARCHAR},
+      </if>
+      <if test="noroom != null" >
+        NOROOM = #{noroom,jdbcType=VARCHAR},
+      </if>
+      <if test="ltime != null" >
+        LTIME = #{ltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lwaiter != null" >
+        LWAITER = #{lwaiter,jdbcType=VARCHAR},
+      </if>
+      <if test="etime != null" >
+        ETIME = #{etime,jdbcType=VARCHAR},
+      </if>
+      <if test="ewaiter != null" >
+        EWAITER = #{ewaiter,jdbcType=VARCHAR},
+      </if>
+      <if test="cardtype != null" >
+        CARDTYPE = #{cardtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        CARDNO = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        STIME = #{stime,jdbcType=VARCHAR},
+      </if>
+      <if test="rtime != null" >
+        RTIME = #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        NUM = #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="inputtime != null" >
+        INPUTTIME = #{inputtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="rksj != null" >
+        RKSJ = #{rksj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sspcs != null" >
+        SSPCS = #{sspcs,jdbcType=VARCHAR},
+      </if>
+      <if test="revstatus != null" >
+        REVSTATUS = #{revstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        ID = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        PIC = #{pic,jdbcType=REAL},
+      </if>
+    </set>
+    where CCODE = #{ccode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.task.EpHotelPerson" >
+    update ep_hotel_person
+    set GCODE = #{gcode,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      NAMEPY = #{namepy,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      NATION = #{nation,jdbcType=VARCHAR},
+      BDATE = #{bdate,jdbcType=VARCHAR},
+      IDTYPE = #{idtype,jdbcType=VARCHAR},
+      IDCODE = #{idcode,jdbcType=VARCHAR},
+      XZQH = #{xzqh,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      NOHOTEL = #{nohotel,jdbcType=VARCHAR},
+      NOROOM = #{noroom,jdbcType=VARCHAR},
+      LTIME = #{ltime,jdbcType=TIMESTAMP},
+      LWAITER = #{lwaiter,jdbcType=VARCHAR},
+      ETIME = #{etime,jdbcType=VARCHAR},
+      EWAITER = #{ewaiter,jdbcType=VARCHAR},
+      CARDTYPE = #{cardtype,jdbcType=VARCHAR},
+      CARDNO = #{cardno,jdbcType=VARCHAR},
+      STIME = #{stime,jdbcType=VARCHAR},
+      RTIME = #{rtime,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=VARCHAR},
+      NUM = #{num,jdbcType=VARCHAR},
+      INPUTTIME = #{inputtime,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      RKSJ = #{rksj,jdbcType=TIMESTAMP},
+      SSPCS = #{sspcs,jdbcType=VARCHAR},
+      REVSTATUS = #{revstatus,jdbcType=VARCHAR},
+      ID = #{id,jdbcType=VARCHAR},
+      PIC = #{pic,jdbcType=REAL}
+    where CCODE = #{ccode,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.suspect.EtVehicleMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.suspect.EtVehicle" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SUSPECT_NO" property="suspectNo" jdbcType="VARCHAR" />
+    <result column="PLATE_NUM" property="plateNum" jdbcType="VARCHAR" />
+    <result column="DRIVER_LICENSE" property="driverLicense" jdbcType="VARCHAR" />
+    <result column="CAR_COLOR" property="carColor" jdbcType="VARCHAR" />
+    <result column="CAR_TYPE" property="carType" jdbcType="VARCHAR" />
+    <result column="DEMO" property="demo" jdbcType="VARCHAR" />
+    <result column="LASTEST_AREA_CODE" property="lastestAreaCode" jdbcType="VARCHAR" />
+    <result column="LASTEST_AREA_NAME" property="lastestAreaName" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!--添加重点人员车辆信息-->
+  <insert id="insert" parameterType="com.entity.suspect.EtVehicle" >
+    insert into et_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="suspectNo != null" >
+        SUSPECT_NO,
+      </if>
+      <if test="plateNum != null" >
+        PLATE_NUM,
+      </if>
+      <if test="driverLicense != null" >
+        DRIVER_LICENSE,
+      </if>
+      <if test="carColor != null" >
+        CAR_COLOR,
+      </if>
+      <if test="carType != null" >
+        CAR_TYPE,
+      </if>
+      <if test="demo != null" >
+        DEMO,
+      </if>
+      <if test="lastestAreaCode != null" >
+        LASTEST_AREA_CODE,
+      </if>
+      <if test="lastestAreaName != null" >
+        LASTEST_AREA_NAME,
+      </if>
+        CREAT_TIME,
+        MODIFY_TIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="suspectNo != null" >
+        #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNum != null" >
+        #{plateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicense != null" >
+        #{driverLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test="demo != null" >
+        #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestAreaCode != null" >
+        #{lastestAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestAreaName != null" >
+        #{lastestAreaName,jdbcType=VARCHAR},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <!--通过重点人员编号查询车辆信息-->
+  <sql id="Base_Column_List" >
+    ID, SUSPECT_NO, PLATE_NUM, DRIVER_LICENSE, CAR_COLOR, CAR_TYPE, DEMO, LASTEST_AREA_CODE, 
+    LASTEST_AREA_NAME, CREAT_TIME, MODIFY_TIME
+  </sql>
+  <select id="selectvehicleList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from et_vehicle
+    where SUSPECT_NO = #{suspectId,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from et_vehicle
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.suspect.EtVehicle" >
+    update et_vehicle
+    <set >
+      <if test="suspectNo != null" >
+        SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNum != null" >
+        PLATE_NUM = #{plateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicense != null" >
+        DRIVER_LICENSE = #{driverLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        CAR_COLOR = #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        CAR_TYPE = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test="demo != null" >
+        DEMO = #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestAreaCode != null" >
+        LASTEST_AREA_CODE = #{lastestAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestAreaName != null" >
+        LASTEST_AREA_NAME = #{lastestAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.suspect.EtVehicle" >
+    update et_vehicle
+    set SUSPECT_NO = #{suspectNo,jdbcType=VARCHAR},
+      PLATE_NUM = #{plateNum,jdbcType=VARCHAR},
+      DRIVER_LICENSE = #{driverLicense,jdbcType=VARCHAR},
+      CAR_COLOR = #{carColor,jdbcType=VARCHAR},
+      CAR_TYPE = #{carType,jdbcType=VARCHAR},
+      DEMO = #{demo,jdbcType=VARCHAR},
+      LASTEST_AREA_CODE = #{lastestAreaCode,jdbcType=VARCHAR},
+      LASTEST_AREA_NAME = #{lastestAreaName,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

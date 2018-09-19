@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案件详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- basic styles -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css" />
+    <script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../css/commonStyle.css" />
+    <link rel="stylesheet" href="../css/case.css" />
+    <script src="../assets/js/datepicker/WdatePicker.js"></script>
+
+    <!-- <![endif]-->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- page specific plugin scripts -->
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div style="width: 100%;height: 100%;margin: 0 auto;padding: 0px;background: white">
+    <!--当前页面位置-->
+    <!--<div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <span class="title">当前位置：</span>
+                <span>案件详情</span>
+            </li>
+        </ul>
+    </div>-->
+    <!--案件基本信息录入-->
+    <div class="breadcrumbs" style="width: auto;height: auto;padding: 0px">
+        <!--案件信息录入-->
+        <div class="row breadcrumbs" style="text-align: center;margin: 0px;border-left: none;border-top: none;border-right: none">
+            <div class="col-md-12">
+                <span class="title">案件信息</span>
+            </div>
+        </div>
+        <!--案件状态、案件名称-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-8 noPadding">
+                <div class="col-md-2 caseTxt">
+                    <span>案件名称</span>
+                </div>
+                <div class="col-md-10 caseInfo">
+                    <span id="caseTitle"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件状态</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="caseState"></span>
+                </div>
+            </div>
+        </div>
+        <!--案件编号、案件来源、案件类别-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件编号</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="caseNo"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件类别</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="caseClass"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>警情编号</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="alarmNo"></span>
+                </div>
+            </div>
+        </div>
+        <!--备注-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>备注</span>
+            </div>
+            <div class="col-md-9 caseInfo lastInput" style="width: 88.88%">
+                <span id="caseRemarks"></span>
+            </div>
+        </div>
+        <!--发案时间、发案时间上限、发案时间下限-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>发案时间上限</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="happenTimeUp"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>发案时间下限</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="happenTimeDown"></span>
+                </div>
+            </div>
+        </div>
+        <!--简要案情-->
+        <div class="row breadcrumbs caseContainer" style="min-height: 80px">
+            <div class="col-md-2 caseTxt" style="width:11.11%;min-height: 80px;line-height: 80px">
+                <span>简要案情</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width:88.88%;min-height: 80px;line-height: 27px">
+                <span id="caseDesc"></span>
+            </div>
+        </div>
+        <!--案发详细地址-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-2 caseTxt" style="width: 11.11%">
+                <span>案发详细地址</span>
+            </div>
+            <div class="col-md-10 caseInfo lastInput" style="width: 88.88%">
+                <span id="detalAddress"></span>
+            </div>
+        </div>
+        <!--案件主办人姓名、区域划分、案件受理时间-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件主办人</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="sponsorName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>区域划分</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="zoneName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+            </div>
+            <div class="col-md-4 noPadding" style="padding: 0px">
+                <div class="col-md-4 caseTxt">
+                    <span>案件受理时间</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="acceptTime"></span>
+                </div>
+            </div>
+        </div>
+        <!--案件受理单位、案件主办单位、案件协办单位-->
+        <div class="row breadcrumbs caseContainer">
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件受理单位</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="acceptUnitName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件主办单位</span>
+                </div>
+                <div class="col-md-8 caseInfo">
+                    <span id="hostUnitName"></span>
+                </div>
+            </div>
+            <div class="col-md-4 noPadding">
+                <div class="col-md-4 caseTxt">
+                    <span>案件协办单位</span>
+                </div>
+                <div class="col-md-8 caseInfo lastInput">
+                    <span id="assistUnitName"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--嫌疑人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left">
+                    <span class="multiTitle">嫌疑人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                </div>
+            </div>
+        </div>
+        <!--嫌疑人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+                <span>手机号码</span>
+            </div>
+            <!--<div class="col-md-2 caseTxt leftTxt" >
+                <span>QQ</span>
+            </div>-->
+            <div class="col-md-5 caseTxt leftTxt" >
+                <span>备注</span>
+            </div>
+        </div>
+        <!--嫌疑人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="suspect">
+
+
+        </div>
+
+        <!--受害人信息栏-->
+        <div class="row breadcrumbs titleBadge">
+            <div class="row" style="padding-left: 12px">
+                <div class="col-md-11" style="text-align: left;">
+                    <span class="multiTitle">受害人信息</span>
+                </div>
+                <!--添加的图标-->
+                <div class="col-md-1" style="text-align: right">
+                </div>
+            </div>
+        </div>
+        <!--受害人标题栏-->
+        <div class="row breadcrumbs caseContainer" style="border-top: 1px solid #D1E1FF">
+            <div class="col-md-1 caseTxt leftTxt">
+                <span>姓名</span>
+            </div>
+            <div class="col-md-3 caseTxt leftTxt">
+                <span>身份证号</span>
+            </div>
+            <div class="col-md-1 caseTxt leftTxt" >
+                <span>性别</span>
+            </div>
+            <div class="col-md-2 caseTxt leftTxt" >
+                <span>手机号码</span>
+            </div>
+            <!-- <div class="col-md-2 caseTxt leftTxt" >
+                 <span>QQ</span>
+             </div>-->
+            <div class="col-md-5 caseTxt leftTxt" >
+                <span>备注</span>
+            </div>
+        </div>
+        <!--受害人编辑栏-->
+        <div class="row breadcrumbs caseContainer" style="border-bottom: none" id="victim">
+
+        </div>
+
+    </div>
+</div>
+<script>
+    $(window).ready(function () {
+        var thisURL = document.URL;
+        var  getval =thisURL.split('?')[1];
+        console.log(getval);
+        findCaseById(getval);
+    });
+    /*查询案件信息*/
+    function findCaseById(getval){
+//        window.parent.layer.load(1, {shade: [0.3, '#393D49']});
+        $.ajax({
+            type: 'POST',
+            url: getRootPath_web()+"/case/findCaseById?"+getval,//发送请求
+            dataType : "json",
+            success: function(data) {
+//                var json = JSON.parse(data.data);
+//                var json = eval('('+data.data+')');
+//                JSON.parse(jsonstr); //可以将json字符串转换成json对象
+//                JSON.stringify(caseObj); //可以将json对象转换成json对符串
+                var json = $.parseJSON(data.data);
+                //案件信息
+                var caseObj = json.data.etCase;
+                for (var prop in caseObj){
+                    var value = caseObj[prop];
+                    $("#"+prop).text((caseObj[prop]==null?"":caseObj[prop]));
+                }
+                //案件状态
+                $("#caseState").text((caseObj.caseState==null?"":dicCommon[18][caseObj.caseState]));
+                //案件类别
+                $("#caseClass").text((caseObj.caseClass==null||caseObj.caseClass==0?"":dicCommon[19][caseObj.caseClass]));
+                //案件来源
+                //$("#caseSource").text((caseObj.caseSource==null?"":dicCommon[22][caseObj.caseSource]));
+                //警情信息
+                $("#alarmNo").text((caseObj.alarmNo==null?"":dicCommon[22][caseObj.alarmNo]));
+
+                var value = $("#happenTimeUp").text();
+                $("#happenTimeUp").text(value.substring(0,value.indexOf(".0")));
+
+                var value = $("#happenTimeDown").text();
+                $("#happenTimeDown").text(value.substring(0,value.indexOf(".0")));
+
+                var value = $("#acceptTime").text();
+                $("#acceptTime").text(value.substring(0,value.indexOf(".0")));
+                //嫌疑人和受害人
+                var apStaffArr=json.data.apStaffs;
+                for (var i=0;i<apStaffArr.length;i++){
+                    if(apStaffArr[i].suspectClass=="1000"||apStaffArr[i].suspectClass==1000)
+                    {//嫌疑人
+                        var suspectStr=[];
+                        suspectStr.push('<div class="row breadcrumbs caseContainer">\n');
+                        suspectStr.push('   <div class="col-md-1 caseInfo">\n');
+                        suspectStr.push('       <span>'+(apStaffArr[i].name==null?"":apStaffArr[i].name)+'</span>\n');
+                        suspectStr.push('   </div>\n');
+                        suspectStr.push('   <div class="col-md-3 caseInfo">\n');
+                        suspectStr.push('       <span>'+(apStaffArr[i].idcardNum==null?"":apStaffArr[i].idcardNum)+'</span>\n');
+                        suspectStr.push('   </div>\n');
+                        suspectStr.push('   <div class="col-md-1 caseInfo">\n');
+                        suspectStr.push('       <span>'+(apStaffArr[i].gender==null||apStaffArr[i].gender==0?"":dicCommon[12][apStaffArr[i].gender])+'</span>\n');
+                        suspectStr.push('   </div>\n');
+                        suspectStr.push('   <div class="col-md-2 caseInfo">\n');
+                        suspectStr.push('       <span>'+(apStaffArr[i].phoneNum==null?"":apStaffArr[i].phoneNum)+'</span>\n');
+                        suspectStr.push('   </div>\n');
+//                        suspectStr.push('   <div class="col-md-2 caseInfo">\n');
+//                        suspectStr.push('       <span>'+apStaffArr[i]+'</span>\n');
+//                        suspectStr.push('   </div>\n');
+                        suspectStr.push('   <div class="col-md-5 caseInfo">\n');
+                        suspectStr.push('       <span>'+(apStaffArr[i].remark==null?"":apStaffArr[i].remark)+'</span>\n');
+                        suspectStr.push('   </div>\n');
+                        suspectStr.push('</div>\n');
+                        $('#suspect').append(suspectStr.join(''));
+
+                    }else if(apStaffArr[i].suspectClass=="1001"||apStaffArr[i].suspectClass==1001)
+                    {//受害人
+                        var victimStr=[];
+                        victimStr.push('<div class="row breadcrumbs caseContainer">\n');
+                        victimStr.push('   <div class="col-md-1 caseInfo">\n');
+                        victimStr.push('       <span>'+(apStaffArr[i].name==null?"":apStaffArr[i].name)+'</span>\n');
+                        victimStr.push('   </div>\n');
+                        victimStr.push('   <div class="col-md-3 caseInfo">\n');
+                        victimStr.push('       <span>'+(apStaffArr[i].idcardNum==null?"":apStaffArr[i].idcardNum)+'</span>\n');
+                        victimStr.push('   </div>\n');
+                        victimStr.push('   <div class="col-md-1 caseInfo">\n');
+                        victimStr.push('       <span>'+(apStaffArr[i].gender==null||apStaffArr[i].gender==0?"":dicCommon[12][apStaffArr[i].gender])+'</span>\n');
+                        victimStr.push('   </div>\n');
+                        victimStr.push('   <div class="col-md-2 caseInfo">\n');
+                        victimStr.push('       <span>'+(apStaffArr[i].phoneNum==null?"":apStaffArr[i].phoneNum)+'</span>\n');
+                        victimStr.push('   </div>\n');
+//                        victimStr.push('   <div class="col-md-2 caseInfo">\n');
+//                        victimStr.push('       <span>'+apStaffArr[i]+'</span>\n');
+//                        victimStr.push('   </div>\n');
+                        victimStr.push('   <div class="col-md-5 caseInfo">\n');
+                        victimStr.push('       <span>'+(apStaffArr[i].remark==null?"":apStaffArr[i].remark)+'</span>\n');
+                        victimStr.push('   </div>\n');
+                        victimStr.push('</div>\n');
+                        $('#victim').append(victimStr.join(''));
+                    }
+                }
+                window.parent.layer.closeAll('loading');
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

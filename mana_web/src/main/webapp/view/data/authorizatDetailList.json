@@ -1,0 +1,36 @@
+﻿{
+    "type": "authorizatDetailList",
+    "recordsTotal": 3,
+    "recordsFiltered": 3,
+    "draw": null,
+    "data": [
+        {
+            "xingming": "警察1",
+            "jinghao": "d19d34d7-eaf8-4502-be7b-91a7d1ba96d5",
+            "chayue": "已授权",
+            "bianji": "未授权",
+            "shijian": "2018-02-03"
+        },
+        {
+            "xingming": "警察2",
+            "jinghao": "4008002",
+            "chayue": "未授权",
+            "bianji": "已授权",
+            "shijian": "2018-11-03"
+        },
+        {
+            "xingming": "警察3",
+            "jinghao": "110105200012201475",
+            "chayue": "已授权",
+            "bianji": "未授权",
+            "shijian": "2018-02-03"
+        },
+        {
+            "xingming": "警察4",
+            "jinghao": "110105200012207850",
+            "chayue": "未授权",
+            "bianji": "已授权",
+            "shijian": "2018-11-03"
+        }
+    ]
+}
